@@ -2,6 +2,8 @@
 
 Uqbar is a peer-to-peer app framework and node network that provides the 4 basic primitives needed for p2p applications. We've identified and built these primitives in order to create robust abstractions, cutting away the usual boilerplate and complexity of p2p software development while preserving flexibility. These 4 basic primitives are:
 
+SICK CHANGE
+
 - Networking: passing messages from peer to peer.
 
 - Filesystem: storing data and persisting it forever.
