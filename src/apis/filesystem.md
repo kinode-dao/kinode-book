@@ -4,7 +4,9 @@ Draft 28.11.2023
 
 ### Overview
 
-You should be extremely vary of giving any installed package the capability to message the filesystem directly, this is essentially root access. Most processes will still interact with the filesystem indirectly through using the Get/Set/DeleteState functions, that can be called directly from the standard library [add link].
+(TODO: add link to filesystem overview)
+
+Users should be extremely wary of giving any installed package the capability to message the filesystem directly, as this essentially gives the process (TODO: is process the right word here?) root access. Instead, most processes will interact with the filesystem indirectly through using the Get/Set/DeleteState functions, which can be called directly from the standard library [add link].
 
 The u128s used in most commands are file handles, uuids that are unique to each written file.
 

@@ -6,9 +6,9 @@ Draft 28.11.2023
 
 The virtual filesystem is a light layer on top of the internal filesystem, and is used to provide a consistent interface for interacting with the filesystem.
 
-Within it you'll find some familiar posix commands, some new. The vfs also handles capabilities, whereas access to the underlying filesystem is essentially root access, mostly reserved for runtime modules. 
+Within the VFS you'll find some familiar posix commands, some new. The VFS also handles capabilities. Access to the underlying filesystem is essentially root access, and is mostly reserved for runtime modules. 
 
-The vfs' metadata is stored in a similar way to apps state, by calling save_state.
+The VFS metadata is stored in a similar way to app state, by calling save_state.
 
 ### API
 

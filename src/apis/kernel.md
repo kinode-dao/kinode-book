@@ -1,6 +1,6 @@
 # Kernel API
 
-The kernel takes only a few types of requests, and generally the capability to message the kernel will not be available to userspace applications.
+The kernel accepts  only a few types of requests (TODO: which?). Generally, userspace applications will not have the cabaility to message the kernel. 
 
 ```rust
 pub enum KernelCommand {
@@ -22,7 +22,7 @@ All `KernelCommand`s are sent in the IPC field as this struct serialized to JSON
 
 ## `Booted`
 
-Purely for internal use within the kernel.
+Purely for internal use within the kernel (TODO: does this not require any explanation at all then?).
 
 ## `InitializeProcess`
 
