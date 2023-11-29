@@ -4,7 +4,7 @@ Third Draft: revised 9/20/23
 
 ### 1. Protocol Overview and Motivation
 
-The Uqbar networking protocol is designed to be performant, reliable, private, and purely peer-to-peer, while still enabling access for nodes that don’t use a static public IP address.
+The Uqbar networking protocol is designed to be performant, reliable, private, and purely peer-to-peer, while still enabling access for nodes that don’t have access to a static public IP address.
 
 The networking protocol is NOT designed to be all-encompassing, that is, the only way that two Uqbar nodes will ever communicate. Many Uqbar runtimes will provide userspace access to HTTP server/client capabilities, TCP sockets, and much more. Therefore, some applications will choose to use such facilities to communicate. This networking protocol is merely a common language that every Uqbar node is guaranteed to speak. For this reason it is the protocol on which system processes will communicate, and it will be a reasonable default for most applications.
 
