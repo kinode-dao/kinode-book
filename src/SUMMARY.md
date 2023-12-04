@@ -25,6 +25,14 @@
 # Process Standard Library
 - [Overview](./process_stdlib/overview.md)
 
+# Build and Deploy an App
+
+- [Chapter 1: Environment Setup](./my_first_app/chapter_1.md)
+- [Chapter 2: Sending Some Messages, Using Some Tools](./my_first_app/chapter_2.md)
+- [Chapter 3: Frontend Time](./my_first_app/chapter_3.md)
+- [Chapter 4: Defining Your Protocol](./my_first_app/chapter_4.md)
+- [Chapter 5: Sharing With The World](./my_first_app/chapter_5.md)
+
 # API Reference
 - [APIs Overview](./apis/overview.md)
 - [uqbar.wit](./apis/uqbar_wit.md)
@@ -36,13 +44,5 @@
 - [HTTP Client API](./apis/http_client.md)
 - [Net API](./apis/net.md)
 
-# Build and Deploy an App
-
-- [Chapter 1: Environment Setup](./my_first_app/chapter_1.md)
-- [Chapter 2: Sending Some Messages, Using Some Tools](./my_first_app/chapter_2.md)
-- [Chapter 3: Defining Your Protocol](./my_first_app/chapter_3.md)
-- [Chapter 4: Sharing With The World](./my_first_app/chapter_4.md)
-
 # Example Apps
 
-TODO

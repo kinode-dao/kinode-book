@@ -48,3 +48,27 @@ We then define a `Component` struct and implement the `Guest` trait for it. This
 
 [joker_it's_about_sending_a_message.gif]
 
+- ...
+
+## Gathering capabilities
+
+- in our package manifest:
+    - request_messaging
+    - grant_messaging
+
+- from the WIT:
+    - `get_capability()`
+    - `share_capability()`
+
+## Serving a frontend
+
+- ...
+
+## Using a database
+
+- ...
+
+## Saving a file
+
+- ...
+
