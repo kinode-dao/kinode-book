@@ -1,6 +1,8 @@
 # Kernel API
 
-The kernel accepts  only a few types of requests (TODO: which?). Generally, userspace applications will not have the cabaility to message the kernel. 
+Generally, userspace applications will not have the cabaility to message the kernel. Those that can, such as the app store, have full control over starting and stopping all userspace processes.
+
+The kernel runtime task accepts one shape of message, always sent as a `Request` serialized to JSON text bytes using `serde_json`:
 
 ```rust
 pub enum KernelCommand {
@@ -18,11 +20,21 @@ pub enum KernelCommand {
 }
 ```
 
-All `KernelCommand`s are sent in the IPC field as this struct serialized to JSON text bytes using `serde_json`.
+All `KernelCommand`s are sent in the IPC field of a `Request`. Only `InitializeProcess`, `RunProcess`, and `KillProcess` will give back a `Response`, also serialized to JSON text bytes using `serde_json`:
+
+```rust
+pub enum KernelResponse {
+    InitializedProcess,       // given back after a successful InitializeProcess
+    InitializeProcessError,   // given back after a failed InitializeProcess
+    StartedProcess,           // given back after a successful RunProcess
+    RunProcessError,          // given back after a failed RunProcess
+    KilledProcess(ProcessId), // given back after a KillProcess request
+}
+```
 
 ## `Booted`
 
-Purely for internal use within the kernel (TODO: does this not require any explanation at all then?).
+Purely for internal use within the kernel. Sent by the kernel, to the kernel, to indicate that all persisted processes have been initialized and are ready to run.
 
 ## `InitializeProcess`
 
@@ -34,15 +46,11 @@ This will *not* cause the process to begin running. To do that, send a `RunProce
 
 ## `RunProcess`
 
-Takes a process ID and tells kernel to call the `init` function. The process must have first been Initialized.
+Takes a process ID and tells kernel to call the `init` function. The process must have first been initialized with a successful `InitializeProcess`.
 
 ## `KillProcess`
 
-Takes a process ID and kills it. This is a dangerous operation as messages queued for the process will be lost.
-
-## `RebootProcess`
-
-Purely for internal use within the kernel.
+Takes a process ID and kills it. This is a dangerous operation as messages queued for the process will be lost. The process will be removed from the kernel's process table and will no longer be able to receive messages.
 
 ## `Shutdown`
 
