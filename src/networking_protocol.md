@@ -34,57 +34,13 @@ If a node is private, it must initiate a connection with at least one of its all
 
 ### 3. Handshake
 
-There is a handshake sequence that must be performed before sending Uqbar messages in order to enable symmetric encryption between communicating nodes. Once the handshake is performed, those two nodes may communicate directly or through any router, as long as each node holds onto the handshake data.
-
-If a node receives an encrypted message that it cannot decrypt (either because it has not saved the correct decription key or because its decryption key fails) it should respond with a handshake message, which lets the sender know they need to re-shake.
-
-Once a handshake is received, it is responded to with a HandshakeAck, which is the same data structure, but marked as a response so as avoid looping failures. Handshakes look like this:
-```rust
-Handshake {
-    from: String,
-    target: String,
-    id_signature: Vec<u8>,
-    ephemeral_public_key: Vec<u8>,
-    ephemeral_public_key_signature: Vec<u8>,
-    nonce: Vec<u8>,
-}
-```
-The nonce field is to be filled out by the node initiating the connection. If filled out by the responding node, it will be ignored. The initiating node can use whatever strategy it wants to generate the nonce (TODO: clarify).
-
-The id_signature is an EdDSA signature, created by the node’s networking public key, on the byte serialization of the Identity data structure that exists onchain for that node. This ensures that connections agree on the current state of each participant’s PKI information.
-
-The ephemeral_public_key is generated as part of the Handshake and used in a Diffe-Hellman key exchange. This key is also signed by the node’s networking key. By signing this public key with its networking key, a node verifies that it is in fact sending all subsequent messages, and the ephemeral key exchange allows all subsequent messages to be encrypted and only decrypted by the target.
-
-The exact WebSockets route taken depends on the public/private nature of both nodes involved.
-
-If both nodes are public, the initiator connects directly to the target. If a public node is connecting to a private node, it must establish a connection with one of its routers, then request a connection to the private node and send them a handshake. The connection-initiating node should try available routers until it successfully establishes a connection. If a private node is connecting to a public node, it can either connect directly, revealing its IP address, or privately through a router using the same method as above. Two private nodes will always connect through a router.
+XX OUT OF DATE
 
 
 ### 4. Sending Messages
 
-Once both nodes have sent a handshake, the connection is complete. All messages are encrypted using the shared secret created by the Diffe-Hellman key exchange performed in the handshake messages. Different implementations can execute different expiration strategies around handshakes (TODO: clarify), but if a node changes its onchain routing information, that always triggers a new handshake.
+XX OUT OF DATE
 
-This is the exact message type sent as binary data between nodes:
-```rust
-NetworkMessage {
-    Ack(u64),
-    Nack(u64),
-    Msg {
-        from: String,
-        to: String,
-        id: u64,
-        contents: Vec<u8>,
-    },
-    Handshake(Handshake),
-    HandshakeAck(Handshake),
-    Error(NetworkError),
-}
-```
-Acks are used to confirm delivery of a Msg. Nacks are used to confirm that, although the message was delivered over the network to *some* node in the chain (either router or destination), it was not successfully decrypted and passed on to the kernel of the target. This could happen due to a disconnect between router and target, a decryption error of some kind, or some kind of invalid message format.
-
-Msg contents are always encrypted.
-
-Handshakes are exchanged in-order, so the initiator sends a Handshake, then the responder sends a HandshakeAck.
 
 
 ### 5. Connection Maintenance and Errors
