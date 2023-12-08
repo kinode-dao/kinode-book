@@ -27,11 +27,21 @@
 
 # Build and Deploy an App
 
-- [Chapter 1: Environment Setup](./my_first_app/chapter_1.md)
-- [Chapter 2: Sending Some Messages, Using Some Tools](./my_first_app/chapter_2.md)
-- [Chapter 3: Frontend Time](./my_first_app/chapter_3.md)
-- [Chapter 4: Defining Your Protocol](./my_first_app/chapter_4.md)
-- [Chapter 5: Sharing With The World](./my_first_app/chapter_5.md)
+- [Environment Setup](./my_first_app/chapter_1.md)
+- [Sending Some Messages, Using Some Tools](./my_first_app/chapter_2.md)
+- [Frontend Time](./my_first_app/chapter_3.md)
+- [Defining Your Protocol](./my_first_app/chapter_4.md)
+- [Sharing With The World](./my_first_app/chapter_5.md)
+
+# In-Depth Guide: Chess App
+
+- [Start From Template](./chess_app/start.md)
+- [Chess Engine](./chess_app/chess_engine.md)
+- [Adding a Frontend](./chess_app/frontend.md)
+- [Putting Everything Together](./chess_app/putting_everything_together.md)
+- [Extension 1: Chat](./chess_app/chat.md)
+- [Extension 2: Payment Integration](./chess_app/payment.md)
+- [Extension 3: LLM Integration](./chess_app/llm.md)
 
 # API Reference
 - [APIs Overview](./apis/overview.md)
