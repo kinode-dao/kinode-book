@@ -53,6 +53,3 @@
 - [HTTP Server API](./apis/http_server.md)
 - [HTTP Client API](./apis/http_client.md)
 - [Net API](./apis/net.md)
-
-# Example Apps
-
