@@ -18,3 +18,8 @@ At a high level, the following is the important information for identities in th
         3. WebTransport port
         4. TCP port
         5. UDP port
+
+
+### DotUqRegistrar
+
+The DotUqRegistrar (.uq) is responsible for registering all .uq domain names and authorizing access for alterations to these nodes when a user attempts to change a record for a node on the QNSRegistryResolver. 
