@@ -5,7 +5,7 @@ Chess is a good example for an Uqbar app because the basic game logic is already
 In your `src/lib.rs`, you should already have something like this from the template:
 
 ```rust
-use uqbar_process_lib::{println, receive, Address, Message};
+use uqbar_process_lib::{println, await_message, Address, Message};
 
 wit_bindgen::generate!({
     path: "../wit",
@@ -23,12 +23,12 @@ impl Guest for Component {
         println!("{our}: start");
 
         loop {
-            let _ = receive().map(|(source, message)| {
-                let Message::Request(req) = message else { return };
+            let _ = await_message().map(|(message)| {
+                if !message.is_request() { return };
                 println!(
-                    "{our}: got message from {}: {}",
-                    source.process.process(),
-                    String::from_utf8_lossy(&req.ipc)
+                    "{our}: got request from {}: {}",
+                    message.source().process(),
+                    String::from_utf8_lossy(message.ipc())
                 );
             });
         }
@@ -36,7 +36,7 @@ impl Guest for Component {
 }
 ```
 
-Add `pleco = "0.5"` to your `Cargo.toml` dependencies (latest version at the time of writing). Then, import pleco at the top of lib.rs with `use pleco::Board;`. Now, we have access to a chess board and can manipulate it with code such as this:
+In `Cargo.toml`, add `pleco = "0.5"` to your dependencies. Then, at the top of `src/lib.rs`, add `use pleco::Board;`. Now, we have access to a chess board and can manipulate it with code such as this:
 
 ```rust
 let mut board = Board::start_pos();
@@ -46,6 +46,7 @@ board.apply_uci_move(move_str)?;
 
 The [pleco docs](https://github.com/pleco-rs/Pleco#using-pleco-as-a-library) show everything you can do. But this isn't very interesting! We want to be able to play chess with other people. Let's start by creating a persisted state for the chess app and an IPC format for sending messages to other nodes.
 
+In `src/lib.rs`:
 ```rust
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
@@ -102,7 +103,7 @@ You might notice a problem with this app... there's no way to see your games! A 
 `Cargo.toml`:
 ```toml
 [package]
-name = "my_chess_app"
+name = "my_chess_cli_app"
 version = "0.1.0"
 edition = "2021"
 
@@ -119,9 +120,8 @@ pleco = "0.5"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 url = "*"
-# NOTE: you can replace this with a newer version of the repo, but the tutorial may break slightly!
-uqbar_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "b2dbec7" }
-wit-bindgen = { git = "https://github.com/bytecodealliance/wit-bindgen", rev = "5390bab780733f1660d14c254ec985df2816bf1d" }
+uqbar_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "a4cbe91" }
+wit-bindgen = { git = "https://github.com/bytecodealliance/wit-bindgen", rev = "efcc759" }
 
 [lib]
 crate-type = ["cdylib"]
@@ -137,7 +137,7 @@ use pleco::Board;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use uqbar_process_lib::{
-    get_typed_state, println, receive, set_state, Address, Message, NodeId, Request, Response,
+    await_message, get_typed_state, println, set_state, Address, Message, NodeId, Request, Response,
 };
 
 extern crate base64;
@@ -225,55 +225,54 @@ impl Guest for Component {
 
 fn main_loop(our: &Address, state: &mut ChessState) {
     loop {
-        // Call receive() to wait for any incoming messages.
+        // Call await_message() to wait for any incoming messages.
         // If we get a network error, make a print and throw it away.
         // In a high-quality consumer-grade app, we'd want to explicitly handle
         // this and surface it to the user.
-        let Ok((source, message)) = receive() else {
-            println!("{our}: got network error");
-            continue;
-        };
-        // We never expect any responses *here*, because for every
-        // chess protocol request, we *await* its response in-place.
-        // This is appropriate for direct node<>node comms, less
-        // appropriate for other circumstances...
-        let Message::Request(request) = message else {
-            continue;
-        };
-        // Deserialize the request IPC to our format, and throw it away if it
-        // doesn't fit.
-        let Ok(chess_request) = serde_json::from_slice::<ChessRequest>(&request.ipc) else {
-            println!("{our}: got invalid request");
-            continue
-        };
-        // Call a function to handle the request.
-        match handle_request(&our, &source, &chess_request, state) {
-            Ok(()) => continue,
-            Err(e) => println!("{our}: error handling request: {:?}", e),
+        match await_message() {
+            Err(send_error) => {
+                println!("{our}: got network error: {send_error:?}");
+                continue;
+            }
+            Ok(message) => match handle_request(&our, &message, state) {
+                Ok(()) => continue,
+                Err(e) => println!("{our}: error handling request: {:?}", e),
+            },
         }
     }
 }
 
 /// Handle chess protocol messages from ourself *or* other nodes.
-fn handle_request(
-    our: &Address,
-    source: &Address,
-    chess_request: &ChessRequest,
-    state: &mut ChessState,
-) -> anyhow::Result<()> {
+fn handle_request(our: &Address, message: &Message, state: &mut ChessState) -> anyhow::Result<()> {
+    // Throw away responses. We never expect any responses *here*, because for every
+    // chess protocol request, we *await* its response in-place. This is appropriate
+    // for direct node<>node comms, less appropriate for other circumstances...
+    if !message.is_request() {
+        return Err(anyhow::anyhow!("message was response"));
+    }
     // If the request is from another node, handle it as an incoming request.
     // Note that we can enforce the ProcessId as well, but it shouldn't be a trusted
     // piece of information, since another node can easily spoof any ProcessId on a request.
     // It can still be useful simply as a protocol-level switch to handle different kinds of
     // requests from the same node, with the knowledge that the remote node can finagle with
     // which ProcessId a given message can be from. It's their code, after all.
-    if source.node != our.node {
-        handle_chess_request(&source.node, state, chess_request)
+    if message.source().node != our.node {
+        // Deserialize the request IPC to our format, and throw it away if it
+        // doesn't fit.
+        let Ok(chess_request) = serde_json::from_slice::<ChessRequest>(message.ipc()) else {
+            return Err(anyhow::anyhow!("invalid chess request"));
+        };
+        handle_chess_request(&message.source().node, state, &chess_request)
     // ...and if the request is from ourselves, handle it as our own!
     // Note that since this is a local request, we *can* trust the ProcessId.
     // Here, we'll accept messages from the local terminal so as to make this a "CLI" app.
-    } else if source.node == our.node && source.process == "terminal:terminal:uqbar" {
-        handle_local_request(our, state, chess_request)
+    } else if message.source().node == our.node
+        && message.source().process == "terminal:terminal:uqbar"
+    {
+        let Ok(chess_request) = serde_json::from_slice::<ChessRequest>(message.ipc()) else {
+            return Err(anyhow::anyhow!("invalid chess request"));
+        };
+        handle_local_request(our, state, &chess_request)
     } else {
         // If we get a request from ourselves that isn't from the terminal, we'll just
         // throw it away. This is a good place to put a printout to show that we've
@@ -389,16 +388,14 @@ fn handle_local_request(
             // Send the other player a NewGame request
             // The request is exactly the same as what we got from terminal.
             // We'll give them 5 seconds to respond...
-            let response = Request::new()
+            let Ok(Message::Response { ref ipc, .. }) = Request::new()
                 .target((game_id.as_ref(), our.process.clone()))
                 .ipc(serde_json::to_vec(&action)?)
-                .send_and_await_response(5)?;
+                .send_and_await_response(5)? else {
+                    return Err(anyhow::anyhow!("other player did not respond properly to new game request"))
+                };
             // If they accept, create a new game -- otherwise, error out.
-            let Ok((_source, Message::Response((resp, _context)))) = response else {
-                return Err(anyhow::anyhow!("other player did not respond properly to new game request"));
-            };
-            let resp = serde_json::from_slice::<ChessResponse>(&resp.ipc)?;
-            if resp != ChessResponse::NewGameAccepted {
+            if serde_json::from_slice::<ChessResponse>(ipc)? != ChessResponse::NewGameAccepted {
                 return Err(anyhow::anyhow!("other player rejected new game request!"));
             }
             // New game with default board.
@@ -434,15 +431,13 @@ fn handle_local_request(
             // Send the move to the other player, then check if the game is over.
             // The request is exactly the same as what we got from terminal.
             // We'll give them 5 seconds to respond...
-            let response = Request::new()
+            let Ok(Message::Response { ref ipc, .. }) = Request::new()
                 .target((game_id.as_ref(), our.process.clone()))
                 .ipc(serde_json::to_vec(&action)?)
-                .send_and_await_response(5)?;
-            let Ok((_source, Message::Response((resp, _context)))) = response else {
-                return Err(anyhow::anyhow!("other player did not respond properly to our move"));
-            };
-            let resp = serde_json::from_slice::<ChessResponse>(&resp.ipc)?;
-            if resp != ChessResponse::MoveAccepted {
+                .send_and_await_response(5)? else {
+                    return Err(anyhow::anyhow!("other player did not respond properly to our move"))
+                };
+            if serde_json::from_slice::<ChessResponse>(ipc)? != ChessResponse::MoveAccepted {
                 return Err(anyhow::anyhow!("other player rejected our move"));
             }
             game.turns += 1;
