@@ -1,14 +1,14 @@
 # Adding a Frontend
 
-Here, we'll take the code from the [previous section](./chess_engine.md) and add a web frontend to it.
+Here, we'll add a web frontend to the code from the [previous section](./chess_engine.md).
 
-There are two parts to this project: Altering the process code to serve and handle HTTP requests, and writing a webpage to interact with the process. We'll be using React to make a single-page app that will show our current games and let us make moves, plus make new games and resign from existing ones.
+Creating a web frontend has two parts: 1) altering the process code to serve and handle HTTP requests, and 2) writing a webpage to interact with the process. We'll use React to make a single-page app that displays our current games and allows us to: create new games, resign from games, and make moves on the chess board. 
 
 JavaScript and React development aren't in the scope of this tutorial, so we'll provide that code [here](https://github.com/uqbar-dao/chess-ui).
 
-The important part is the built result, specifically, `index.html`, `index.js`, and `index.css`. We will be serving these as static files, [which you can get here](https://github.com/uqbar-dao/chess-ui/tree/tutorial/tutorial_build) if you don't want to build them yourself.
+The important part (TODO: of what?) is the built result (TODO: as in the whole app?), specifically, `index.html`, `index.js`, and `index.css`. We will serve these as static files, [which you can get here](https://github.com/uqbar-dao/chess-ui/tree/tutorial/tutorial_build) if you don't want to build them yourself.
 
-Add the files to the `pkg` folder in your app, so they'll be ingested on-install. This allows your process to fetch them from the virtual filesystem, as all files in `pkg` are mounted. However... for simplicity's sake, we can use the `include_str!` macro to embed the files directly into our process binary and serve them that way. See the [VFS API overview](../apis/vfs.md) to see how to use files mounted in `pkg`.
+Add the files to the `pkg` folder in your app, so they'll be ingested on-install. This allows your process to fetch them from the virtual filesystem, as all files in `pkg` are mounted. However, for simplicity's sake, we can also use the `include_str!` macro to embed the files directly into our process binary. See the [VFS API overview](../apis/vfs.md) to see how to use files mounted in `pkg`.
 
 In `src/lib.rs`:
 ```rust
@@ -60,11 +60,11 @@ http::bind_http_path("/games", true, false).unwrap();
 ...
 ```
 
-This code will go in the init() function such that the frontend is served when the process starts.
+The above code will go in (TODO: go in seems like the wrong verb) the init() function such that the frontend is served when the process starts.
 
-The `http` library in [process_lib](../process_stdlib/overview.md) provides a simple interface for serving static files and handling HTTP requests. We use `bind_http_static_path` to serve the static files we included in our process binary, and `bind_http_path` to handle requests to `/games`. See process_lib docs for more functions and documentation on their parameters. These requests all serve HTTP that can only be accessed by a logged-in node user (the `true` parameter for `authenticated`), and can be accessed remotely (the `false` parameter for `local_only`). This API is under active development!
+The `http` library in [process_lib](../process_stdlib/overview.md) provides a simple interface for serving static files and handling HTTP requests. We use `bind_http_static_path` to serve the static files we included in our process binary, and `bind_http_path` to handle requests to `/games`. See process_lib docs (TODO: link) for more functions and documentation on their parameters. These requests all serve HTTP that can only be accessed by a logged-in node user (the `true` parameter for `authenticated`) and can be accessed remotely (the `false` parameter for `local_only`). This API is under active development!
 
-Requests on the /games path will come in as requests to our process, and we'll have to handle them and give a response. The request/response format can be imported from `http` in `process_lib`. To do this, we'll add a branch to our main request-handling function that takes requests from our `http_server:sys:uqbar`.
+Requests on the /games path will arrive as requests to our process, and we'll have to handle them and respond. The request/response format can be imported from `http` in `process_lib`. To do this, we'll add a branch to our main request-handling function that takes requests from `http_server:sys:uqbar`.
 
 In `src/lib.rs`, inside `handle_request()`:
 ```rust
@@ -107,9 +107,9 @@ else if message.source().node == our.node
 ...
 ```
 
-This code will have some errors -- we need a new function to handle HTTP requests, and a new state parameter to handle active frontend clients.
+This code will have some errors (TODO: as in, when its run it throws errors? Or the code has obvious errors when looking at it) -- we need a new function to handle HTTP requests, and a new state parameter to handle active frontend clients.
 
-The `handle_http_request` function will be defined below. It takes the request, and returns a `Result` that we can match on to send a response. We'll also handle websocket open/close messages here, and ignore websocket push messages. We add a new `state` parameter here:
+The `handle_http_request` function is defined below (TODO: but not immediately below?). It takes the request and returns a `Result` that we can match on (TODO: is "match on" the correct verb?) to send a response. We'll also handle websocket open/close messages here (TODO: as part of the function? what is here?), and ignore websocket push messages. We add a new `state` parameter here:
 
 In `src/lib.rs`:
 ```rust
@@ -122,7 +122,7 @@ struct ChessState {
 ...
 ```
 
-`clients` now holds the channel IDs of all connected clients. We'll use this to send updates over WebSockets to the frontend when the game state changes. But wait! We shouldn't persist this information, because those connections will die when our process is killed or the node is turned off. So we'll create another state type for persistence and convert to/from the in-memory one above.
+`clients` now holds the channel IDs of all connected clients. We'll use this to send updates over WebSockets to the frontend when the game state changes. But wait! We shouldn't persist this information because those connections will disappear when our process is killed or the node (TODO: which node?) is turned off. So we'll create another state type for persistence and convert to/from the in-memory one above (TODO: this is unclear phrasing to me).
 
 In `src/lib.rs`:
 ```rust
@@ -153,7 +153,7 @@ fn load_chess_state() -> ChessState {
 ...
 ```
 
-Now, we just need a `handle_http_request` function to take incoming HTTP requests and return HTTP responses. This will serve pretty much exactly the same purpose as the `handle_local_request` function from the previous chapter, meaning that the frontend will produce actions and we'll execute them.
+Now, we just need a `handle_http_request` function to take incoming HTTP requests and return HTTP responses. This will serve the same purpose as the `handle_local_request` function from the previous chapter, meaning that the frontend will produce actions and we'll execute them.
 
 *An aside: As a process dev, you should be aware that HTTP resources served in this way can be accessed by _other processes running on the same node_, regardless of whether the paths are authenticated or not. This can be a security risk: if your app is handling sensitive actions from the frontend, a malicious app could make those API requests instead. You should never expect users to "only install non-malicious apps" -- instead, use a _secure subdomain_ to isolate your app's HTTP resources from other processes. See the [HTTP Server API](../apis/http_server.md) for more details.*
 
@@ -338,9 +338,9 @@ fn handle_http_request(
 ...
 ```
 
-This is a lot of code, but it's mostly just handling the different HTTP methods and returning the appropriate responses. The only new thing here is the `get_payload()` function, which lets us get the HTTP body. See the HTTP API docs ([client](../apis/http_client.md), [server](../apis/http_server.md)) for more details.
+This is a lot of code. Mostly, it just handles the different HTTP methods and returns the appropriate responses. The only unfamiliar code here is the `get_payload()` function, which lets us get (TODO: accesses? receives? requests?) the HTTP body. See the HTTP API docs ([client](../apis/http_client.md), [server](../apis/http_server.md)) for more details.
 
-Are we ready to play chess? Almost! One more missing piece: the backend needs to send WebSocket updates to the frontend after each move, so the board gets updated without a refresh. We already keep track of open channels in our process state, and we'll just send a push to each open channel when something happens.
+Are we ready to play chess? Almost! One more missing piece: the backend needs to send WebSocket updates to the frontend after each move in order to update the board without a refresh. We already keep track of open channels in our process state, and now we'll just send a push to each open channel when a move occurs.
 
 In `src/lib.rs`, add a helper function:
 ```rust
@@ -374,6 +374,6 @@ fn send_ws_update(
 }
 ```
 
-Now, anywhere we receive an action from another node (so in `handle_chess_update()`), call `send_ws_update(&our, &game, &state.clients)?` to send an update to all connected clients. You'll need to add `our` as a parameter to the handler function. A good place to do this is right before we save our updated state. Moves that we make ourselves from the frontend will update on their own.
+Now, anywhere we receive an action from another node (in `handle_chess_update()`, for example), call `send_ws_update(&our, &game, &state.clients)?` to send an update to all connected clients. You'll need to add `our` as a parameter to the handler function. A good place to do this is right before we save our updated state. Moves that we make ourselves from the frontend will update on their own.
 
 Continue to [Putting Everything Together](./putting_everything_together.md) to see the full code and screenshots of the app in action.
