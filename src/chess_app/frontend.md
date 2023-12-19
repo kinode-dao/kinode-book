@@ -57,6 +57,8 @@ http::bind_http_static_path(
 )
 .unwrap();
 http::bind_http_path("/games", true, false).unwrap();
+// Allow websockets to be opened at / (our process ID will be prepended).
+http::bind_ws_path("/", true, false).unwrap();
 ...
 ```
 
@@ -87,8 +89,10 @@ else if message.source().node == our.node
                     }
                 }
             }
-            http::HttpServerRequest::WebSocketOpen(channel_id) => {
-                // client frontend opened a websocket
+            http::HttpServerRequest::WebSocketOpen { path, channel_id } => {
+                // We know this is authenticated and unencrypted because we only
+                // bound one path, the root path. So we know that client
+                // frontend opened a websocket and can send updates
                 state.clients.insert(channel_id);
                 Ok(())
             }
