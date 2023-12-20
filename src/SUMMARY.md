@@ -13,8 +13,6 @@
 
 - [Processes](./processes.md)
     - [Capability-Based Security](./process-capabilities.md)
-    - [Payloads](./process-payloads.md)
-    - [Responses and Network Errors](./process-responses.md)
     - [Startup, Spindown, and Crashes](./process-startup.md)
 - [Networking Protocol](./networking_protocol.md)
 - [HTTP Server](./http_server.md)

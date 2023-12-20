@@ -136,7 +136,7 @@ use uqbar_process_lib::{
 
 extern crate base64;
 
-// Boilerplate: generate the wasm bindings for an Uqbar app
+// Boilerplate: generate the Wasm bindings for an Uqbar app
 wit_bindgen::generate!({
     path: "wit",
     world: "process",

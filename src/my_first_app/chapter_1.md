@@ -21,11 +21,11 @@ First, we need to install Rust. In your terminal, run:
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-For more information, or debugging, see the [Rust lang install page](https://www.rust-lang.org/tools/install). 
+For more information, or debugging, see the [Rust lang install page](https://www.rust-lang.org/tools/install).
 
-### Acquiring WASM and Uqbar Development Tools: `uqdev`
+### Acquiring Wasm and Uqbar Development Tools: `uqdev`
 
-Next, install WASM and the Uqbar Development Tools, or `uqdev`, using `cargo`:
+Next, install Wasm and the Uqbar Development Tools, or `uqdev`, using `cargo`:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -78,7 +78,7 @@ It is exhaustively defined [here](https://doc.rust-lang.org/cargo/reference/mani
 
 The `src/` directory is where the code for the process lives.
 
-The `pkg/` directory contains two files, `manifest.json` and `metadata.json`, that specify information the Uqbar node needs to run the package, which will be enumerated below. The `pkg/` directory is also where `.wasm` binaries will be deposited by [`uqbar build`](#building-the-package).
+The `pkg/` directory contains two files, `manifest.json` and `metadata.json`, that specify information the Uqbar node needs to run the package, which will be enumerated below. The `pkg/` directory is also where `.Wasm` binaries will be deposited by [`uqbar build`](#building-the-package).
 The files in the `pkg/` directory are finally injected into the Uqbar node with [`uqbar start-package`](#starting-the-package).
 
 #### `pkg/manifest.json`
@@ -86,7 +86,7 @@ The files in the `pkg/` directory are finally injected into the Uqbar node with 
 The `manifest.json` file contains information the Uqbar node needs in order to run the package:
 
 ```bash
-$ cat my_chat_app/pkg/manifest.json 
+$ cat my_chat_app/pkg/manifest.json
 [
     {
         "process_name": "my_chat_app",
@@ -121,7 +121,7 @@ Key                    | Required? | Value type
 The `metadata.json` file contains information about the package and the publisher:
 
 ```bash
-$ cat my_chat_app/pkg/metadata.json 
+$ cat my_chat_app/pkg/metadata.json
 {
     "package": "my_chat_app",
     "publisher": "template.uq",
@@ -154,8 +154,8 @@ uqdev build
 
 ### Booting a fake Uqbar node
 
-Often, it is optimal to develop on a fake node. Fake nodes are simple to set up, easy to restart if broken, and mocked networking makes development testing very straightforward. 
-To boot a fake Uqbar node for development purposes, use the `uqdev boot-fake-node` tool. 
+Often, it is optimal to develop on a fake node. Fake nodes are simple to set up, easy to restart if broken, and mocked networking makes development testing very straightforward.
+To boot a fake Uqbar node for development purposes, use the `uqdev boot-fake-node` tool.
 
 `uqdev boot-fake-node` downloads the OS- and architecture-appropriate Uqbar core binary and runs it without connecting to the live network.
 Instead, it connects to a mocked local network, allowing different fake nodes on the same machine to communicate with each other.
@@ -184,7 +184,7 @@ To develop on a real Uqbar node, connect to the network and follow the instructi
 ### Starting the package
 
 Time to load and initiate the `my_chat_app` package. For this, you will use the `uqdev start-package` tool.
-Like [uqdev build](#building-the-package), the `uqdev start-package` tool receives an optional directory containing the package or, if no directory is received, tries the current working directory. It also requires a url: the address of the node on which to initiate the package. 
+Like [uqdev build](#building-the-package), the `uqdev start-package` tool receives an optional directory containing the package or, if no directory is received, tries the current working directory. It also requires a url: the address of the node on which to initiate the package.
 The node's url follows a `-u` or `--url` flag.
 
 You can start the package from either within or outside `my_chat_app` directory. After completing the previous step, you should be one directory above the `my_chat_app` directory and can use the following: 
