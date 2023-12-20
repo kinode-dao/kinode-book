@@ -13,7 +13,7 @@ You should see something like this:
 
 To try it out, boot up another node, execute the `uqdev start-package` command, and invite your new node to a game. Presto!
 
-This concludes the main Chess tutorial. If you're interested in learning more about how to write Uqbar processes, there are several great options to extend the app: 
+This concludes the main Chess tutorial. If you're interested in learning more about how to write Uqbar processes, there are several great options to extend the app:
 
 - Consider how to handle network errors and surface those to the user
 - Add game tracking to the processes state, such that players can see their history
@@ -22,7 +22,7 @@ This concludes the main Chess tutorial. If you're interested in learning more ab
 There are also three extensions to this tutorial which dive into specific use cases which make the most of Uqbar:
 
 - [Chat](./chat.md)
-- [Payment Integration](./payment.md) (TODO: crypto, yes? so maybe this should say Blockchain Integration?)
+- [Payment Integration (using ETH)](./payment.md)
 - [LLM Integration (play chess against the AI!)](./llm.md)
 
 The full code is available [here](https://github.com/uqbar-dao/uqbar/tree/main/modules/chess) or below:
