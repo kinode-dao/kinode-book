@@ -95,7 +95,7 @@ impl Guest for Component {
         // unpack the address string and print it to the terminal
         let our = Address::from_str(&our).unwrap();
         println!("{our}: start");
-        
+
         // print something else out
         println!("this is the child process, wow!");
     }
@@ -105,7 +105,7 @@ The spawn function in Uqbar comprises several parameters, each serving a specifi
 
 - `name: Option<String>`: This parameter specifies the name of the process. If set to None, the process is automatically assigned a numerical identifier, resulting in a ProcessId formatted like `123456789:my-package:john.uq`.
 
-- `wasm_path: String`: Indicates the location of the compiled WebAssembly (WASM) bytecode for the process. This path should be relative to the `/pkg` directory in your project.
+- `wasm_path: String`: Indicates the location of the compiled WebAssembly (wasm) bytecode for the process. This path should be relative to the `/pkg` directory in your project.
 
 - `on_exit: OnExit`: Determines the behavior of the process upon termination, whether due to completion, a crash, or a panic. OnExit is an enum with three potential values:
 
