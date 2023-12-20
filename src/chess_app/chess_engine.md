@@ -1,8 +1,8 @@
 # Chess Engine
 
-Chess is a good example for an Uqbar app because the basic game logic is already readily available. There are thousands of high-quality libraries across many languages that can be imported into a wasm app that runs on Uqbar. We'll be using [pleco](https://github.com/pleco-rs/Pleco).
+Chess is a good example for an Uqbar application walk-through because the basic game logic is already readily available. There are thousands of high-quality chess libraries across many languages that can be imported into a Wasm app that runs on Uqbar. We'll be using [pleco](https://github.com/pleco-rs/Pleco).
 
-In your `src/lib.rs`, you should already have something like this from the template:
+In your `src/lib.rs`, your template should already have some code that looks something like this:
 
 ```rust
 use uqbar_process_lib::{println, await_message, Address, Message};
@@ -36,15 +36,9 @@ impl Guest for Component {
 }
 ```
 
-In `Cargo.toml`, add `pleco = "0.5"` to your dependencies. Then, at the top of `src/lib.rs`, add `use pleco::Board;`. Now, we have access to a chess board and can manipulate it with code such as this:
+In `Cargo.toml`, which should be at the top-level in the template folder, add `pleco = "0.5"` to your dependencies. Then, at the top of `src/lib.rs`, add `use pleco::Board;`. Now, we have access to a chess board and can manipulate it easily.
 
-```rust
-let mut board = Board::start_pos();
-let move_str = "e2e4";
-board.apply_uci_move(move_str)?;
-```
-
-The [pleco docs](https://github.com/pleco-rs/Pleco#using-pleco-as-a-library) show everything you can do. But this isn't very interesting! We want to be able to play chess with other people. Let's start by creating a persisted state for the chess app and an IPC format for sending messages to other nodes.
+The [pleco docs](https://github.com/pleco-rs/Pleco#using-pleco-as-a-library) show everything you can do using the pleco library. But this isn't very interesting by itself! We want to play chess with other people. Let's start by creating a persisted state for the chess app and an IPC format for sending messages to other nodes.
 
 In `src/lib.rs`:
 ```rust
@@ -84,21 +78,21 @@ struct ChessState {
 
 Here's a simple Request/Response interface and a persistable game state.
 
-Creating explicit `ChessRequest` and `ChessResponse` types is the easiest way to get reliable and easy to parse messages between two processes. It makes message-passing very simple. If you get a request, you can deserialize it to `ChessRequest` and ignore or throw an error if that fails. If you get a response, you can do the same but with `ChessResponse`. And every request and response that you send can be serialized in kind. More advanced apps can take on different structures, but a top-level enum to ser/de and match on is always a good idea.
+Creating explicit `ChessRequest` and `ChessResponse` types is the easiest way to get reliable and easy to parse messages between two processes (TODO: something missing here gramatically, but can't quite find the correct word). It makes message-passing very simple. If you get a request, you can deserialize it to `ChessRequest` and ignore or throw an error if that fails. If you get a response, you can do the same but with `ChessResponse`. And every request and response that you send can be serialized in kind. More advanced apps can take on different structures, but a top-level enum to serialize/deserialize and match on is always a good idea.
 
-We've also got a state struct here which can be persisted using the `set_state` and `get_state` commands exposed by Uqbar's runtime. Note that the `Game` struct here has `board` as a `String`. This is because the `Board` type from pleco doesn't implement `Serialize` or `Deserialize`. We'll have to convert it to a string using `fen()` before persisting it, and convert it back to a `Board` with `Board::from_fen()` when we load it from state.
+The state struct shown above can also be persisted using the `set_state` and `get_state` commands exposed by Uqbar's runtime. Note that the `Game` struct here has `board` as a `String`. This is because the `Board` type from pleco doesn't implement `Serialize` or `Deserialize`. We'll have to convert it to a string using `fen()` before persisting it. Then, we will convert it back to a `Board` with `Board::from_fen()` when we load it from state.
 
-This process will have a version of init() that creates an event loop and handles ChessRequests, but first, it's important to note that these types already bake in some assumptions about our "chess protocol" as it were. Keep in mind that requests can either expect a response, or be fired and forgotten. And unless a response is expected, there's no way to know if that request was received or not. In a game like chess, pretty much every action has a logical response. Otherwise there's no way to easily alert the user that their counterparty has gone offline, or started to otherwise ignore our moves. Partially for the sake of the tutorial, I've decided to make three kinds of requests and only have two of them expect a response. In our code, `NewGame` and `Move` requests will always await a response, blocking until they receive one (or the request times out). `Resign`, however, will be fire-and-forget -- a "real" game would probably want to wait for a response here too, but it's also important to let one player resign and thus clear their state *without* that resignation being "accepted" by a non-responsive player, so production-grade resignation logic is non-trivial.
+The code below will contain a version of the `init()` function that creates an event loop and handles ChessRequests. First, however, it's important to note that these types already bake in some assumptions about our "chess protocol". Remember, requests can either expect a response, or be fired and forgotten. Unless a response is expected, there's no way to know if a request was received or not. In a game like chess, pretty much every action has a logical response. Otherwise, there's no way to easily alert the user that their counterparty has gone offline, or started to otherwise ignore our moves. For the sake of the tutorial, I've decided to make three kinds of requests—only have two expect a response. In our code, the `NewGame` and `Move` requests will always await a response, blocking until they receive one (or the request times out). `Resign`, however, will be fire-and-forget. While a "real" game may prefer to wait for a response, it is important to let one player resign and thus clear their state *without* that resignation being "accepted" by a non-responsive player, so production-grade resignation logic is non-trivial.
 
-*An aside: when building consumer-grade peer-to-peer apps, you'll find that there are in fact very few "trivial" interaction patterns. Something as simple as resigning from a one-on-one game, which would be a single POST request in a client-frontend <> server-backend architecture, requires well-thought-out negotiations to ensure that both players can walk away with a clean state machine, regardless of whether the counterparty is cooperating. Adding more "players" to the mix makes this even more complex. To keep things clean, leverage the request/response pattern and the `context` field to store information about how to handle a given response, if you're not awaiting it in-place.*
+*An aside: when building consumer-grade peer-to-peer apps, you'll find that there are in fact very few "trivial" interaction patterns. Something as simple as resigning from a one-on-one game, which would be a single POST request in a client-frontend <> server-backend architecture, requires well-thought-out negotiations to ensure that both players can walk away with a clean state machine, regardless of whether the counterparty is cooperating. Adding more "players" to the mix makes this even more complex. To keep things clean, leverage the request/response pattern and the `context` field to store information about how to handle a given response, if you're not awaiting it in a blocking fashion.*
 
-Here's the full code for the CLI version of the app. You can build it and install it on a node using `uqdev`. You can interact with it in the terminal, primitively, like so:
+Below, you'll find the full code for the CLI version of the app. You can build it and install it on a node using `uqdev`. You can interact with it in the terminal, primitively, like so:
 `/a our@chess2:chess2:ben.uq`
 `/m {"NewGame": {"white": "<your_node_id>", "black": "<other_node_id>"}}`
 `/m {"Move": {"game_id": "<other_node_id>", "move_str": "e2e4"}}`
-(If you want to make a better CLI app, consider parsing IPC as a string...)
+(If you want to make a more ergonomic CLI app, consider parsing IPC as a string...)
 
-You might notice a problem with this app... there's no way to see your games! A fun project would be to add a CLI command that shows you, in-terminal, the board for a given game_id. But in the [next chapter](./frontend.md), we'll add a frontend to this app so you can see your games in a browser.
+As you read through the code, you might notice a problem with this app... there's no way to see your games! A fun project would be to add a CLI command that shows you, in-terminal, the board for a given game_id. But in the [next chapter](./frontend.md), we'll add a frontend to this app so you can see your games in a browser.
 
 `Cargo.toml`:
 ```toml
