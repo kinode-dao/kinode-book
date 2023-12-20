@@ -2,7 +2,7 @@
 
 ### Overview
 
-On Uqbar, processes are the building blocks for peer-to-peer applications. The Uqbar "microkernel" exlusively handles message-passing between `processes`, plus the startup and teardown of said processes. The following describes the message design as it relates to processes. Processes spawn with an ID: either a developer-selected string or a randomly-generated number as string. This identifier is namespaced by the package name that it was installed as, and to generate a globally-unique identifier for a process, it is combined with the name of the node that it is running on to build an `address`.
+On Uqbar, processes are the building blocks for peer-to-peer applications. The Uqbar "microkernel" exlusively handles message-passing between `processes`, plus the startup and teardown of said processes. The following describes the message design as it relates to processes. Processes spawn with an ID: either a developer-selected string or a randomly-generated number as string. This identifier is put into a namespace under the package name that it was installed as, and to generate a globally-unique identifier for a process, it is combined with the name of the node that it is running on to build an `address`.
 
 Package IDs (TODO: link to docs) look like this:
 
@@ -34,7 +34,7 @@ Processes communicate by passing messages, of which there are two kinds: `reques
 
 When a request or response is received, it has an `address` attached: the source of the message, including the ID of the process that produced the request, as well as the ID of the node itself.
 
-The integrity of a source `address` differs between local and remote messages. If a message is local, it's validated by the local kernel, which can be trusted to label the process ID and node ID correctly. If a message is remote, only the node ID can be validated (via networking keys associated with each node ID). The process ID comes from the remote kernel, which could claim anything. (This is fine -- think of remote process IDs as a marker of what protocol is being spoken, rather than a discrete piece of code written by a specific developer.)
+The integrity of a source `address` differs between local and remote messages. If a message is local, the validity of its source is ensured by the local kernel, which can be trusted to label the process ID and node ID correctly. If a message is remote, only the node ID can be validated (via networking keys associated with each node ID). The process ID comes from the remote kernel, which could claim any process ID. (This is fine -- think of remote process IDs as a marker of what protocol is being spoken, rather than a discrete piece of code written by a specific developer.)
 
 Requests can be issued at any time by a running process. A request can optionally expect a response. If it does, the request will be retained by the kernel, along with an optional `context` object created by the request's issuer. This request will be considered outstanding until the kernel receives a matching response, at which point that response will be delivered to the requester alongside the optional context. Contexts saved by the kernel enable very straightforward, async-await-style code inside processes.
 
@@ -52,7 +52,7 @@ Lastly, messages contain an optional `metadata` field, expressed as a JSON-strin
 
 Messages that result in networking failures, like requests that time out, are returned to the process that created them as an error. There are only two kinds of send errors: Offline and Timeout. Offline means a message's remote target definitively cannot be reached. Timeout is multi-purpose: it's possible in the remote case that actual networking with that node is compromised, or that the (remote or local) process is simply taking too long to respond / not responding at all.
 
-A send error will give the process the original message along with saved `context` if any, so the process can handle re-sending, crashing, or otherwise dealing with the failure as it sees fit. If the error comes from a response, the process may optionally try to send a response again: it will be directed towards the original outstanding request.
+A send error will give the process the original message along with saved `context` if any, so the process can handle re-sending, crashing, or otherwise dealing with the failure as the developer desires. If the error comes from a response, the process may optionally try to send a response again: it will be directed towards the original outstanding request.
 
 ### Capabilities
 
