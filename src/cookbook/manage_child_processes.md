@@ -23,10 +23,11 @@ my-package/
 ```
 To initiate a child process, use the `spawn` function from `uqbar_process_lib`. The following example demonstrates a basic parent process whose sole function is to spawn a child process and grant it the ability to send messages using `http_client`:
 ```rust
+// imports
 use uqbar_process_lib::{println, spawn, get_capability, Address, Capabilities, OnExit};
 
+// boilerplate to generate types
 wit_bindgen::generate!({
-    // note that the WIT file can be in any directory
     path: "wit",
     world: "process",
     exports: {
@@ -36,23 +37,32 @@ wit_bindgen::generate!({
 
 struct Component;
 
-// parent app
+// parent app component boilerplate
 impl Guest for Component {
     fn init(our: String) {
+        // unpack the address string and print it to the terminal
         let our = Address::from_str(&our).unwrap();
         println!("{our}: start");
 
+        // the parents app already has the capability to message http_client here we
+        // are fetching that capability so that we can pass it to the child in `spawn`
         let Some(http_client_cap) = get_capability(
             &Address::new(&our.node, ProcessId::from_str("http_client:sys:uqbar").unwrap()),
             &"\"messaging\"".into(),
         ) else { todo!()};
 
-        match spawn(
+        // this function actually spawns the child process
+        let spawned_process_id: ProcessId = match spawn(
+            // name of the child process
             Some("spawned_child_process".to_string()),
+            // path to find the compiled wasm file for the child process
             "/child.wasm",
+            // what to do when this process crashes/panics/finishes
             OnExit::None,
-            &Capabilities::Some(vec![http_client_cap, networking_cap]),
-            false, // not public
+            // capabilities to pass onto the child
+            &Capabilities::Some(vec![http_client_cap]),
+            // this process will not be public
+            false,
         ) {
             Ok(spawned_process_id) => spawned_process_id,
             Err(e) => {
@@ -65,6 +75,7 @@ impl Guest for Component {
 
 The child process can be anything, for simplicity's sake let's make it a degenerate process that does nothing but print it's name and die:
 ```rust
+// same boilerplate as above
 use uqbar_process_lib::{println, Address};
 
 wit_bindgen::generate!({
@@ -78,11 +89,15 @@ wit_bindgen::generate!({
 
 struct Component;
 
-// parent app
+// child app component boilerplate
 impl Guest for Component {
     fn init(our: String) {
+        // unpack the address string and print it to the terminal
         let our = Address::from_str(&our).unwrap();
         println!("{our}: start");
+        
+        // print something else out
+        println!("this is the child process, wow!");
     }
 }
 ```
