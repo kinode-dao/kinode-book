@@ -18,7 +18,7 @@ Addresses (TODO: link to docs) look like this:
 
 `some_user.uq@process_one:my_cool_software:my_username.uq`
 
-Processes are compiled to wasm. They can be started once and complete immediately, or they can run forever. They can spawn other processes, and coordinate in arbitrarily complex ways by passing messages to one another.
+Processes are compiled to Wasm. They can be started once and complete immediately, or they can run forever. They can spawn other processes, and coordinate in arbitrarily complex ways by passing messages to one another.
 
 ### Process State
 
@@ -44,9 +44,9 @@ If a process receives a request, that doesn't mean it must directly issue a resp
 
 Messages, both requests and responses, can contain arbitrary data, which must be interpreted by the process that receives it. The structure of a message contains ample hints about how best to do this:
 
-First, messages contain a field labeled `ipc`. In order to cross the wasm boundary and be language-agnostic, this is simply a byte vector. To achieve composability, a process should be very clear, in code and documentation, about what it expects in the `ipc` field and how it gets parsed, usually into a language-level struct or object.
+First, messages contain a field labeled `ipc`. In order to cross the Wasm boundary and be language-agnostic, this is simply a byte vector. To achieve composability, a process should be very clear, in code and documentation, about what it expects in the `ipc` field and how it gets parsed, usually into a language-level struct or object.
 
-A message also contains a `payload`, another byte vector, used for opaque, arbitrary, or large data. Payloads, along with being a sort of "backup" field, are an optimization for shuttling messages across the wasm boundary. Unlike other message fields, the payload is only moved into a process if explicitly called (`get_payload()`). Processes can thus choose whether to ingest a payload based on the ipc/metadata/source/context of a given message. Payloads hold bytes alongside a `mime` field for explicit process-and-language-agnostic format declaration, if desired.
+A message also contains a `payload`, another byte vector, used for opaque, arbitrary, or large data. Payloads, along with being a sort of "backup" field, are an optimization for shuttling messages across the Wasm boundary. Unlike other message fields, the payload is only moved into a process if explicitly called (`get_payload()`). Processes can thus choose whether to ingest a payload based on the ipc/metadata/source/context of a given message. Payloads hold bytes alongside a `mime` field for explicit process-and-language-agnostic format declaration, if desired.
 
 Lastly, messages contain an optional `metadata` field, expressed as a JSON-string, to enable middleware processes and other such things to manipulate the message without altering the IPC itself.
 
@@ -66,4 +66,4 @@ The kernel gives out capabilities that allow a process to message another *local
 
 This is a high-level overview of process semantics. In practice, processes are combined and shared in **packages**, which are generally synonymous with **apps**.
 
-It's briefly discussed here that processes are compiled to wasm. The details of this are not covered in the Uqbar Book, but can be found in the documentation for the [Uqbar runtime](https://github.com/uqbar-dao/uqbar), which uses [Wasmtime](https://wasmtime.dev/), a WebAssembly runtime, to load, execute, and provide an interface for the subset of wasm processes that are valid Uqbar processes. The long term goal of the Uqbar runtime is to use [WASI](https://wasi.dev/) to provide a secure, sandboxed environment for processes to not only make use of the kernel features described in this document, but also to make full use of the entire WebAssembly ecosystem, including the ability to use sandboxed system calls provided by the host via WASI.
+It's briefly discussed here that processes are compiled to Wasm. The details of this are not covered in the Uqbar Book, but can be found in the documentation for the [Uqbar runtime](https://github.com/uqbar-dao/uqbar), which uses [Wasmtime](https://wasmtime.dev/), a WebAssembly runtime, to load, execute, and provide an interface for the subset of Wasm processes that are valid Uqbar processes. The long term goal of the Uqbar runtime is to use [WASI](https://wasi.dev/) to provide a secure, sandboxed environment for processes to not only make use of the kernel features described in this document, but also to make full use of the entire WebAssembly ecosystem, including the ability to use sandboxed system calls provided by the host via WASI.

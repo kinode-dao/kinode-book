@@ -25,7 +25,7 @@ For more information, or debugging, see the [Rust lang install page](https://www
 
 ### Acquiring Wasm and Uqbar Development Tools: `uqdev`
 
-Next, install wasm and the Uqbar Development Tools, or `uqdev`, using `cargo`:
+Next, install Wasm and the Uqbar Development Tools, or `uqdev`, using `cargo`:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -78,7 +78,7 @@ It is exhaustively defined [here](https://doc.rust-lang.org/cargo/reference/mani
 
 The `src/` directory is where the code for the process lives.
 
-The `pkg/` directory contains two files, `manifest.json` and `metadata.json`, that specify information the Uqbar node needs to run the package, which will be enumerated below. The `pkg/` directory is also where `.wasm` binaries will be deposited by [`uqbar build`](#building-the-package).
+The `pkg/` directory contains two files, `manifest.json` and `metadata.json`, that specify information the Uqbar node needs to run the package, which will be enumerated below. The `pkg/` directory is also where `.Wasm` binaries will be deposited by [`uqbar build`](#building-the-package).
 The files in the `pkg/` directory are finally injected into the Uqbar node with [`uqbar start-package`](#starting-the-package).
 
 #### `pkg/manifest.json`
