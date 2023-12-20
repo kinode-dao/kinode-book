@@ -187,13 +187,13 @@ Time to load and initiate the `my_chat_app` package. For this, you will use the 
 Like [uqdev build](#building-the-package), the `uqdev start-package` tool receives an optional directory containing the package or, if no directory is received, tries the current working directory. It also requires a url: the address of the node on which to initiate the package. 
 The node's url follows a `-u` or `--url` flag.
 
-If (TODO: WHAT?) not in the directory, use:
+You can start the package from either within or outside `my_chat_app` directory. After completing the previous step, you should be one directory above the `my_chat_app` directory and can use the following: 
 
 ```bash
 uqdev start-package my_chat_app -u http://localhost:8080
 ```
 
-or, if in the package directory:
+or, if you are already in the correct package directory:
 
 ```bash
 uqdev start-package -u http://localhost:8080
