@@ -10,7 +10,7 @@ There is no cost and no need to register credit card information -- just an emai
 
 ## Starting the Uqbar node
 
-Start an Uqbar node using the binary built in the previous section (TODO: link).
+Start an Uqbar node using the binary built in the [previous section](./install.md).
 Locating the binary on your system, take a look at the arguments it accepts:
 
 ```bash
