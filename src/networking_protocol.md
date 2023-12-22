@@ -10,17 +10,17 @@ The networking protocol is NOT designed to be all-encompassing, that is, the onl
 
 In order for nodes to attest to their identity without any central authority, all networking information is made available onchain. Networking information can take two forms: direct or routed. The former allows for completely direct peer-to-peer connections, and the latter allows nodes without a physical network configuration that permits direct connections to route messages through a peer.
 
-The networking protocol can be implemented in multiple underlying protocols, but it will use WebSockets for the initial implementation. Other options to explore in the future are raw TCP sockets, UDP, and WebRTC (TODO: do we even want to bother with "we will explore in the future?" May as well cut IMO). Since our protocol is encrypted, a secure underlying connection with TLS or HTTPS is never necessary. WebSockets are prioritized since we expect to quickly build Uqbar nodes that run purely in-browser.
+The networking protocol can be implemented in multiple underlying protocols, but it will use WebSockets for the initial implementation. Since our protocol is encrypted, a secure underlying connection with TLS or HTTPS is never necessary. WebSockets are prioritized since we expect to quickly build Uqbar nodes that run purely in-browser.
 
 ### 2. Onchain Networking Information
 
-All nodes must publish a networking public key onchain. This is an Ed25519 EdDSA public key. A new key may be posted at any time, but all messages sent across the network after a connection (TODO: between nodes?) is established must be sent with the key known by the target peer. Note that all nodes should have robust (TODO: what does robust mean here?) access to the onchain PKI, which can mostly be done over the network itself but should have fallback “clearweb” endpoints available (TODO: clarify). Because it may take time (TODO: how much time are we talking?) for a new networking key to proliferate, a node that changes its networking key might expect handshakes to fail if it attempts to make a connection right away.
+All nodes must publish an Ed25519 EdDSA networking public key onchain. A new key transaction may be posted at any time, but because agreement on networking keys is required to establish a connection and send messages between nodes, changes to onchain networking information will temporarily disrupt networking. Therefore, all nodes must have robust access to the onchain PKI, meaning: multiple backup options and multiple pathways to read onchain data. Because it may take time for a new networking key to proliferate to all nodes, (anywhere from seconds to days depending on chain indexing access) a node that changes its networking key should expect downtime immediately after doing so.
 
 Nodes that wish to make direct connections must post a URL and port onchain. The data structure will resemble this:
 ```rust
     "ws_routing": ["147.135.114.167", 9002]
 ```
-Nodes that will network behind routing (TODO: what does "network behind routing" mean?) can leave this field null, and instead indicate which other nodes will rout for them. The full data structure of a network identity onchain will resemble this, where usernames are unique:
+Indirect nodes can leave this field null, and instead indicate which other nodes will rout for them. The full data structure of a network identity onchain will resemble this, where usernames are unique:
 ```rust
     "username": "squid",
     "networking_key": "6077987c998066ed7dea3e30555add0523482475c705fb92c0c8e78307b8e62c",
@@ -46,8 +46,6 @@ XX OUT OF DATE
 ### 5. Connection Maintenance and Errors
 
 The system’s networking module seeks to abstract away the many complexities of p2p networking from app developers. To this end, it reduces all networking issues to either Offline or Timeout.
-
-Timeouts are caused by a message not being delivered within X seconds (X is TBD, somewhere between 5 and 15 seconds probably). This measurement applies to individual routing strategies and can stack (TODO: elaborate).
 
 If a peer is public, i.e. they have direct networking information published onchain, determining their offline status is simple: try to create a connection and send a message; it will throw an offline error if this message fails. If a message is un-acked for more than the timeout counter, it will throw a timeout.
 
