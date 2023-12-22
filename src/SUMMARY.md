@@ -2,7 +2,7 @@
 
 [Introduction](./intro.md)
 [Identity System](./identity_system.md)
-[Design Philosophy and Protocol Governance](./design_philosophy.md)
+[Design Philosophy](./design_philosophy.md)
 
 # Getting Started
 
