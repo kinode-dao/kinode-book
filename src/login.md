@@ -2,9 +2,13 @@
 
 Let's get onto the live network!
 
+This process will only become easier with time.
+For now, the Uqbar network posts identities to the Ethereum Sepolia testnet.
+
 ## Creating an Alchemy Account
 
 Below, Alchemy is used as an [Ethereum RPC endpoint](#acquiring-an-rpc-api-key) and to use a [faucet for Sepolia testnet ETH](#acquiring-sepolia-testnet-eth).
+The Ethereum RPC endpoint and Sepolia ETH are required to send and receive Ethereum transactions that back the Uqbar identity system.
 Before going any further, register an [Alchemy account](https://www.alchemy.com/).
 There is no cost and no need to register credit card information -- just an email registration.
 
@@ -31,6 +35,7 @@ Options:
 
 A home directory must be supplied -- where the node will store its files.
 The binary also takes a required `--rpc` flag.
+The `--rpc` flag is a `wss://` WebSocket link to an Ethereum RPC so the Uqbar node can send and receive Ethereum transactions -- for now used for the identity system.
 And finally, by default, the node will run at port 8080; this can be modified with the `--port` flag.
 
 ### Acquiring an RPC API Key
@@ -45,7 +50,7 @@ Copy the WebSocket API key from the API Key button:
 
 ### Running the Binary
 
-Replace the `--rpc` field below, and start the node with:
+Replace the `--rpc` field below with the WebSocket API key link copied from [above](#acquiring-an-rpc-api-key), and start the node with:
 
 ```bash
 ./uqbar home --rpc wss://eth-sepolia.g.alchemy.com/v2/<your-api-key>
