@@ -59,7 +59,7 @@ Options:
 Create a package `my_chat_app`:
 
 ```bash
-uqdev new my_chat_app -p my_chat_app
+uqdev new my_chat_app -a my_chat_app -u template.uq
 ```
 
 ### Exploring the package
