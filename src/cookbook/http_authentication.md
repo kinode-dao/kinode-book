@@ -1,5 +1,3 @@
-TODO: Will
-
 # HTTP API
 
 In Nectar OS, incoming HTTP requests are handled by a Rust `warp` server in the core `http_server:sys:uqbar` process. This process handles binding (registering) routes, simple JWT-based authentication, and serving a `/login` page if auth is missing.
@@ -174,3 +172,7 @@ my_package
             index.html
             /assets
 ```
+
+## App-Specific Authentication
+
+COMING SOON
