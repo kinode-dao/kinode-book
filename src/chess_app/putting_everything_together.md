@@ -9,7 +9,7 @@ Next, use `uqdev start-package <your_chess_app_name> --url <your_test_node_url>`
 Remember that you determine the process name, package name, and your developer name in the `manifest.json` and `metadata.json` files inside `/pkg`. Open your chess frontend by navigating to your node's URL (probably something like `http://localhost:8080`), and use the names you chose as the path. For example, if your chess process name is `my_chess_app`, and your package is named `chess`, and your publisher name is `ben.uq`, you would navigate to `http://localhost:8080/my_chess_app:chess:ben.uq`.
 
 You should see something like this:
-[![chess frontend](./chess_home.png)](./chess_home_.png)
+![chess frontend](./chess_home.png)
 
 To try it out, boot up another node, execute the `uqdev start-package` command, and invite your new node to a game. Presto!
 
