@@ -32,7 +32,6 @@
 - [Sharing With The World](./my_first_app/chapter_5.md)
 
 # In-Depth Guide: Chess App
-
 - [Start From Template](./chess_app/start.md)
 - [Chess Engine](./chess_app/chess_engine.md)
 - [Adding a Frontend](./chess_app/frontend.md)
@@ -40,6 +39,12 @@
 - [Extension 1: Chat](./chess_app/chat.md)
 - [Extension 2: Payment Integration](./chess_app/payment.md)
 - [Extension 3: LLM Integration](./chess_app/llm.md)
+
+# Cookbook (Handy Recipes)
+- [HTTP Authentication](./cookbook/http_authentication.md)
+- [Managing Child Processes](./cookbook/manage_child_processes.md)
+- [Publishing a Website or Web App](./cookbook/publish_to_web.md)
+- [Websocket Authentication](./cookbook/websocket_authentication.md)
 
 # API Reference
 - [APIs Overview](./apis/overview.md)

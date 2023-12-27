@@ -1,6 +1,6 @@
 # Publishing a Website or Web App
 
-Publishing a website or web app is quite simple. There are helper functions to make this a one-line call, if you have properly uploaded the relevant files from your development `/pkg` directory.
+Publishing a website or web app is quite simple. There are helper functions to make this a one-line call if you have properly uploaded the relevant files from your development `/pkg` directory.
 
 All of these functions expect you to place your `index.html` within a directory in `/pkg`. In the following examples, that directory would be `/pkg/ui`. All other files should be in a directory called `assets` inside of `ui`, so `/pkg/ui/assets`. The structure should look like this:
 

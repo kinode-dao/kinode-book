@@ -50,7 +50,7 @@ websocket.send(message);
 
 Incoming WebSocket messages will be enums of `HttpServerRequest` with type `WebSocketOpen`, `WebSocketPush`, or `WebSocketClose`.
 
-You will want to store the `channel_id` that comes in with `WebSocketOpen` so that you can push data to that websocket. If you expect to have more than 1 client connected at a time, then you will most likely want to store the channel IDs in a Set (Rust `HashSet`).
+You will want to store the `channel_id` that comes in with `WebSocketOpen` so that you can push data to that websocket. If you expect to have more than one client connected at a time, then you will most likely want to store the channel IDs in a Set (Rust `HashSet`).
 
 With a `WebSocketPush`, the incoming message will be on the `Payload`, accessible with `get_payload()`.
 
