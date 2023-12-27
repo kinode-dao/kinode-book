@@ -11,7 +11,6 @@ For the purposes of this documentation, terminal commands are provided as-is for
 The following assumes a Unix environment -- macOS or Linux.
 If on Windows, [get WSL](https://learn.microsoft.com/en-us/windows/wsl/install) first.
 In general, Uqbar does not support Windows.
-```
 
 ### Acquiring Rust
 
