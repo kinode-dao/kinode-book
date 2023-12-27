@@ -1,18 +1,18 @@
 # Installation
 
-Let's get the Uqbar core software to run a live node.
-
-If you just want to get developing as fast as possible, [My First Uqbar Application](./my_first_app/chapter_1.md) is a better place to start.
+This section will teach you how to run the Uqbar core software on a live node. However, if you are just interested in starting development as fast as possible, start with [My First Uqbar Application](./my_first_app/chapter_1.md).
 
 ## Download Binary
 
-The easiest way to get the software is to download a [precompiled release binary](https://github.com/uqbar-dao/uqbar/releases).
-There are different binaries depending on architecture and OS.
+First, get the software itself by downloading a [precompiled release binary](https://github.com/uqbar-dao/uqbar/releases).
+Choose the correct binary for your particular computer architecture and OS. 
 Extract the `.zip` file and the binary is inside.
+
+Note that some operating systems, particularly Apple, may flag the download as suspicious. While the binary has not been tested exhaustively on all Linux distributions, it should *just work*. 
 
 ### Apple
 
-To run the binary, go to `System Settings > Privacy and Security`, and click to `Allow Anyway` the `uqbar` binary:
+First, attempt to run the binary, which Apple will block. Then, go to `System Settings > Privacy and Security` and click to `Allow Anyway` for the `uqbar` binary:
 
 ![Apple unknown developer](./assets/apple-unknown-developer.png)
 
@@ -20,7 +20,7 @@ To run the binary, go to `System Settings > Privacy and Security`, and click to 
 
 ### Acquire Rust and various tools
 
-First, we need to install Rust and some `cargo` tools.
+Now, we need to install Rust and some `cargo` tools.
 In your terminal, run:
 
 ```bash
@@ -54,6 +54,7 @@ cargo +nightly build --release
 
 The resulting binary will be at path `target/release/uqbar`.
 
-You can also build the binary without the `--release` flag, which will build significantly faster since it does not perform any optimizations during compilation.
+You can also build the binary without the `--release` flag. This command will build the binary significantly faster, as it does not perform any optimizations during compilation, but it will run much more slowly after compiling. 
 The non-release binary will be at path `target/debug/uqbar`.
-The downside of eliding the `--release` flag is that the binary will run much more slowly since it is unoptimized.
+
+
