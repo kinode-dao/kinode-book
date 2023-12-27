@@ -69,7 +69,10 @@ The template contains:
 
 ```bash
 $ ls my_chat_app
-Cargo.toml  pkg/  src/
+my_chat_app     pkg             ui
+
+$ ls my_chat_app/my_chat_app
+Cargo.toml      src
 ```
 
 The `Cargo.toml` file is standard for Rust projects: it specifies dependencies.
