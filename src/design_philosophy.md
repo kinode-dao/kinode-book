@@ -1,35 +1,16 @@
 # Design Philosophy
 The following is a high-level overview of Uqbar's design philosophy, along with the rationale for its fundamental design choices.
 
-## Decentralized Software is Critical to Human Flourishing. 
-We take this as axiomatic, non-negotiable. We believe decentralized software is essential on two fronts: idealogical and technical.
-
-Idealogically, decentralized software is essential for: 
-* privacy
-* data ownership
-* monopoly resistance
-* censorship resistance
-* economic freedom
-* societal innovation
-
-Technically, decentralized software is essential for: 
-* composable development
-* permisionless innovation
-* AI safety and integration
-* rich blockchain applications
-
 ## Decentralized Software Requires a Shared Computing Environment
-A single shared computing environment enables software to coordinate directly between users, services, and other pieces of software in a common language. Therefore, the best way to enable decentralized software is to provide an easy-to-run, general purpose node (equally performant on laptops and data centers) that runs the same operating system as all other nodes on the network. This environment must integrate with existing protocols, blockchains, and services to create a new set of protocols that operate peer-to-peer within the node network. 
+A single shared computing environment enables software to coordinate directly between users, services, and other pieces of software in a common language. Therefore, the best way to enable decentralized software is to provide an easy-to-use, general purpose node (that can run on anything from laptops to data centers) that runs the same operating system as all other nodes on the network. This environment must integrate with existing protocols, blockchains, and services to create a new set of protocols that operate peer-to-peer within the node network. 
 
 ## Decentralization is Broad
 A wide array of companies and services benefit from some amount of decentralized infrastructure, even those operating in a largely centralized context. Additionally, central authority and centralized data are often essential to the proper function of a particular service, including those with decentralized properties. The Uqbar environment must be flexible enough to serve the vast majority of the decentralization spectrum.
 
 ## Blockchains are not Databases
-To use blockchains as mere databases would negate their unique value. Blockchains are consensus tools, and exist in a spectrum alongside consensus strategies such as: Raft, lockstep protocols, CRTDTs, and simple gossip. All of these are valid consensus schemes, and peer-to-peer software, such as that built on Uqbar, must choose the correct strategy for a particular task, program, or application. 
+To use blockchains as mere databases would negate their unique value. Blockchains are consensus tools, and exist in a spectrum alongside consensus strategies such as Raft, lockstep protocols, CRTDTs, and simple gossip. All of these are valid consensus schemes, and peer-to-peer software, such as that built on Uqbar, must choose the correct strategy for a particular task, program, or application. 
 
 ## Decentralized Software Outcompetes Centralized Software through Permisionlessness and Composability
-Centralized software has significant institutional advantages: robust financial backing, widespread adoption, and established incumbency. Decenentralized software, however, has advantages in speed of innovation. 
-
 Therefore, any serious decentralized network must identify and prioritize the features that guarantee permisionless and composable development. Those features include: 
 * a persistent software environment (software can run forever once deployed)
 * client diversity (more actors means fewer monopolies)
