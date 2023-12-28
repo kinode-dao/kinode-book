@@ -110,8 +110,8 @@ Key                    | Required? | Value type
 `"process_wasm_path"`  | Yes       | string (representing a path)
 `"on_panic"`           | Yes       | string (`"None"` or `"Restart"`) or object (covered elsewhere)
 `"request_networking"` | Yes       | bool
-`"request_messaging"`  | No        | array of strings
-`"grant_networking"`   | No        | array of strings
+`"request_messaging"`  | No        | array of strings to note process names, or objects to note custom capabilities and from what process to request them
+`"grant_messaging "`   | No        | array of strings to note process names, or objects to note custom capabilities to generate and send to a process
 `"public"`             | Yes       | bool
 
 #### `pkg/metadata.json`
@@ -177,7 +177,7 @@ Fri 12/8 15:43 http_server: running on port 8080
 
 Alternatively, development sometimes calls for a real node, which has access to the actual Uqbar network and its providers, such as integrated LLMs.
 
-To develop on a real Uqbar node, connect to the network and follow the instructions to [setup an Uqbar node](https://github.com/uqbar-dao/uqbar?tab=readme-ov-file#setup).
+To develop on a real Uqbar node, connect to the network and follow the instructions to [setup an Uqbar node](../install.md).
 
 ### Starting the package
 

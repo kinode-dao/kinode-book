@@ -27,8 +27,8 @@
 
 - [Environment Setup](./my_first_app/chapter_1.md)
 - [Sending Some Messages, Using Some Tools](./my_first_app/chapter_2.md)
-- [Frontend Time](./my_first_app/chapter_3.md)
-- [Defining Your Protocol](./my_first_app/chapter_4.md)
+- [Defining Your Protocol](./my_first_app/chapter_3.md)
+- [Frontend Time](./my_first_app/chapter_4.md)
 - [Sharing With The World](./my_first_app/chapter_5.md)
 
 # In-Depth Guide: Chess App
