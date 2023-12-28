@@ -28,9 +28,9 @@ enum ChessResponse {
 }
 ```
 
-These types need to be exhaustive, since we match on them whenever we get a message. One could change that, and introduce a new type that serves as an "umbrella" over multiple kinds of message, but since a simple chat will only be a few extra entries into the existing types, it's unnecessary for this example.
+These types need to be exhaustive, since we want to be able to feed every incoming message into a `match` statement that uses `ChessRequest` and `ChessResponse`. For more complex apps, one could introduce a new type that serves as an umbrella over multiple "kinds" of message, but since a simple chat will only be a few extra entries into the existing types, it's unnecessary for this example.
 
-Chat will need a new request to send a message, something like `Message(String)`. It doesn't need a `from` field, since that's just the `source` of the message!
+In order to add chat, the request type above will need a new variant, something like `Message(String)`. It doesn't need a `from` field, since that's just the `source` of the message!
 
 A new response type will make the chat more robust, by acknowledging received messages. Something like `MessageAck` will do, with no fields -- since this will be sent in response to a `Message` request, the sender will know which message it's acknowledging.
 
@@ -54,7 +54,7 @@ enum ChessResponse {
 }
 ```
 
-If you are modifying these types inside the finished chess app from this tutorial, your IDE should indicate that there are a few errors now: these new message types are not handled in their respective match statements. Those errors, in `handle_chess_request` and `handle_local_request`, are where you'll need logic to handle messages other nodes send to this node, and messages this node sends to others, respectively.
+If you are modifying these types inside the finished chess app from this tutorial, your IDE should indicate that there are a few errors now: these new message types are not handled in their respective `match` statements. Those errors, in `handle_chess_request` and `handle_local_request`, are where you'll need logic to handle messages other nodes send to this node, and messages this node sends to others, respectively.
 
 In `handle_chess_request`, the app receives requests from other nodes. A reasonable way to handle incoming messages is to add them to a vector of messages that's saved for each active game. The frontend could reflect this by adding a chat box next to each game, and displaying all messages sent over that game's duration.
 
@@ -174,22 +174,13 @@ Let's modify this to handle more than just making moves. Note that there's an im
 }
 ```
 
-An easy way to allow messages is to switch on whether the key `"move"` is present, and if not, look for the key `"message"`. This could also easily be codified as a Rust type and deserialized.
+An easy way to allow messages is to match on whether the key `"move"` is present, and if not, look for the key `"message"`. This could also easily be codified as a Rust type and deserialized.
 
 Now, instead of assuming `"move"` exists, let's add a branch that handles the `"message"` case. This is a modification of the code above:
 ```rust
 // on PUT: make a move OR send a message
 "PUT" => {
-    let Some(payload) = get_payload() else {
-        return http::send_response(http::StatusCode::BAD_REQUEST, None, vec![]);
-    };
-    let payload_json = serde_json::from_slice::<serde_json::Value>(&payload.bytes)?;
-    let Some(game_id) = payload_json["id"].as_str() else {
-        return http::send_response(http::StatusCode::BAD_REQUEST, None, vec![]);
-    };
-    let Some(game) = state.games.get_mut(game_id) else {
-        return http::send_response(http::StatusCode::NOT_FOUND, None, vec![]);
-    };
+    // ... same as the previous snippet ...
     let Some(move_str) = payload_json["move"].as_str() else {
         let Some(message) = payload_json["message"].as_str() else {
             return http::send_response(http::StatusCode::BAD_REQUEST, None, vec![]);
@@ -218,15 +209,8 @@ Now, instead of assuming `"move"` exists, let's add a branch that handles the `"
             body,
         );
     };
-    if (game.turns % 2 == 0 && game.white != our.node)
-        || (game.turns % 2 == 1 && game.black != our.node)
-    {
-        return http::send_response(http::StatusCode::FORBIDDEN, None, vec![]);
-    } else if game.ended {
-        return http::send_response(http::StatusCode::CONFLICT, None, vec![]);
-    }
     //
-    // ...the rest of the move-handling code...
+    // ... the rest of the move-handling code, same as previous snippet ...
     //
 }
 ```
