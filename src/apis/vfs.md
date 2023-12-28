@@ -1,102 +1,97 @@
 # VFS API
 
-Draft 28.11.2023
+The VFS API tries to map over the [std::fs](https://doc.rust-lang.org/std/fs/index.html) calls as clearly as possible. 
 
-### Overview
+Every request takes a path and a corresponding action. The paths look like normal relative paths within the folder `your_node_home/vfs`, but they include 2 parts at the start, a `package_id` and a `drive`.
 
-The virtual filesystem is a light layer on top of the internal filesystem, and is used to provide a consistent interface for interacting with the filesystem.
+Example path: `/your_package:publisher.uq/pkg/`. This folder is usually filled with files put into the /pkg folder when installing with app_store.
 
-Within the VFS you'll find some familiar posix commands, some new. The VFS also handles capabilities. Access to the underlying filesystem is essentially root access, and is mostly reserved for runtime modules. 
+Capabilities are checked on the package_id/drive part of the path, when calling CreateDrive you'll be given "Read" and "Write" caps that you can share with other processes. 
 
-The VFS metadata is stored in a similar way to app state, by calling save_state.
-
-### API
-
-Requests always have a target drive. Modifying or reading this drive requires a corresponding capability enforced by the VFS. You can pass these capabilities to other apps/nodes who you want to be able to modify/read your files.
-
-[link to general capability guide/examples]
+Other processes within your package will have access by default. They can call actions within existing drives, like VfsAction::Read with path "/your_package:publisher.uq/assets/cat.jpeg". 
 
 ```rust
 pub struct VfsRequest {
-    pub drive: String,
+    pub path: String,
     pub action: VfsAction,
 }
-```
 
-[todo implicit full_path behavior describing]
-
-```rust
+/// VfsActions mostly mirror the behaviour of std::fs
 pub enum VfsAction {
-    New,
-    Add {
-        full_path: String,
-        entry_type: AddEntryType,
-    },
-    Rename {
-        full_path: String,
-        new_full_path: String,
-    },
-    Delete(String),
-    WriteOffset {
-        full_path: String,
-        offset: u64,
-    },
-    Append(String),
-    SetSize {
-        full_path: String,
-        size: u64,
-    },
-    GetPath(u128),
-    GetHash(String),
-    GetEntry(String),
-    GetFileChunk {
-        full_path: String,
-        offset: u64,
-        length: u64,
-    },
-    GetEntryLength(String),
+    /// creates a drive ["your_package:publisher.uq/your_drive/other_path"] and attaches capabilities
+    /// to the process calling it
+    CreateDrive,
+    CreateDir,
+    CreateDirAll,
+    CreateFile,
+    OpenFile,
+    CloseFile,
+    WriteAll,
+    Write,
+    ReWrite,
+    WriteAt(u64),
+    Append,
+    SyncAll,
+    Read,
+    ReadToEnd,
+    ReadDir,
+    ReadExact(u64),
+    ReadToString,
+    Seek(SeekFrom),
+    RemoveFile,
+    RemoveDir,
+    RemoveDirAll,
+    Rename(String),
+    Metadata,
+    AddZip,
+    Len,
+    SetLen(u64),
+    Hash,
 }
 
-pub enum AddEntryType {
-    Dir,
-    NewFile,                     //  add a new file to fs and add name in vfs
-    ExistingFile { hash: u128 }, //  link an existing file in fs to a new name in vfs
-    ZipArchive,
+pub enum SeekFrom {
+    Start(u64),
+    End(i64),
+    Current(i64),
 }
-```
 
-```rust
-pub enum GetEntryType {
-    Dir,
+pub enum FileType {
     File,
+    Directory,
+    Symlink,
+    Other,
 }
-```
 
-A response from the Vfs can be an error, you can branch off of some of the common ones in your app [example]. 
+pub struct FileMetadata {
+    pub file_type: FileType,
+    pub len: u64,
+}
 
-```rust
+pub struct DirEntry {
+    pub path: String,
+    pub file_type: FileType,
+}
+
 pub enum VfsResponse {
     Ok,
     Err(VfsError),
-    GetPath(Option<String>),
-    GetHash(Option<u128>),
-    GetEntry {
-        // file bytes in payload, if entry was a file
-        is_file: bool,
-        children: Vec<String>,
-    },
-    GetFileChunk, // chunk in payload, if file exists
-    GetEntryLength(Option<u64>),
+    Read,
+    ReadDir(Vec<DirEntry>),
+    ReadToString(String),
+    Metadata(FileMetadata),
+    Len(u64),
+    Hash([u8; 32]),
 }
 
 pub enum VfsError {
-    BadJson,
-    BadPayload,
-    BadDriveName,
-    BadDescriptor,
-    NoCap,
-    EntryNotFound,
-    PersistError,
-    InternalError,
+    NoCap { action: String, path: String },
+    BadBytes { action: String, path: String },
+    BadRequest { error: String },
+    ParseError { error: String, path: String },
+    IOError { error: String, path: String },
+    CapChannelFail { error: String },
+    BadJson { error: String },
+    NotFound { path: String },
+    CreateDirError { path: String, error: String },
 }
 ```
