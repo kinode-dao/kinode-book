@@ -27,7 +27,6 @@ For more information, or debugging, see the [Rust lang install page](https://www
 Next, install Wasm and the Uqbar Development Tools, or `uqdev`, using `cargo`:
 
 ```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 cargo install wasm-tools
 rustup install nightly
 rustup target add wasm32-wasi
@@ -58,7 +57,7 @@ Options:
 Create a package `my_chat_app`:
 
 ```bash
-uqdev new my_chat_app -p my_chat_app
+uqdev new my_chat_app -a my_chat_app -u template.uq
 ```
 
 ### Exploring the package
@@ -189,7 +188,7 @@ Time to load and initiate the `my_chat_app` package. For this, you will use the 
 Like [uqdev build](#building-the-package), the `uqdev start-package` tool receives an optional directory containing the package or, if no directory is received, tries the current working directory. It also requires a url: the address of the node on which to initiate the package.
 The node's url follows a `-u` or `--url` flag.
 
-You can start the package from either within or outside `my_chat_app` directory. After completing the previous step, you should be one directory above the `my_chat_app` directory and can use the following: 
+You can start the package from either within or outside `my_chat_app` directory. After completing the previous step, you should be one directory above the `my_chat_app` directory and can use the following:
 
 ```bash
 uqdev start-package my_chat_app -u http://localhost:8080
