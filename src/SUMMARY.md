@@ -17,7 +17,8 @@
 - [Networking Protocol](./networking_protocol.md)
 - [HTTP Server](./http_server.md)
 - [HTTP Client](./http_client.md)
-- [Filesystem](./filesystem.md)
+- [Files](./files.md)
+- [Databases](./databases.md)
 - [ETH Read and Write](./eth.md)
 
 # Process Standard Library
@@ -50,8 +51,9 @@
 - [APIs Overview](./apis/overview.md)
 - [uqbar.wit](./apis/uqbar_wit.md)
 - [Kernel API](./apis/kernel.md)
-- [Filesystem API](./apis/filesystem.md)
 - [VFS API](./apis/vfs.md)
+- [KV API](./apis/kv.md)
+- [SQLITE API](./apis/sqlite.md)
 - [Terminal API](./apis/terminal.md)
 - [HTTP Server API](./apis/http_server.md)
 - [HTTP Client API](./apis/http_client.md)

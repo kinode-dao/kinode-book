@@ -44,20 +44,24 @@ One of those tools is `new`, which creates a template for an Uqbar package. The 
 $ uqdev new --help
 Create an Uqbar template package
 
-Usage: uqdev new --package <package-name> <directory>
+Usage: uqdev new [OPTIONS] <DIR>
 
 Arguments:
-  <directory>  Path to create template directory at
+  <DIR>  Path to create template directory at
 
 Options:
-  -p, --package <package-name>  Name of the package
-  -h, --help                    Print help
+  -a, --package <PACKAGE>      Name of the package [default: DIR]
+  -u, --publisher <PUBLISHER>  Name of the publisher [default: template.uq]
+  -l, --language <LANGUAGE>    Programming language of the template [default: rust] [possible values: rust, python]
+  -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: chat]
+      --ui                     If set, use the template with UI
+  -h, --help                   Print help
 ```
 
 Create a package `my_chat_app`:
 
 ```bash
-uqdev new my_chat_app -a my_chat_app -u template.uq
+uqdev new my_chat_app
 ```
 
 ### Exploring the package
@@ -67,8 +71,12 @@ The `uqdev new` command creates the simpler of the two: a single process (TODO: 
 The template contains:
 
 ```bash
-$ ls my_chat_app
-Cargo.toml  pkg/  src/
+$ ls my_chat_app/*
+my_chat_app/my_chat_app:
+Cargo.toml  src
+
+my_chat_app/pkg:
+manifest.json  metadata.json
 ```
 
 The `Cargo.toml` file is standard for Rust projects: it specifies dependencies.
@@ -89,7 +97,7 @@ $ cat my_chat_app/pkg/manifest.json
     {
         "process_name": "my_chat_app",
         "process_wasm_path": "/my_chat_app.wasm",
-        "on_panic": "Restart",
+        "on_exit": "Restart",
         "request_networking": true,
         "request_messaging": [
             "net:sys:uqbar"
@@ -108,7 +116,7 @@ Key                    | Required? | Value type
 ---------------------- | --------- | ----------
 `"process_name"`       | Yes       | string
 `"process_wasm_path"`  | Yes       | string (representing a path)
-`"on_panic"`           | Yes       | string (`"None"` or `"Restart"`) or object (covered elsewhere)
+`"on_exit"`            | Yes       | string (`"None"` or `"Restart"`) or object (covered elsewhere)
 `"request_networking"` | Yes       | bool
 `"request_messaging"`  | No        | array of strings to note process names, or objects to note custom capabilities and from what process to request them
 `"grant_messaging "`   | No        | array of strings to note process names, or objects to note custom capabilities to generate and send to a process
