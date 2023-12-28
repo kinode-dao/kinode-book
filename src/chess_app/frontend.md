@@ -378,6 +378,6 @@ fn send_ws_update(
 }
 ```
 
-Now, anywhere we receive an action from another node (in `handle_chess_update()`, for example), call `send_ws_update(&our, &game, &state.clients)?` to send an update to all connected clients. You'll need to add `our` as a parameter to the handler function. A good place to do this is right before we save our updated state. Moves that we make ourselves from the frontend will update on their own.
+Now, anywhere we receive an action from another node (in `handle_chess_request()`, for example), call `send_ws_update(&our, &game, &state.clients)?` to send an update to all connected clients. You'll need to add `our` as a parameter to the handler function. A good place to do this is right before we save our updated state. Moves that we make ourselves from the frontend will update on their own.
 
 Continue to [Putting Everything Together](./putting_everything_together.md) to see the full code and screenshots of the app in action.
