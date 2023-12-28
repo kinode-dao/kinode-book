@@ -87,9 +87,13 @@ The code below will contain a version of the `init()` function that creates an e
 *An aside: when building consumer-grade peer-to-peer apps, you'll find that there are in fact very few "trivial" interaction patterns. Something as simple as resigning from a one-on-one game, which would be a single POST request in a client-frontend <> server-backend architecture, requires well-thought-out negotiations to ensure that both players can walk away with a clean state machine, regardless of whether the counterparty is cooperating. Adding more "players" to the mix makes this even more complex. To keep things clean, leverage the request/response pattern and the `context` field to store information about how to handle a given response, if you're not awaiting it in a blocking fashion.*
 
 Below, you'll find the full code for the CLI version of the app. You can build it and install it on a node using `uqdev`. You can interact with it in the terminal, primitively, like so:
-`/a our@chess2:chess2:ben.uq`
-`/m {"NewGame": {"white": "<your_node_id>", "black": "<other_node_id>"}}`
-`/m {"Move": {"game_id": "<other_node_id>", "move_str": "e2e4"}}`
+
+```
+/a our@chess2:chess2:ben.uq
+/m {"NewGame": {"white": "<your_node_id>", "black": "<other_node_id>"}}
+/m {"Move": {"game_id": "<other_node_id>", "move_str": "e2e4"}}
+```
+
 (If you want to make a more ergonomic CLI app, consider parsing IPC as a string...)
 
 As you read through the code, you might notice a problem with this app... there's no way to see your games! A fun project would be to add a CLI command that shows you, in-terminal, the board for a given game_id. But in the [next chapter](./frontend.md), we'll add a frontend to this app so you can see your games in a browser.
