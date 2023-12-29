@@ -106,7 +106,7 @@ let Ok(server_request) = http::HttpServerRequest::from_bytes(message.ipc()) else
 // ...
 ```
 
-Next, we must parse out the HTTP request from the general type. This is necessary because the `HttpServerRequest` enum contains both HTTP protocol requests and requests related to WebSockets. In the future this code will be more streamlined!
+Next, we must parse out the HTTP request from the general type. This is necessary because the `HttpServerRequest` enum contains both HTTP protocol requests and requests related to WebSockets. Note that it's quite possible to streamline this series of request refinements if you're only interested in one type of request -- this example is overly thorough for demonstration purposes.
 
 ```rust
 // ...
