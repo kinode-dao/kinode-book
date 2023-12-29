@@ -1,4 +1,4 @@
-# Chapter 4: Defining Your Protocol
+# Chapter 3: Defining Your Protocol
 
 In the last chapter, we created a simple request-response pattern that uses strings as an IPC field type. This is fine for certain limited cases, but in practice, most Uqbar processes written in Rust use an IPC type that is serialized and deserialized to bytes using [Serde](https://serde.rs/). There are a multitude of libraries that implement Serde's `Serialize` and `Deserialize` traits, and the process developer is responsible for selecting a strategy that is appropriate for their use case.
 
@@ -45,12 +45,11 @@ Now, when we form requests and response, instead of sticking a string in the `ip
 
 Defining IPC types is just one step towards writing interoperable code. It's also critical to document the overall structure of the program along with message payloads and metadata used, if any. Writing interoperable code is necessary for enabling permissionless composability, and Uqbar aims to make this the default kind of program, unlike the centralized web. Whether or not you intend to make your process interoperable, having a fixed structure for your messages is a good idea.
 
-First, let's create a request that uses the new IPC type:
+First, let's create a request that uses the new IPC type (and stop expecting a response):
 ```rust
 Request::new()
     .target(&our)
     .ipc(MyIPC::hello("hello world"))
-    .expects_response(5)
     .send();
 ```
 
@@ -61,19 +60,15 @@ let Ok(ipc) = MyIPC::parse(message.ipc()) else {
     continue;
 };
 if message.is_request() {
-    // Respond to a Hello with a Hello, and a Goodbye by exiting
+    // Respond to a Hello by printing it, and a Goodbye by exiting
     // the loop, which will cause the process to exit.
     match ipc {
         MyIPC::Hello(text) => {
             println!("got a Hello: {text}");
-            Response::new()
-                .ipc(MyIPC::hello("hello"))
-                .send()
-                .unwrap();
         }
         MyIPC::Goodbye => {
             println!("goodbye!");
-            return;
+            break;
         }
     }
 } else {
@@ -103,9 +98,7 @@ First, try a hello. Get the address of your process by looking at the "started" 
 /m our@<your_process>:<your_package>:<your_publisher> {"Hello": "hey there"}
 ```
 
-You should see the message text printed and a response!
-
-Next, try a goodbye. This will cause the process to exit.
+You should see the message text printed. Next, try a goodbye. This will cause the process to exit.
 ```bash
 /m our@<your_process>:<your_package>:<your_publisher> "Goodbye"
 ```
