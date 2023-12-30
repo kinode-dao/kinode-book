@@ -66,9 +66,12 @@ uqdev new my_chat_app
 
 ### Exploring the Package
 
-Uqbar packages come in one of two structures (Todo: pending changes proposed by Nick).
-The `uqdev new` command creates the simpler of the two: a single process (TODO: why is it simpler? Advantages—I want some quick, clear explantions of why things are set up the way they are).
-The template contains:
+Uqbar packages are sets of one or more Uqbar [processes](../processes.md).
+An Uqbar package is represented in Unix as a directory that has a `pkg/` directory within.
+Each process within the package is its own directory.
+By default, the `uqdev new` command creates a simple, one-process package.
+Other templates, including a Python template and a UI-enabled template can be used by passing different flags to `uqdev new` (see `uqdev new --help` above).
+The default template looks like:
 
 ```bash
 $ ls my_chat_app/*
@@ -139,7 +142,7 @@ Here, the `publisher` is some default value, but for a real package, this field 
 
 #### `src/lib.rs`
 
-TODO: Leaving this blank for now because I'm not sure the chat app is going to remain as the default template. Happy to fill this in; just lmk.
+TODO
 
 ### Building the Package
 
@@ -190,22 +193,25 @@ To develop on a real Uqbar node, connect to the network and follow the instructi
 ### Starting the Package
 
 Time to load and initiate the `my_chat_app` package. For this, you will use the `uqdev start-package` tool.
-Like [uqdev build](#building-the-package), the `uqdev start-package` tool receives an optional directory containing the package or, if no directory is received, tries the current working directory. It also requires a url: the address of the node on which to initiate the package.
-The node's url follows a `-u` or `--url` flag.
+Like [uqdev build](#building-the-package), the `uqdev start-package` tool receives an optional directory containing the package or, if no directory is received, tries the current working directory.
+It also requires a URL: the address of the node on which to initiate the package.
+The node's URL can be input in one of two ways:
+1. If running on localhost, the port can be supplied with `-p` or `--port`,
+2. More generally, the node's entire URL can be supplied with a `-u` or `--url` flag.
 
 You can start the package from either within or outside `my_chat_app` directory. After completing the previous step, you should be one directory above the `my_chat_app` directory and can use the following:
 
 ```bash
-uqdev start-package my_chat_app -u http://localhost:8080
+uqdev start-package my_chat_app -p 8080
 ```
 
 or, if you are already in the correct package directory:
 
 ```bash
-uqdev start-package -u http://localhost:8080
+uqdev start-package -p 8080
 ```
 
-where here the port provided in the url following `-u` must match the port bound by the node or fake node (see discussion [above](#booting-a-fake-uqbar-node)).
+where here the port provided following `-p` must match the port bound by the node or fake node (see discussion [above](#booting-a-fake-uqbar-node)).
 
 The node's terminal should display something like
 
@@ -217,4 +223,22 @@ Congratulations on completing the first steps towards developing applications on
 
 ### Using the Package
 
-TODO: again dependent on whether we want to use `chat`; if yes, I can put here how to spin up a second node & chat between them
+To test out the functionality of `my_chat_app`, spin up another fake node to chat with in a new terminal:
+
+```bash
+uqdev boot-fake-node -h /tmp/uqbar-fake-node-2 -p 8081 -f fake2.uq
+```
+
+The fake nodes communicate over a mocked local network.
+
+To send a chat message from the first node, run the following in its terminal:
+
+```
+/m our@my_chat_app:my_chat_app:template.uq {"Send": {"target": "fake2.uq", "message": "hello world"}}
+```
+
+and replying:
+
+```
+/m our@my_chat_app:my_chat_app:template.uq {"Send": {"target": "fake.uq", "message": "wow, it works!"}}
+```
