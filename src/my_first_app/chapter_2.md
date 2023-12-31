@@ -34,7 +34,7 @@ fn my_init_fn(our: Address) {
 
 Every Uqbar process written in Rust will need code that does the same thing as the above. The `Address` parameter tells our process what its globally-unique name is. (TODO: link to docs)
 
-Let's fill out the init function with code that will stop it from exiting immediately. Here's an infinite loop that will wait for a message and then print it out. Note that we are importing a few more things from the process_lib including a println! macro that replaces the standard Rust one.
+Let's fill out the init function with code that will stop it from exiting immediately. Here's an infinite loop that will wait for a message and then print it out. Note that you are importing a few more things from the process_lib including a println! macro that replaces the standard Rust one.
 
 ```rust
 use uqbar_process_lib::{await_message, call_init, println, Address};
@@ -76,7 +76,7 @@ Request::new()
     .send();
 ```
 
-Because this process might not have capabilities to message any other (local or remote) processes, we'll just send the message to ourself.
+Because this process might not have capabilities to message any other (local or remote) processes, just send the message to this process.
 
 ```rust
 Request::new()
