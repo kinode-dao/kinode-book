@@ -14,22 +14,23 @@ At a high level, the PKI depends on two elements: public keys and networking inf
 When nodes first connect, they engage in an initial handshake ceremony (TODO: describe) to create an encryption channel using both of their public keys. 
 It is this credential that verifies the identity of each nodes.
 
-2. Networking information depends on whether a node is direct or routed. 
+2. Networking information depends on whether a node is direct or routed (for more, see [networking protocol](./networking_protocol.md)). 
 
+Direct nodes send and receive networking traffic directly to and from all nodes on the network. In doing so they must provide their: 
+* IP address
+* WebSockets port
+* WebTransport port
+* TCP port
+* UDP port
 
+Indirect nodes instead delegate node to serve as its entrypoint on the network such that it need not publicly reveal its own IP information to any nodes other than its chosen routers. For this option, they set a list of nodes that may fulfill this role for them.
 
-    - Direct Node
-        Networking information. When a node decides to send/receive network traffic to/from all nodes on the network directly, it provides at least some of the following information, maybe more. The minimum is IP and WebSockets port.
-            1. IP address
-            2. WebSockets port
-            3. WebTransport port
-            4. TCP port
-            5. UDP port
-    - Indirect Node or Routed Node
-        A node may choose to delegate another node to serve as its entrypoint on the network such that it will not have to reveal its own ip information publicly to any nodes other than its chosen routers. For this option, they set a list of nodes that may fulfill this role for them.
+## Name Registration 
 
-## DotUqRegistrar
+The `DotUqRegistrar` (AKA `.uq`) is responsible for registering all .uq domain names and authorizing alterations to these nodes when a user attempts to change a record for a node on the QNSRegistryResolver. (Todo: just confused by this)
+It implements ERC721 tokenization logic for the names it is charged with, so all Uq names are NFTs that may be transferred to and from any address. 
+There is currently a minimum length of 9 characters for Uqbar IDs.
 
-The DotUqRegistrar (.uq) is responsible for registering all .uq domain names and authorizing access for alterations to these nodes when a user attempts to change a record for a node on the QNSRegistryResolver. It implements ERC721 tokenization logic for the names it is charged with, so all Uq names are NFTs that may be transferred to and from any address. There is a minimum length of 9 characters for a new name at this time.
-
-It allows users to create subdomains underneath any Uq name they own. Initially this grants them control over the subdomain, as a holder of the parent domain, but they may choose to irreversibly revoke this control if they desire to. This applies at each level of subdomain.
+It allows users to create subdomains underneath any Uq name they own. 
+Initially this grants them control over the subdomain, as a holder of the parent domain, but they may choose to irreversibly revoke this control if they desire to. 
+This applies at each level of subdomain.

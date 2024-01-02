@@ -2,7 +2,8 @@
 
 Let's get onto the live network!
 
-These directions are particular to the Uqbar alpha release. Joining the network will become significantly easier on subsequent releases.
+These directions are particular to the Uqbar alpha release. 
+Joining the network will become significantly easier on subsequent releases.
 
 Note: While Uqbar will eventually post identities to Optimism, the alpha release uses the Ethereum Sepolia testnet.
 
@@ -103,7 +104,9 @@ Then, return to the Uqbar node.
 
 ### Setting Up Networking (Direct vs. Routed Nodes)
 
-When registering on Uqbar, you may choose between running a direct or routed (indirect) node. For most users, we recommend using a routed node. To do this, simply leave the box below name registration unchecked.
+When registering on Uqbar, you may choose between running a direct or routed (indirect) node. 
+For most users, we recommend using a routed node. 
+To do this, simply leave the box below name registration unchecked.
 
 ![Register select name](./assets/register-select-name.png)
 
