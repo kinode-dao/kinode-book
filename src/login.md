@@ -2,7 +2,7 @@
 
 Let's get onto the live network!
 
-These directions are particular to the Uqbar alpha release. Joining the network will become significantly easier on subsequent releases. 
+These directions are particular to the Uqbar alpha release. Joining the network will become significantly easier on subsequent releases.
 
 Note: While Uqbar will eventually post identities to Optimism, the alpha release uses the Ethereum Sepolia testnet.
 
@@ -11,12 +11,12 @@ Note: While Uqbar will eventually post identities to Optimism, the alpha release
 Alchemy is used as an [Ethereum RPC endpoint](#acquiring-an-rpc-api-key) and as a [faucet for Sepolia testnet ETH](#acquiring-sepolia-testnet-eth).
 An Ethereum RPC endpoint and Sepolia ETH are required to send and receive Ethereum transactions that support the Uqbar identity system.
 If you do not already have one, register an [Alchemy account](https://www.alchemy.com/).
-There account is free and requires only an email address for registration. 
+There account is free and requires only an email address for registration.
 
 ## Starting the Uqbar node
 
 Start an Uqbar node using the binary built in the [previous section](./install.md).
-Locating the binary on your system, run: 
+Locating the binary on your system, run:
 
 ```bash
 $ ./uqbar --help
@@ -76,7 +76,7 @@ If the page looks like:
 
 ![Register need wallet](./assets/register-need-wallet.png)
 
-then proceed to [Acquiring a Wallet](#acquiring-a-wallet).
+then proceed to [Acquiring a Wallet](#aside-acquiring-a-wallet).
 Otherwise, if the page looks like:
 
 ![Register have wallet](./assets/register-have-wallet.png)
