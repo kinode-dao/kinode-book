@@ -15,6 +15,7 @@
     - [Capability-Based Security](./process-capabilities.md)
     - [Startup, Spindown, and Crashes](./process-startup.md)
 - [Networking Protocol](./networking_protocol.md)
+- [Public Key Infrastructure](./pki.md)
 - [HTTP Server](./http_server.md)
 - [HTTP Client](./http_client.md)
 - [Files](./files.md)
