@@ -1,6 +1,6 @@
 # Introduction
 
-Uqbar is a peer-to-peer app framework and node network designed to simplify the development and deployment of decentraliezd applications. It is also a *sovereign cloud computer*, in that Uqbar can be deployed anywhere and act as a server controlled by anyone. Ultimately, Uqbar facilitates the writing and distribution of sofware that runs on privately-held, personal server nodes. 
+Uqbar is a decentralized operating system, peer-to-peer app framework, and node network designed to simplify the development and deployment of decentraliezd applications. It is also a *sovereign cloud computer*, in that Uqbar can be deployed anywhere and act as a server controlled by anyone. Ultimately, Uqbar facilitates the writing and distribution of sofware that runs on privately-held, personal server nodes or node clusters. 
 
 Uqbar eliminates boilerplate and reduces the complexity of p2p software development by providing four basic and necessary primitives:
 
