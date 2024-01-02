@@ -36,7 +36,6 @@ When a request or response is received, it has an attached `address`, which cons
 
 The integrity of a source `address` differs between local and remote messages. If a message is local, the validity of its source is ensured by the local kernel, which can be trusted to label the process ID and node ID correctly. If a message is remote, only the node ID can be validated (via networking keys associated with each node ID). The process ID comes from the remote kernel, which could claim any process ID. This is fine -- merely consider remote process IDs a *claim* about the initiating process rather than an infallible ID for discrete piece of code written by a specific developer.
 
-
 Requests can be issued at any time by a running process. A request can optionally expect a response. If it does, the request will be retained by the kernel, along with an optional `context` object created by the request's issuer. This request will be considered outstanding until the kernel receives a matching response, at which point that response will be delivered to the requester alongside the optional context. Contexts saved by the kernel enable very straightforward, async-await-style code inside processes.
 
 Requests that expect a response set a timeout value, after which, if no response is received, the initial request is returned to the process that issued it as an error. Send errors are handled in processes alongside other incoming messages.
@@ -51,7 +50,7 @@ A message also contains a `payload`, another byte vector, used for opaque, arbit
 
 Lastly, messages contain an optional `metadata` field, expressed as a JSON-string, to enable middleware processes and other such things to manipulate the message without altering the IPC itself.
 
-Messages that result in networking failures, like requests that time out, are returned to the process that created them as an error. There are only two kinds of send errors: Offline and Timeout. Offline means a message's remote target definitively cannot be reached. Timeout is multi-purpose: for remote nodes, it may indicate compromised networking; for both remote and local nodes, it may indicate that a process is simply failing to respond in the required time. 
+Messages that result in networking failures, like requests that time out, are returned to the process that created them as an error. There are only two kinds of send errors: Offline and Timeout. Offline means a message's remote target definitively cannot be reached. Timeout is multi-purpose: for remote nodes, it may indicate compromised networking; for both remote and local nodes, it may indicate that a process is simply failing to respond in the required time.
 
 A send error will return to the originating process the initial message, along with and saved `context`, so that the process can re-send the message, crashing, or otherwise handle the failure as the developer desires. If the error results from a response, the process may optionally try to re-send a response: it will be directed towards the original outstanding request.
 
