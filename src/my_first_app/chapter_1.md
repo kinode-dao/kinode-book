@@ -1,7 +1,7 @@
 # My First Uqbar Application
 
 Welcome!
-In this tutorial, we'll walk through setting up an Uqbar development environment.
+In this tutorial, you'll walk through setting up an Uqbar development environment.
 By the end, you will have created an Uqbar application, or package, composed of one or more processes that run on a live Uqbar node. The application will be a simple chat interface: `my_chat_app`.
 
 For the purposes of this documentation, terminal commands are provided as-is for ease of copying EXCEPT when the output of the command is also shown. In that case, the command is prepended with a `$ ` to distinguish the command from the output. The `$ ` should not be copied into the terminal.
@@ -14,7 +14,7 @@ In general, Uqbar does not support Windows.
 
 ### Acquiring Rust
 
-First, we need to install Rust. In your terminal, run:
+First, you need to install Rust. In your terminal, run:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -118,8 +118,8 @@ Key                    | Required? | Value type
 `"process_wasm_path"`  | Yes       | string (representing a path)
 `"on_exit"`            | Yes       | string (`"None"` or `"Restart"`) or object (covered elsewhere)
 `"request_networking"` | Yes       | bool
-`"request_messaging"`  | No        | array of strings
-`"grant_networking"`   | No        | array of strings
+`"request_messaging"`  | No        | array of strings to note process names, or objects to note custom capabilities and from what process to request them
+`"grant_messaging "`   | No        | array of strings to note process names, or objects to note custom capabilities to generate and send to a process
 `"public"`             | Yes       | bool
 
 #### `pkg/metadata.json`
@@ -185,7 +185,7 @@ Fri 12/8 15:43 http_server: running on port 8080
 
 Alternatively, development sometimes calls for a real node, which has access to the actual Uqbar network and its providers, such as integrated LLMs.
 
-To develop on a real Uqbar node, connect to the network and follow the instructions to [setup an Uqbar node](https://github.com/uqbar-dao/uqbar?tab=readme-ov-file#setup).
+To develop on a real Uqbar node, connect to the network and follow the instructions to [setup an Uqbar node](../install.md).
 
 ### Starting the package
 
