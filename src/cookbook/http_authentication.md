@@ -1,10 +1,13 @@
 # HTTP API
 
-In Nectar OS, incoming HTTP requests are handled by a Rust `warp` server in the core `http_server:sys:uqbar` process. This process handles binding (registering) routes, simple JWT-based authentication, and serving a `/login` page if auth is missing.
+In Nectar OS, incoming HTTP requests are handled by a Rust `warp` server in the core `http_server:sys:uqbar` process. 
+This process handles binding (registering) routes, simple JWT-based authentication, and serving a `/login` page if auth is missing.
 
 ## Binding (Registering) HTTP Paths
 
-Any process that you build can bind (register) any number of HTTP paths with `http_server`. Every path that you bind will be automatically prepended with the current process' ID. For example, bind the route `/messages` within a process called `main:my_package:myname.uq` like so:
+Any process that you build can bind (register) any number of HTTP paths with `http_server`. 
+Every path that you bind will be automatically prepended with the current process' ID. 
+For example, bind the route `/messages` within a process called `main:my_package:myname.uq` like so:
 
 ```
 use uqbar_process_lib::{http::bind_http_path};
@@ -14,9 +17,11 @@ bind_http_path("/messages", true, false).unwrap();
 
 Now, any HTTP requests to your node at `/main:my_package:myname.uq/messages` will be routed to your process.
 
-The other two parameters to `bind_http_path` are `authenticated: bool` and `local_only: bool`. `authenticated` means that `http_server` will check for an auth cookie (set at login/registration), and `local_only` means that `http_server` will only allow requests that come from `localhost`.
+The other two parameters to `bind_http_path` are `authenticated: bool` and `local_only: bool`. 
+`authenticated` means that `http_server` will check for an auth cookie (set at login/registration), and `local_only` means that `http_server` will only allow requests that come from `localhost`.
 
-Incoming HTTP requests will come via `http_server` and have both an `ipc` and a `payload`. The `payload` is the HTTP request body, and the `ipc` is an `IncomingHttpRequest`:
+Incoming HTTP requests will come via `http_server` and have both an `ipc` and a `payload`. 
+The `payload` is the HTTP request body, and the `ipc` is an `IncomingHttpRequest`:
 
 ```
 pub struct IncomingHttpRequest {
