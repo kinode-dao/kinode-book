@@ -7,8 +7,8 @@ Then, the `init` function common to all processes is called.
 
 This scenario is identical to when a process is re-initialized. From the perspective of both the kernel and the process code, there is no difference.
 
-Given that Uqbar nodes can, comporting with the realities of the physical world, be turned off, a well-written process must be robust to being shut down and reinstantiated at any time.
-This begs the question: how do processes persist information between instantiations?
+Given that Uqbar nodes can, comporting with the realities of the physical world, be turned off, a well-written process must withstand being shut down and reinstantiated at any time.
+This raises the question: how do processes persist information between instantiations?
 There are two ways: either the process can use the built-in `set_state` and `get_state` WIT functions, or it can send data to a process that does this for them.
 
 The first option is a maximally-simple way to write some bytes to disk (where they'll be backed up, if the node owner has configured that behavior).
