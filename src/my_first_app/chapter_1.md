@@ -1,7 +1,7 @@
 # My First Uqbar Application
 
 Welcome!
-In this tutorial, we'll walk through setting up an Uqbar development environment.
+In this tutorial, you'll walk through setting up an Uqbar development environment.
 By the end, you will have created an Uqbar application, or package, composed of one or more processes that run on a live Uqbar node.
 The application will be a simple chat interface: `my_chat_app`.
 
@@ -17,7 +17,7 @@ In general, Uqbar does not support Windows.
 
 ### Acquiring Rust
 
-First, we need to install Rust. In your terminal, run:
+First, you need to install Rust. In your terminal, run:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh

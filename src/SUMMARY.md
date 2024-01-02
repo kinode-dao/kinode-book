@@ -42,6 +42,7 @@
 - [Extension 3: LLM Integration](./chess_app/llm.md)
 
 # Cookbook (Handy Recipes)
+- [Cookbook Overview](./cookbook/cookbook_overview.md)
 - [HTTP Authentication](./cookbook/http_authentication.md)
 - [Managing Child Processes](./cookbook/manage_child_processes.md)
 - [Publishing a Website or Web App](./cookbook/publish_to_web.md)
