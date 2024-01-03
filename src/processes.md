@@ -48,7 +48,7 @@ The integrity of a source `address` differs between local and remote messages.
 If a message is local, the validity of its source is ensured by the local kernel, which can be trusted to label the process ID and node ID correctly.
 If a message is remote, only the node ID can be validated (via networking keys associated with each node ID).
 The process ID comes from the remote kernel, which could claim any process ID.
-This is fine -- merely consider remote process IDs a *claim* about the initiating process rather than an infallible ID for discrete piece of code written by a specific developer.
+This is fine — merely consider remote process IDs a *claim* about the initiating process rather than an infallible ID for discrete piece of code written by a specific developer.
 
 Requests can be issued at any time by a running process.
 A request can optionally expect a response.

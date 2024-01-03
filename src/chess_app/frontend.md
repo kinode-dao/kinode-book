@@ -123,7 +123,7 @@ else if message.source().node == our.node
 ...
 ```
 
-This code won't compile yet -- we need a new function to handle HTTP requests, and a new state parameter to handle active frontend clients.
+This code won't compile yet — we need a new function to handle HTTP requests, and a new state parameter to handle active frontend clients.
 
 Before defining `handle_http_request`, we need to add a new state parameter to our process state.
 We'll keep track of all connected clients in a `HashSet<u32>` and send updates to them when the game state changes.
@@ -180,7 +180,7 @@ This will serve the same purpose as the `handle_local_request` function from the
 
 *An aside: As a process dev, you should be aware that HTTP resources served in this way can be accessed by _other processes running on the same node_, regardless of whether the paths are authenticated or not.
 This can be a security risk: if your app is handling sensitive actions from the frontend, a malicious app could make those API requests instead.
-You should never expect users to "only install non-malicious apps" -- instead, use a _secure subdomain_ to isolate your app's HTTP resources from other processes.
+You should never expect users to "only install non-malicious apps" — instead, use a _secure subdomain_ to isolate your app's HTTP resources from other processes.
 See the [HTTP Server API](../apis/http_server.md) for more details.*
 
 In `src/lib.rs`:

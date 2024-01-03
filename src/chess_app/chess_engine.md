@@ -420,7 +420,7 @@ fn handle_local_request(
                 .send_and_await_response(5)? else {
                     return Err(anyhow::anyhow!("other player did not respond properly to new game request"))
                 };
-            // If they accept, create a new game -- otherwise, error out.
+            // If they accept, create a new game — otherwise, error out.
             if serde_json::from_slice::<ChessResponse>(ipc)? != ChessResponse::NewGameAccepted {
                 return Err(anyhow::anyhow!("other player rejected new game request!"));
             }
@@ -479,7 +479,7 @@ fn handle_local_request(
             let Some(game) = state.games.get_mut(with_who) else {
                 return Err(anyhow::anyhow!("no game with {with_who}"));
             };
-            // send the other player an end game request -- no response expected
+            // send the other player an end game request — no response expected
             Request::new()
                 .target((with_who.as_ref(), our.process.clone()))
                 .ipc(serde_json::to_vec(&action)?)

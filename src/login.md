@@ -39,9 +39,9 @@ Options:
   -V, --version       Print version
 ```
 
-A home directory must be supplied -- where the node will store its files.
+A home directory must be supplied — where the node will store its files.
 The binary also takes a required `--rpc` flag.
-The `--rpc` flag is a `wss://` WebSocket link to an Ethereum RPC, allowing the Uqbar node can send and receive Ethereum transactions -- used in the identity system as described above.
+The `--rpc` flag is a `wss://` WebSocket link to an Ethereum RPC, allowing the Uqbar node can send and receive Ethereum transactions — used in the identity system as described above.
 Finally, by default, the node will run at port 8080; this can be modified with the `--port` flag.
 
 ### Acquiring an RPC API Key

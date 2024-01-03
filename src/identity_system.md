@@ -1,18 +1,19 @@
 # Identity System
 
 One of the most important features of a peer-to-peer network is the ability to maintain a unique and persistent identity.
-This identity must be self-sovereign, unforgeable, and easy to discover by peers.Uqbar uses a domain system similar to [ENS](https://ens.domains/) to achieve this.
+This identity must be self-sovereign, unforgeable, and easy to discover by peers.
+Uqbar uses a domain system similar to [ENS](https://ens.domains/) to achieve this.
 It should be noted that, in our system, the concepts of `domain`, `identity`, and `username` are identical and interchangeable.
 
-Like ENS, Uqbar domains (managed by our `QNS`) are registered by a wallet and owned in the form of an NFT.
+Like ENS, Uqbar domains (managed by our QNS) are registered by a wallet and owned in the form of an NFT.
 However, unlike ENS, Uqbar domains never expire. Additionally, they contain metadata necessary to both:
 - demonstrate the provenance of a given identity.
 - route messages to the identity on the Uqbar network.
 
-We recognize that users may wish to operate under one of a massive variety of identities, some of which have existed for years.
-The great thing about NFT-based identities is that they are composable between networks, and we are developing tools for linking multiple NFT IDs held in the same wallet.
-QNS provides the utility of Uqbar networking, but can and should be paired with existing identity solutions, such as ENS or NFT communities, to support profile images, social reputation, and more.
-However, QNS will be the simplest and cheapest way to register an ID on the network.
+QNS provides both sensible defaults and flexibility.
+The cheapest option is also the default: minting a new NFT, a `.uq` TLD.
+However, unlike ENS, QNS is not restricted to a single set of NFTs.
+Instead, it is designed to easily extend and wrap existing NFTs, enabling users to use identities they are already attached to as their Uqbar identity.
 
 What does this look like in practice?
 
