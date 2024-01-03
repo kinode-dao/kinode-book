@@ -39,7 +39,7 @@ In order to add chat, the request type above will need a new variant, something 
 It doesn't need a `from` field, since that's just the `source` of the message!
 
 A new response type will make the chat more robust, by acknowledging received messages.
-Something like `MessageAck` will do, with no fields -- since this will be sent in response to a `Message` request, the sender will know which message it's acknowledging.
+Something like `MessageAck` will do, with no fields — since this will be sent in response to a `Message` request, the sender will know which message it's acknowledging.
 
 The new types will look like this:
 ```rust
@@ -98,7 +98,7 @@ ChessRequest::Message(content) => {
 ```
 
 In `handle_local_request`, the app sends requests to other nodes.
-Note, however, that requests to message ourself don't really make sense -- what should really happen is that the chess frontend performs a PUT request, or sends a message over a websocket, and the chess backend process turns that into a message request to the other player.
+Note, however, that requests to message ourself don't really make sense — what should really happen is that the chess frontend performs a PUT request, or sends a message over a websocket, and the chess backend process turns that into a message request to the other player.
 So instead of handling `Message` requests in `handle_local_request`, the process should reject or ignore them:
 
 ```rust

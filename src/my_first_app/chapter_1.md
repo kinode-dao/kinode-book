@@ -11,7 +11,7 @@ The `$ ` should not be copied into the terminal.
 
 ## Chapter 1: Setting Up the Development Environment
 
-The following assumes a Unix environment -- macOS or Linux.
+The following assumes a Unix environment — macOS or Linux.
 If on Windows, [get WSL](https://learn.microsoft.com/en-us/windows/wsl/install) first.
 In general, Uqbar does not support Windows.
 

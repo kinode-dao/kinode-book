@@ -116,7 +116,7 @@ let Ok(server_request) = http::HttpServerRequest::from_bytes(message.ipc()) else
 
 Next, you must parse out the HTTP request from the general type.
 This is necessary because the `HttpServerRequest` enum contains both HTTP protocol requests and requests related to WebSockets.
-Note that it's quite possible to streamline this series of request refinements if you're only interested in one type of request -- this example is overly thorough for demonstration purposes.
+Note that it's quite possible to streamline this series of request refinements if you're only interested in one type of request — this example is overly thorough for demonstration purposes.
 
 ```rust
 // ...
@@ -336,7 +336,7 @@ This is a super barebones `index.html` that provides a form to make requests to 
 After saving this file to `pkg/static/index.html`, rebuilding the program, and starting the package again, you should be able to navigate to you `http://localhost:8080/<process_id>` and see the form page.
 Note that you can now set `authenticated` to `true` in the /api binding and the webpage will still work, but cURL will not.
 
-This frontend is now fully packaged with the process -- there are no more steps!
+This frontend is now fully packaged with the process — there are no more steps!
 Of course, this can be made arbitrarily complex with various frontend frameworks that produce a static build.
 
 In the next and final chapter, we'll quickly go over the package metadata and discuss how to share this app across the Uqbar network.
