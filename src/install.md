@@ -1,9 +1,13 @@
 # Installation
 
-This section will teach you how to run the Uqbar core software on a live node.
+This section will teach you how to get the Uqbar core software, required to run a live node.
+After acquiring the software, you can learn how to run it and [Join the Network](./login.md).
 However, if you are just interested in starting development as fast as possible, start with [My First Uqbar Application](./my_first_app/chapter_1.md).
 
 ## Download Binary
+
+The recommended method for most users is to use a precompiled binary.
+If you want to make edits to the Uqbar core software, see [Build From Source](#build-from-source).
 
 First, get the software itself by downloading a [precompiled release binary](https://github.com/uqbar-dao/uqbar/releases).
 Choose the correct binary for your particular computer architecture and OS.
@@ -21,10 +25,11 @@ Then, go to `System Settings > Privacy and Security` and click to `Allow Anyway`
 
 ## Build From Source
 
+You can compile the binary from source using the following instructions.
+
 ### Acquire Rust and various tools
 
-Now, we need to install Rust and some `cargo` tools.
-In your terminal, run:
+Install Rust and some `cargo` tools, by running the following in your terminal:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
