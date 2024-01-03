@@ -15,6 +15,6 @@ The first option is a maximally-simple way to write some bytes to disk (where th
 The second option is vastly more general, because runtime modules that have direct messaging availability from userspace offer any number of APIs.
 So far, there are three modules built into Uqbar that are designed for persisted data: a filesystem, a key-value store, and a SQLite database.
 
-Each of these modules offer APIs accessed via message-passing, then write to disk. 
-Between instantiations of a process, this data remains saved, even backed up. 
+Each of these modules offer APIs accessed via message-passing, then write to disk.
+Between instantiations of a process, this data remains saved, even backed up.
 The process can then retrieve this data when it is re-instantiated.

@@ -1,11 +1,11 @@
 # Extension 1: Chat
 
-So, at this point you've got a working chess game with a frontend. 
-There are a number of obvious improvements to the program to be made, as listed at the end of the last chapter. 
+So, at this point you've got a working chess game with a frontend.
+There are a number of obvious improvements to the program to be made, as listed at the end of the last chapter.
 The best way to understand those improvements is to start exploring other areas of the docs, such as the chapters on capabilities-based security and the networking protocol, for error handling.
 
-This chapter will instead focus on how to *extend* an existing program with new functionality. 
-Chat is a basic feature for a chess program, but will touch the existing code in many places. 
+This chapter will instead focus on how to *extend* an existing program with new functionality.
+Chat is a basic feature for a chess program, but will touch the existing code in many places.
 This will give you a good idea of how to extend your own programs.
 
 We need to alter at least 4 things about the program:
@@ -32,13 +32,13 @@ enum ChessResponse {
 }
 ```
 
-These types need to be exhaustive, since we want to be able to feed every incoming message into a `match` statement that uses `ChessRequest` and `ChessResponse`. 
+These types need to be exhaustive, since we want to be able to feed every incoming message into a `match` statement that uses `ChessRequest` and `ChessResponse`.
 For more complex apps, one could introduce a new type that serves as an umbrella over multiple "kinds" of message, but since a simple chat will only be a few extra entries into the existing types, it's unnecessary for this example.
 
-In order to add chat, the request type above will need a new variant, something like `Message(String)`. 
+In order to add chat, the request type above will need a new variant, something like `Message(String)`.
 It doesn't need a `from` field, since that's just the `source` of the message!
 
-A new response type will make the chat more robust, by acknowledging received messages. 
+A new response type will make the chat more robust, by acknowledging received messages.
 Something like `MessageAck` will do, with no fields -- since this will be sent in response to a `Message` request, the sender will know which message it's acknowledging.
 
 The new types will look like this:
@@ -61,11 +61,11 @@ enum ChessResponse {
 }
 ```
 
-If you are modifying these types inside the finished chess app from this tutorial, your IDE should indicate that there are a few errors now: these new message types are not handled in their respective `match` statements. 
+If you are modifying these types inside the finished chess app from this tutorial, your IDE should indicate that there are a few errors now: these new message types are not handled in their respective `match` statements.
 Those errors, in `handle_chess_request` and `handle_local_request`, are where you'll need logic to handle messages other nodes send to this node, and messages this node sends to others, respectively.
 
-In `handle_chess_request`, the app receives requests from other nodes. 
-A reasonable way to handle incoming messages is to add them to a vector of messages that's saved for each active game. 
+In `handle_chess_request`, the app receives requests from other nodes.
+A reasonable way to handle incoming messages is to add them to a vector of messages that's saved for each active game.
 The frontend could reflect this by adding a chat box next to each game, and displaying all messages sent over that game's duration.
 
 To do that, the `Game` struct must be altered to hold such a vector.
@@ -97,8 +97,8 @@ ChessRequest::Message(content) => {
 ...
 ```
 
-In `handle_local_request`, the app sends requests to other nodes. 
-Note, however, that requests to message ourself don't really make sense -- what should really happen is that the chess frontend performs a PUT request, or sends a message over a websocket, and the chess backend process turns that into a message request to the other player. 
+In `handle_local_request`, the app sends requests to other nodes.
+Note, however, that requests to message ourself don't really make sense -- what should really happen is that the chess frontend performs a PUT request, or sends a message over a websocket, and the chess backend process turns that into a message request to the other player.
 So instead of handling `Message` requests in `handle_local_request`, the process should reject or ignore them:
 
 ```rust
@@ -177,7 +177,7 @@ This is the current (super gross!!) code for handling PUT requests in `handle_ht
 }
 ```
 
-Let's modify this to handle more than just making moves. 
+Let's modify this to handle more than just making moves.
 Note that there's an implicit JSON structure enforced by the code above, where PUT requests from our frontend look like this:
 
 ```json
@@ -187,10 +187,10 @@ Note that there's an implicit JSON structure enforced by the code above, where P
 }
 ```
 
-An easy way to allow messages is to match on whether the key `"move"` is present, and if not, look for the key `"message"`. 
+An easy way to allow messages is to match on whether the key `"move"` is present, and if not, look for the key `"message"`.
 This could also easily be codified as a Rust type and deserialized.
 
-Now, instead of assuming `"move"` exists, let's add a branch that handles the `"message"` case. 
+Now, instead of assuming `"move"` exists, let's add a branch that handles the `"message"` case.
 This is a modification of the code above:
 ```rust
 // on PUT: make a move OR send a message
@@ -230,24 +230,23 @@ This is a modification of the code above:
 }
 ```
 
-That's it. 
-A simple demonstration of how to extend the functionality of a given process. 
+That's it.
+A simple demonstration of how to extend the functionality of a given process.
 There are a few key things to keep in mind when doing this, if you want to build stable, maintainable, upgradable applications:
 
-- By adding chat, you changed the format of the "chess protocol" implicitly declared by this program. 
-If a user is running the old code, their version won't know how to handle the new `Message` request type we added. 
-**Depending on the serialization/deserialization strategy used, this might even create incompatibilities with the other types of requests.** 
-This is a good reason to use a serialization strategy that allows for "unknown" fields, such as JSON. 
+- By adding chat, you changed the format of the "chess protocol" implicitly declared by this program.
+If a user is running the old code, their version won't know how to handle the new `Message` request type we added.
+**Depending on the serialization/deserialization strategy used, this might even create incompatibilities with the other types of requests.**
+This is a good reason to use a serialization strategy that allows for "unknown" fields, such as JSON.
 If you're using a binary format, you'll need to be more careful about how you add new fields to existing types.
 
-- It's *okay* to break backwards compatibility with old versions of an app, but once a protocol is established, it's best to stick to it or start a new project. 
-Backwards compatibility can always be achieved by adding a version number to the request/response type(s) directly. 
+- It's *okay* to break backwards compatibility with old versions of an app, but once a protocol is established, it's best to stick to it or start a new project.
+Backwards compatibility can always be achieved by adding a version number to the request/response type(s) directly.
 That's a simple way to know which version of the protocol is being used and handle it accordingly. (TODO: link to cookbook example of this.)
 
-- By adding a `messages` field to the `Game` struct, you changed the format of the state that gets persisted. 
-If a user was running the previous version of this process, and upgrades to this version, the old state will fail to properly deserialize. 
-If you are building an upgrade to an existing app, you should always test that the new version can appropriately handle old state. 
-If you have many versions, you might need to make sure that state types from *any* old version can be handled. 
-Again, inserting a version number that can be deserialized from persisted state is a useful strategy. 
+- By adding a `messages` field to the `Game` struct, you changed the format of the state that gets persisted.
+If a user was running the previous version of this process, and upgrades to this version, the old state will fail to properly deserialize.
+If you are building an upgrade to an existing app, you should always test that the new version can appropriately handle old state.
+If you have many versions, you might need to make sure that state types from *any* old version can be handled.
+Again, inserting a version number that can be deserialized from persisted state is a useful strategy.
 The best way to do this depends on the serialization strategy used. (TODO: link to cookbook example of this.)
-
