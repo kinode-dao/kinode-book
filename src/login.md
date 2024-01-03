@@ -2,7 +2,7 @@
 
 Let's get onto the live network!
 
-These directions are particular to the Uqbar alpha release. 
+These directions are particular to the Uqbar alpha release.
 Joining the network will become significantly easier on subsequent releases.
 
 Note: While Uqbar will eventually post identities to Optimism, the alpha release uses the Ethereum Sepolia testnet.
@@ -87,7 +87,7 @@ Click `Register UqName` and proceed to [Connecting the Wallet](#connecting-the-w
 
 ### Aside: Acquiring a Wallet
 
-To register an identity, we must send an Ethereum transaction, which requires ETH and a crypto wallet.
+To register an identity, we must send an Ethereum transaction, which requires ETH and a cryptocurrency wallet.
 While many wallets will work, we use Metamask below.
 Install Metamask [here](https://metamask.io/download/).
 
@@ -104,8 +104,8 @@ Then, return to the Uqbar node.
 
 ### Setting Up Networking (Direct vs. Routed Nodes)
 
-When registering on Uqbar, you may choose between running a direct or routed (indirect) node. 
-For most users, we recommend using a routed node. 
+When registering on Uqbar, you may choose between running a direct or routed (indirect) node.
+For most users, we recommend using a routed node.
 To do this, simply leave the box below name registration unchecked.
 
 ![Register select name](./assets/register-select-name.png)

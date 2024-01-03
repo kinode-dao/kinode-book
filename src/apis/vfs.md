@@ -1,16 +1,16 @@
 # VFS API
 
-The VFS API tries to map over the [std::fs](https://doc.rust-lang.org/std/fs/index.html) calls as clearly as possible. 
+The VFS API tries to map over the [std::fs](https://doc.rust-lang.org/std/fs/index.html) calls as clearly as possible.
 
-Every request takes a path and a corresponding action. 
+Every request takes a path and a corresponding action.
 The paths look like normal relative paths within the folder `your_node_home/vfs`, but they include 2 parts at the start, a `package_id` and a `drive`.
 
 Example path: `/your_package:publisher.uq/pkg/`. This folder is usually filled with files put into the /pkg folder when installing with app_store.
 
-Capabilities are checked on the package_id/drive part of the path, when calling CreateDrive you'll be given "Read" and "Write" caps that you can share with other processes. 
+Capabilities are checked on the package_id/drive part of the path, when calling CreateDrive you'll be given "Read" and "Write" caps that you can share with other processes.
 
-Other processes within your package will have access by default. 
-They can call actions within existing drives, like VfsAction::Read with path "/your_package:publisher.uq/assets/cat.jpeg". 
+Other processes within your package will have access by default.
+They can call actions within existing drives, like VfsAction::Read with path "/your_package:publisher.uq/assets/cat.jpeg".
 
 ```rust
 pub struct VfsRequest {
