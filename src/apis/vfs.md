@@ -14,38 +14,36 @@ They can call actions within existing drives, like VfsAction::Read with path "/y
 
 ```rust
 pub struct VfsRequest {
+    /// path is always prepended by package_id, the capabilities of the topmost folder are checked
+    /// "/your_package:publisher.uq/drive_folder/another_folder_or_file"
     pub path: String,
     pub action: VfsAction,
 }
 
-/// VfsActions mostly mirror the behaviour of std::fs
 pub enum VfsAction {
-    /// creates a drive ["your_package:publisher.uq/your_drive/other_path"] and attaches capabilities
-    /// to the process calling it
     CreateDrive,
     CreateDir,
     CreateDirAll,
     CreateFile,
-    OpenFile,
+    OpenFile { create: bool },
     CloseFile,
-    WriteAll,
     Write,
-    ReWrite,
-    WriteAt(u64),
+    WriteAt,
     Append,
     SyncAll,
     Read,
-    ReadToEnd,
     ReadDir,
+    ReadToEnd,
     ReadExact(u64),
     ReadToString,
-    Seek(SeekFrom),
+    Seek { seek_from: SeekFrom },
     RemoveFile,
     RemoveDir,
     RemoveDirAll,
-    Rename(String),
+    Rename { new_path: String },
     Metadata,
     AddZip,
+    CopyFile { new_path: String },
     Len,
     SetLen(u64),
     Hash,
@@ -78,6 +76,7 @@ pub enum VfsResponse {
     Ok,
     Err(VfsError),
     Read,
+    SeekFrom(u64),
     ReadDir(Vec<DirEntry>),
     ReadToString(String),
     Metadata(FileMetadata),

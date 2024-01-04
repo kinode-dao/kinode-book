@@ -10,10 +10,10 @@ pub struct SqliteRequest {
     pub action: SqliteAction,
 }
 
+#[derive(Debug, Serialize, Deserialize)]
 pub enum SqliteAction {
-    /// New is called to create a new database and be given capabilities,
-    /// or to open a connection to an existing one.
-    New,
+    Open,
+    RemoveDb,
     Write {
         statement: String,
         tx_id: Option<u64>,
@@ -46,7 +46,6 @@ pub enum SqlValue {
 
 pub enum SqliteError {
     NoDb,
-    DbAlreadyExists,
     NoTx,
     NoCap { error: String },
     UnexpectedResponse,
