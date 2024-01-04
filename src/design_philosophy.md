@@ -1,5 +1,5 @@
 # Design Philosophy
-The following is a high-level overview of Uqbar's design philosophy, along with the rationale for its fundamental design choices.
+The following is a high-level overview of Uqbar's design philosophy, along with the rationale for fundamental design choices.
 
 ### Decentralized Software Requires a Shared Computing Environment
 A single shared computing environment enables software to coordinate directly between users, services, and other pieces of software in a common language.
@@ -13,7 +13,7 @@ The Uqbar environment must be flexible enough to serve the vast majority of the 
 
 ### Blockchains are not Databases
 To use blockchains as mere databases would negate their unique value.
-Blockchains are consensus tools, and exist in a spectrum alongside consensus strategies such as Raft, lockstep protocols, CRDTs, and simple gossip.
+Blockchains are consensus tools, and exist in a spectrum alongside other consensus strategies such as Raft, lockstep protocols, CRDTs, and simple gossip.
 All of these are valid consensus schemes, and peer-to-peer software, such as that built on Uqbar, must choose the correct strategy for a particular task, program, or application.
 
 ### Decentralized Software Outcompetes Centralized Software through Permissionlessness and Composability
@@ -22,7 +22,7 @@ Those features include:
 * a persistent software environment (software can run forever once deployed)
 * client diversity (more actors means fewer monopolies)
 * perpetual backwards-compatibility
-* a robust node network (that ensures individual ownership of software and data)
+* a robust node network that ensures individual ownership of software and data
 
 ### Decentralized Software Requires Decentralized Governance
 The above properties are achieved by governance.

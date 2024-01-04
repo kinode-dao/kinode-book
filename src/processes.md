@@ -3,26 +3,37 @@
 ### Overview
 
 On Uqbar, processes are the building blocks for peer-to-peer applications.
-The Uqbar "microkernel" exclusively handles message-passing between `processes`, plus the startup and teardown of said processes.
+The Uqbar runtime handles message-passing between processes, plus the startup and teardown of said processes.
 This section describes the message design as it relates to processes.
-Processes spawn with an ID: either a developer-selected string or a randomly-generated number as string.
-This identifier is namespaced under the package name at installation, and to generate a globally-unique identifier for a process, the package name is combined with the name of the node that it is running on to build an `address`.
 
-Package IDs (TODO: link to docs) look like this:
+Processes have a globally unique identifier, or "address", composed of four elements.
+First, the publisher's node.
+Second, the package name.
+Third, the process identifier.
+Processes spawn with their own identifier: either a developer-selected string or a randomly-generated number as string.
+And finally, the node the process is running on (your node).
 
-`my_cool_software:my_username.uq`
+Package IDs (TODO: link to docs) look like:
 
-Process IDs (TODO: link to docs) look like this:
+```
+my_cool_software:my_username.uq
+```
 
-`process_one:my_cool_software:my_username.uq`
+Process IDs (TODO: link to docs) look like:
 
-`8513024814:my_cool_software:my_username.uq`
+```
+process_one:my_cool_software:my_username.uq
+8513024814:my_cool_software:my_username.uq
+```
 
-Addresses (TODO: link to docs) look like this:
+Addresses (TODO: link to docs) look like:
 
-`some_user.uq@process_one:my_cool_software:my_username.uq`
+```
+some_user.uq@process_one:my_cool_software:my_username.uq
+```
 
-Processes are compiled to Wasm. They can be started once and complete immediately, or they can run forever.
+Processes are compiled to Wasm.
+They can be started once and complete immediately, or they can run forever.
 They can spawn other processes, and coordinate in arbitrarily complex ways by passing messages to one another.
 
 ### Process State
@@ -36,7 +47,7 @@ Instead, processes elect to persist data, and what data to persist, when desired
 Data might be persisted after every message ingested, after every X minutes, after a certain specific event, or never.
 When data is persisted, the kernel saves it to our abstracted filesystem, which not only persists data on disk, but also across arbitrarily many encrypted remote backups as configured at the user-system-level.
 
-This design allows for ephemeral state that lives in-memory, or truly permanent state, encrypted across many remote backups, synchronized and safe. [Read more about filesystem persistence here](./filesystem.md).
+This design allows for ephemeral state that lives in-memory, or truly permanent state, encrypted across many remote backups, synchronized and safe. [Read more about filesystem persistence here](./files.md).
 
 ### Requests and Responses
 
@@ -48,43 +59,44 @@ The integrity of a source `address` differs between local and remote messages.
 If a message is local, the validity of its source is ensured by the local kernel, which can be trusted to label the process ID and node ID correctly.
 If a message is remote, only the node ID can be validated (via networking keys associated with each node ID).
 The process ID comes from the remote kernel, which could claim any process ID.
-This is fine — merely consider remote process IDs a *claim* about the initiating process rather than an infallible ID for discrete piece of code written by a specific developer.
+This is fine — merely consider remote process IDs a *claim* about the initiating process rather than an infallible ID like in the local case.
 
 Requests can be issued at any time by a running process.
 A request can optionally expect a response.
 If it does, the request will be retained by the kernel, along with an optional `context` object created by the request's issuer.
-This request will be considered outstanding until the kernel receives a matching response, at which point that response will be delivered to the requester alongside the optional context.
-Contexts saved by the kernel enable very straightforward, async-await-style code inside processes.
+A request will be considered outstanding until the kernel receives a matching response, at which point that response will be delivered to the requester alongside the optional `context`.
+`context`s allow responses to be disambiguated when handled asynchronously, for example, when some information about the request must be used in handling the response.
+Responses can also be handled in an async-await style, as will be discussed in a moment.
 
 Requests that expect a response set a timeout value, after which, if no response is received, the initial request is returned to the process that issued it as an error.
 Send errors are handled in processes alongside other incoming messages.
 
 If a process receives a request, that doesn't mean it must directly issue a response.
-The process can instead issue request(s) that inherit the context of the incipient request.
-If a request inherits context from another request, its responses to the child request will be returned to the parent request's issuer.
+The process can instead issue request(s) that "inherit" from the incipient request, continuing its line.
+If a request "inherits" from another request, responses to the child request will be returned to the parent request's issuer.
 This allows for arbitrarily complex request-response chains, particularly useful for "middleware" processes.
 
 Messages, both requests and responses, can contain arbitrary data, which must be interpreted by the process that receives it.
 The structure of a message contains hints about how best to do this:
 
-First, messages contain a field labeled `ipc`, which holds the actual contents of the message.
-In order to cross the Wasm boundary and be language-agnostic, the `ipc` field is simply a byte vector.
-To achieve composability between processes, a process should be very clear, in code and documentation, about what it expects in the `ipc` field and how it gets parsed, usually into a language-level struct or object.
+First, messages contain a field labeled `body`, which holds the actual contents of the message.
+In order to cross the Wasm boundary and be language-agnostic, the `body` field is simply a byte vector.
+To achieve composability between processes, a process should be very clear, in code and documentation, about what it expects in the `body` field and how it gets parsed, usually into a language-level struct or object.
 
-A message also contains a `payload`, another byte vector, used for opaque, arbitrary, or large data.
-Payloads, along with being suitable location for miscellaneous message data, are an optimization for shuttling messages across the Wasm boundary.
-Unlike other message fields, the payload is only moved into a process if explicitly called with (`get_payload()`).
-Processes can thus choose whether to ingest a payload based on the ipc/metadata/source/context of a given message.
-Payloads hold bytes alongside a `mime` field for explicit process-and-language-agnostic format declaration, if desired.
+A message also contains a `lazy_load_blob`, another byte vector, used for opaque, arbitrary, or large data.
+`lazy_load_blob`s, along with being suitable location for miscellaneous message data, are an optimization for shuttling messages across the Wasm boundary.
+Unlike other message fields, the `lazy_load_blob` is only moved into a process if explicitly called with (`get_blob()`).
+Processes can thus choose whether to ingest a `lazy_load_blob` based on the `body`/`metadata`/`source`/`context` of a given message.
+`lazy_load_blob`s hold bytes alongside a `mime` field for explicit process-and-language-agnostic format declaration, if desired.
 
 Lastly, messages contain an optional `metadata` field, expressed as a JSON-string, to enable middleware processes and other such things to manipulate the message without altering the IPC itself.
 
-Messages that result in networking failures, like requests that time out, are returned to the process that created them as an error.
+Messages that result in networking failures, like requests that timeout, are returned to the process that created them as an error.
 There are only two kinds of send errors: Offline and Timeout.
 Offline means a message's remote target definitively cannot be reached.
 Timeout is multi-purpose: for remote nodes, it may indicate compromised networking; for both remote and local nodes, it may indicate that a process is simply failing to respond in the required time.
 
-A send error will return to the originating process the initial message, along with and saved `context`, so that the process can re-send the message, crashing, or otherwise handle the failure as the developer desires.
+A send error will return to the originating process the initial message, along with any optional `context`, so that the process can re-send the message, crash, or otherwise handle the failure as the developer desires.
 If the error results from a response, the process may optionally try to re-send a response: it will be directed towards the original outstanding request.
 
 ### Capabilities
@@ -106,4 +118,5 @@ In practice, processes are combined and shared in **packages**, which are genera
 
 It's briefly discussed here that processes are compiled to Wasm.
 The details of this are not covered in the Uqbar Book, but can be found in the documentation for the [Uqbar runtime](https://github.com/uqbar-dao/uqbar), which uses [Wasmtime](https://wasmtime.dev/), a WebAssembly runtime, to load, execute, and provide an interface for the subset of Wasm processes that are valid Uqbar processes.
+Pragmatically, processes can be compiled using the [`uqdev` tools](https://github.com/uqbar-dao/uqdev).
 The long term goal of the Uqbar runtime is to use [WASI](https://wasi.dev/) to provide a secure, sandboxed environment for processes to not only make use of the kernel features described in this document, but also to make full use of the entire WebAssembly ecosystem, including the ability to use sandboxed system calls provided by the host via WASI.

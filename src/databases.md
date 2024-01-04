@@ -6,7 +6,7 @@ These can be created, accessed, and shared amongst processes.
 The APIs for doing so you can find here: [KV](./apis/kv.md) and [SQLite](./apis/sqlite.md).
 
 Similarly to files in the VFS, they are accessed by `package_id` and a `db` name.
-Capabilities to read and write can be shared to other processes, and ones in your own package have access by default.
+Capabilities to read and write can be shared with other processes; processes within a given package have access by default.
 
 All examples are using the uqbar_process_lib functions defined here: [link]
 
