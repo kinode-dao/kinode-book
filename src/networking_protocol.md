@@ -30,15 +30,15 @@ Because it may take time for a new networking key to proliferate to all nodes, (
 Nodes that wish to make direct connections must post a URL and port onchain.
 The data structure will resemble this:
 ```rust
-    "ws_routing": ["147.135.114.167", 9002]
+"ws_routing": ["147.135.114.167", 9002]
 ```
 Indirect nodes can leave this field null, and instead indicate which other nodes will rout for them.
 The full data structure of a network identity onchain will resemble this, where usernames are unique:
 ```rust
-    "username": "squid",
-    "networking_key": "6077987c998066ed7dea3e30555add0523482475c705fb92c0c8e78307b8e62c",
-    "ws_routing": null,
-    "allowed_routers": ["loach"]
+"username": "squid",
+"networking_key": "6077987c998066ed7dea3e30555add0523482475c705fb92c0c8e78307b8e62c",
+"ws_routing": null,
+"allowed_routers": ["loach"]
 ```
 Nodes with onchain network information will be referred to as public nodes, and ones without will be referred to as private nodes.
 
