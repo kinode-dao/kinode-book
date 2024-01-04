@@ -2,11 +2,11 @@
 
 ## VFS
 
-The primary way to access files within your node is through the VFS [API](./apis/vfs.md).
-It tries to map over the functions of std::fs as clearly as possible, adding some capabilities checks on paths and some combinatory actions.
+The primary way to access files within your node is through the [VFS API](./apis/vfs.md).
+The VFS API follows std::fs closely, adding some capabilities checks on paths and some combinatory actions.
 
-They exist within the "/vfs" folder within your home node, and files are grouped by `package_id`.
-An example part of your VFS might look like this:
+VFS files exist in the "/vfs" folder within your home node, and files are grouped by `package_id`.
+For example, part of the VFS might look like:
 
 ```
 .

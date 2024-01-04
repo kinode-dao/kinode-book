@@ -1,4 +1,4 @@
-# Join the network
+# Join the Network
 
 Let's get onto the live network!
 
@@ -9,14 +9,14 @@ Note: While Uqbar will eventually post identities to Optimism, the alpha release
 
 ## Creating an Alchemy Account
 
-Alchemy is used as an [Ethereum RPC endpoint](#acquiring-an-rpc-api-key) and as a [faucet for Sepolia testnet ETH](#acquiring-sepolia-testnet-eth).
+Alchemy is used as an [Ethereum RPC endpoint](#acquiring-an-rpc-api-key) and as a [faucet for Sepolia testnet ETH](#aside-acquiring-sepolia-testnet-eth).
 An Ethereum RPC endpoint and Sepolia ETH are required to send and receive Ethereum transactions that support the Uqbar identity system.
 If you do not already have one, register an [Alchemy account](https://www.alchemy.com/).
-There account is free and requires only an email address for registration.
+The account is free and requires only an email address for registration.
 
 ## Starting the Uqbar node
 
-Start an Uqbar node using the binary built in the [previous section](./install.md).
+Start an Uqbar node using the binary acquired in the [previous section](./install.md).
 Locating the binary on your system, run:
 
 ```bash
@@ -41,8 +41,8 @@ Options:
 
 A home directory must be supplied — where the node will store its files.
 The binary also takes a required `--rpc` flag.
-The `--rpc` flag is a `wss://` WebSocket link to an Ethereum RPC, allowing the Uqbar node can send and receive Ethereum transactions — used in the identity system as described above.
-Finally, by default, the node will run at port 8080; this can be modified with the `--port` flag.
+The `--rpc` flag is a `wss://` WebSocket link to an Ethereum RPC, allowing the Uqbar node can send and receive Ethereum transactions — used in the [identity system](./identity_system.md) as mentioned [above](#creating-an-alchemy-account).
+Finally, by default, the node will bind to port 8080; this can be modified with the `--port` flag.
 
 ### Acquiring an RPC API Key
 
@@ -56,7 +56,7 @@ Copy the WebSocket API key from the API Key button:
 
 ### Running the Binary
 
-Replace the `--rpc` field below with the WebSocket API key link copied from [above](#acquiring-an-rpc-api-key), and start the node with:
+Replace the `--rpc` field below with the WebSocket API key link copied from [the previous step](#acquiring-an-rpc-api-key), and start the node with:
 
 ```bash
 ./uqbar home --rpc wss://eth-sepolia.g.alchemy.com/v2/<your-api-key>
@@ -87,8 +87,8 @@ Click `Register UqName` and proceed to [Connecting the Wallet](#connecting-the-w
 
 ### Aside: Acquiring a Wallet
 
-To register an identity, we must send an Ethereum transaction, which requires ETH and a cryptocurrency wallet.
-While many wallets will work, we use Metamask below.
+To register an identity, Uqbar must send an Ethereum transaction, which requires ETH and a cryptocurrency wallet.
+While many wallets will work, the examples below use Metamask.
 Install Metamask [here](https://metamask.io/download/).
 
 ### Connecting the Wallet
@@ -104,28 +104,28 @@ Then, return to the Uqbar node.
 
 ### Setting Up Networking (Direct vs. Routed Nodes)
 
-When registering on Uqbar, you may choose between running a direct or routed (indirect) node.
-For most users, we recommend using a routed node.
+When registering on Uqbar, you may choose between running a direct or indirect (routed) node.
+Most users should use an indirect node.
 To do this, simply leave the box below name registration unchecked.
 
 ![Register select name](./assets/register-select-name.png)
 
 Am indirect node connects to the network through a router, which is a direct node that serves as an intermediary, passing packets from sender to receiver.
 Routers make connecting to the network convenient, and so are the default.
-If you are connecting from a laptop that isn't always on, or that changes WiFi networks, use a routed node.
+If you are connecting from a laptop that isn't always on, or that changes WiFi networks, use an indirect node.
 
 A direct node connects directly, without intermediary, to other nodes (though they may, themselves, be using a router).
 Direct nodes may have better performance, since they remove middlemen from connections.
 Direct nodes also reduces the number of third parties that know about the connection between your node and your peer's node (if both you and your peer use direct nodes, there will be no third party involved).
 
-We advise you use a routed node unless you are familiar with running servers.
+Use an indirect node unless you are familiar with running servers.
 A direct node must be served from a static IP and port, since these are registered on the Ethereum network and are how other nodes will attempt to contact you.
 
 Regardless, all packets, passed directly or via a router, are end-to-end encrypted.
 Only you and the recipient can read messages.
 
 As a direct node, your IP is published on the blockchain.
-As a routed node, only your router knows your IP.
+As an indirect node, only your router knows your IP.
 
 ### Sending the Registration Transaction
 
@@ -141,7 +141,7 @@ The networking key is how your node communicates securely with other nodes, and 
 
 ![Register set password](./assets/register-set-password.png)
 
-## Online at Last
+## Welcome to the Network
 
 After setting the node password, you will be greeted with the homepage.
 
