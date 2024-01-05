@@ -1,18 +1,23 @@
 # Introduction
 
+The Uqbar Book describes the Uqbar operating system, both in conceptual and practical terms.
+
+* To get your hands dirty developing, jump to [My First Uqbar Application](./my_first_app/chapter_1.md).
+* To learn about high-level concepts, keep reading these documents in-order.
+* To learn about how the system functions, start reading about [System Components](./processes.md).
+
 Uqbar is a decentralized operating system, peer-to-peer app framework, and node network designed to simplify the development and deployment of decentralized applications.
 It is also a *sovereign cloud computer*, in that Uqbar can be deployed anywhere and act as a server controlled by anyone.
 Ultimately, Uqbar facilitates the writing and distribution of software that runs on privately-held, personal server nodes or node clusters.
 
 Uqbar eliminates boilerplate and reduces the complexity of p2p software development by providing four basic and necessary primitives:
 
-- Networking: passing messages from peer to peer.
-
-- Identity: linking permanent system-wide identities to individual nodes.
-
-- Data Persistence: storing data and saving it in perpetuity.
-
-- Global State: reading shared global state (blockchain) and composing actions with this state (transactions).
+Primitive        | Description
+---------------- | -----------
+Networking       | Passing messages from peer to peer.
+Identity         | Linking permanent system-wide identities to individual nodes.
+Data Persistence | Storing data and saving it in perpetuity.
+Global State     | Reading shared global state (blockchain) and composing actions with this state (transactions).
 
 The focus of this book is how to build and deploy applications on Uqbar.
 
