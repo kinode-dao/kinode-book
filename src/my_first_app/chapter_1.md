@@ -1,50 +1,40 @@
-# My First Uqbar Application
+# Tutorial: Build and Deploy an App
 
 Welcome!
-In this tutorial, you'll walk through setting up an Uqbar development environment.
-By the end, you will have created an Uqbar application, or package, composed of one or more processes that run on a live Uqbar node.
-The application will be a simple chat interface: `my_chat_app`.
+In these tutorials, you'll setup your development environment and learn about the `uqdev` tools.
+You'll learn about templates and also walk through writing an application from the group up, backend and frontend.
+And finally, you'll learn how to deploy applications through the Uqbar app store.
 
 For the purposes of this documentation, terminal commands are provided as-is for ease of copying EXCEPT when the output of the command is also shown.
 In that case, the command is prepended with a `$ ` to distinguish the command from the output.
 The `$ ` should not be copied into the terminal.
 
-## Chapter 1: Setting Up the Development Environment
+# Environment Setup
+
+In this chapter, you'll walk through setting up an Uqbar development environment.
+By the end, you will have created an Uqbar application, or package, composed of one or more processes that run on a live Uqbar node.
+The application will be a simple chat interface: `my_chat_app`.
 
 The following assumes a Unix environment — macOS or Linux.
 If on Windows, [get WSL](https://learn.microsoft.com/en-us/windows/wsl/install) first.
 In general, Uqbar does not support Windows.
 
-### Acquiring Rust
+## Acquiring Rust and the Uqbar Development Tools (`uqdev`)
 
-First, you need to install Rust. In your terminal, run:
+Install Rust and the Uqbar Development Tools, or `uqdev`:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
-
-For more information, or debugging, see the [Rust lang install page](https://www.rust-lang.org/tools/install).
-
-### Acquiring Uqbar Development Tools (`uqdev`) and Dependencies
-
-Next, install dependencies and Uqbar Development Tools, or `uqdev`, using `cargo`:
-
-```bash
-cargo install wasm-tools
-rustup install nightly
-rustup target add wasm32-wasi
-rustup target add wasm32-wasi --toolchain nightly
-cargo install cargo-wasi
 cargo install --git https://github.com/uqbar-dao/uqdev
 ```
 
-### Creating a New Uqbar Package Template
+## Creating a New Uqbar Package Template
 
 The `uqdev` toolkit has a [variety of features](https://github.com/uqbar-dao/uqdev).
 One of those tools is `new`, which creates a template for an Uqbar package.
 The `new` tool takes two arguments: a path to create the template directory and a name for the package:
 
-```bash
+```
 $ uqdev new --help
 Create an Uqbar template package
 
@@ -56,8 +46,8 @@ Arguments:
 Options:
   -a, --package <PACKAGE>      Name of the package [default: DIR]
   -u, --publisher <PUBLISHER>  Name of the publisher [default: template.uq]
-  -l, --language <LANGUAGE>    Programming language of the template [default: rust] [possible values: rust, python]
-  -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: chat]
+  -l, --language <LANGUAGE>    Programming language of the template [default: rust] [possible values: rust, python, javascript]
+  -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: chat, fibonacci]
       --ui                     If set, use the template with UI
   -h, --help                   Print help
 ```
@@ -68,13 +58,13 @@ Create a package `my_chat_app`:
 uqdev new my_chat_app
 ```
 
-### Exploring the Package
+## Exploring the Package
 
 Uqbar packages are sets of one or more Uqbar [processes](../processes.md).
 An Uqbar package is represented in Unix as a directory that has a `pkg/` directory within.
 Each process within the package is its own directory.
-By default, the `uqdev new` command creates a simple, one-process package.
-Other templates, including a Python template and a UI-enabled template can be used by passing different flags to `uqdev new` (see `uqdev new --help` above).
+By default, the `uqdev new` command creates a simple, one-process package, a chat app.
+Other templates, including a Python template and a UI-enabled template can be used by passing different flags to `uqdev new` (see `uqdev new --help`).
 The default template looks like:
 
 ```bash
@@ -103,7 +93,16 @@ The `pkg/` directory contains two files, `manifest.json` and `metadata.json`, th
 The `pkg/` directory is also where `.wasm` binaries will be deposited by [`uqbar build`](#building-the-package).
 The files in the `pkg/` directory contents are injected into the Uqbar node with [`uqbar start-package`](#starting-the-package).
 
-#### `pkg/manifest.json`
+Though not included here, packages with a frontend have a `ui/` directory as well.
+For an example, look at the result of:
+```bash
+uqdev new my_chat_app_with_ui --ui
+tree my_chat_app_with_ui
+```
+Note that not all templates have a UI-enabled version.
+As of 230104, only the Rust chat template has a UI-enabled version.
+
+### `pkg/manifest.json`
 
 The `manifest.json` file contains information the Uqbar node needs in order to run the package:
 
@@ -141,7 +140,7 @@ Key                    | Required? | Value type
 `"grant_messaging"`    | No        | array of strings to note process names, or objects to note custom capabilities to generate and send to a process
 `"public"`             | Yes       | bool
 
-#### `pkg/metadata.json`
+### `pkg/metadata.json`
 
 The `metadata.json` file contains information about the package and the publisher:
 
@@ -157,11 +156,11 @@ $ cat my_chat_app/pkg/metadata.json
 Here, the `publisher` is some default value, but for a real package, this field should contain the QNS id of the publishing node.
 The `publisher` can also be set with a `uqdev new --publisher` flag.
 
-#### `src/lib.rs`
+### `src/lib.rs`
 
 TODO
 
-### Building the Package
+## Building the Package
 
 To build the package, use the `uqdev build` tool.
 
@@ -179,7 +178,7 @@ cd my_chat_app
 uqdev build
 ```
 
-### Booting a Fake Uqbar Node
+## Booting a Fake Uqbar Node
 
 Often, it is optimal to develop on a fake node.
 Fake nodes are simple to set up, easy to restart if broken, and mocked networking makes development testing very straightforward.
@@ -214,16 +213,16 @@ uqdev boot-fake-node --runtime-path ~/path/to/uqbar
 
 where `~/path/to/uqbar` must be replaced with a path to the Uqbar core repo or an Uqbar binary.
 
-### Option: Starting a Real Uqbar Node
+## Option: Starting a Real Uqbar Node
 
 Alternatively, development sometimes calls for a real node, which has access to the actual Uqbar network and its providers, such as integrated LLMs.
 
 To develop on a real Uqbar node, connect to the network and follow the instructions to [setup an Uqbar node](../install.md).
 
-### Starting the Package
+## Starting the Package
 
 Time to load and initiate the `my_chat_app` package. For this, you will use the `uqdev start-package` tool.
-Like [uqdev build](#building-the-package), the `uqdev start-package` tool receives an optional directory containing the package or, if no directory is received, tries the current working directory.
+Like [`uqdev build`](#building-the-package), the `uqdev start-package` tool receives an optional directory containing the package or, if no directory is received, tries the current working directory.
 It also requires a URL: the address of the node on which to initiate the package.
 The node's URL can be input in one of two ways:
 1. If running on localhost, the port can be supplied with `-p` or `--port`,
@@ -246,13 +245,13 @@ where here the port provided following `-p` must match the port bound by the nod
 
 The node's terminal should display something like
 
-```bash
+```
 Fri 12/8 15:54 my_chat_app: begin
 ```
 
 Congratulations on completing the first steps towards developing applications on Uqbar!
 
-### Using the Package
+## Using the Package
 
 To test out the functionality of `my_chat_app`, spin up another fake node to chat with in a new terminal:
 

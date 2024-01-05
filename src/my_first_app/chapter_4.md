@@ -1,4 +1,4 @@
-# Chapter 4: Frontend Time
+# Frontend Time
 
 After the last chapter, you should have a simple process that responds to two commands from the terminal.
 In this chapter, you'll add some basic HTTP logic to serve a frontend and accept an HTTP PUT request that contains a command.
@@ -8,9 +8,9 @@ If you're the type of person that prefers to learn by looking at a complete exam
 ## Adding HTTP request handling
 
 Using the built-in HTTP server will require handling a new type of request in our main loop, and serving a response to it.
-The process_lib contains types and functions for doing so.
+The [process_lib](../process_stdlib/overview.md) contains types and functions for doing so.
 
-At the top of your process, import `http`, `get_payload`, and `Message` from `uqbar_process_lib` along with the rest of the imports.
+At the top of your process, import `http`, `get_payload`, and `Message` from [`uqbar_process_lib`](../process_stdlib/overview.md) along with the rest of the imports.
 You'll use `get_payload()` to grab the body bytes of an incoming HTTP request.
 ```rust
 use uqbar_process_lib::{
@@ -153,7 +153,7 @@ Putting it all together, you get a process which you can build and start, then u
 ```rust
 use serde::{Deserialize, Serialize};
 use uqbar_process_lib::{
-    await_message, call_init, get_payload, http, println, Address, Message, Request, Response,
+    await_message, call_init, get_payload, http, println, Address, Message, Request,
 };
 
 wit_bindgen::generate!({
@@ -286,10 +286,12 @@ But for maximum ease and efficiency, use the static bind command on `/` and move
 To do this, edit the bind commands in `my_init_fn` to look like this:
 ```rust
 http::bind_http_path("/api", true, false).unwrap();
-http::serve_index_html(&our, "static").unwrap();
+http::serve_index_html(&our, "ui").unwrap();
 ```
 
-Now you can add a static `index.html` file to the package. Create a new file in `pkg/static/index.html` with the following contents.
+Now you can add a static `index.html` file to the package.
+UI files are stored in the `ui/` directory and built into the application by `uqdev build` automatically.
+Create a new file in `ui/index.html` with the following contents.
 **Make sure to replace the fetch URL with your process ID!**
 ```html
 <!DOCTYPE html>
@@ -332,9 +334,9 @@ Now you can add a static `index.html` file to the package. Create a new file in 
 </html>
 ```
 
-This is a super barebones `index.html` that provides a form to make requests to our /api endpoint.
-After saving this file to `pkg/static/index.html`, rebuilding the program, and starting the package again, you should be able to navigate to you `http://localhost:8080/<process_id>` and see the form page.
-Note that you can now set `authenticated` to `true` in the /api binding and the webpage will still work, but cURL will not.
+This is a super barebones `index.html` that provides a form to make requests to the `/api` endpoint.
+After saving this file to `ui/index.html`, rebuilding the program, and starting the package again, you should be able to navigate to you `http://localhost:8080/<process_id>` and see the form page.
+Note that you can now set `authenticated` to `true` in the `/api` binding and the webpage will still work, but cURL will not.
 
 This frontend is now fully packaged with the process — there are no more steps!
 Of course, this can be made arbitrarily complex with various frontend frameworks that produce a static build.

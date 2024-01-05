@@ -1,3 +1,11 @@
+# In-Depth Guide: Chess App
+
+This guide will walk you through building a very simple chess app on Uqbar.
+The final result will look like [this](https://github.com/uqbar-dao/uqbar/tree/main/modules/chess): chess is in the basic runtime distribution so you can try it yourself.
+
+To prepare for this tutorial, follow the environment setup guide [here](../my_first_app/chapter_1.md).
+Once you have the template app installed and can see it running on your testing node, continue...
+
 # Chess Engine
 
 Chess is a good example for an Uqbar application walk-through because the basic game logic is already readily available.
