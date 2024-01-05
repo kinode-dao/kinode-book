@@ -135,7 +135,7 @@ This is the current (super gross!!) code for handling PUT requests in `handle_ht
     };
     let mut board = Board::from_fen(&game.board).unwrap();
     if !board.apply_uci_move(move_str) {
-        // TODO surface illegal move to player or something here
+        // reader note: can surface illegal move to player or something here
         return http::send_response(http::StatusCode::BAD_REQUEST, None, vec![]);
     }
     // send the move to the other player
@@ -206,7 +206,7 @@ This is a modification of the code above:
             .ipc(serde_json::to_vec(&ChessRequest::Message(message.to_string()))?)
             .send_and_await_response(5)?
         else {
-            // TODO: handle a failed message send!
+            // Reader Note: handle a failed message send!
             return Err(anyhow::anyhow!(
                 "other player did not respond properly to our message"
             ));
@@ -242,11 +242,11 @@ If you're using a binary format, you'll need to be more careful about how you ad
 
 - It's *okay* to break backwards compatibility with old versions of an app, but once a protocol is established, it's best to stick to it or start a new project.
 Backwards compatibility can always be achieved by adding a version number to the request/response type(s) directly.
-That's a simple way to know which version of the protocol is being used and handle it accordingly. (TODO: link to cookbook example of this.)
+That's a simple way to know which version of the protocol is being used and handle it accordingly.
 
 - By adding a `messages` field to the `Game` struct, you changed the format of the state that gets persisted.
 If a user was running the previous version of this process, and upgrades to this version, the old state will fail to properly deserialize.
 If you are building an upgrade to an existing app, you should always test that the new version can appropriately handle old state.
 If you have many versions, you might need to make sure that state types from *any* old version can be handled.
 Again, inserting a version number that can be deserialized from persisted state is a useful strategy.
-The best way to do this depends on the serialization strategy used. (TODO: link to cookbook example of this.)
+The best way to do this depends on the serialization strategy used.

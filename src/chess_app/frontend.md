@@ -295,7 +295,7 @@ fn handle_http_request(
             };
             let mut board = Board::from_fen(&game.board).unwrap();
             if !board.apply_uci_move(move_str) {
-                // TODO surface illegal move to player or something here
+                // reader note: can surface illegal move to player or something here
                 return http::send_response(http::StatusCode::BAD_REQUEST, None, vec![]);
             }
             // send the move to the other player

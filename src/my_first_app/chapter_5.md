@@ -16,10 +16,8 @@ The `package` field in metadata determines the name of the package.
 The `publisher` field determines the name of the publisher (you!).
 **Note: you *can* set any publisher name you want, but others will be able to verify that you are the publisher by comparing the value in this field with a signature attached to the entry in a (good) app store or package manager, so it's a good idea to put *your node identity* here.**
 
-(TODO: talk about how to sign packages)
-
 Once you're ready to share, it's quite easy.
 If you are developing on a fake node, you'll have to boot a real one, then install this package locally in order to publish on the network.
 If you're already on a real node, you can go ahead and navigate to the App Store on the homepage and go through the publishing flow.
 
-(TODO: complete this page when the app_store frontend is ready)
+In the near future, you will be able to quickly and easily publish your applications to the network using  GUI from the `app store`. 
