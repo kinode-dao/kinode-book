@@ -9,11 +9,11 @@ This scenario is identical to when a process is re-initialized. From the perspec
 
 Given that Uqbar nodes can, comporting with the realities of the physical world, be turned off, a well-written process must withstand being shut down and reinstantiated at any time.
 This raises the question: how do processes persist information between instantiations?
-There are two ways: either the process can use the built-in `set_state` and `get_state` WIT functions, or it can send data to a process that does this for them.
+There are two ways: either the process can use the built-in `set_state` and `get_state` functions, or it can send data to a process that does this for them.
 
 The first option is a maximally-simple way to write some bytes to disk (where they'll be backed up, if the node owner has configured that behavior).
 The second option is vastly more general, because runtime modules that have direct messaging availability from userspace offer any number of APIs.
-So far, there are three modules built into Uqbar that are designed for persisted data: a filesystem, a key-value store, and a SQLite database.
+So far, there are three modules built into Uqbar that are designed for persisted data: a [filesystem](./files.md), a [key-value store](./apis/kv.md), and a [SQLite database](./apis/sqlite.md).
 
 Each of these modules offer APIs accessed via message-passing and write data to disk.
 Between instantiations of a process, this data remains saved, even backed up.
