@@ -1,7 +1,5 @@
 # Capability-Based Security
 
-TODO: after current phase of development, revisit and expand this section.
-
 Capabilities are a security paradigm in which an ability that is usually handled as a *permission* (i.e. certain processes are allowed to perform an action if they are saved on an "access control list") are instead handled as a *token* (i.e. the process that possesses token can perform a certain action).
 These unforgeable tokens (as enforced by the kernel) can be passed to other owners, held by a given process, and checked for.
 
