@@ -1,4 +1,4 @@
-# Chapter 5: Sharing With The World
+# Sharing with the World
 
 So, you've made a new process.
 You've tested your code and are ready to share with friends, or perhaps just install across a couple nodes in order to do more testing.

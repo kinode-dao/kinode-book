@@ -1,4 +1,4 @@
-# Chapter 3: Defining Your Protocol
+# Defining Your Protocol
 
 In the last chapter, you created a simple request-response pattern that uses strings as an IPC field type.
 This is fine for certain limited cases, but in practice, most Uqbar processes written in Rust use an IPC type that is serialized and deserialized to bytes using [Serde](https://serde.rs/).

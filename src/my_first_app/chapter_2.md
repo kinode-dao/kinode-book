@@ -1,4 +1,4 @@
-# Chapter 2: Sending Some Messages, Using Some Tools
+# Sending Some Messages, Using Some Tools
 
 This chapter assumes you've completed the steps outlined in [Chapter 1](./chapter_1.md) to construct your dev environment or otherwise have a basic Uqbar app open in your code editor of choice.
 You should also be actively running an Uqbar node ([live](../login.md) or [fake](./chapter_1.md#booting-a-fake-uqbar-node)) such that you can quickly compile and test your code!

@@ -1,4 +1,4 @@
-# Chapter 4: Frontend Time
+# Frontend Time
 
 After the last chapter, you should have a simple process that responds to two commands from the terminal.
 In this chapter, you'll add some basic HTTP logic to serve a frontend and accept an HTTP PUT request that contains a command.

@@ -23,18 +23,19 @@
 - [ETH Read and Write](./eth.md)
 
 # Process Standard Library
+
 - [Overview](./process_stdlib/overview.md)
 
-# Build and Deploy an App
+# Tutorial: Build and Deploy an App
 
 - [Environment Setup](./my_first_app/chapter_1.md)
 - [Sending Some Messages, Using Some Tools](./my_first_app/chapter_2.md)
 - [Defining Your Protocol](./my_first_app/chapter_3.md)
 - [Frontend Time](./my_first_app/chapter_4.md)
-- [Sharing With The World](./my_first_app/chapter_5.md)
+- [Sharing with the World](./my_first_app/chapter_5.md)
 
 # In-Depth Guide: Chess App
-- [Start From Template](./chess_app/start.md)
+
 - [Chess Engine](./chess_app/chess_engine.md)
 - [Adding a Frontend](./chess_app/frontend.md)
 - [Putting Everything Together](./chess_app/putting_everything_together.md)
@@ -43,6 +44,7 @@
 - [Extension 3: LLM Integration](./chess_app/llm.md)
 
 # Cookbook (Handy Recipes)
+
 - [Cookbook Overview](./cookbook/cookbook_overview.md)
 - [HTTP Authentication](./cookbook/http_authentication.md)
 - [Managing Child Processes](./cookbook/manage_child_processes.md)
@@ -50,6 +52,7 @@
 - [Websocket Authentication](./cookbook/websocket_authentication.md)
 
 # API Reference
+
 - [APIs Overview](./apis/overview.md)
 - [uqbar.wit](./apis/uqbar_wit.md)
 - [Kernel API](./apis/kernel.md)

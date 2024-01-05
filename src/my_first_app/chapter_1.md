@@ -1,4 +1,4 @@
-# My First Uqbar Application
+# Tutorial: Build and Deploy an App
 
 Welcome!
 In these tutorials, you'll setup your development environment and learn about the `uqdev` tools.
@@ -9,7 +9,7 @@ For the purposes of this documentation, terminal commands are provided as-is for
 In that case, the command is prepended with a `$ ` to distinguish the command from the output.
 The `$ ` should not be copied into the terminal.
 
-# Chapter 1: Setting Up the Development Environment
+# Environment Setup
 
 In this chapter, you'll walk through setting up an Uqbar development environment.
 By the end, you will have created an Uqbar application, or package, composed of one or more processes that run on a live Uqbar node.

@@ -39,7 +39,10 @@ To access files in the vfs, you need to create or open a drive, this can be done
 let drive_path: String = create_drive(our.package_id(), "drive_name")?;
 ```
 
-All examples are using the uqbar_process_lib functions defined here: [link]
+All examples are using the [uqbar_process_lib](./process_stdlib/overview.md) functions, and would be imported like
+```rust
+use uqbar_process_lib::vfs::{open_file, create, ...};
+```
 
 #### Files
 
@@ -89,7 +92,7 @@ file.write_at(&buffer)?;
 ```rust
 /// Read into buffer from current cursor position
 /// Returns the amount of bytes read.
-let mut buffer = vec![0; 5]; 
+let mut buffer = vec![0; 5];
 file.read_at(&buffer)?;
 ```
 
