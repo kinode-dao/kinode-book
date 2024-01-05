@@ -1,4 +1,4 @@
-### Databases
+# Databases
 
 The runtime currently comes preloaded with 2 databases, a key value (RocksDB) and sqlite.
 
@@ -8,11 +8,11 @@ The APIs for doing so you can find here: [KV](./apis/kv.md) and [SQLite](./apis/
 Similarly to files in the VFS, they are accessed by `package_id` and a `db` name.
 Capabilities to read and write can be shared with other processes; processes within a given package have access by default.
 
-All examples are using the uqbar_process_lib functions defined here: [link]
+All examples are using the [uqbar_process_lib](https://github.com/uqbar-dao/process_lib) functions.
 
-#### Usage
+## Usage
 
-**KV**
+#### KV
 
 ```rust
 // opens or creates a kv db named birthdays in our package.
@@ -25,7 +25,7 @@ let bday = kv.get(b"tacitus".to_vec())?;
 println!("got a bday: {}", String::from_utf8(bday)?);
 ```
 
-**SQLite**
+#### SQLite
 
 ```rust
 // opens or creates sqlite db named users in our package.
@@ -51,9 +51,10 @@ let rows = sqlite.read(select_statement, vec![])?;
 println!("rows: {}", rows.len());
 ```
 
-### Links
+## References
 
 - [KV API](./apis/kv.md)
 - [SQLite API](./apis/sqlite.md)
 - [RocksDB](https://github.com/rust-rocksdb/rust-rocksdb)
 - [SQLite](https://www.sqlite.org/docs.html)
+- [uqbar_process_lib](https://github.com/uqbar-dao/process_lib)
