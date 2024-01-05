@@ -13,7 +13,7 @@ There are two ways: either the process can use the built-in `set_state` and `get
 
 The first option is a maximally-simple way to write some bytes to disk (where they'll be backed up, if the node owner has configured that behavior).
 The second option is vastly more general, because runtime modules that have direct messaging availability from userspace offer any number of APIs.
-So far, there are three modules built into Uqbar that are designed for persisted data: a [filesystem](./files.md), a [key-value store](./apis/kv.md), and a [SQLite database](./apis/sqlite.md).
+So far, there are three modules built into Uqbar that are designed for persisted data: a [filesystem](./files.md), a [key-value store, and a SQLite database](./databases.md).
 
 Each of these modules offer APIs accessed via message-passing and write data to disk.
 Between instantiations of a process, this data remains saved, even backed up.
