@@ -1,13 +1,13 @@
 # Chapter 2: Sending Some Messages, Using Some Tools
 
-This chapter assumes you've completed the steps outlined in [Chapter 1](./my_first_app/chapter_1) to construct your dev environment or otherwise have a basic Uqbar app open in your code editor of choice.
-You should also be actively running an Uqbar test node such that you can quickly compile and test your code!
+This chapter assumes you've completed the steps outlined in [Chapter 1](./chapter_1.md) to construct your dev environment or otherwise have a basic Uqbar app open in your code editor of choice.
+You should also be actively running an Uqbar node ([live](../login.md) or [fake](./chapter_1.md#booting-a-fake-uqbar-node)) such that you can quickly compile and test your code!
 Tight feedback loops when building: very important.
 
-## Starting from scratch
+## Starting from Scratch
 
 If you want to hit the ground running, you can take the template code or the [chess tutorial](../chess_app/start.md) and start hacking away.
-Here, we'll start from scratch and explain every line of boilerplate.
+Here, you'll start from scratch and learn about every line of boilerplate.
 
 The last chapter explained packages, the package manifest, and metadata.
 Every package contains one or more processes, which are the actual Wasm programs that will run on a node.
@@ -23,13 +23,21 @@ wit_bindgen::generate!({
 });
 ```
 
-After generating the bindings, every process must define a `Component` struct and implement the `Guest` trait for it.
+After generating the bindings, every process must define a `Component` struct and implement the `Guest` trait for it defining a single function, `init()`.
 This is the entry point for the process, and the `init()` function is the first function called by the Uqbar runtime when the process is started.
 
-This can be done manually, but it's easier to import the `uqbar_process_lib` crate (a sort of standard library for Uqbar processes written in Rust) and use the `call_init!` macro.
+The definition of the `Component` struct can be done manually, but it's easier to import the [`uqbar_process_lib`](../process_stdlib/overview.md) crate (a sort of standard library for Uqbar processes written in Rust) and use the `call_init!` macro.
 
 ```rust
 use uqbar_process_lib::{call_init, Address};
+
+wit_bindgen::generate!({
+    path: "wit",
+    world: "process",
+    exports: {
+        world: Component,
+    },
+});
 
 call_init!(my_init_fn);
 
@@ -43,10 +51,18 @@ The `Address` parameter tells our process what its globally-unique name is. (TOD
 
 Let's fill out the init function with code that will stop it from exiting immediately.
 Here's an infinite loop that will wait for a message and then print it out.
-Note that you are importing a few more things from the process_lib including a println! macro that replaces the standard Rust one.
+Note that you are importing a few more things from the [process_lib](../process_stdlib/overview.md) including a `println!` macro that replaces the standard Rust one.
 
 ```rust
 use uqbar_process_lib::{await_message, call_init, println, Address};
+
+wit_bindgen::generate!({
+    path: "wit",
+    world: "process",
+    exports: {
+        world: Component,
+    },
+});
 
 call_init!(my_init_fn);
 
@@ -66,15 +82,15 @@ These imports are the necessary "system calls" for talking to other processes an
 Run
 ```bash
 uqdev build your_pkg_name
-uqdev start-package your_pkg_name -u http://localhost:8080
+uqdev start-package your_pkg_name -p 8080
 ```
 
 to see this code in the node you set up in the last chapter.
 
-## Sending a message
+## Sending a Message
 
 Let's send a message to another process.
-The `Request` type in process_lib will provide all the necessary functionality.
+The `Request` type in [process_lib](../process_stdlib/overview.md) will provide all the necessary functionality.
 ```rust
 use uqbar_process_lib::{await_message, call_init, println, Address, Request};
 ```
@@ -88,7 +104,7 @@ Request::new()
     .send();
 ```
 
-Because this process might not have capabilities to message any other (local or remote) processes, just send the message to this process.
+Because this process might not have capabilities to message any other (local or remote) processes, just send the message to itself.
 
 ```rust
 Request::new()
