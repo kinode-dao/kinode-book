@@ -119,6 +119,8 @@ The reason `lazy_load_blob`s are not automatically loaded into a process is that
 If process A sends a request with a blob to process B, process B can send a request that inherits to process C.
 If process B does not attach a new `lazy_load_blob` to that inheriting request, the original blob from process A will be attached and accessible to C.
 
+This is the second functionality of inheritance; the first is discussed above: [eliminating the need for bucket-brigading of responses](#inheriting-a-response).
+
 #### Errors
 
 Messages that result in networking failures, like requests that timeout, are returned to the process that created them as an error.
