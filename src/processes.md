@@ -82,18 +82,23 @@ The process can instead issue request(s) that "inherit" from the incipient reque
 If a request does not expect a response and also "inherits" from another request, responses to the child request will be returned to the parent request's issuer.
 This allows for arbitrarily complex request-response chains, particularly useful for "middleware" processes.
 
-There is one other use of inheritance, discussed below: [inheriting data](#inheriting-a-lazy_load_blob).
+There is one other use of inheritance, discussed below: [passing data in request chains cheaply](#inheriting-a-lazy_load_blob).
 
 ##### Awaiting a Response
 
 When sending a request, a process can await a response to that specific request, queueing other messages in the meantime.
 Awaiting a response leads to easier-to-read code:
-* The response is handled in the next line of code, rather than in a separate iteration of the message-handling loop,
-* The `context` need not be set, since it is clear what request the response corresponds to.
+* The response is handled in the next line of code, rather than in a separate iteration of the message-handling loop
+* Therefore, the `context` need not be set.
 The downside of awaiting a response is that all other messages to a process will be queued until that response is received and handled.
 
 As such, certain applications lend themselves to blocking with an await, and others don't.
-A rule of thumb is: await responses for simpler code except when a process needs to performantly handle other messages in the meantime.
+A rule of thumb is: await responses (because simpler code) except when a process needs to performantly handle other messages in the meantime.
+
+For example, if a file-transfer process can only transfer one file at a time, requests can simply await responses, since the only possible next message will be a response to the request just sent.
+In contrast, if a file-transfer process can transfer more than one file at a time, requests that await responses will block others in the meantime; for performance it may make sense to write the process fully asynchronously.
+The constraint on awaiting is a primary reason why it is desirable to [spawn child processes](#spawning-child-processes).
+Continuing the file-transfer example, by spawning one child "worker" process per file to be transferred, each worker can use the await mechanic to simplify the code, while not limiting performance.
 
 #### Message Structure
 
@@ -115,9 +120,17 @@ Lastly, messages contain an optional `metadata` field, expressed as a JSON-strin
 
 ##### Inheriting a `lazy_load_blob`
 
-The reason `lazy_load_blob`s are not automatically loaded into a process is that an intermediate process may not need to access that data.
-If process A sends a request with a blob to process B, process B can send a request that inherits to process C.
-If process B does not attach a new `lazy_load_blob` to that inheriting request, the original blob from process A will be attached and accessible to C.
+The reason `lazy_load_blob`s are not automatically loaded into a process is that an intermediate process may not need to access the blob.
+If process A sends a message with a blob to process B, process B can send a message that inherits to process C.
+If process B does not attach a new `lazy_load_blob` to that inheriting message, the original blob from process A will be attached and accessible to C.
+
+For example, consider again the file-transfer process discussed [above](#awaiting-a-response).
+Say one node, `send.uq`, is transferring a file to another node, `recv.uq`.
+The process of sending a file chunk will look something like:
+1. `recv.uq` sends a request for chunk N
+2. `send.uq` receives the request and itself makes a request to the filesystem for the piece of the file
+3. `send.uq` receives a response from the filesystem with the piece of the file in the `lazy_load_blob`;
+   `send.uq` sends a response that inherits the blob back to `recv.uq` without itself having to load the blob, saving the compute and IO required to move the blob across the Wasm boundary.
 
 This is the second functionality of inheritance; the first is discussed above: [eliminating the need for bucket-brigading of responses](#inheriting-a-response).
 
@@ -142,6 +155,17 @@ It also gives a capability allowing processes to send and receive messages over 
 A process can optionally mark itself as `public`, meaning that it can be messaged by any *local* process regardless of capabilities.
 
 [See the capabilities chapter for more details.](./process-capabilities.md)
+
+### Spawning child processes
+
+A process can spawn "child" processes -- in which case the spawner is known as the "parent".
+As discussed [above](#awaiting-a-response), one of the primary reasons to write an application with multiple processes is to enable both simple code and high performance.
+
+Child processes can be used to:
+1. Run code that may crash without risking crashing the parent
+2. Run compute-heavy code without blocking the parent
+3. Run IO-heavy code without blocking the parent
+4. Break out code that is more easily written with awaits to avoid blocking the parent
 
 ### Conclusion
 
