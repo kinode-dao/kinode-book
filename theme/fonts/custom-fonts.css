@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Kabel Black";
-  src: url("Kabel-Black.woff2") format("woff2");
+  src: url("/fonts/Kabel_Black_Regular.otf") format("opentype");
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
