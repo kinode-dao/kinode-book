@@ -3,22 +3,30 @@
 Generally, userspace applications will not have the capability to message the kernel.
 Those that can, such as the app store, have full control over starting and stopping all userspace processes.
 
-The kernel runtime task accepts one shape of message, always sent as a `Request` serialized to JSON text bytes using `serde_json`:
-
+The kernel runtime task accepts one kind of `Request`:
 ```rust
+#[derive(Debug, Serialize, Deserialize)]
 pub enum KernelCommand {
     Booted,
     InitializeProcess {
         id: ProcessId,
-        wasm_bytes_handle: u128,
-        on_panic: OnPanic,
-        initial_capabilities: HashSet<SignedCapability>,
+        wasm_bytes_handle: String,
+        wit_version: Option<u32>,
+        on_exit: OnExit,
+        initial_capabilities: HashSet<Capability>,
         public: bool,
     },
+    GrantCapabilities {
+        target: ProcessId,
+        capabilities: Vec<Capability>,
+    },
+
     RunProcess(ProcessId),
     KillProcess(ProcessId),
     Shutdown,
+    Debug(KernelPrint),
 }
+
 ```
 
 All `KernelCommand`s are sent in the IPC field of a `Request`.
@@ -53,6 +61,12 @@ The payload must be the same .wasm file, in raw bytes, that the `wasm_bytes_hand
 
 This will *not* cause the process to begin running.
 To do that, send a `RunProcess` command after a successful `InitializeProcess` command.
+
+## `GrantCapabilities`
+This command directly inserts a list of capabilities into another process' state.
+While you generally don't want to do this for security reasons, it helps you clean up the "handshake" process by which capabilities must be handed off between two processes before engaging in the business logic.
+For instance, if you want a kernel module like `http_server` to be able to message a process back, you do this by directly inserting that `"messaging"` cap into `http_server`'s store.
+Only the `app_store` and `tester` make use of this.
 
 ## `RunProcess`
 
