@@ -5,19 +5,28 @@ Generally, userspace applications will not have the cabaility to message the ker
 The kernel runtime task accepts one shape of message, always sent as a `Request` serialized to JSON text bytes using `serde_json`:
 
 ```rust
+#[derive(Debug, Serialize, Deserialize)]
 pub enum KernelCommand {
     Booted,
     InitializeProcess {
         id: ProcessId,
-        wasm_bytes_handle: u128,
-        on_panic: OnPanic,
-        initial_capabilities: HashSet<SignedCapability>,
+        wasm_bytes_handle: String,
+        wit_version: Option<u32>,
+        on_exit: OnExit,
+        initial_capabilities: HashSet<Capability>,
         public: bool,
     },
+    GrantCapabilities {
+        target: ProcessId,
+        capabilities: Vec<Capability>,
+    },
+
     RunProcess(ProcessId),
     KillProcess(ProcessId),
     Shutdown,
+    Debug(KernelPrint),
 }
+
 ```
 
 All `KernelCommand`s are sent in the IPC field of a `Request`. Only `InitializeProcess`, `RunProcess`, and `KillProcess` will give back a `Response`, also serialized to JSON text bytes using `serde_json`:
@@ -43,6 +52,9 @@ The first command used to start a new process. Generally available to apps via t
 `InitializeProcess` must be sent with a payload. The payload must be the same .wasm file, in raw bytes, that the `wasm_bytes_handle` points to.
 
 This will *not* cause the process to begin running. To do that, send a `RunProcess` command after a successful `InitializeProcess` command.
+
+# `GrantCapabilities`
+This command directly inserts a list of capabilities into another process' state. While we generally don't want to do this for security reasons, it helps us clean up the "handshake" process by which capabilities must be handed off between two processes before engaging in the business logic. For instance, if we want a kernel module like `http_server` to be able to message a process back, we do this by directly inserting that `"messaging"` cap into `http_server`'s store. Only the `app_store` and `tester` make use of this.
 
 ## `RunProcess`
 

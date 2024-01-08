@@ -14,7 +14,7 @@ The VFS metadata is stored in a similar way to app state, by calling save_state.
 
 Requests always have a target drive. Modifying or reading this drive requires a corresponding capability enforced by the VFS. You can pass these capabilities to other apps/nodes who you want to be able to modify/read your files.
 
-[link to general capability guide/examples]
+[Click here to learn more about capabilities](../process-capabilities.md)
 
 ```rust
 pub struct VfsRequest {

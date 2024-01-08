@@ -58,27 +58,10 @@ Examples of capabilities:
     When a file is saved by a process, the filesystem returns a handle to that file upon success. This handle is the only way to read or write to that file. The process can clone the handle and share it via message with another process, or split the handle and only clone and share the 'read' or 'write' aspect.
 
 - access to networking:
-    TODO does a process need a cap granted to it at launch to "do networking"?
+    To be able to send messages over the network, a process must acquire the `"network"` capability.
 
 - access to other processes:
-
-    ```rust
-    pub struct Address {
-        pub node: String,
-        pub process: ProcessId,
-    }
-    ```
-
-    Instead of `target` being a mere `Address` struct, a process must have a `Capability` in order to create a message directed at another process. Since this is such a common capability, we can have special affordances to make it as ergonomic as using an `Address`. Literally, the process can be written as though it simply uses Address structs in its messaging, and the kernel can interpolate them with matching CapAddress structs that it stores next to the running process.
-
-    ```rust
-    pub struct CapAddress {
-        pub node: String,
-        pub process: ProcessId,
-        issuer: Address,
-        signature: String,
-    }
-    ```
+    To be able to message other processes on your node, a proess must acquire the `"messaging"` capability issued by that process. Since this is such a common capability, we can have special affordances to make it as ergonomic as possible - you do not have to attach the `"messaging"` capability to the `Request` or `Response` any time you want to message another process. Once it is saved, the kernel will check for you.
 
     When a process starts, we need some kind of way for it to "request" certain capabilities that it requires for operation. This bubbles up all the way to top-level user-facing UX: it's similar to installing an iOS app and seeing it request camera and microphone access.
 

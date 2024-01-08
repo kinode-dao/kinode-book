@@ -53,12 +53,11 @@ A process must then have a `Component` struct and implement the `Guest` trait fo
 ## Gathering capabilities
 
 - in our package manifest:
-    - request_messaging
-    - grant_messaging
+    - request_capabilities
+    - grant_capabilities
 
 - from the WIT:
-    - `get_capability()`
-    - `share_capability()`
+    - `save_capabilities()`
 
 ## Serving a frontend
 
