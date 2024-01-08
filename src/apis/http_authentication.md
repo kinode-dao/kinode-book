@@ -20,8 +20,8 @@ Now, any HTTP requests to your node at `/main:my_package:myname.uq/messages` wil
 The other two parameters to `bind_http_path` are `authenticated: bool` and `local_only: bool`.
 `authenticated` means that `http_server` will check for an auth cookie (set at login/registration), and `local_only` means that `http_server` will only allow requests that come from `localhost`.
 
-Incoming HTTP requests will come via `http_server` and have both an `ipc` and a `payload`.
-The `payload` is the HTTP request body, and the `ipc` is an `IncomingHttpRequest`:
+Incoming HTTP requests will come via `http_server` and have both an `body` and a `lazy_load_blob`.
+The `lazy_load_blob` is the HTTP request body, and the `body` is an `IncomingHttpRequest`:
 
 ```
 pub struct IncomingHttpRequest {
@@ -40,19 +40,19 @@ Note that `raw_path` is the host and full path of the original HTTP request that
 Usually, you will want to:
 1) determine if an incoming request is a HTTP request.
 2) figure out what kind of `IncomingHttpRequest` it is.
-3) handle the rquest based on the path and method.
+3) handle the request based on the path and method.
 
-Here is an example from the `uqdev` chat app template that handles both `POST` and `GET` requests to the `/messages` path:
+Here is an example from the `uqdev` UI-enabled chat app template that handles both `POST` and `GET` requests to the `/messages` path:
 
 ```
 fn handle_http_server_request(
     our: &Address,
     message_archive: &mut MessageArchive,
     source: &Address,
-    ipc: &[u8],
+    body: &[u8],
     our_channel_id: &mut u32,
 ) -> anyhow::Result<()> {
-    let Ok(server_request) = serde_json::from_slice::<HttpServerRequest>(ipc) else {
+    let Ok(server_request) = serde_json::from_slice::<HttpServerRequest>(body) else {
         // Fail silently if we can't parse the request
         return Ok(());
     };
@@ -83,7 +83,7 @@ fn handle_http_server_request(
                     // Send a message
                     "POST" => {
                         print_to_terminal(0, "1");
-                        let Some(payload) = get_payload() else {
+                        let Some(blob) = get_blob() else {
                             return Ok(());
                         };
                         print_to_terminal(0, "2");
@@ -92,7 +92,7 @@ fn handle_http_server_request(
                             message_archive,
                             our_channel_id,
                             source,
-                            &payload.bytes,
+                            &blob.bytes,
                             true,
                         )?;
 

@@ -1,26 +1,24 @@
 # Spawning and Managing Child Processes
+
 In Uqbar, a "parent" process can create additional processes, known as "children".
 These child processes are particularly useful for handling intensive tasks (referred to as "workers") that require long computation times without hindering the performance of the main application.
 They are also beneficial for segregating distinct logical components.
-Each child process operates within its own Rust project, complete with a separate Cargo.toml file, ensuring modular and organized code management.
+Each process is its own subdirectory within the package.
+E.g., for Rust processes, each is its own Rust project, complete with a separate Cargo.toml file.
 
-Your project's file structure might resemble the following:
+Your package's file structure might resemble the following:
 
 ```
 my-package/
 ├─ pkg/
 │  ├─ metadata.json
 │  ├─ manifest.json
-│  ├─ parent.wasm
-│  ├─ child.wasm
 ├─ parent/
 │  ├─ src/
-│  ├─ target/
 │  ├─ Cargo.toml
 │  ├─ Cargo.lock
 ├─ child/
 │  ├─ src/
-│  ├─ target/
 │  ├─ Cargo.toml
 │  ├─ Cargo.lock
 ```

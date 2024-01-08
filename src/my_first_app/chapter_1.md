@@ -84,7 +84,7 @@ my_chat_app
 The `my_chat_app/` package here contains one process, also named `my_chat_app/`.
 The process directory contains source files and other metadata for compiling that process.
 
-Here, the `Cargo.toml` file is standard for Rust projects: it specifies dependencies.
+In Rust processes, the standard Rust `Cargo.toml` file is included: it specifies dependencies.
 It is exhaustively defined [here](https://doc.rust-lang.org/cargo/reference/manifest.html).
 The `src/` directory is where the code for the process lives.
 
@@ -93,7 +93,7 @@ The `pkg/` directory contains two files, `manifest.json` and `metadata.json`, th
 The `pkg/` directory is also where `.wasm` binaries will be deposited by [`uqbar build`](#building-the-package).
 The files in the `pkg/` directory contents are injected into the Uqbar node with [`uqbar start-package`](#starting-the-package).
 
-Though not included here, packages with a frontend have a `ui/` directory as well.
+Though not included in this template, packages with a frontend have a `ui/` directory as well.
 For an example, look at the result of:
 ```bash
 uqdev new my_chat_app_with_ui --ui
