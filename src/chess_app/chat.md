@@ -2,19 +2,19 @@
 
 So, at this point you've got a working chess game with a frontend.
 There are a number of obvious improvements to the program to be made, as listed at the end of the last chapter.
-The best way to understand those improvements is to start exploring other areas of the docs, such as the chapters on capabilities-based security and the networking protocol, for error handling.
+The best way to understand those improvements is to start exploring other areas of the docs, such as the chapters on [capabilities-based security](../process-capabilities.md) and the [networking protocol](../networking_protocol.md), for error handling.
 
 This chapter will instead focus on how to *extend* an existing program with new functionality.
 Chat is a basic feature for a chess program, but will touch the existing code in many places.
 This will give you a good idea of how to extend your own programs.
 
-We need to alter at least 4 things about the program:
-- the request-response types it can handle (i.e. the protocol itself)
-- the incoming request handler for HTTP requests, to receive chats sent by our node
-- the outgoing websocket update, to send received chats to the frontend
-- the frontend, to display the chat
+You need to alter at least 4 things about the program:
+- The request-response types it can handle (i.e. the protocol itself)
+- The incoming request handler for HTTP requests, to receive chats sent by `our` node
+- The outgoing websocket update, to send received chats to the frontend
+- The frontend, to display the chat
 
-We'll handle them in that order. First, let's look at the types we use for request-response now:
+Handling them in that order, first, look at the types used for request-response now:
 ```rust
 #[derive(Debug, Serialize, Deserialize)]
 enum ChessRequest {
@@ -32,7 +32,7 @@ enum ChessResponse {
 }
 ```
 
-These types need to be exhaustive, since we want to be able to feed every incoming message into a `match` statement that uses `ChessRequest` and `ChessResponse`.
+These types need to be exhaustive, since incoming messages will be fed into a `match` statement that uses `ChessRequest` and `ChessResponse`.
 For more complex apps, one could introduce a new type that serves as an umbrella over multiple "kinds" of message, but since a simple chat will only be a few extra entries into the existing types, it's unnecessary for this example.
 
 In order to add chat, the request type above will need a new variant, something like `Message(String)`.
@@ -98,7 +98,7 @@ ChessRequest::Message(content) => {
 ```
 
 In `handle_local_request`, the app sends requests to other nodes.
-Note, however, that requests to message ourself don't really make sense — what should really happen is that the chess frontend performs a PUT request, or sends a message over a websocket, and the chess backend process turns that into a message request to the other player.
+Note, however, that requests to message `our`self don't really make sense — what should really happen is that the chess frontend performs a PUT request, or sends a message over a websocket, and the chess backend process turns that into a message request to the other player.
 So instead of handling `Message` requests in `handle_local_request`, the process should reject or ignore them:
 
 ```rust
@@ -178,7 +178,7 @@ This is the current (super gross!!) code for handling PUT requests in `handle_ht
 ```
 
 Let's modify this to handle more than just making moves.
-Note that there's an implicit JSON structure enforced by the code above, where PUT requests from our frontend look like this:
+Note that there's an implicit JSON structure enforced by the code above, where PUT requests from your frontend look like this:
 
 ```json
 {

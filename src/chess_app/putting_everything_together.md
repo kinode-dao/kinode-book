@@ -1,6 +1,6 @@
 # Putting Everything Together
 
-After adding a frontend in the previous chapter, our chess game is ready to play.
+After adding a frontend in the previous chapter, your chess game is ready to play.
 
 Hopefully, you've been using `uqdev build <your_chess_app_name>` to test the code as the tutorial has progressed.
 If not, do so now in order to get a compiled package we can install onto a node.
@@ -10,7 +10,7 @@ You should see the printout we added to `init()` in your terminal: `chess by <yo
 
 Remember that you determine the process name, package name, and your developer name in the `manifest.json` and `metadata.json` files inside `/pkg`.
 Open your chess frontend by navigating to your node's URL (probably something like `http://localhost:8080`), and use the names you chose as the path.
-For example, if your chess process name is `my_chess_app`, and your package is named `chess`, and your publisher name is `ben.uq`, you would navigate to `http://localhost:8080/my_chess_app:chess:ben.uq`.
+For example, if your chess process name is `my_chess`, and your package is named `my_chess`, and your publisher name is `template.uq`, you would navigate to `http://localhost:8080/my_chess:my_chess:template.uq`.
 
 You should see something like this:
 ![chess frontend](./chess_home.png)
