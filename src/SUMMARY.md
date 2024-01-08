@@ -20,7 +20,6 @@
 - [HTTP Client](./http_client.md)
 - [Files](./files.md)
 - [Databases](./databases.md)
-- [ETH Read and Write](./eth.md)
 
 # Process Standard Library
 
@@ -40,16 +39,12 @@
 - [Adding a Frontend](./chess_app/frontend.md)
 - [Putting Everything Together](./chess_app/putting_everything_together.md)
 - [Extension 1: Chat](./chess_app/chat.md)
-- [Extension 2: Payment Integration](./chess_app/payment.md)
-- [Extension 3: LLM Integration](./chess_app/llm.md)
 
 # Cookbook (Handy Recipes)
 
 - [Cookbook Overview](./cookbook/cookbook_overview.md)
-- [HTTP Authentication](./cookbook/http_authentication.md)
 - [Managing Child Processes](./cookbook/manage_child_processes.md)
 - [Publishing a Website or Web App](./cookbook/publish_to_web.md)
-- [Websocket Authentication](./cookbook/websocket_authentication.md)
 
 # API Reference
 
@@ -62,4 +57,7 @@
 - [Terminal API](./apis/terminal.md)
 - [HTTP Server API](./apis/http_server.md)
 - [HTTP Client API](./apis/http_client.md)
+- [HTTP API](./apis/http_authentication.md)
 - [Net API](./apis/net.md)
+- [Websocket API](./apis/websocket_authentication.md)
+
