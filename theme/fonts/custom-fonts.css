@@ -1,0 +1,23 @@
+@font-face {
+  font-family: "Kabel Black";
+  src: url("Kabel-Black.woff2") format("woff2");
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+.menu-title {
+  font-family: "Kabel Black", sans-serif;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Kabel Black", sans-serif;
+}

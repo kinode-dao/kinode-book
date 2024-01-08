@@ -4,3 +4,7 @@ language = "en"
 multilingual = false
 src = "src"
 title = "uqbar-book"
+
+[output.html]
+additional-js = ["theme/customize-buttons.js"]
+additional-css = ["theme/fonts/custom-fonts.css"]
