@@ -1,27 +1,29 @@
 # Spawning and Managing Child Processes
-In Uqbar, a "parent" process can create additional processes, known as "children". These child processes are particularly useful for handling intensive tasks (referred to as "workers") that require long computation times without hindering the performance of the main application. They are also beneficial for segregating distinct logical components. Each child process operates within its own Rust project, complete with a separate Cargo.toml file, ensuring modular and organized code management.
 
-Your project's file structure might resemble the following:
+In Uqbar, a "parent" process can create additional processes, known as "children".
+These child processes are particularly useful for handling intensive tasks (referred to as "workers") that require long computation times without hindering the performance of the main application.
+They are also beneficial for segregating distinct logical components.
+Each process is its own subdirectory within the package.
+E.g., for Rust processes, each is its own Rust project, complete with a separate Cargo.toml file.
+
+Your package's file structure might resemble the following:
 
 ```
 my-package/
 ├─ pkg/
 │  ├─ metadata.json
 │  ├─ manifest.json
-│  ├─ parent.wasm
-│  ├─ child.wasm
 ├─ parent/
 │  ├─ src/
-│  ├─ target/
 │  ├─ Cargo.toml
 │  ├─ Cargo.lock
 ├─ child/
 │  ├─ src/
-│  ├─ target/
 │  ├─ Cargo.toml
 │  ├─ Cargo.lock
 ```
-To initiate a child process, use the `spawn` function from `uqbar_process_lib`. The following example demonstrates a basic parent process whose sole function is to spawn a child process and grant it the ability to send messages using `http_client`:
+To initiate a child process, use the `spawn` function from `uqbar_process_lib`.
+The following example demonstrates a basic parent process whose sole function is to spawn a child process and grant it the ability to send messages using `http_client`:
 ```rust
 // imports
 use uqbar_process_lib::{println, spawn, Address, Capability, OnExit};
@@ -48,7 +50,7 @@ impl Guest for Component {
         let spawned_process_id: ProcessId = match spawn(
             // name of the child process
             Some("spawned_child_process".to_string()),
-            // path to find the compiled wasm file for the child process
+            // path to find the compiled Wasm file for the child process
             "/child.wasm",
             // what to do when this process crashes/panics/finishes
             OnExit::None,
@@ -96,7 +98,7 @@ impl Guest for Component {
         // unpack the address string and print it to the terminal
         let our = Address::from_str(&our).unwrap();
         println!("{our}: start");
-        
+
         // print something else out
         println!("this is the child process, wow!");
     }
@@ -104,15 +106,18 @@ impl Guest for Component {
 ```
 The spawn function in Uqbar comprises several parameters, each serving a specific purpose in the process creation:
 
-- `name: Option<String>`: This parameter specifies the name of the process. If set to None, the process is automatically assigned a numerical identifier, resulting in a ProcessId formatted like `123456789:my-package:john.uq`.
+- `name: Option<String>`: This parameter specifies the name of the process.
+If set to None, the process is automatically assigned a numerical identifier, resulting in a ProcessId formatted like `123456789:my-package:john.uq`.
 
-- `wasm_path: String`: Indicates the location of the compiled WebAssembly (WASM) bytecode for the process. This path should be relative to the `/pkg` directory in your project.
+- `wasm_path: String`: Indicates the location of the compiled WebAssembly (Wasm) bytecode for the process.
+This path should be relative to the `/pkg` directory in your project.
 
-- `on_exit: OnExit`: Determines the behavior of the process upon termination, whether due to completion, a crash, or a panic. OnExit is an enum with three potential values:
+- `on_exit: OnExit`: Determines the behavior of the process upon termination, whether due to completion, a crash, or a panic.
+OnExit is an enum with three potential values:
 
   - `None`: The process will take no action upon exiting.
   - `Restart`: The process will automatically restart after termination.
-  - `Requests: Vec<(Address, Request, Option<Payload>)>`: Upon process termination, a series of predefined requests will be dispatched. This feature is particularly useful for notifying other processes about the termination of this child process.
+  - `Requests: Vec<(Address, Request, Option<Payload>)>`: Upon process termination, a series of predefined requests will be dispatched.
 - `request_capabilities: Vec<Capability>`: This argument is for passing immediate capabilities to the child process. As illustrated in the provided example, the parent's http_client messaging capability was shared with the child.
 - `grant_capabilities: Vec<ProcessId>`: This argument is for granting capabilities to other processes on start. However, for security reasons, we limit it just to the `"messaging"` cap for messaging this process back, hence why it is a `Vec<ProcessId>` instead of vector of arbitrary capabilities.
 - `public: bool`: This boolean value determines whether the process can receive messages from other processes by default.

@@ -1,1 +1,1 @@
-TODO: Will
+# Websocket Authentication
