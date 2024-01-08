@@ -119,7 +119,7 @@ OnExit is an enum with three potential values:
   - `Restart`: The process will automatically restart after termination.
   - `Requests: Vec<(Address, Request, Option<Payload>)>`: Upon process termination, a series of predefined requests will be dispatched.
 - `request_capabilities: Vec<Capability>`: This argument is for passing immediate capabilities to the child process. As illustrated in the provided example, the parent's http_client messaging capability was shared with the child.
-- `grant_capabilities: Vec<ProcessId>`: This argument is for granting capabilities to other processes on start. However, for security reasons, we limit it just to the `"messaging"` cap for messaging this process back, hence why it is a `Vec<ProcessId>` instead of vector of arbitrary capabilities.
+- `grant_capabilities: Vec<ProcessId>`: This argument is for granting capabilities to other processes on start. However, for security reasons, you limit it just to the `"messaging"` cap for messaging this process back, hence why it is a `Vec<ProcessId>` instead of vector of arbitrary capabilities.
 - `public: bool`: This boolean value determines whether the process can receive messages from other processes by default.
 
 The fields within the spawn function closely mirror those found in the pkg/manifest.json file of your project, providing a consistent and intuitive setup for process management.
