@@ -3,7 +3,7 @@
 Capabilities are a security paradigm in which an ability that is usually handled as a *permission* (i.e. certain processes are allowed to perform an action if they are saved on an "access control list") are instead handled as a *token* (i.e. the process that possesses token can perform a certain action).
 These unforgeable tokens (as enforced by the kernel) can be passed to other owners, held by a given process, and checked for.
 
-In Uqbar, each process has an associated set of capabilities, which are each represented internally as an arbitrary JSON object with a source process.
+In Nectar OS, each process has an associated set of capabilities, which are each represented internally as an arbitrary JSON object with a source process.
 The kernel abstracts away the procedure of checking if a capability is legitimate, using the running node's networking keys as a signing mechanism to ensure that capabilities are not forged.
 
 Runtime processes, including the kernel itself, the filesystem, and the HTTP client, use capabilities to ensure that only the processes that should be able to access them can do so.

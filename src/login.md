@@ -2,21 +2,21 @@
 
 Let's get onto the live network!
 
-These directions are particular to the Uqbar alpha release.
+These directions are particular to the Nectar OS alpha release.
 Joining the network will become significantly easier on subsequent releases.
 
-Note: While Uqbar will eventually post identities to Optimism, the alpha release uses the Ethereum Sepolia testnet.
+Note: While Nectar will eventually post identities to Optimism, the alpha release uses the Ethereum Sepolia testnet.
 
 ## Creating an Alchemy Account
 
 Alchemy is used as an [Ethereum RPC endpoint](#acquiring-an-rpc-api-key) and as a [faucet for Sepolia testnet ETH](#aside-acquiring-sepolia-testnet-eth).
-An Ethereum RPC endpoint and Sepolia ETH are required to send and receive Ethereum transactions that support the Uqbar identity system.
+An Ethereum RPC endpoint and Sepolia ETH are required to send and receive Ethereum transactions that support the Nectar identity system.
 If you do not already have one, register an [Alchemy account](https://www.alchemy.com/).
 The account is free and requires only an email address for registration.
 
-## Starting the Uqbar node
+## Starting the Nectar node
 
-Start an Uqbar node using the binary acquired in the [previous section](./install.md).
+Start an Nectar node using the binary acquired in the [previous section](./install.md).
 Locating the binary on your system, run:
 
 ```bash
@@ -41,7 +41,7 @@ Options:
 
 A home directory must be supplied — where the node will store its files.
 The binary also takes a required `--rpc` flag.
-The `--rpc` flag is a `wss://` WebSocket link to an Ethereum RPC, allowing the Uqbar node can send and receive Ethereum transactions — used in the [identity system](./identity_system.md) as mentioned [above](#creating-an-alchemy-account).
+The `--rpc` flag is a `wss://` WebSocket link to an Ethereum RPC, allowing the Nectar node can send and receive Ethereum transactions — used in the [identity system](./identity_system.md) as mentioned [above](#creating-an-alchemy-account).
 Finally, by default, the node will bind to port 8080; this can be modified with the `--port` flag.
 
 ### Acquiring an RPC API Key
@@ -87,7 +87,7 @@ Click `Register UqName` and proceed to [Connecting the Wallet](#connecting-the-w
 
 ### Aside: Acquiring a Wallet
 
-To register an identity, Uqbar must send an Ethereum transaction, which requires ETH and a cryptocurrency wallet.
+To register an identity, Nectar must send an Ethereum transaction, which requires ETH and a cryptocurrency wallet.
 While many wallets will work, the examples below use Metamask.
 Install Metamask [here](https://metamask.io/download/).
 
@@ -100,11 +100,11 @@ After registering a username, click through until you reach `Connect Wallet` and
 ### Aside: Acquiring Sepolia Testnet ETH
 
 Using the Alchemy account [registered above](#creating-an-alchemy-account), use the [Sepolia faucet](https://sepoliafaucet.com/) to acquire Sepolia ETH if you do not already have some in your wallet.
-Then, return to the Uqbar node.
+Then, return to the Nectar node.
 
 ### Setting Up Networking (Direct vs. Routed Nodes)
 
-When registering on Uqbar, you may choose between running a direct or indirect (routed) node.
+When registering on Nectar, you may choose between running a direct or indirect (routed) node.
 Most users should use an indirect node.
 To do this, simply leave the box below name registration unchecked.
 

@@ -2,24 +2,24 @@
 
 One of the most important features of a peer-to-peer network is the ability to maintain a unique and persistent identity.
 This identity must be self-sovereign, unforgeable, and easy to discover by peers.
-Uqbar uses a domain system similar to [ENS](https://ens.domains/) to achieve this.
+Nectar OS uses a domain system similar to [ENS](https://ens.domains/) to achieve this.
 It should be noted that, in our system, the concepts of `domain`, `identity`, and `username` are identical and interchangeable.
 
-Like ENS, Uqbar domains (managed by our QNS) are registered by a wallet and owned in the form of an NFT.
-However, unlike ENS, Uqbar domains never expire. Additionally, they contain metadata necessary to both:
+Like ENS, Nectar domains (managed by our QNS) are registered by a wallet and owned in the form of an NFT.
+However, unlike ENS, Nectar domains never expire. Additionally, they contain metadata necessary to both:
 - demonstrate the provenance of a given identity.
-- route messages to the identity on the Uqbar network.
+- route messages to the identity on the Nectar network.
 
 QNS provides both sensible defaults and flexibility.
 The cheapest option is also the default: minting a new NFT, a `.uq` TLD.
 However, unlike ENS, QNS is not restricted to a single set of NFTs.
-Instead, it is designed to easily extend and wrap existing NFTs, enabling users to use identities they are already attached to as their Uqbar identity.
+Instead, it is designed to easily extend and wrap existing NFTs, enabling users to use identities they are already attached to as their Nectar identity.
 
 What does this look like in practice?
 
 It's easy enough to check for provenance of a given identity.
-If you have an Uqbar domain, you can prove ownership by signing a message with the wallet that owns the domain.
-However, to essentially use your Uqbar identity as a domain name for your personal server, QNS domains have routing information, similar to a DNS record, that points to an IP address.
+If you have an Nectar domain, you can prove ownership by signing a message with the wallet that owns the domain.
+However, to essentially use your Nectar identity as a domain name for your personal server, QNS domains have routing information, similar to a DNS record, that points to an IP address.
 
 A QNS domain can either be `direct` or `indirect`.
 When users first boot a node, they may decide between these two domain types as they create their initial identity.
@@ -37,5 +37,5 @@ For more information about the architectural specifics of the networking protoco
 The main takeaway for the identity system is that *domain provenance* and *domain resolution* are unified by QNS.
 
 Like .eth for ENS, the QNS domain space is fixed inside the `.uq` top-level domain.
-However, we reserve the ability to expand domain availability in the future, and governance of the Uqbar protocol will include the ability to manage domain names.
+However, we reserve the ability to expand domain availability in the future, and governance of the Nectar protocol will include the ability to manage domain names.
 Eventually, we hope to link various TLDs to existing NFT communities and other identity systems.

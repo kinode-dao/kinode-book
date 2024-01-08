@@ -1,6 +1,6 @@
 # Spawning and Managing Child Processes
 
-In Uqbar, a "parent" process can create additional processes, known as "children".
+In Nectar OS, a "parent" process can create additional processes, known as "children".
 These child processes are particularly useful for handling intensive tasks (referred to as "workers") that require long computation times without hindering the performance of the main application.
 They are also beneficial for segregating distinct logical components.
 Each process is its own subdirectory within the package.
@@ -103,7 +103,7 @@ impl Guest for Component {
     }
 }
 ```
-The spawn function in Uqbar comprises several parameters, each serving a specific purpose in the process creation:
+The spawn function in Nectar comprises several parameters, each serving a specific purpose in the process creation:
 
 - `name: Option<String>`: This parameter specifies the name of the process.
 If set to None, the process is automatically assigned a numerical identifier, resulting in a ProcessId formatted like `123456789:my-package:john.uq`.
@@ -119,7 +119,7 @@ OnExit is an enum with three potential values:
   - `Requests: Vec<(Address, Request, Option<Payload>)>`: Upon process termination, a series of predefined requests will be dispatched.
   This feature is particularly useful for notifying other processes about the termination of this child process.
 - `capabilities: Vec<SignedCapability>`: This argument is for passing immediate capabilities to the child process.
-As illustrated in the provided example, the parent's http_client messaging capability was shared with the child.
+As illustrated in the provided example, the parent's `http_client` messaging capability was shared with the child.
 - `public: bool`: This boolean value determines whether the process can receive messages from other processes by default.
 
 The fields within the spawn function closely mirror those found in the pkg/manifest.json file of your project, providing a consistent and intuitive setup for process management.

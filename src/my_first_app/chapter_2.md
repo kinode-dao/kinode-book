@@ -1,7 +1,7 @@
 # Sending Some Messages, Using Some Tools
 
-This chapter assumes you've completed the steps outlined in [Chapter 1](./chapter_1.md) to construct your dev environment or otherwise have a basic Uqbar app open in your code editor of choice.
-You should also be actively running an Uqbar node ([live](../login.md) or [fake](./chapter_1.md#booting-a-fake-uqbar-node)) such that you can quickly compile and test your code!
+This chapter assumes you've completed the steps outlined in [Chapter 1](./chapter_1.md) to construct your dev environment or otherwise have a basic Nectar app open in your code editor of choice.
+You should also be actively running an Nectar node ([live](../login.md) or [fake](./chapter_1.md#booting-a-fake-uqbar-node)) such that you can quickly compile and test your code!
 Tight feedback loops when building: very important.
 
 ## Starting from Scratch
@@ -11,7 +11,7 @@ Here, you'll start from scratch and learn about every line of boilerplate.
 
 The last chapter explained packages, the package manifest, and metadata.
 Every package contains one or more processes, which are the actual Wasm programs that will run on a node.
-In order to compile properly to the Uqbar environment, every process must generate the WIT bindings for the `process` "world".
+In order to compile properly to the Nectar environment, every process must generate the WIT bindings for the `process` "world".
 
 ```rust
 wit_bindgen::generate!({
@@ -24,9 +24,9 @@ wit_bindgen::generate!({
 ```
 
 After generating the bindings, every process must define a `Component` struct and implement the `Guest` trait for it defining a single function, `init()`.
-This is the entry point for the process, and the `init()` function is the first function called by the Uqbar runtime when the process is started.
+This is the entry point for the process, and the `init()` function is the first function called by the Nectar runtime when the process is started.
 
-The definition of the `Component` struct can be done manually, but it's easier to import the [`uqbar_process_lib`](../process_stdlib/overview.md) crate (a sort of standard library for Uqbar processes written in Rust) and use the `call_init!` macro.
+The definition of the `Component` struct can be done manually, but it's easier to import the [`uqbar_process_lib`](../process_stdlib/overview.md) crate (a sort of standard library for Nectar processes written in Rust) and use the `call_init!` macro.
 
 ```rust
 use uqbar_process_lib::{call_init, Address};
@@ -46,7 +46,7 @@ fn my_init_fn(our: Address) {
 }
 ```
 
-Every Uqbar process written in Rust will need code that does the same thing as the above.
+Every Nectar process written in Rust will need code that does the same thing as the above.
 The `Address` parameter tells our process what its globally-unique name is. (TODO: link to docs)
 
 Let's fill out the init function with code that will stop it from exiting immediately.
@@ -77,7 +77,7 @@ fn my_init_fn(our: Address) {
 ```
 
 See [uqbar.wit](./apis/uqbar_wit.md) for more details on what is imported by the WIT bindgen macro.
-These imports are the necessary "system calls" for talking to other processes and runtime components in Uqbar.
+These imports are the necessary "system calls" for talking to other processes and runtime components in Nectar OS.
 
 Run
 ```bash
@@ -257,7 +257,7 @@ fn my_init_fn(our: Address) {
 }
 ```
 
-This basic structure can be found in the majority of Uqbar processes.
+This basic structure can be found in the majority of Nectar processes.
 The other common structure is a thread-like process, that sends and handles a fixed series of messages and then exits.
 
 In the next chapter, we will cover how to turn this very basic request-response pattern into something that can be extensible and composable.

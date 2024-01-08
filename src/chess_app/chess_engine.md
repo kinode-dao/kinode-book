@@ -1,6 +1,6 @@
 # In-Depth Guide: Chess App
 
-This guide will walk you through building a very simple chess app on Uqbar.
+This guide will walk you through building a very simple chess app on Nectar OS.
 The final result will look like [this](https://github.com/uqbar-dao/uqbar/tree/main/modules/chess): chess is in the basic runtime distribution so you can try it yourself.
 
 To prepare for this tutorial, follow the environment setup guide [here](../my_first_app/chapter_1.md), i.e. [start a fake node](../my_first_app/chapter_1.md#booting-a-fake-uqbar-node) and then, in another terminal, run:
@@ -15,11 +15,11 @@ Once you have the template app installed and can see it running on your testing 
 
 # Chess Engine
 
-Chess is a good example for an Uqbar application walk-through because:
+Chess is a good example for an Nectar application walk-through because:
 1. The basic game logic is already readily available.
-   There are thousands of high-quality chess libraries across many languages that can be imported into a Wasm app that runs on Uqbar.
+   There are thousands of high-quality chess libraries across many languages that can be imported into a Wasm app that runs on Nectar.
    We'll be using [pleco](https://github.com/pleco-rs/Pleco)
-2. It is a multiplayer game, showing Uqbar's p2p communications and ability to serve frontends
+2. It is a multiplayer game, showing Nectar's p2p communications and ability to serve frontends
 3. It is fun!
 
 In `my_chess/Cargo.toml`, which should be in the `my_chess/` process directory inside the `my_chess/` package directory, add `pleco = "0.5"` to your dependencies.
@@ -105,7 +105,7 @@ If you get a response, you can do the same but with `ChessResponse`.
 And every request and response that you send can be serialized in kind.
 More advanced apps can take on different structures, but a top-level `enum` to serialize/deserialize and match on is always a good idea.
 
-The `ChessState` `struct` shown above can also be persisted using the `set_state` and `get_state` commands exposed by Uqbar's runtime.
+The `ChessState` `struct` shown above can also be persisted using the `set_state` and `get_state` commands exposed by Nectar's runtime.
 Note that the `Game` `struct` here has `board` as a `String`.
 This is because the `Board` type from pleco doesn't implement `Serialize` or `Deserialize`.
 We'll have to convert it to a string using `fen()` before persisting it.
@@ -183,7 +183,7 @@ use uqbar_process_lib::{
 
 extern crate base64;
 
-// Boilerplate: generate the Wasm bindings for an Uqbar app
+// Boilerplate: generate the Wasm bindings for an Nectar app
 wit_bindgen::generate!({
     path: "wit",
     world: "process",

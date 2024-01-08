@@ -138,7 +138,7 @@ if http_request.method().unwrap() != http::Method::PUT {
 ```
 
 Finally, grab the payload from the request, send a 200 OK response to the client, and handle the payload, by sending a Request to ourselves with the payload as the IPC.
-This could be done in a different way, but this simple pattern is useful for letting HTTP requests masquerade as in-Uqbar requests.
+This could be done in a different way, but this simple pattern is useful for letting HTTP requests masquerade as in-Nectar requests.
 ```rust
 // ...
 let Some(body) = get_payload() else {
@@ -341,4 +341,4 @@ Note that you can now set `authenticated` to `true` in the `/api` binding and th
 This frontend is now fully packaged with the process — there are no more steps!
 Of course, this can be made arbitrarily complex with various frontend frameworks that produce a static build.
 
-In the next and final chapter, we'll quickly go over the package metadata and discuss how to share this app across the Uqbar network.
+In the next and final chapter, we'll quickly go over the package metadata and discuss how to share this app across the Nectar network.

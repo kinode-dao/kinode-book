@@ -1,13 +1,13 @@
 # Installation
 
-This section will teach you how to get the Uqbar core software, required to run a live node.
+This section will teach you how to get the Nectar OS core software, required to run a live node.
 After acquiring the software, you can learn how to run it and [Join the Network](./login.md).
-However, if you are just interested in starting development as fast as possible, start with [My First Uqbar Application](./my_first_app/chapter_1.md).
+However, if you are just interested in starting development as fast as possible, start with [My First Nectar Application](./my_first_app/chapter_1.md).
 
 ## Download Binary
 
 The recommended method for most users is to use a precompiled binary.
-If you want to make edits to the Uqbar core software, see [Build From Source](#build-from-source).
+If you want to make edits to the Nectar core software, see [Build From Source](#build-from-source).
 
 First, get the software itself by downloading a [precompiled release binary](https://github.com/uqbar-dao/uqbar/releases).
 Choose the correct binary for your particular computer architecture and OS.
@@ -42,7 +42,7 @@ cargo install cargo-wasi
 
 For more information, or debugging, see the [Rust lang install page](https://www.rust-lang.org/tools/install).
 
-### Acquire Uqbar core
+### Acquire Nectar OS core
 
 Clone and set up the repository:
 

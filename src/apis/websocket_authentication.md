@@ -11,7 +11,7 @@ To open a WebSocket channel, connect to the main route on the node `/` and send 
 The simplest way to connect from a browser is to use the `@uqbar/client-encryptor-api` like so:
 
 ```
-const api = new UqbarEncryptorApi({
+const api = new NectarEncryptorApi({
   nodeId: window.our.node, // this is set if the /our.js script is present in index.html
   processId: "my_package:my_package:template.uq",
   onOpen: (_event, api) => {
