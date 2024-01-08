@@ -4,12 +4,12 @@ Third Draft: revised 9/20/23
 
 ### 1. Protocol Overview and Motivation
 
-The Uqbar networking protocol is designed to be performant, reliable, private, and purely peer-to-peer, while still enabling access for nodes without a static public IP address.
+The Nectar networking protocol is designed to be performant, reliable, private, and purely peer-to-peer, while still enabling access for nodes without a static public IP address.
 
-The networking protocol is NOT designed to be all-encompassing, that is, the only way that two Uqbar nodes will ever communicate.
-Many Uqbar runtimes will provide userspace access to HTTP server/client capabilities, TCP sockets, and much more.
+The networking protocol is NOT designed to be all-encompassing, that is, the only way that two Nectar nodes will ever communicate.
+Many Nectar runtimes will provide userspace access to HTTP server/client capabilities, TCP sockets, and much more.
 Some applications will choose to use such facilities to communicate.
-This networking protocol is merely a common language that every Uqbar node is guaranteed to speak.
+This networking protocol is merely a common language that every Nectar node is guaranteed to speak.
 For this reason, it is the protocol on which system processes will communicate, and it will be a reasonable default for most applications.
 
 In order for nodes to attest to their identity without any central authority, all networking information is made available onchain.
@@ -18,7 +18,7 @@ The former allows for completely direct peer-to-peer connections, and the latter
 
 The networking protocol can be implemented in multiple underlying protocols, but it will use WebSockets for the initial implementation.
 Since our protocol is encrypted, a secure underlying connection with TLS or HTTPS is never necessary.
-WebSockets are prioritized since we expect to quickly build Uqbar nodes that run purely in-browser.
+WebSockets are prioritized since we expect to quickly build Nectar nodes that run purely in-browser.
 
 ### 2. Onchain Networking Information
 

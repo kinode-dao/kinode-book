@@ -1,6 +1,6 @@
 # HTTP API
 
-In Nectar OS, incoming HTTP requests are handled by a Rust `warp` server in the core `http_server:sys:uqbar` process.
+In Nectar OS, incoming HTTP requests are handled by a Rust `warp` server in the core `http_server:sys:nectar` process.
 This process handles binding (registering) routes, simple JWT-based authentication, and serving a `/login` page if auth is missing.
 
 ## Binding (Registering) HTTP Paths
@@ -10,7 +10,7 @@ Every path that you bind will be automatically prepended with the current proces
 For example, bind the route `/messages` within a process called `main:my_package:myname.uq` like so:
 
 ```
-use uqbar_process_lib::{http::bind_http_path};
+use nectar_process_lib::{http::bind_http_path};
 
 bind_http_path("/messages", true, false).unwrap();
 ```

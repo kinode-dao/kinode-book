@@ -1,7 +1,7 @@
 # Public Key Infrastructure
 
-The following is a high level overview of Uqbar's public key infrastructure, the Uqbar Identity System, or QNS.
-You can find a more general discussion of the Uqbar [identity system](./identity_system.md) here.
+The following is a high level overview of Nectar's public key infrastructure, the Nectar Identity System, or QNS.
+You can find a more general discussion of the Nectar [identity system](./identity_system.md) here.
 
 ## Identity Registration
 
@@ -31,7 +31,7 @@ Indirect nodes reveal their IP only to their routers.
 The `DotUqRegistrar` (AKA `.uq`) is responsible for registering all `.uq` domain names.
 It is also responsible for authorizing alterations to `.uq` node records managed by the QNSRegistryResolver. (Todo: just confused by this)
 `DotUqRegistrar` implements ERC721 tokenization logic for the names it is charged with, so all `.uq` names are NFTs that may be transferred to and from any address.
-There is currently a minimum length of 9 characters for Uqbar IDs.
+There is currently a minimum length of 9 characters for Nectar IDs.
 
 `DotUqRegistrar` allows users to create subdomains underneath any `.uq` name they own.
 Initially this grants them control over the subdomain, as a holder of the parent domain, but they may choose to irreversibly revoke this control if they desire to.

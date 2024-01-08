@@ -3,7 +3,7 @@ authors = ["dr-frmr"]
 language = "en"
 multilingual = false
 src = "src"
-title = "uqbar-book"
+title = "Nectar Book"
 
 [output.html]
 additional-js = ["theme/customize-buttons.js"]

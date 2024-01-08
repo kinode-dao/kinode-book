@@ -2,8 +2,8 @@
 
 ### Overview
 
-On Uqbar, processes are the building blocks for peer-to-peer applications.
-The Uqbar runtime handles message-passing between processes, plus the startup and teardown of said processes.
+On Nectar OS, processes are the building blocks for peer-to-peer applications.
+The Nectar runtime handles message-passing between processes, plus the startup and teardown of said processes.
 This section describes the message design as it relates to processes.
 
 Processes have a globally unique identifier, or "address", composed of four elements.
@@ -38,7 +38,7 @@ They can spawn other processes, and coordinate in arbitrarily complex ways by pa
 
 ### Process State
 
-Uqbar processes can be stateless or stateful.
+Nectar processes can be stateless or stateful.
 In this case, state refers to data that is persisted between process instantiations.
 Nodes get turned off, intentionally or otherwise.
 The kernel handles rebooting processes that were running previously, but their state is not persisted by default.
@@ -173,6 +173,6 @@ This is a high-level overview of process semantics.
 In practice, processes are combined and shared in **packages**, which are generally synonymous with **apps**.
 
 It's briefly discussed here that processes are compiled to Wasm.
-The details of this are not covered in the Uqbar Book, but can be found in the documentation for the [Uqbar runtime](https://github.com/uqbar-dao/uqbar), which uses [Wasmtime](https://wasmtime.dev/), a WebAssembly runtime, to load, execute, and provide an interface for the subset of Wasm processes that are valid Uqbar processes.
+The details of this are not covered in the Nectar Book, but can be found in the documentation for the [Nectar runtime](https://github.com/uqbar-dao/nectar), which uses [Wasmtime](https://wasmtime.dev/), a WebAssembly runtime, to load, execute, and provide an interface for the subset of Wasm processes that are valid Nectar processes.
 Pragmatically, processes can be compiled using the [`uqdev` tools](https://github.com/uqbar-dao/uqdev).
-The long term goal of the Uqbar runtime is to use [WASI](https://wasi.dev/) to provide a secure, sandboxed environment for processes to not only make use of the kernel features described in this document, but also to make full use of the entire WebAssembly ecosystem, including the ability to use sandboxed system calls provided by the host via WASI.
+The long term goal of the Nectar runtime is to use [WASI](https://wasi.dev/) to provide a secure, sandboxed environment for processes to not only make use of the kernel features described in this document, but also to make full use of the entire WebAssembly ecosystem, including the ability to use sandboxed system calls provided by the host via WASI.

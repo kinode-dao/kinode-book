@@ -23,7 +23,7 @@ You'll also use a WebSocket connection to send updates to the frontend when the 
 In `my_chess/src/lib.rs`, inside `init()`:
 ```rust
 ...
-use uqbar_process_lib::http;
+use nectar_process_lib::http;
 ...
 // Serve the index.html and other UI files found in pkg/ui at the root path.
 http::serve_ui(&our, "ui").unwrap();
@@ -47,13 +47,13 @@ This API is under active development!
 
 Requests on the `/games` path will arrive as requests to your process, and you'll have to handle them and respond.
 The request/response format can be imported from `http` in `process_lib`.
-To do this, add a branch to the main request-handling function that takes requests from `http_server:sys:uqbar`.
+To do this, add a branch to the main request-handling function that takes requests from `http_server:sys:nectar`.
 
 In `my_chess/src/lib.rs`, inside `handle_request()`:
 ```rust
 ...
     } else if message.source().node == our.node
-        && message.source().process == "http_server:sys:uqbar"
+        && message.source().process == "http_server:sys:nectar"
     {
         // receive HTTP requests and websocket connection messages from our server
         match serde_json::from_slice::<http::HttpServerRequest>(message.ipc())? {
@@ -155,7 +155,7 @@ See the [HTTP Server API](../apis/http_server.md) for more details.
 In `my_chess/src/lib.rs`:
 ```rust
 ...
-use uqbar_process_lib::get_payload;
+use nectar_process_lib::get_payload;
 ...
 fn handle_http_request(
     our: &Address,
@@ -346,7 +346,7 @@ Since open channels are already tracked in process state, you just need to send 
 In `my_chess/src/lib.rs`, add a helper function:
 ```rust
 ...
-use uqbar_process_lib::Payload;
+use nectar_process_lib::Payload;
 ...
 fn send_ws_update(
     our: &Address,
@@ -355,7 +355,7 @@ fn send_ws_update(
 ) -> anyhow::Result<()> {
     for channel in open_channels {
         Request::new()
-            .target((&our.node, "http_server", "sys", "uqbar"))
+            .target((&our.node, "http_server", "sys", "nectar"))
             .ipc(serde_json::to_vec(
                 &http::HttpServerAction::WebSocketPush {
                     channel_id: *channel,

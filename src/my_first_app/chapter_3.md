@@ -1,7 +1,7 @@
 # Defining Your Protocol
 
 In the last chapter, you created a simple request-response pattern that uses strings as an IPC field type.
-This is fine for certain limited cases, but in practice, most Uqbar processes written in Rust use an IPC type that is serialized and deserialized to bytes using [Serde](https://serde.rs/).
+This is fine for certain limited cases, but in practice, most Nectar processes written in Rust use an IPC type that is serialized and deserialized to bytes using [Serde](https://serde.rs/).
 There are a multitude of libraries that implement Serde's `Serialize` and `Deserialize` traits, and the process developer is responsible for selecting a strategy that is appropriate for their use case.
 
 Some popular options are `bincode` and `serde_json`.
@@ -50,7 +50,7 @@ This comes with a number of benefits:
 
 Defining IPC types is just one step towards writing interoperable code.
 It's also critical to document the overall structure of the program along with message payloads and metadata used, if any.
-Writing interoperable code is necessary for enabling permissionless composability, and Uqbar aims to make this the default kind of program, unlike the centralized web.
+Writing interoperable code is necessary for enabling permissionless composability, and Nectar OS aims to make this the default kind of program, unlike the centralized web.
 
 First, let's create a request that uses the new IPC type (and stop expecting a response):
 ```rust
@@ -97,7 +97,7 @@ Go into the manifest, and under the process name, edit (or add) the `grant_messa
 ```json
 ...
 "grant_messaging": [
-    "terminal:terminal:uqbar"
+    "terminal:terminal:nectar"
 ],
 ...
 ```
