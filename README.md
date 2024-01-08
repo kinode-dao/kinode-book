@@ -1,6 +1,6 @@
-# uqbar-book
+# nectar-book
 
-"Rust Book"-style introduction and documentation to Uqbar and building on Uqbar.
+"Rust Book"-style introduction and documentation to Nectar OS and building on Nectar.
 
 ## To build:
 
