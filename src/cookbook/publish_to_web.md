@@ -10,10 +10,10 @@ The structure should look like this:
 
 ```
 my_package
-    /pkg
-        /ui
-            index.html
-            /assets
+└── pkg
+    └── ui
+        ├── assets
+        └── index.html
 ```
 
 ## Serving Static Assets
@@ -74,8 +74,8 @@ So your project would look like this:
 
 ```
 my_package
-    /pkg
-        /ui
-            index.html
-            /assets
+└── pkg
+    └── ui
+        ├── assets
+        └── index.html
 ```
