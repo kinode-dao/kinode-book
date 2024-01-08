@@ -97,7 +97,7 @@ Go into the manifest, and under the process name, edit (or add) the `grant_messa
 ```json
 ...
 "grant_messaging": [
-    "terminal:terminal:uqbar"
+    "terminal:terminal:nectar"
 ],
 ...
 ```

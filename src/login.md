@@ -20,14 +20,14 @@ Start an Nectar node using the binary acquired in the [previous section](./insta
 Locating the binary on your system, run:
 
 ```bash
-$ ./uqbar --help
+$ ./nectar --help
 ```
 This will reveal the arguments expected by the binary:
 
 ```bash
 A General Purpose Sovereign Cloud Computing Platform
 
-Usage: uqbar [OPTIONS] --rpc <WS_URL> <home>
+Usage: nectar [OPTIONS] --rpc <WS_URL> <home>
 
 Arguments:
   <home>  Path to home directory
@@ -59,7 +59,7 @@ Copy the WebSocket API key from the API Key button:
 Replace the `--rpc` field below with the WebSocket API key link copied from [the previous step](#acquiring-an-rpc-api-key), and start the node with:
 
 ```bash
-./uqbar home --rpc wss://eth-sepolia.g.alchemy.com/v2/<your-api-key>
+./nectar home --rpc wss://eth-sepolia.g.alchemy.com/v2/<your-api-key>
 ```
 
 A new browser tab should open, but if not, look in the terminal for a line like

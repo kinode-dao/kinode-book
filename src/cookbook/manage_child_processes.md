@@ -22,11 +22,11 @@ my-package/
 │  ├─ Cargo.toml
 │  ├─ Cargo.lock
 ```
-To initiate a child process, use the `spawn` function from `uqbar_process_lib`.
+To initiate a child process, use the `spawn` function from `nectar_process_lib`.
 The following example demonstrates a basic parent process whose sole function is to spawn a child process and grant it the ability to send messages using `http_client`:
 ```rust
 // imports
-use uqbar_process_lib::{println, spawn, get_capability, Address, Capabilities, OnExit};
+use nectar_process_lib::{println, spawn, get_capability, Address, Capabilities, OnExit};
 
 // boilerplate to generate types
 wit_bindgen::generate!({
@@ -49,7 +49,7 @@ impl Guest for Component {
         // the parents app already has the capability to message http_client here we
         // are fetching that capability so that we can pass it to the child in `spawn`
         let Some(http_client_cap) = get_capability(
-            &Address::new(&our.node, ProcessId::from_str("http_client:sys:uqbar").unwrap()),
+            &Address::new(&our.node, ProcessId::from_str("http_client:sys:nectar").unwrap()),
             &"\"messaging\"".into(),
         ) else { todo!()};
 
@@ -78,7 +78,7 @@ impl Guest for Component {
 The child process can be anything, for simplicity's sake let's make it a degenerate process that does nothing but print it's name and die:
 ```rust
 // same boilerplate as above
-use uqbar_process_lib::{println, Address};
+use nectar_process_lib::{println, Address};
 
 wit_bindgen::generate!({
     // note that the WIT file can be in any directory

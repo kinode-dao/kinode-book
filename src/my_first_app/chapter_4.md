@@ -10,17 +10,17 @@ If you're the type of person that prefers to learn by looking at a complete exam
 Using the built-in HTTP server will require handling a new type of request in our main loop, and serving a response to it.
 The [process_lib](../process_stdlib/overview.md) contains types and functions for doing so.
 
-At the top of your process, import `http`, `get_payload`, and `Message` from [`uqbar_process_lib`](../process_stdlib/overview.md) along with the rest of the imports.
+At the top of your process, import `http`, `get_payload`, and `Message` from [`nectar_process_lib`](../process_stdlib/overview.md) along with the rest of the imports.
 You'll use `get_payload()` to grab the body bytes of an incoming HTTP request.
 ```rust
-use uqbar_process_lib::{
+use nectar_process_lib::{
     await_message, call_init, get_payload, http, println, Address, Message, Request, Response,
 };
 ```
 
 Keep the custom IPC type the same, and keep using that for terminal input.
 
-At the beginning of the init function, in order to receieve HTTP requests, you must use the `uqbar_process_lib::http` library to bind a new path. Binding a path will cause the process to receive all HTTP requests that match that path.
+At the beginning of the init function, in order to receieve HTTP requests, you must use the `nectar_process_lib::http` library to bind a new path. Binding a path will cause the process to receive all HTTP requests that match that path.
 You can also bind static content to a path using another function in the library.
 ```rust
 // ...
@@ -44,7 +44,7 @@ Put this right under the bind command:
 loop {
     match await_message() {
         Ok(message) => {
-            if message.source().process == "http_server:sys:uqbar" {
+            if message.source().process == "http_server:sys:nectar" {
                 handle_http_message(&our, &message);
             } else {
                 if handle_hello_message(&message) {
@@ -104,7 +104,7 @@ fn handle_http_message(our: &Address, message: &Message) {
 }
 ```
 
-Instead of parsing our IPC type from the message, parse the type that the `http_server` process gives us. This type is defined in the `uqbar_process_lib::http` module for us:
+Instead of parsing our IPC type from the message, parse the type that the `http_server` process gives us. This type is defined in the `nectar_process_lib::http` module for us:
 ```rust
 // ...
 let Ok(server_request) = http::HttpServerRequest::from_bytes(message.ipc()) else {
@@ -152,7 +152,7 @@ Request::to(our).ipc(body.bytes).send().unwrap();
 Putting it all together, you get a process which you can build and start, then use cURL to send Hello and Goodbye requests via HTTP PUTs! Here's the full code:
 ```rust
 use serde::{Deserialize, Serialize};
-use uqbar_process_lib::{
+use nectar_process_lib::{
     await_message, call_init, get_payload, http, println, Address, Message, Request,
 };
 
@@ -200,7 +200,7 @@ fn my_init_fn(our: Address) {
     loop {
         match await_message() {
             Ok(message) => {
-                if message.source().process == "http_server:sys:uqbar" {
+                if message.source().process == "http_server:sys:nectar" {
                     handle_http_message(&our, &message);
                 } else {
                     if handle_hello_message(&message) {

@@ -90,8 +90,8 @@ The `src/` directory is where the code for the process lives.
 
 Also within the package directory is a `pkg/` directory.
 The `pkg/` directory contains two files, `manifest.json` and `metadata.json`, that specify information the Nectar node needs to run the package, which will be enumerated below.
-The `pkg/` directory is also where `.wasm` binaries will be deposited by [`uqbar build`](#building-the-package).
-The files in the `pkg/` directory contents are injected into the Nectar node with [`uqbar start-package`](#starting-the-package).
+The `pkg/` directory is also where `.wasm` binaries will be deposited by [`uqdev build`](#building-the-package).
+The files in the `pkg/` directory contents are injected into the Nectar node with [`uqdev start-package`](#starting-the-package).
 
 Though not included in this template, packages with a frontend have a `ui/` directory as well.
 For an example, look at the result of:
@@ -115,7 +115,7 @@ $ cat my_chat_app/pkg/manifest.json
         "on_exit": "Restart",
         "request_networking": true,
         "request_messaging": [
-            "net:sys:uqbar"
+            "net:sys:nectar"
         ],
         "grant_messaging": [],
         "public": true
@@ -208,10 +208,10 @@ Or, if it is a path to an Nectar binary, it will use that binary to start the no
 For example:
 
 ```bash
-uqdev boot-fake-node --runtime-path ~/path/to/uqbar
+uqdev boot-fake-node --runtime-path ~/path/to/nectar
 ```
 
-where `~/path/to/uqbar` must be replaced with a path to the Nectar core repo or an Nectar binary.
+where `~/path/to/nectar` must be replaced with a path to the Nectar core repo or an Nectar binary.
 
 ## Option: Starting a Real Nectar Node
 
@@ -241,7 +241,7 @@ or, if you are already in the correct package directory:
 uqdev start-package -p 8080
 ```
 
-where here the port provided following `-p` must match the port bound by the node or fake node (see discussion [above](#booting-a-fake-uqbar-node)).
+where here the port provided following `-p` must match the port bound by the node or fake node (see discussion [above](#booting-a-fake-nectar-node)).
 
 The node's terminal should display something like
 
@@ -256,7 +256,7 @@ Congratulations on completing the first steps towards developing applications on
 To test out the functionality of `my_chat_app`, spin up another fake node to chat with in a new terminal:
 
 ```bash
-uqdev boot-fake-node -h /tmp/uqbar-fake-node-2 -p 8081 -f fake2.uq
+uqdev boot-fake-node -h /tmp/nectar-fake-node-2 -p 8081 -f fake2.uq
 ```
 
 The fake nodes communicate over a mocked local network.

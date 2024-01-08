@@ -1,9 +1,9 @@
 # In-Depth Guide: Chess App
 
 This guide will walk you through building a very simple chess app on Nectar OS.
-The final result will look like [this](https://github.com/uqbar-dao/uqbar/tree/main/modules/chess): chess is in the basic runtime distribution so you can try it yourself.
+The final result will look like [this](https://github.com/uqbar-dao/nectar/tree/main/modules/chess): chess is in the basic runtime distribution so you can try it yourself.
 
-To prepare for this tutorial, follow the environment setup guide [here](../my_first_app/chapter_1.md), i.e. [start a fake node](../my_first_app/chapter_1.md#booting-a-fake-uqbar-node) and then, in another terminal, run:
+To prepare for this tutorial, follow the environment setup guide [here](../my_first_app/chapter_1.md), i.e. [start a fake node](../my_first_app/chapter_1.md#booting-a-fake-nectar-node) and then, in another terminal, run:
 ```bash
 uqdev new my_chess
 cd my_chess
@@ -27,7 +27,7 @@ In your `my_chess/src/lib.rs`, replace the existing code with:
 
 ```rust
 use pleco::Board;
-use uqbar_process_lib::{await_message, call_init, println, Address};
+use nectar_process_lib::{await_message, call_init, println, Address};
 
 wit_bindgen::generate!({
     path: "wit",
@@ -161,14 +161,14 @@ pleco = "0.5"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 url = "*"
-uqbar_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "a0af5c1" }
+nectar_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "a0af5c1" }
 wit-bindgen = { git = "https://github.com/bytecodealliance/wit-bindgen", rev = "efcc759" }
 
 [lib]
 crate-type = ["cdylib"]
 
 [package.metadata.component]
-package = "uqbar:process"
+package = "nectar:process"
 ```
 
 `my_chess/src/lib.rs`:
@@ -177,7 +177,7 @@ package = "uqbar:process"
 use pleco::Board;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-use uqbar_process_lib::{
+use nectar_process_lib::{
     await_message, call_init, get_typed_state, println, set_state, Address, Message, NodeId, Request, Response,
 };
 
@@ -306,7 +306,7 @@ fn handle_request(our: &Address, message: &Message, state: &mut ChessState) -> a
     // Note that since this is a local request, we *can* trust the ProcessId.
     // Here, we'll accept messages from the local terminal so as to make this a "CLI" app.
     } else if message.source().node == our.node
-        && message.source().process == "terminal:terminal:uqbar"
+        && message.source().process == "terminal:terminal:nectar"
     {
         let Ok(chess_request) = serde_json::from_slice::<ChessRequest>(message.ipc()) else {
             return Err(anyhow::anyhow!("invalid chess request"));

@@ -1,7 +1,7 @@
 # Sending Some Messages, Using Some Tools
 
 This chapter assumes you've completed the steps outlined in [Chapter 1](./chapter_1.md) to construct your dev environment or otherwise have a basic Nectar app open in your code editor of choice.
-You should also be actively running an Nectar node ([live](../login.md) or [fake](./chapter_1.md#booting-a-fake-uqbar-node)) such that you can quickly compile and test your code!
+You should also be actively running an Nectar node ([live](../login.md) or [fake](./chapter_1.md#booting-a-fake-nectar-node)) such that you can quickly compile and test your code!
 Tight feedback loops when building: very important.
 
 ## Starting from Scratch
@@ -26,10 +26,10 @@ wit_bindgen::generate!({
 After generating the bindings, every process must define a `Component` struct and implement the `Guest` trait for it defining a single function, `init()`.
 This is the entry point for the process, and the `init()` function is the first function called by the Nectar runtime when the process is started.
 
-The definition of the `Component` struct can be done manually, but it's easier to import the [`uqbar_process_lib`](../process_stdlib/overview.md) crate (a sort of standard library for Nectar processes written in Rust) and use the `call_init!` macro.
+The definition of the `Component` struct can be done manually, but it's easier to import the [`nectar_process_lib`](../process_stdlib/overview.md) crate (a sort of standard library for Nectar processes written in Rust) and use the `call_init!` macro.
 
 ```rust
-use uqbar_process_lib::{call_init, Address};
+use nectar_process_lib::{call_init, Address};
 
 wit_bindgen::generate!({
     path: "wit",
@@ -54,7 +54,7 @@ Here's an infinite loop that will wait for a message and then print it out.
 Note that you are importing a few more things from the [process_lib](../process_stdlib/overview.md) including a `println!` macro that replaces the standard Rust one.
 
 ```rust
-use uqbar_process_lib::{await_message, call_init, println, Address};
+use nectar_process_lib::{await_message, call_init, println, Address};
 
 wit_bindgen::generate!({
     path: "wit",
@@ -76,7 +76,7 @@ fn my_init_fn(our: Address) {
 }
 ```
 
-See [uqbar.wit](./apis/uqbar_wit.md) for more details on what is imported by the WIT bindgen macro.
+See [nectar.wit](./apis/nectar_wit.md) for more details on what is imported by the WIT bindgen macro.
 These imports are the necessary "system calls" for talking to other processes and runtime components in Nectar OS.
 
 Run
@@ -92,7 +92,7 @@ to see this code in the node you set up in the last chapter.
 Let's send a message to another process.
 The `Request` type in [process_lib](../process_stdlib/overview.md) will provide all the necessary functionality.
 ```rust
-use uqbar_process_lib::{await_message, call_init, println, Address, Request};
+use nectar_process_lib::{await_message, call_init, println, Address, Request};
 ```
 
 `Request` is a builder struct that abstracts over the raw interface presented in the WIT bindings.
@@ -118,7 +118,7 @@ If you know that a `target` and `ipc` was set, you can safely unwrap this: send 
 
 Here's the full process code, with both sending and handling the message:
 ```rust
-use uqbar_process_lib::{await_message, call_init, println, Address, Request};
+use nectar_process_lib::{await_message, call_init, println, Address, Request};
 
 wit_bindgen::generate!({
     path: "wit",
@@ -191,7 +191,7 @@ This code won't send a response back yet.
 To do that, import the `Response` type from process_lib and fire one off inside the request branch.
 
 ```rust
-use uqbar_process_lib::{await_message, call_init, println, Address, Request, Response};
+use nectar_process_lib::{await_message, call_init, println, Address, Request, Response};
 // ...
 if message.is_request() {
     println!("{our}: got request: {message:?}");
@@ -208,7 +208,7 @@ But it's still ugly.
 Let's put it all together and add a bit more handling to show the IPC value as a string:
 
 ```rust
-use uqbar_process_lib::{await_message, call_init, println, Address, Request, Response};
+use nectar_process_lib::{await_message, call_init, println, Address, Request, Response};
 
 wit_bindgen::generate!({
     path: "wit",

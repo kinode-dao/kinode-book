@@ -32,4 +32,4 @@ There are also three extensions to this tutorial which dive into specific use ca
 - [Payment Integration (using ETH)](./payment.md)
 - [LLM Integration (play chess against the AI!)](./llm.md)
 
-The full code is available [here](https://github.com/uqbar-dao/uqbar/tree/main/modules/chess).
+The full code is available [here](https://github.com/uqbar-dao/nectar/tree/main/modules/chess).

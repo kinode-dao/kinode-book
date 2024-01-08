@@ -1,6 +1,6 @@
 # WebSocket API
 
-In Nectar OS, WebSocket connects are made with a Rust `warp` server in the core `http_server:sys:uqbar` process.
+In Nectar OS, WebSocket connects are made with a Rust `warp` server in the core `http_server:sys:nectar` process.
 Each connection is assigned a `channel_id` that can be bound to a given process using a `WsRegister` message.
 The process receives the `channel_id` for pushing data into the WebSocket, and any subsequent messages from that client will be forwarded to the bound process.
 
@@ -15,7 +15,7 @@ const api = new NectarEncryptorApi({
   nodeId: window.our.node, // this is set if the /our.js script is present in index.html
   processId: "my_package:my_package:template.uq",
   onOpen: (_event, api) => {
-    console.log('Connected to uqbar node')
+    console.log('Connected to nectar node')
     // Send a message to the node via WebSocket
     api.send({ data: 'Hello World' })
   },
@@ -40,7 +40,7 @@ function getCookie(name) {
 const websocket = new WebSocket("http://localhost:8080/");
 
 const message = JSON.stringify({
-    "auth_token": getCookie(`uqbar-auth_${nodeId}`),
+    "auth_token": getCookie(`nectar-auth_${nodeId}`),
     "target_process": "my_package:my_package:template.uq",
     "encrypted": false,
 });
@@ -127,7 +127,7 @@ If you would prefer to send the request without the helper function, this is tha
 Request::new()
     .target(Address::new(
         node,
-        ProcessId::from_str("http_server:sys:uqbar").unwrap(),
+        ProcessId::from_str("http_server:sys:nectar").unwrap(),
     ))
     .ipc(
         serde_json::json!(HttpServerRequest::WebSocketPush {

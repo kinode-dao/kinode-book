@@ -9,7 +9,7 @@ However, if you are just interested in starting development as fast as possible,
 The recommended method for most users is to use a precompiled binary.
 If you want to make edits to the Nectar core software, see [Build From Source](#build-from-source).
 
-First, get the software itself by downloading a [precompiled release binary](https://github.com/uqbar-dao/uqbar/releases).
+First, get the software itself by downloading a [precompiled release binary](https://github.com/uqbar-dao/nectar/releases).
 Choose the correct binary for your particular computer architecture and OS.
 Extract the `.zip` file and the binary is inside.
 
@@ -19,7 +19,7 @@ While the binary has not been tested exhaustively on all Linux distributions, it
 ### Apple
 
 First, attempt to run the binary, which Apple will block.
-Then, go to `System Settings > Privacy and Security` and click to `Allow Anyway` for the `uqbar` binary:
+Then, go to `System Settings > Privacy and Security` and click to `Allow Anyway` for the `nectar` binary:
 
 ![Apple unknown developer](./assets/apple-unknown-developer.png)
 
@@ -47,9 +47,9 @@ For more information, or debugging, see the [Rust lang install page](https://www
 Clone and set up the repository:
 
 ```bash
-git clone git@github.com:uqbar-dao/uqbar.git
+git clone git@github.com:uqbar-dao/nectar.git
 
-cd uqbar
+cd nectar
 mkdir .cargo
 echo "net.git-fetch-with-cli = true" > .cargo/config
 ```
@@ -60,8 +60,8 @@ Build the binary:
 cargo +nightly build --release
 ```
 
-The resulting binary will be at path `target/release/uqbar`.
+The resulting binary will be at path `target/release/nectar`.
 
 You can also build the binary without the `--release` flag.
 This command will build the binary significantly faster, as it does not perform any optimizations during compilation, but it will run much more slowly after compiling.
-The non-release binary will be at path `target/debug/uqbar`.
+The non-release binary will be at path `target/debug/nectar`.

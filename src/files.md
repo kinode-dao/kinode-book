@@ -10,13 +10,13 @@ For example, part of the VFS might look like:
 
 ```text
 .
-├── app_store:uqbar
+├── app_store:nectar
 │   └── pkg
 │       ├── app_store.wasm
 │       ├── ft_worker.wasm
 │       ├── manifest.json
 │       └── metadata.json
-├── chess:uqbar
+├── chess:nectar
 │   └── pkg
 │       ├── chess.html
 │       ├── chess.wasm
@@ -24,7 +24,7 @@ For example, part of the VFS might look like:
 │       ├── index.js
 │       ├── manifest.json
 │       └── metadata.json
-├── homepage:uqbar
+├── homepage:nectar
 │   └── pkg
 │       ├── homepage.wasm
 │       ├── manifest.json
@@ -39,9 +39,9 @@ To access files in the vfs, you need to create or open a drive, this can be done
 let drive_path: String = create_drive(our.package_id(), "drive_name")?;
 ```
 
-All examples are using the [uqbar_process_lib](./process_stdlib/overview.md) functions, and would be imported like
+All examples are using the [nectar_process_lib](./process_stdlib/overview.md) functions, and would be imported like
 ```rust
-use uqbar_process_lib::vfs::{open_file, create, ...};
+use nectar_process_lib::vfs::{open_file, create, ...};
 ```
 
 ### Files
