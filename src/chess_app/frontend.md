@@ -9,22 +9,13 @@ Here, you'll use React to make a single-page app that displays your current game
 
 JavaScript and React development aren't in the scope of this tutorial, so we'll provide that code [here](https://github.com/uqbar-dao/chess-ui).
 
-The important part of the frontend for the purpose of this tutorial is the build, specifically, `index.html`, `index.js`, and `index.css`.
+The important part of the frontend for the purpose of this tutorial is the build, specifically the `pkg/ui` directory that will be loaded into the VFS during installation.
 Serve these as static files, [which you can get here](https://github.com/uqbar-dao/chess-ui/tree/tutorial/tutorial_build) if you don't want to build them yourself.
 
-Add the files to the `pkg` folder in your app, so they'll be ingested on-install.
+Run `npm run build` in the `chess-ui` repo and copy the output `dist` folder into the `pkg` folder in your app, so it'll be ingested on-install.
 This allows your process to fetch them from the virtual filesystem, as all files in `pkg` are mounted.
+Rename it to `ui` so that you have the files in `pkg/ui`.
 See the [VFS API overview](../apis/vfs.md) to see how to use files mounted in `pkg`.
-However, for simplicity's sake, you can also use the `include_str!` macro to embed the files directly into your process binary.
-
-In `my_chess/src/lib.rs`:
-```rust
-...
-const CHESS_HTML: &str = include_str!("../../pkg/index.html");
-const CHESS_JS: &str = include_str!("../../pkg/index.js");
-const CHESS_CSS: &str = include_str!("../../pkg/index.css");
-...
-```
 
 Chess will use the `http_server` runtime module to serve a static frontend and receive HTTP requests from it.
 You'll also use a WebSocket connection to send updates to the frontend when the game state changes.
@@ -34,37 +25,12 @@ In `my_chess/src/lib.rs`, inside `init()`:
 ...
 use nectar_process_lib::http;
 ...
-// serve static page at /index.html, /index.js, /index.css
-// dynamically handle requests to /games
-http::bind_http_static_path(
-    "/",
-    true,  // only serve for ourselves
-    false, // can access remotely
-    Some("text/html".to_string()),
-    CHESS_HTML
-        .replace("${node}", &our.node)
-        .replace("${process}", &our.process.to_string())
-        .as_bytes()
-        .to_vec(),
-)
-.unwrap();
-http::bind_http_static_path(
-    "/index.js",
-    true,
-    false,
-    Some("text/javascript".to_string()),
-    CHESS_JS.as_bytes().to_vec(),
-)
-.unwrap();
-http::bind_http_static_path(
-    "/index.css",
-    true,
-    false,
-    Some("text/css".to_string()),
-    CHESS_CSS.as_bytes().to_vec(),
-)
-.unwrap();
+// Serve the index.html and other UI files found in pkg/ui at the root path.
+http::serve_ui(&our, "ui").unwrap();
+
+// Allow HTTP requests to be made to /games; they will be handled dynamically.
 http::bind_http_path("/games", true, false).unwrap();
+
 // Allow websockets to be opened at / (our process ID will be prepended).
 http::bind_ws_path("/", true, false).unwrap();
 ...
@@ -73,7 +39,8 @@ http::bind_ws_path("/", true, false).unwrap();
 The above code should be inserted into the `init()` function such that the frontend is served when the process starts.
 
 The `http` library in [process_lib](../process_stdlib/overview.md) provides a simple interface for serving static files and handling HTTP requests.
-Use `bind_http_static_path` to serve the static files includeded in the process binary, and `bind_http_path` to handle requests to `/games`.
+Use `serve_ui` to serve the static files includeded in the process binary, and `bind_http_path` to handle requests to `/games`.
+`serve_ui` takes two arguments: the process' `&Address` and the name of the folder inside `pkg` that contains the `index.html` and other associated UI files.
 See [process_lib docs](../process_stdlib/overview.md) for more functions and documentation on their parameters.
 These requests all serve HTTP that can only be accessed by a logged-in node user (the `true` parameter for `authenticated`) and can be accessed remotely (the `false` parameter for `local_only`).
 This API is under active development!
