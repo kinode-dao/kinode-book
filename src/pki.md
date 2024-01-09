@@ -15,8 +15,7 @@ When nodes first connect, they engage in an initial handshake ceremony (TODO: de
 It is this credential that verifies the identity of each nodes.
 2. Networking information depends on whether a node is direct or routed (for more, see [networking protocol](./networking_protocol.md)).
 
-Direct nodes send and receive networking traffic directly to and from all nodes on the network. In doing so they must provide their:
-* IP address
+Direct nodes send and receive networking traffic directly to and from all nodes on the network. In doing so they must provide their IP address and one or more of:
 * WebSockets port
 * WebTransport port
 * TCP port
@@ -24,7 +23,6 @@ Direct nodes send and receive networking traffic directly to and from all nodes 
 
 Indirect nodes instead specify one or more "router" nodes.
 These router nodes communicate between indirect nodes and the network at large.
-Indirect nodes reveal their IP only to their routers.
 
 ## Name Registration
 
