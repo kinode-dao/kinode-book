@@ -2,7 +2,7 @@
 
 No server or web services backend would be complete without an HTTP interface.
 Nectar nodes must be able to both create and serve HTTP requests.
-This enables Nectar apps to read data from the web, and other Nectar nodes, and also serve both public and private websites and APIs.
+This enables Nectar apps to read data from the web (and other Nectar nodes), and also serve both public and private websites and APIs.
 The HTTP server is how most processes in the Nectar OS present their interface to the user, through an authenticated web browser.
 
 The specification for the [server](./apis/http_server.md) and [client](./apis/http_client.md) APIs are available in the API reference.

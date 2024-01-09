@@ -2,7 +2,7 @@
 
 *See also: docs.rs for HTTP Server part of process_lib*
 
-**Note: Most processes will not use this API directly. Instead, they will use the [`process_lib`](./process_stdlib/overview.md) library, which papers over this API and provides a set of types and functions which are much easier to natively use.**
+**Note: Most processes will not use this API directly. Instead, they will use the [`process_lib`](./process_stdlib/overview.md) library, which papers over this API and provides a set of types and functions which are much easier to natively use. This is mostly useful for re-implementing this module in a different client or performing niche actions unsupported by the library.**
 
 The HTTP server is used by sending and receiving requests and responses.
 From a process, you may send an `HttpServerAction` to the `http_server:sys:nectar` process.
@@ -102,8 +102,8 @@ pub enum HttpServerError {
 }
 ```
 
-Certain actions will cause the HTTP server to send the process requests in the future.
-If a process uses `Bind` or `SecureBind`, future HTTP requests to that path will be sent to the process, which is expected to issue a response that can then be sent to the client.
+Certain actions will cause the HTTP server to send requests to the process in the future.
+If a process uses `Bind` or `SecureBind`, that process will need to field future requests from the HTTP server. The server will handle incoming HTTP protocol messages to that path by sending an `HttpServerRequest` to the process which performed the binding, and will expect a response that it can then send to the client.
 
 **Note: Paths bound using the HTTP server are *always* prefixed by the ProcessId of the process that bound them.**
 
@@ -149,7 +149,7 @@ pub struct IncomingHttpRequest {
 ```
 
 Processes that use the HTTP server should expect to field this request type, serialized to JSON.
-To respond, issue a response with the structure in the body, serialized to JSON:
+The process must issue a response with this structure in the body, serialized to JSON:
 
 ```rust
 /// HTTP Response type that can be shared over WASM boundary to apps.
@@ -164,4 +164,4 @@ pub struct HttpResponse {
 
 This response is only required for HTTP requests.
 `WebSocketOpen`, `WebSocketPush`, and `WebSocketClose` requests do not require a response.
-If a process wants to send data over an open WebSocket connection, it should issue a `HttpServerAction::WebSocketPush` request with the appropriate `channel_id`.
+If a process is meant to send data over an open WebSocket connection, it must issue a `HttpServerAction::WebSocketPush` request with the appropriate `channel_id`.
