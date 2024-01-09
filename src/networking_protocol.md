@@ -1,7 +1,5 @@
 # Networking Protocol
 
-Third Draft: revised 9/20/23
-
 ### 1. Protocol Overview and Motivation
 
 The Nectar networking protocol is designed to be performant, reliable, private, and purely peer-to-peer, while still enabling access for nodes without a static public IP address.
@@ -38,13 +36,16 @@ The full data structure of a network identity onchain will resemble this, where 
 "username": "squid",
 "networking_key": "6077987c998066ed7dea3e30555add0523482475c705fb92c0c8e78307b8e62c",
 "ws_routing": null,
-"allowed_routers": ["loach"]
+"allowed_routers": ["loach", ...]
 ```
-Nodes with onchain network information will be referred to as public nodes, and ones without will be referred to as private nodes.
 
-If a node is private, it must initiate a connection with at least one of its allowed routers in order to begin networking.
-Until such a connection is established, the private node is offline.
-In practice, a private node that wants reliable access to the network should (1) have many routers listed onchain and (2) connect to as many of them as possible on startup.
+*Note: the TLD of the username is not included in the onchain data, as it is set by the registry contract that issues the username.*
+
+Nodes with onchain network information will be referred to as direct nodes, and ones without will be referred to as indirect nodes.
+
+If a node is indirect, it must initiate a connection with at least one of its allowed routers in order to begin networking.
+Until such a connection is established, the indirect node is offline.
+In practice, an indirect node that wants reliable access to the network should (1) have many routers listed onchain and (2) connect to as many of them as possible on startup.
 
 
 ### 3. Handshake
@@ -63,8 +64,7 @@ XX OUT OF DATE
 The system’s networking module seeks to abstract away the many complexities of p2p networking from app developers.
 To this end, it reduces all networking issues to either Offline or Timeout.
 
-If a peer is public, i.e. they have direct networking information published onchain, determining their offline status is simple: try to create a connection and send a message; it will throw an offline error if this message fails. If a message is un-acked for more than the timeout counter, it will throw a timeout.
+If a peer is direct, i.e. they have networking information published onchain, determining their offline status is simple: try to create a connection and send a message; it will throw an offline error if this message fails. If a message is un-acked for more than the timeout counter, it will throw a timeout.
 
 If a peer is non-public, i.e. they have routers, multiple attempts must be made before either an offline or timeout error is thrown.
-Routers will forward errors produced by their connection attempt to the target, which is why the Error type is inside the NetworkMessage enum.
 
