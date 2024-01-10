@@ -153,7 +153,7 @@ $ cat my_chat_app/pkg/metadata.json
 }
 ```
 
-Here, the `publisher` is some default value, but for a real package, this field should contain the QNS id of the publishing node.
+Here, the `publisher` is some default value, but for a real package, this field should contain the NDNS id of the publishing node.
 The `publisher` can also be set with a `necdev new --publisher` flag.
 
 ### `src/lib.rs`

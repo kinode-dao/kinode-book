@@ -28,8 +28,8 @@ Nectar's kernel handles the startup and teardown of processes, as well as messag
 Processes are programs compiled to Wasm, which export a single `init()` function.
 They can be started once and complete immediately, or they can run "forever".
 
-Peers in NectarOS are identified by their onchain username in the "QNS": uQbar Name System, which is modeled after ENS.
-The modular architecture of the QNS allows for any Ethereum NFT, including ENS names themselves, to generate a unique Nectar identity once it is linked to a QNS entry.
+Peers in NectarOS are identified by their onchain username in the "NDNS": Nectar Domain Name System, which is modeled after ENS.
+The modular architecture of the NDNS allows for any Ethereum NFT, including ENS names themselves, to generate a unique Nectar identity once it is linked to a NDNS entry.
 
 Data persistence and blockchain access, as fundamental primitives for p2p apps, are built directly into the kernel.
 The filesystem is abstracted away from the developer, and data is automatically persisted across an arbitrary number of encrypted remote backups as configured at the user-system-level.

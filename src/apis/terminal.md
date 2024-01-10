@@ -41,5 +41,5 @@ The plaintext format of an `Address` looks like <node_id>`@`<process_id>.
 
 Example address:
 ```
-some_user.uq@process_one:my_cool_software:my_username.uq
+some_user.nec@process_one:my_cool_software:my_username.nec
 ```

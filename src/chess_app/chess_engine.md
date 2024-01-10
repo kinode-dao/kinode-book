@@ -129,7 +129,7 @@ To keep things clean, leverage the request/response pattern and the `context` fi
 
 Below, you'll find the full code for the CLI version of the app.
 You can build it and install it on a node using `necdev`.
-You can interact with it in the terminal, primitively, like so (assuming your first node is `fake.nec` and second is `fake2.nec`)):
+You can interact with it in the terminal, primitively, like so (assuming your first node is `fake.nec` and second is `fake2.nec`):
 ```
 /a our@my_chess:my_chess:template.nec
 /m {"NewGame": {"white": "fake.nec", "black": "fake2.nec"}}

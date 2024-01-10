@@ -48,15 +48,15 @@
 # API Reference
 
 - [APIs Overview](./apis/overview.md)
-- [uqbar.wit](./apis/uqbar_wit.md)
+- [HTTP API](./apis/http_authentication.md)
+- [HTTP Client API](./apis/http_client.md)
+- [HTTP Server API](./apis/http_server.md)
 - [Kernel API](./apis/kernel.md)
-- [VFS API](./apis/vfs.md)
 - [KV API](./apis/kv.md)
+- [Net API](./apis/net.md)
+- [nectar.wit](./apis/nectar_wit.md)
 - [SQLITE API](./apis/sqlite.md)
 - [Terminal API](./apis/terminal.md)
-- [HTTP Server API](./apis/http_server.md)
-- [HTTP Client API](./apis/http_client.md)
-- [HTTP API](./apis/http_authentication.md)
-- [Net API](./apis/net.md)
+- [VFS API](./apis/vfs.md)
 - [Websocket API](./apis/websocket_authentication.md)
 
