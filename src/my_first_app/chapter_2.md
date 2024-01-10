@@ -81,8 +81,8 @@ These imports are the necessary "system calls" for talking to other processes an
 
 Run
 ```bash
-uqdev build your_pkg_name
-uqdev start-package your_pkg_name -p 8080
+necdev build your_pkg_name
+necdev start-package your_pkg_name -p 8080
 ```
 
 to see this code in the node you set up in the last chapter.
@@ -146,7 +146,7 @@ fn my_init_fn(our: Address) {
 }
 ```
 
-Using `uqdev build` and `uqdev start-package` like before, you should be able to see in your node's terminal the message being received in the loop.
+Using `necdev build` and `necdev start-package` like before, you should be able to see in your node's terminal the message being received in the loop.
 However, you'll see the "hello world" message as a byte vector.
 
 Let's modify our request to expect a response, and our message-handling to send one back, as well as parse the received request into a string.

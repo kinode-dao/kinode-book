@@ -7,7 +7,7 @@ This process handles binding (registering) routes, simple JWT-based authenticati
 
 Any process that you build can bind (register) any number of HTTP paths with `http_server`.
 Every path that you bind will be automatically prepended with the current process' ID.
-For example, bind the route `/messages` within a process called `main:my_package:myname.uq` like so:
+For example, bind the route `/messages` within a process called `main:my_package:myname.nec` like so:
 
 ```
 use nectar_process_lib::{http::bind_http_path};
@@ -15,7 +15,7 @@ use nectar_process_lib::{http::bind_http_path};
 bind_http_path("/messages", true, false).unwrap();
 ```
 
-Now, any HTTP requests to your node at `/main:my_package:myname.uq/messages` will be routed to your process.
+Now, any HTTP requests to your node at `/main:my_package:myname.nec/messages` will be routed to your process.
 
 The other two parameters to `bind_http_path` are `authenticated: bool` and `local_only: bool`.
 `authenticated` means that `http_server` will check for an auth cookie (set at login/registration), and `local_only` means that `http_server` will only allow requests that come from `localhost`.
@@ -42,7 +42,7 @@ Usually, you will want to:
 2) figure out what kind of `IncomingHttpRequest` it is.
 3) handle the request based on the path and method.
 
-Here is an example from the `uqdev` UI-enabled chat app template that handles both `POST` and `GET` requests to the `/messages` path:
+Here is an example from the `necdev` UI-enabled chat app template that handles both `POST` and `GET` requests to the `/messages` path:
 
 ```
 fn handle_http_server_request(

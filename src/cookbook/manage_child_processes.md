@@ -107,7 +107,7 @@ impl Guest for Component {
 The spawn function in Nectar comprises several parameters, each serving a specific purpose in the process creation:
 
 - `name: Option<String>`: This parameter specifies the name of the process.
-If set to None, the process is automatically assigned a numerical identifier, resulting in a ProcessId formatted like `123456789:my-package:john.uq`.
+If set to None, the process is automatically assigned a numerical identifier, resulting in a ProcessId formatted like `123456789:my-package:john.nec`.
 
 - `wasm_path: String`: Indicates the location of the compiled WebAssembly (Wasm) bytecode for the process.
 This path should be relative to the `/pkg` directory in your project.

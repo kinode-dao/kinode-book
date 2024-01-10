@@ -83,7 +83,7 @@ Otherwise, if the page looks like:
 ![Register have wallet](./assets/register-have-wallet.png)
 
 the browser already has a supported wallet installed.
-Click `Register UqName` and proceed to [Connecting the Wallet](#connecting-the-wallet).
+Click `Register NecName` and proceed to [Connecting the Wallet](#connecting-the-wallet).
 
 ### Aside: Acquiring a Wallet
 
@@ -129,7 +129,7 @@ As an indirect node, only your router knows your IP.
 
 ### Sending the Registration Transaction
 
-After clicking `Register Uqname`, click through the wallet prompts to send the transaction:
+After clicking `Register Necname`, click through the wallet prompts to send the transaction:
 
 ![Register wallet prompt](./assets/register-wallet-prompt.png)
 

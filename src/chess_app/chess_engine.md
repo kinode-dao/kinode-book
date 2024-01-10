@@ -5,10 +5,10 @@ The final result will look like [this](https://github.com/uqbar-dao/nectar/tree/
 
 To prepare for this tutorial, follow the environment setup guide [here](../my_first_app/chapter_1.md), i.e. [start a fake node](../my_first_app/chapter_1.md#booting-a-fake-nectar-node) and then, in another terminal, run:
 ```bash
-uqdev new my_chess
+necdev new my_chess
 cd my_chess
-uqdev build
-uqdev start-package -p 8080
+necdev build
+necdev start-package -p 8080
 ```
 
 Once you have the template app installed and can see it running on your testing node, continue...
@@ -128,12 +128,12 @@ Adding more "players" to the mix makes this even more complex.
 To keep things clean, leverage the request/response pattern and the `context` field to store information about how to handle a given response, if you're not awaiting it in a blocking fashion.
 
 Below, you'll find the full code for the CLI version of the app.
-You can build it and install it on a node using `uqdev`.
-You can interact with it in the terminal, primitively, like so (assuming your first node is `fake.uq` and second is `fake2.uq`)):
+You can build it and install it on a node using `necdev`.
+You can interact with it in the terminal, primitively, like so (assuming your first node is `fake.nec` and second is `fake2.nec`):
 ```
-/a our@my_chess:my_chess:template.uq
-/m {"NewGame": {"white": "fake.uq", "black": "fake2.uq"}}
-/m {"Move": {"game_id": "fake2.uq", "move_str": "e2e4"}}
+/a our@my_chess:my_chess:template.nec
+/m {"NewGame": {"white": "fake.nec", "black": "fake2.nec"}}
+/m {"Move": {"game_id": "fake2.nec", "move_str": "e2e4"}}
 ```
 (If you want to make a more ergonomic CLI app, consider parsing IPC as a string...)
 
