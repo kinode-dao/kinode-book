@@ -1,6 +1,6 @@
 # In-Depth Guide: Chess App
 
-This guide will walk you through building a very simple chess app on Nectar OS.
+This guide will walk you through building a very simple chess app on NectarOS.
 The final result will look like [this](https://github.com/uqbar-dao/nectar/tree/main/modules/chess): chess is in the basic runtime distribution so you can try it yourself.
 
 To prepare for this tutorial, follow the environment setup guide [here](../my_first_app/chapter_1.md), i.e. [start a fake node](../my_first_app/chapter_1.md#booting-a-fake-nectar-node) and then, in another terminal, run:

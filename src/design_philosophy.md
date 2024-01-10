@@ -1,5 +1,5 @@
 # Design Philosophy
-The following is a high-level overview of Nectar OS's design philosophy, along with the rationale for fundamental design choices.
+The following is a high-level overview of NectarOS's design philosophy, along with the rationale for fundamental design choices.
 
 ### Decentralized Software Requires a Shared Computing Environment
 A single shared computing environment enables software to coordinate directly between users, services, and other pieces of software in a common language.

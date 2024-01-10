@@ -6,7 +6,7 @@ The Nectar Book describes the Nectar operating system, both in conceptual and pr
 * To learn about high-level concepts, keep reading these documents in-order.
 * To learn about how the system functions, start reading about [System Components](./processes.md).
 
-Nectar OS is a decentralized operating system, peer-to-peer app framework, and node network designed to simplify the development and deployment of decentralized applications.
+NectarOS is a decentralized operating system, peer-to-peer app framework, and node network designed to simplify the development and deployment of decentralized applications.
 It is also a *sovereign cloud computer*, in that Nectar can be deployed anywhere and act as a server controlled by anyone.
 Ultimately, Nectar facilitates the writing and distribution of software that runs on privately-held, personal server nodes or node clusters.
 
@@ -19,7 +19,7 @@ Identity         | Linking permanent system-wide identities to individual nodes.
 Data Persistence | Storing data and saving it in perpetuity.
 Global State     | Reading shared global state (blockchain) and composing actions with this state (transactions).
 
-The focus of this book is how to build and deploy applications on Nectar OS.
+The focus of this book is how to build and deploy applications on NectarOS.
 
 ## Architecture Overview
 
@@ -28,7 +28,7 @@ Nectar's kernel handles the startup and teardown of processes, as well as messag
 Processes are programs compiled to Wasm, which export a single `init()` function.
 They can be started once and complete immediately, or they can run "forever".
 
-Peers in Nectar OS are identified by their onchain username in the "QNS": uQbar Name System, which is modeled after ENS.
+Peers in NectarOS are identified by their onchain username in the "QNS": uQbar Name System, which is modeled after ENS.
 The modular architecture of the QNS allows for any Ethereum NFT, including ENS names themselves, to generate a unique Nectar identity once it is linked to a QNS entry.
 
 Data persistence and blockchain access, as fundamental primitives for p2p apps, are built directly into the kernel.

@@ -1,6 +1,6 @@
 # Installation
 
-This section will teach you how to get the Nectar OS core software, required to run a live node.
+This section will teach you how to get the NectarOS core software, required to run a live node.
 After acquiring the software, you can learn how to run it and [Join the Network](./login.md).
 However, if you are just interested in starting development as fast as possible, start with [My First Nectar Application](./my_first_app/chapter_1.md).
 
@@ -42,7 +42,7 @@ cargo install cargo-wasi
 
 For more information, or debugging, see the [Rust lang install page](https://www.rust-lang.org/tools/install).
 
-### Acquire Nectar OS core
+### Acquire NectarOS core
 
 Clone and set up the repository:
 

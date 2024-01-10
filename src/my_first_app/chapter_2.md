@@ -77,7 +77,7 @@ fn my_init_fn(our: Address) {
 ```
 
 See [nectar.wit](./apis/nectar_wit.md) for more details on what is imported by the WIT bindgen macro.
-These imports are the necessary "system calls" for talking to other processes and runtime components in Nectar OS.
+These imports are the necessary "system calls" for talking to other processes and runtime components in NectarOS.
 
 Run
 ```bash

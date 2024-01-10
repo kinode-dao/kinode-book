@@ -1,6 +1,6 @@
 # Spawning and Managing Child Processes
 
-In Nectar OS, a "parent" process can create additional processes, known as "children".
+In NectarOS, a "parent" process can create additional processes, known as "children".
 These child processes are particularly useful for handling intensive tasks (referred to as "workers") that require long computation times without hindering the performance of the main application.
 They are also beneficial for segregating distinct logical components.
 Each process is its own subdirectory within the package.
