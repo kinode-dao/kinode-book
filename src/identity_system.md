@@ -2,7 +2,7 @@
 
 One of the most important features of a peer-to-peer network is the ability to maintain a unique and persistent identity.
 This identity must be self-sovereign, unforgeable, and easy to discover by peers.
-Nectar OS uses a domain system similar to [ENS](https://ens.domains/) to achieve this.
+NectarOS uses a domain system similar to [ENS](https://ens.domains/) to achieve this.
 It should be noted that, in our system, the concepts of `domain`, `identity`, and `username` are identical and interchangeable.
 
 Like ENS, Nectar domains (managed by our QNS) are registered by a wallet and owned in the form of an NFT.

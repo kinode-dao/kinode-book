@@ -50,7 +50,7 @@ This comes with a number of benefits:
 
 Defining IPC types is just one step towards writing interoperable code.
 It's also critical to document the overall structure of the program along with message payloads and metadata used, if any.
-Writing interoperable code is necessary for enabling permissionless composability, and Nectar OS aims to make this the default kind of program, unlike the centralized web.
+Writing interoperable code is necessary for enabling permissionless composability, and NectarOS aims to make this the default kind of program, unlike the centralized web.
 
 First, let's create a request that uses the new IPC type (and stop expecting a response):
 ```rust

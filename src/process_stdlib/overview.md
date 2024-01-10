@@ -1,6 +1,6 @@
 # Overview
 
-The [process standard library](https://github.com/uqbar-dao/process_lib) is the easiest way to write Rust apps on Nectar OS.
+The [process standard library](https://github.com/uqbar-dao/process_lib) is the easiest way to write Rust apps on NectarOS.
 
 Since Nectar apps use the [WebAssembly Component Model](https://component-model.bytecodealliance.org/), they are built on top of a WIT (Wasm Interface Type) package.
 This interface contains the core types and functions that are available to all Nectar apps, and these are automatically generated in Rust when building a Wasm app.

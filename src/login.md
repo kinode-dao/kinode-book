@@ -2,7 +2,7 @@
 
 Let's get onto the live network!
 
-These directions are particular to the Nectar OS alpha release.
+These directions are particular to the NectarOS alpha release.
 Joining the network will become significantly easier on subsequent releases.
 
 Note: While Nectar will eventually post identities to Optimism, the alpha release uses the Ethereum Sepolia testnet.
