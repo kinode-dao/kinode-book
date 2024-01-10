@@ -3,7 +3,10 @@
   src: url("/fonts/Kabel_Black_Regular.otf") format("opentype");
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
+}
 
 .menu-title {
   font-family: "Kabel Black", sans-serif;

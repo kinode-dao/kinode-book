@@ -7,7 +7,18 @@ The kernel runtime task accepts one kind of `Request`:
 ```rust
 #[derive(Debug, Serialize, Deserialize)]
 pub enum KernelCommand {
+    /// RUNTIME ONLY: used to notify the kernel that booting is complete and
+    /// all processes have been loaded in from their persisted or bootstrapped state.
     Booted,
+    /// Tell the kernel to install and prepare a new process for execution.
+    /// The process will not begin execution until the kernel receives a
+    /// `RunProcess` command with the same `id`.
+    ///
+    /// The process that sends this command will be given messaging capabilities
+    /// for the new process if `public` is false.
+    ///
+    /// All capabilities passed into initial_capabilities must be held by the source
+    /// of this message, or the kernel will discard them (silently for now).
     InitializeProcess {
         id: ProcessId,
         wasm_bytes_handle: String,
@@ -16,20 +27,26 @@ pub enum KernelCommand {
         initial_capabilities: HashSet<Capability>,
         public: bool,
     },
+    /// Create an arbitrary capability and grant it to a process.
     GrantCapabilities {
         target: ProcessId,
         capabilities: Vec<Capability>,
     },
-
+    /// Tell the kernel to run a process that has already been installed.
+    /// TODO: in the future, this command could be extended to allow for
+    /// resource provision.
     RunProcess(ProcessId),
+    /// Kill a running process immediately. This may result in the dropping / mishandling of messages!
     KillProcess(ProcessId),
+    /// RUNTIME ONLY: notify the kernel that the runtime is shutting down and it
+    /// should gracefully stop and persist the running processes.
     Shutdown,
+    /// Ask kernel to produce debugging information
     Debug(KernelPrint),
 }
-
 ```
 
-All `KernelCommand`s are sent in the IPC field of a `Request`.
+All `KernelCommand`s are sent in the body field of a `Request`, serialized to JSON.
 Only `InitializeProcess`, `RunProcess`, and `KillProcess` will give back a `Response`, also serialized to JSON text bytes using `serde_json`:
 
 ```rust
@@ -56,8 +73,8 @@ The `on_panic` field is an enum that specifies what to do if the process panics.
 The `initial_capabilities` field is a set of capabilities that the process will have access to — note that the capabilities are signed by this kernel.
 The `public` field specifies whether the process should be visible to other processes *without* needing to grant a messaging capability.
 
-`InitializeProcess` must be sent with a payload.
-The payload must be the same .wasm file, in raw bytes, that the `wasm_bytes_handle` points to.
+`InitializeProcess` must be sent with a `lazy_load_blob`.
+The blob must be the same .wasm file, in raw bytes, that the `wasm_bytes_handle` points to.
 
 This will *not* cause the process to begin running.
 To do that, send a `RunProcess` command after a successful `InitializeProcess` command.

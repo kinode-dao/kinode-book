@@ -17,7 +17,7 @@ The application will be a simple chat interface: `my_chat_app`.
 
 The following assumes a Unix environment — macOS or Linux.
 If on Windows, [get WSL](https://learn.microsoft.com/en-us/windows/wsl/install) first.
-In general, Nectar OS does not support Windows.
+In general, NectarOS does not support Windows.
 
 ## Acquiring Rust and the Nectar Development Tools (`necdev`)
 

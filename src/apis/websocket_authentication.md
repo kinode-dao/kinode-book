@@ -1,6 +1,6 @@
 # WebSocket API
 
-In Nectar OS, WebSocket connects are made with a Rust `warp` server in the core `http_server:sys:nectar` process.
+In NectarOS, WebSocket connects are made with a Rust `warp` server in the core `http_server:sys:nectar` process.
 Each connection is assigned a `channel_id` that can be bound to a given process using a `WsRegister` message.
 The process receives the `channel_id` for pushing data into the WebSocket, and any subsequent messages from that client will be forwarded to the bound process.
 

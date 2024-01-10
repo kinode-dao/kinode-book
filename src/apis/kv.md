@@ -1,5 +1,61 @@
 ### KV API
 
+Useful helper functions can be found in the [nectar_process_lib](https://github.com/uqbar-dao/process_lib)
+
+#### Creating/Opening a database
+
+```rust
+use nectar_process_lib::kv;
+
+let kv = kv::open(our.package_id(), "birthdays")?;
+
+// You can now pass this KV struct as a reference to other functions
+```
+
+#### Set
+
+```rust
+let key = b"hello";
+let value= b"world";
+
+let returnvalue = kv.set(&key, &value, None)?;
+// The third argument None is for tx_id. 
+// You can group sets and deletes and commit them later. 
+```
+
+#### Get
+
+```rust
+let key = b"hello";
+
+let returnvalue = kv.get(&key)?;
+```
+
+#### Delete
+
+```rust
+let key = b"hello";
+
+kv.delete(&key, None)?;
+```
+
+#### Transactions
+
+```rust
+let tx_id = kv.begin_tx()?;
+
+let key = b"hello";
+let key2 = b"deleteme";
+let value= b"value";
+
+kv.set(&key, &value, Some(tx_id))?;
+kv.delete(&key, Some(tx_id))?;
+
+kv.commit_tx(tx_id)?;
+```
+
+### API
+
 ```rust
 /// Actions are sent to a specific key value database, "db" is the name,
 /// "package_id" is the package. Capabilities are checked, you can access another process's

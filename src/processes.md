@@ -2,7 +2,7 @@
 
 ### Overview
 
-On Nectar OS, processes are the building blocks for peer-to-peer applications.
+On NectarOS, processes are the building blocks for peer-to-peer applications.
 The Nectar runtime handles message-passing between processes, plus the startup and teardown of said processes.
 This section describes the message design as it relates to processes.
 
