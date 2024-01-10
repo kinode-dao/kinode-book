@@ -1,7 +1,7 @@
 # Tutorial: Build and Deploy an App
 
 Welcome!
-In these tutorials, you'll setup your development environment and learn about the `uqdev` tools.
+In these tutorials, you'll setup your development environment and learn about the `necdev` tools.
 You'll learn about templates and also walk through writing an application from the group up, backend and frontend.
 And finally, you'll learn how to deploy applications through the Nectar app store.
 
@@ -19,26 +19,26 @@ The following assumes a Unix environment — macOS or Linux.
 If on Windows, [get WSL](https://learn.microsoft.com/en-us/windows/wsl/install) first.
 In general, Nectar OS does not support Windows.
 
-## Acquiring Rust and the Nectar Development Tools (`uqdev`)
+## Acquiring Rust and the Nectar Development Tools (`necdev`)
 
-Install Rust and the Nectar Development Tools, or `uqdev`:
+Install Rust and the Nectar Development Tools, or `necdev`:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-cargo install --git https://github.com/uqbar-dao/uqdev
+cargo install --git https://github.com/uqbar-dao/necdev
 ```
 
 ## Creating a New Nectar Package Template
 
-The `uqdev` toolkit has a [variety of features](https://github.com/uqbar-dao/uqdev).
+The `necdev` toolkit has a [variety of features](https://github.com/uqbar-dao/necdev).
 One of those tools is `new`, which creates a template for an Nectar package.
 The `new` tool takes two arguments: a path to create the template directory and a name for the package:
 
 ```
-$ uqdev new --help
+$ necdev new --help
 Create an Nectar template package
 
-Usage: uqdev new [OPTIONS] <DIR>
+Usage: necdev new [OPTIONS] <DIR>
 
 Arguments:
   <DIR>  Path to create template directory at
@@ -55,7 +55,7 @@ Options:
 Create a package `my_chat_app`:
 
 ```bash
-uqdev new my_chat_app
+necdev new my_chat_app
 ```
 
 ## Exploring the Package
@@ -63,8 +63,8 @@ uqdev new my_chat_app
 Nectar packages are sets of one or more Nectar [processes](../processes.md).
 An Nectar package is represented in Unix as a directory that has a `pkg/` directory within.
 Each process within the package is its own directory.
-By default, the `uqdev new` command creates a simple, one-process package, a chat app.
-Other templates, including a Python template and a UI-enabled template can be used by passing different flags to `uqdev new` (see `uqdev new --help`).
+By default, the `necdev new` command creates a simple, one-process package, a chat app.
+Other templates, including a Python template and a UI-enabled template can be used by passing different flags to `necdev new` (see `necdev new --help`).
 The default template looks like:
 
 ```bash
@@ -90,13 +90,13 @@ The `src/` directory is where the code for the process lives.
 
 Also within the package directory is a `pkg/` directory.
 The `pkg/` directory contains two files, `manifest.json` and `metadata.json`, that specify information the Nectar node needs to run the package, which will be enumerated below.
-The `pkg/` directory is also where `.wasm` binaries will be deposited by [`uqdev build`](#building-the-package).
-The files in the `pkg/` directory contents are injected into the Nectar node with [`uqdev start-package`](#starting-the-package).
+The `pkg/` directory is also where `.wasm` binaries will be deposited by [`necdev build`](#building-the-package).
+The files in the `pkg/` directory contents are injected into the Nectar node with [`necdev start-package`](#starting-the-package).
 
 Though not included in this template, packages with a frontend have a `ui/` directory as well.
 For an example, look at the result of:
 ```bash
-uqdev new my_chat_app_with_ui --ui
+necdev new my_chat_app_with_ui --ui
 tree my_chat_app_with_ui
 ```
 Note that not all templates have a UI-enabled version.
@@ -154,7 +154,7 @@ $ cat my_chat_app/pkg/metadata.json
 ```
 
 Here, the `publisher` is some default value, but for a real package, this field should contain the QNS id of the publishing node.
-The `publisher` can also be set with a `uqdev new --publisher` flag.
+The `publisher` can also be set with a `necdev new --publisher` flag.
 
 ### `src/lib.rs`
 
@@ -162,34 +162,34 @@ TODO
 
 ## Building the Package
 
-To build the package, use the `uqdev build` tool.
+To build the package, use the `necdev build` tool.
 
 This tool accepts an optional directory path as the first argument, or, if none is provided, attempts to build the current working directory.
 As such, either of the following will work:
 
 ```bash
-uqdev build my_chat_app
+necdev build my_chat_app
 ```
 
 or
 
 ```bash
 cd my_chat_app
-uqdev build
+necdev build
 ```
 
 ## Booting a Fake Nectar Node
 
 Often, it is optimal to develop on a fake node.
 Fake nodes are simple to set up, easy to restart if broken, and mocked networking makes development testing very straightforward.
-To boot a fake Nectar node for development purposes, use the `uqdev boot-fake-node` tool.
+To boot a fake Nectar node for development purposes, use the `necdev boot-fake-node` tool.
 
-`uqdev boot-fake-node` downloads the OS- and architecture-appropriate Nectar core binary and runs it without connecting to the live network.
+`necdev boot-fake-node` downloads the OS- and architecture-appropriate Nectar core binary and runs it without connecting to the live network.
 Instead, it connects to a mocked local network, allowing different fake nodes on the same machine to communicate with each other.
-`uqdev boot-fake-node` has many optional configuration flags, but the defaults should work fine:
+`necdev boot-fake-node` has many optional configuration flags, but the defaults should work fine:
 
 ```bash
-uqdev boot-fake-node
+necdev boot-fake-node
 ```
 
 The fake node, just like a real node, will accept inputs from the terminal.
@@ -202,13 +202,13 @@ Note the port number in the output for [later](#starting-the-package); it will l
 Fri 12/8 15:43 http_server: running on port 8080
 ```
 
-`uqdev boot-fake-node` also accepts a `--runtime-path` argument.
+`necdev boot-fake-node` also accepts a `--runtime-path` argument.
 When supplied, if it is a path to the Nectar core repo, it will compile and use that binary to start the node.
 Or, if it is a path to an Nectar binary, it will use that binary to start the node.
 For example:
 
 ```bash
-uqdev boot-fake-node --runtime-path ~/path/to/nectar
+necdev boot-fake-node --runtime-path ~/path/to/nectar
 ```
 
 where `~/path/to/nectar` must be replaced with a path to the Nectar core repo or an Nectar binary.
@@ -221,8 +221,8 @@ To develop on a real Nectar node, connect to the network and follow the instruct
 
 ## Starting the Package
 
-Time to load and initiate the `my_chat_app` package. For this, you will use the `uqdev start-package` tool.
-Like [`uqdev build`](#building-the-package), the `uqdev start-package` tool receives an optional directory containing the package or, if no directory is received, tries the current working directory.
+Time to load and initiate the `my_chat_app` package. For this, you will use the `necdev start-package` tool.
+Like [`necdev build`](#building-the-package), the `necdev start-package` tool receives an optional directory containing the package or, if no directory is received, tries the current working directory.
 It also requires a URL: the address of the node on which to initiate the package.
 The node's URL can be input in one of two ways:
 1. If running on localhost, the port can be supplied with `-p` or `--port`,
@@ -232,13 +232,13 @@ You can start the package from either within or outside `my_chat_app` directory.
 After completing the previous step, you should be one directory above the `my_chat_app` directory and can use the following:
 
 ```bash
-uqdev start-package my_chat_app -p 8080
+necdev start-package my_chat_app -p 8080
 ```
 
 or, if you are already in the correct package directory:
 
 ```bash
-uqdev start-package -p 8080
+necdev start-package -p 8080
 ```
 
 where here the port provided following `-p` must match the port bound by the node or fake node (see discussion [above](#booting-a-fake-nectar-node)).
@@ -256,7 +256,7 @@ Congratulations on completing the first steps towards developing applications on
 To test out the functionality of `my_chat_app`, spin up another fake node to chat with in a new terminal:
 
 ```bash
-uqdev boot-fake-node -h /tmp/nectar-fake-node-2 -p 8081 -f fake2.uq
+necdev boot-fake-node -h /tmp/nectar-fake-node-2 -p 8081 -f fake2.uq
 ```
 
 The fake nodes communicate over a mocked local network.
@@ -264,13 +264,13 @@ The fake nodes communicate over a mocked local network.
 To start the same `my_chat_app` on the second fake node, again note the port, and supply it with a `start-package`:
 
 ```bash
-uqdev start-package my_chat_app -p 8081
+necdev start-package my_chat_app -p 8081
 ```
 
 or, if already in the `my_chat_app/` package directory:
 
 ```bash
-uqdev start-package -p 8081
+necdev start-package -p 8081
 ```
 
 To send a chat message from the first node, run the following in its terminal:

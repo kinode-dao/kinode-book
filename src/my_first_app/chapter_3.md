@@ -117,6 +117,6 @@ This will cause the process to exit.
 /m our@<your_process>:<your_package>:<your_publisher> "Goodbye"
 ```
 
-If you try to send another Hello now, nothing will happen, because the process has exited. Nice! You can use `uqdev start-package` to try again.
+If you try to send another Hello now, nothing will happen, because the process has exited. Nice! You can use `necdev start-package` to try again.
 
 In the next chapter, you'll add some basic HTTP logic to serve a frontend from our simple process.

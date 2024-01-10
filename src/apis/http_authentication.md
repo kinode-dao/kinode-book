@@ -42,7 +42,7 @@ Usually, you will want to:
 2) figure out what kind of `IncomingHttpRequest` it is.
 3) handle the request based on the path and method.
 
-Here is an example from the `uqdev` UI-enabled chat app template that handles both `POST` and `GET` requests to the `/messages` path:
+Here is an example from the `necdev` UI-enabled chat app template that handles both `POST` and `GET` requests to the `/messages` path:
 
 ```
 fn handle_http_server_request(

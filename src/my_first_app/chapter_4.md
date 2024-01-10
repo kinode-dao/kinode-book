@@ -290,7 +290,7 @@ http::serve_index_html(&our, "ui").unwrap();
 ```
 
 Now you can add a static `index.html` file to the package.
-UI files are stored in the `ui/` directory and built into the application by `uqdev build` automatically.
+UI files are stored in the `ui/` directory and built into the application by `necdev build` automatically.
 Create a new file in `ui/index.html` with the following contents.
 **Make sure to replace the fetch URL with your process ID!**
 ```html

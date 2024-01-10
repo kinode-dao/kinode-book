@@ -31,27 +31,27 @@ Upon install, the package manager (also referred to as "app store") surfaces the
         "on_exit": "Restart",
         "request_networking": true,
         "request_capabilities": [
-            "net:sys:uqbar"
+            "net:sys:nectar"
         ],
         "grant_capabilities": [
-            "http_server:sys:uqbar"
+            "http_server:sys:nectar"
         ],
         "public": true
     }
 ]
 ```
-By setting `request_networking: true`, the kernel will give it the `"networking"` capability. In the `request_capabilities` field, `chess` is asking for the capability to message `net:sys:uqbar`.
-Finally, in the `grant_capabilities` field, it is giving `http_server:sys:uqbar` the ability to message `chess`.
+By setting `request_networking: true`, the kernel will give it the `"networking"` capability. In the `request_capabilities` field, `chess` is asking for the capability to message `net:sys:nectar`.
+Finally, in the `grant_capabilities` field, it is giving `http_server:sys:nectar` the ability to message `chess`.
 
 When booting the `chess` app, all of these capabilities will be granted throughout our node.
-If we were to print out `chess`' capabilities using `uqbar_process_lib::our_capabilities() -> Vec<Capability>`, we would see something like this:
+If we were to print out `chess`' capabilities using `nectar_process_lib::our_capabilities() -> Vec<Capability>`, we would see something like this:
 
 ```rust
 [
     // obtained because of `request_networking: true`
-    Capability { issuer: "our@kernel:sys:uqbar", params: "\"network\"" },
+    Capability { issuer: "our@kernel:sys:nectar", params: "\"network\"" },
     // obtained because we asked for it in `request_capabilities`
-    Capability { issuer: "our@net:sys:uqbar", params: "\"messaging\"" }
+    Capability { issuer: "our@net:sys:nectar", params: "\"messaging\"" }
 ]
 ```
 Note that [userspace capabilities](#userspace-capabilities), those *created by other processes*, can also be requested in a package manifest, though it's not guaranteed that the user will have installed the process that can grant the capability.
@@ -63,7 +63,7 @@ While the manifest fields are useful for getting a process started, it is not su
 To create our own capabilities, we can simply create a new one, and attach it to a `Request` or `Response` like so:
 
 ```rust
-let my_new_cap = uqbar_process_lib::Capability::new(our, "\"my-new-capability\"");
+let my_new_cap = nectar_process_lib::Capability::new(our, "\"my-new-capability\"");
 
 Request::new()
     .to(a_different_process)
@@ -74,7 +74,7 @@ Request::new()
 On the other end, if a process wants to save and reuse that capability, they can do something like this:
 
 ```rust
-uqbar_process_lib::save_capabilities(req.capabilities);
+nectar_process_lib::save_capabilities(req.capabilities);
 ```
 This call will automatically save the caps for later use.
 Next time you attach this cap to a message, whether that is for authentication with the `issuer`, or to share it with another process, it will reach the other side just fine, and they can check it using the exact same flow.
