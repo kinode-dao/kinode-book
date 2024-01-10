@@ -59,7 +59,7 @@ impl Guest for Component {
                 // the parents app already has the capability to message http_client here
                 // so we are just passing it onto the child
                 Capability {
-                    issuer: Address::new(&our.node, ProcessId::from_str("http_client:sys:uqbar").unwrap()),
+                    issuer: Address::new(&our.node, ProcessId::from_str("http_client:sys:nectar").unwrap()),
                     params: "\"messaging\"".into(),
                 }
             ]),

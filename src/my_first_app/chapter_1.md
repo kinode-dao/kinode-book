@@ -30,7 +30,7 @@ cargo install --git https://github.com/uqbar-dao/necdev
 
 ## Creating a New Nectar Package Template
 
-The `necdev` toolkit has a [variety of features](https://github.com/uqbar-dao/uqdev).
+The `necdev` toolkit has a [variety of features](https://github.com/uqbar-dao/necdev).
 One of those tools is `new`, which creates a template for an Nectar package.
 The `new` tool takes two arguments: a path to create the template directory and a name for the package:
 
