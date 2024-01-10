@@ -40,6 +40,17 @@
 - [Putting Everything Together](./chess_app/putting_everything_together.md)
 - [Extension 1: Chat](./chess_app/chat.md)
 
+# NecDev: Development Tools
+
+- [NecDev](./necdev/necdev.md)
+- [`necdev boot-fake-node`](./necdev/boot-fake-node.md)
+- [`necdev new`](./necdev/new.md)
+- [`necdev build`](./necdev/build.md)
+- [`necdev start-package`](./necdev/start-package.md)
+- [`necdev dev-ui`](./necdev/dev-ui.md)
+- [`necdev inject-message`](./necdev/inject-message.md)
+- [`necdev run-tests`](./necdev/run-tests.md)
+
 # Cookbook (Handy Recipes)
 
 - [Cookbook Overview](./cookbook/cookbook_overview.md)
@@ -60,4 +71,3 @@
 - [HTTP API](./apis/http_authentication.md)
 - [Net API](./apis/net.md)
 - [Websocket API](./apis/websocket_authentication.md)
-
