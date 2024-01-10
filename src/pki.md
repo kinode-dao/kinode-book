@@ -26,11 +26,11 @@ These router nodes communicate between indirect nodes and the network at large.
 
 ## Name Registration
 
-The `DotUqRegistrar` (AKA `.uq`) is responsible for registering all `.uq` domain names.
-It is also responsible for authorizing alterations to `.uq` node records managed by the QNSRegistryResolver. (Todo: just confused by this)
-`DotUqRegistrar` implements ERC721 tokenization logic for the names it is charged with, so all `.uq` names are NFTs that may be transferred to and from any address.
+The `DotUqRegistrar` (AKA `.nec`) is responsible for registering all `.nec` domain names.
+It is also responsible for authorizing alterations to `.nec` node records managed by the QNSRegistryResolver. (Todo: just confused by this)
+`DotUqRegistrar` implements ERC721 tokenization logic for the names it is charged with, so all `.nec` names are NFTs that may be transferred to and from any address.
 There is currently a minimum length of 9 characters for Nectar IDs.
 
-`DotUqRegistrar` allows users to create subdomains underneath any `.uq` name they own.
+`DotUqRegistrar` allows users to create subdomains underneath any `.nec` name they own.
 Initially this grants them control over the subdomain, as a holder of the parent domain, but they may choose to irreversibly revoke this control if they desire to.
 This applies at each level of subdomain.

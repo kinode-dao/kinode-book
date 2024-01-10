@@ -11,7 +11,7 @@ However, unlike ENS, Nectar domains never expire. Additionally, they contain met
 - route messages to the identity on the Nectar network.
 
 QNS provides both sensible defaults and flexibility.
-The cheapest option is also the default: minting a new NFT, a `.uq` TLD.
+The cheapest option is also the default: minting a new NFT, a `.nec` TLD.
 However, unlike ENS, QNS is not restricted to a single set of NFTs.
 Instead, it is designed to easily extend and wrap existing NFTs, enabling users to use identities they are already attached to as their Nectar identity.
 
@@ -36,6 +36,6 @@ The router is responsible for forwarding the message to the indirect node and si
 For more information about the architectural specifics of the networking protocol, see [Networking Protocol](./networking_protocol.md).
 The main takeaway for the identity system is that *domain provenance* and *domain resolution* are unified by QNS.
 
-Like .eth for ENS, the QNS domain space is fixed inside the `.uq` top-level domain.
+Like .eth for ENS, the QNS domain space is fixed inside the `.nec` top-level domain.
 However, we reserve the ability to expand domain availability in the future, and governance of the Nectar protocol will include the ability to manage domain names.
 Eventually, we hope to link various TLDs to existing NFT communities and other identity systems.

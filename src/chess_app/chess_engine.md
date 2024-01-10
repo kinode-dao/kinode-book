@@ -129,11 +129,11 @@ To keep things clean, leverage the request/response pattern and the `context` fi
 
 Below, you'll find the full code for the CLI version of the app.
 You can build it and install it on a node using `necdev`.
-You can interact with it in the terminal, primitively, like so (assuming your first node is `fake.uq` and second is `fake2.uq`)):
+You can interact with it in the terminal, primitively, like so (assuming your first node is `fake.nec` and second is `fake2.nec`)):
 ```
-/a our@my_chess:my_chess:template.uq
-/m {"NewGame": {"white": "fake.uq", "black": "fake2.uq"}}
-/m {"Move": {"game_id": "fake2.uq", "move_str": "e2e4"}}
+/a our@my_chess:my_chess:template.nec
+/m {"NewGame": {"white": "fake.nec", "black": "fake2.nec"}}
+/m {"Move": {"game_id": "fake2.nec", "move_str": "e2e4"}}
 ```
 (If you want to make a more ergonomic CLI app, consider parsing IPC as a string...)
 

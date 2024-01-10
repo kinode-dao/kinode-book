@@ -10,7 +10,7 @@ You should see the printout we added to `init()` in your terminal: `chess by <yo
 
 Remember that you determine the process name, package name, and your developer name in the `manifest.json` and `metadata.json` files inside `/pkg`.
 Open your chess frontend by navigating to your node's URL (probably something like `http://localhost:8080`), and use the names you chose as the path.
-For example, if your chess process name is `my_chess`, and your package is named `my_chess`, and your publisher name is `template.uq`, you would navigate to `http://localhost:8080/my_chess:my_chess:template.uq`.
+For example, if your chess process name is `my_chess`, and your package is named `my_chess`, and your publisher name is `template.nec`, you would navigate to `http://localhost:8080/my_chess:my_chess:template.nec`.
 
 You should see something like this:
 ![chess frontend](./chess_home.png)

@@ -273,7 +273,7 @@ Make sure to replace the URL with your node's local port and the correct process
 Note: if you had not set `authenticated` to false in the bind command, you would need to add an `Authorization` header to this request with the JWT cookie of your node.
 This is saved in your browser automatically on login.
 ```bash
-curl -X PUT -H "Content-Type: application/json" -d '{"Hello": "greetings"}' "http://localhost:8080/tutorial:tutorial:template.uq"
+curl -X PUT -H "Content-Type: application/json" -d '{"Hello": "greetings"}' "http://localhost:8080/tutorial:tutorial:template.nec"
 ```
 
 ## Serving a static frontend
@@ -311,7 +311,7 @@ Create a new file in `ui/index.html` with the following contents.
     </main>
 	<script>
         async function say_hello(text) {
-          const result = await fetch("/tutorial:tutorial:template.uq/api", {
+          const result = await fetch("/tutorial:tutorial:template.nec/api", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ "Hello": text }),

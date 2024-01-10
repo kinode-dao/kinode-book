@@ -45,7 +45,7 @@ Arguments:
 
 Options:
   -a, --package <PACKAGE>      Name of the package [default: DIR]
-  -u, --publisher <PUBLISHER>  Name of the publisher [default: template.uq]
+  -u, --publisher <PUBLISHER>  Name of the publisher [default: template.nec]
   -l, --language <LANGUAGE>    Programming language of the template [default: rust] [possible values: rust, python, javascript]
   -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: chat, fibonacci]
       --ui                     If set, use the template with UI
@@ -148,7 +148,7 @@ The `metadata.json` file contains information about the package and the publishe
 $ cat my_chat_app/pkg/metadata.json
 {
     "package": "my_chat_app",
-    "publisher": "template.uq",
+    "publisher": "template.nec",
     "version": [0, 1, 0]
 }
 ```
@@ -256,7 +256,7 @@ Congratulations on completing the first steps towards developing applications on
 To test out the functionality of `my_chat_app`, spin up another fake node to chat with in a new terminal:
 
 ```bash
-necdev boot-fake-node -h /tmp/nectar-fake-node-2 -p 8081 -f fake2.uq
+necdev boot-fake-node -h /tmp/nectar-fake-node-2 -p 8081 -f fake2.nec
 ```
 
 The fake nodes communicate over a mocked local network.
@@ -276,11 +276,11 @@ necdev start-package -p 8081
 To send a chat message from the first node, run the following in its terminal:
 
 ```
-/m our@my_chat_app:my_chat_app:template.uq {"Send": {"target": "fake2.uq", "message": "hello world"}}
+/m our@my_chat_app:my_chat_app:template.nec {"Send": {"target": "fake2.nec", "message": "hello world"}}
 ```
 
 and replying:
 
 ```
-/m our@my_chat_app:my_chat_app:template.uq {"Send": {"target": "fake.uq", "message": "wow, it works!"}}
+/m our@my_chat_app:my_chat_app:template.nec {"Send": {"target": "fake.nec", "message": "wow, it works!"}}
 ```

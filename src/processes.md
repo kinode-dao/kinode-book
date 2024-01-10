@@ -16,20 +16,20 @@ And finally, the node the process is running on (your node).
 Package IDs (TODO: link to docs) look like:
 
 ```
-my_cool_software:my_username.uq
+my_cool_software:my_username.nec
 ```
 
 Process IDs (TODO: link to docs) look like:
 
 ```
-process_one:my_cool_software:my_username.uq
-8513024814:my_cool_software:my_username.uq
+process_one:my_cool_software:my_username.nec
+8513024814:my_cool_software:my_username.nec
 ```
 
 Addresses (TODO: link to docs) look like:
 
 ```
-some_user.uq@process_one:my_cool_software:my_username.uq
+some_user.nec@process_one:my_cool_software:my_username.nec
 ```
 
 Processes are compiled to Wasm.
@@ -125,12 +125,12 @@ If process A sends a message with a blob to process B, process B can send a mess
 If process B does not attach a new `lazy_load_blob` to that inheriting message, the original blob from process A will be attached and accessible to C.
 
 For example, consider again the file-transfer process discussed [above](#awaiting-a-response).
-Say one node, `send.uq`, is transferring a file to another node, `recv.uq`.
+Say one node, `send.nec`, is transferring a file to another node, `recv.nec`.
 The process of sending a file chunk will look something like:
-1. `recv.uq` sends a request for chunk N
-2. `send.uq` receives the request and itself makes a request to the filesystem for the piece of the file
-3. `send.uq` receives a response from the filesystem with the piece of the file in the `lazy_load_blob`;
-   `send.uq` sends a response that inherits the blob back to `recv.uq` without itself having to load the blob, saving the compute and IO required to move the blob across the Wasm boundary.
+1. `recv.nec` sends a request for chunk N
+2. `send.nec` receives the request and itself makes a request to the filesystem for the piece of the file
+3. `send.nec` receives a response from the filesystem with the piece of the file in the `lazy_load_blob`;
+   `send.nec` sends a response that inherits the blob back to `recv.nec` without itself having to load the blob, saving the compute and IO required to move the blob across the Wasm boundary.
 
 This is the second functionality of inheritance; the first is discussed above: [eliminating the need for bucket-brigading of responses](#inheriting-a-response).
 
