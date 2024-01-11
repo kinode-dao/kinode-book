@@ -36,7 +36,7 @@ The `new` tool takes two arguments: a path to create the template directory and 
 
 ```
 $ necdev new --help
-Create an Nectar template package
+Create a Nectar template package
 
 Usage: necdev new [OPTIONS] <DIR>
 
@@ -100,7 +100,7 @@ necdev new my_chat_app_with_ui --ui
 tree my_chat_app_with_ui
 ```
 Note that not all templates have a UI-enabled version.
-As of 230104, only the Rust chat template has a UI-enabled version.
+As of 240111, only the Rust chat template has a UI-enabled version.
 
 ### `pkg/manifest.json`
 
@@ -114,31 +114,31 @@ $ cat my_chat_app/pkg/manifest.json
         "process_wasm_path": "/my_chat_app.wasm",
         "on_exit": "Restart",
         "request_networking": true,
-        "request_messaging": [
+        "request_capabilities": [
             "net:sys:nectar"
         ],
-        "grant_messaging": [],
+        "grant_capabilities": [],
         "public": true
     }
 ]
 ```
 
-This is a json array of json objects.
+This is a JSON array of JSON objects.
 Each object represents one process that will be started when the package is installed.
 A package with multiple processes need not start them all at install time.
 A package may start more than one of the same process, as long as they each have a unique `process_name`.
 
 Each object has the following fields:
 
-Key                    | Required? | Value type
----------------------- | --------- | ----------
-`"process_name"`       | Yes       | string
-`"process_wasm_path"`  | Yes       | string (representing a path)
-`"on_exit"`            | Yes       | string (`"None"` or `"Restart"`) or object (covered elsewhere)
-`"request_networking"` | Yes       | bool
-`"request_messaging"`  | No        | array of strings to note process names, or objects to note custom capabilities and from what process to request them
-`"grant_messaging"`    | No        | array of strings to note process names, or objects to note custom capabilities to generate and send to a process
-`"public"`             | Yes       | bool
+Key                      | Required? | Value type
+------------------------ | --------- | ----------
+`"process_name"`         | Yes       | string
+`"process_wasm_path"`    | Yes       | string (representing a path)
+`"on_exit"`              | Yes       | string (`"None"` or `"Restart"`) or object (covered [elsewhere](./chapter_2.md#aside-on_exit))
+`"request_networking"`   | Yes       | bool
+`"request_capabilities"` | No        | array of strings to note process names, or objects to note custom capabilities and from what process to request them
+`"grant_capabilities"`   | No        | array of strings to note process names, or objects to note custom capabilities to generate and send to a process
+`"public"`               | Yes       | bool
 
 ### `pkg/metadata.json`
 
@@ -213,7 +213,7 @@ necdev boot-fake-node --runtime-path ~/path/to/nectar
 
 where `~/path/to/nectar` must be replaced with a path to the Nectar core repo or an Nectar binary.
 
-## Option: Starting a Real Nectar Node
+## Optional: Starting a Real Nectar Node
 
 Alternatively, development sometimes calls for a real node, which has access to the actual Nectar network and its providers, such as integrated LLMs.
 
@@ -279,8 +279,17 @@ To send a chat message from the first node, run the following in its terminal:
 /m our@my_chat_app:my_chat_app:template.nec {"Send": {"target": "fake2.nec", "message": "hello world"}}
 ```
 
-and replying:
+and replying, from the other terminal:
 
 ```
 /m our@my_chat_app:my_chat_app:template.nec {"Send": {"target": "fake.nec", "message": "wow, it works!"}}
+```
+
+Messages can also be injected from the outside.
+From a bash terminal, use `uqdev inject-message`, like so:
+
+```bash
+necdev inject-message foo:foo:template.nec '{"Send": {"target": "fake2.nec", "message": "hello from the outside world"}}'
+necdev inject-message foo:foo:template.nec '{"Send": {"target": "fake.nec", "message": "replying from fake2.nec using first method..."}}' --node fake2.nec
+necdev inject-message foo:foo:template.nec '{"Send": {"target": "fake.nec", "message": "and second!"}}' -p 8081
 ```

@@ -55,8 +55,8 @@ bind_http_path("/assets/*", true, false).unwrap();
 Then in your request handler, you can use `handle_ui_asset_request` to get the file whose path matches the HTTP route of the request:
 
 ```
-let ipc = message.ipc();
-if let Ok(http_request) = serde_json::from_slice::<HttpServerRequest>(ipc) {
+let body = message.body();
+if let Ok(http_request) = serde_json::from_slice::<HttpServerRequest>(body) {
     match http_request {
         HttpServerRequest::Http(IncomingHttpRequest { raw_path, .. }) => {
             if raw_path.contains(&format!("/{}/assets/", our.process.to_string())) {

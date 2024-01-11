@@ -43,8 +43,8 @@ Upon install, the package manager (also referred to as "app store") surfaces the
 By setting `request_networking: true`, the kernel will give it the `"networking"` capability. In the `request_capabilities` field, `chess` is asking for the capability to message `net:sys:nectar`.
 Finally, in the `grant_capabilities` field, it is giving `http_server:sys:nectar` the ability to message `chess`.
 
-When booting the `chess` app, all of these capabilities will be granted throughout our node.
-If we were to print out `chess`' capabilities using `nectar_process_lib::our_capabilities() -> Vec<Capability>`, we would see something like this:
+When booting the `chess` app, all of these capabilities will be granted throughout your node.
+If you were to print out `chess`' capabilities using `nectar_process_lib::our_capabilities() -> Vec<Capability>`, you would see something like this:
 
 ```rust
 [
@@ -60,7 +60,7 @@ Therefore, when a userspace process uses the capabilities system, it should have
 ## Userspace Capabilities
 
 While the manifest fields are useful for getting a process started, it is not sufficient for creating and giving custom capabilities to other processes.
-To create our own capabilities, we can simply create a new one, and attach it to a `Request` or `Response` like so:
+To create your own capabilities, simply declare a new one and attach it to a `Request` or `Response` like so:
 
 ```rust
 let my_new_cap = nectar_process_lib::Capability::new(our, "\"my-new-capability\"");

@@ -55,7 +55,7 @@ Incoming WebSocket messages will be enums of `HttpServerRequest` with type `WebS
 You will want to store the `channel_id` that comes in with `WebSocketOpen` so that you can push data to that WebSocket.
 If you expect to have more than one client connected at a time, then you will most likely want to store the channel IDs in a Set (Rust `HashSet`).
 
-With a `WebSocketPush`, the incoming message will be on the `Payload`, accessible with `get_payload()`.
+With a `WebSocketPush`, the incoming message will be on the `LazyLoadBlob`, accessible with `get_blob()`.
 
 `WebSocketClose` will have the `channel_id` of the closed channel, so that you can remove it from wherever you are storing it.
 
@@ -66,10 +66,10 @@ fn handle_http_server_request(
     our: &Address,
     message_archive: &mut MessageArchive,
     source: &Address,
-    ipc: &[u8],
+    body: &[u8],
     channel_ids: &mut HashSet,
 ) -> anyhow::Result<()> {
-    let Ok(server_request) = serde_json::from_slice::<HttpServerRequest>(ipc) else {
+    let Ok(server_request) = serde_json::from_slice::<HttpServerRequest>(body) else {
         // Fail silently if we can't parse the request
         return Ok(());
     };
@@ -81,7 +81,7 @@ fn handle_http_server_request(
             channel_ids.insert(channel_id);
         }
         HttpServerRequest::WebSocketPush { .. } => {
-            let Some(payload) = get_payload() else {
+            let Some(blob) = get_blob() else {
                 return Ok(());
             };
 
@@ -90,7 +90,7 @@ fn handle_http_server_request(
                 message_archive,
                 our_channel_id,
                 source,
-                &payload.bytes,
+                &blob.bytes,
                 false,
             )?;
         }
@@ -115,11 +115,11 @@ pub fn send_ws_push(
     node: String,
     channel_id: u32,
     message_type: WsMessageType,
-    payload: Payload,
+    blob: LazyLoadBlob,
 ) -> anyhow::Result<()>
 ```
 
-`node` will usually be `our.node` (although you can also send a WS push to another node's `http_server`!), `channel_id` is the client you want to send to, `message_type` will be either `WsMessageType::Text` or `WsMessageType::Binary`, and `payload` will be a standard `Payload` with an optional `mime` field and required `bytes` field.
+`node` will usually be `our.node` (although you can also send a WS push to another node's `http_server`!), `channel_id` is the client you want to send to, `message_type` will be either `WsMessageType::Text` or `WsMessageType::Binary`, and `blob` will be a standard `LazyLoadBlob` with an optional `mime` field and required `bytes` field.
 
 If you would prefer to send the request without the helper function, this is that what `send_ws_push` looks like under the hood:
 
@@ -129,7 +129,7 @@ Request::new()
         node,
         ProcessId::from_str("http_server:sys:nectar").unwrap(),
     ))
-    .ipc(
+    .body(
         serde_json::json!(HttpServerRequest::WebSocketPush {
             channel_id,
             message_type,
@@ -138,6 +138,6 @@ Request::new()
         .as_bytes()
         .to_vec(),
     )
-    .payload(payload)
+    .blob(blob)
     .send()?;
 ```

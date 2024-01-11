@@ -3,7 +3,7 @@
 The Nectar terminal is broken up into two segments: a Wasm app, called `terminal:terminal:nectar`, and a runtime module called `terminal:sys:nectar`.
 The Wasm app is the central area where terminal logic and authority live.
 It parses `Requests` by attempting to read the `body` field as a UTF-8 string, then parsing that string into various commands (usually denoted by a `/`) to perform.
-The runtime module exists in order to actually use this app from the terminal which is launched by starting Nectar OS.
+The runtime module exists in order to actually use this app from the terminal which is launched by starting NectarOS.
 It manages the raw input and presents an interface with features such as command history, text manipulation, and shortcuts.
 
 To "use" the terminal as an API, one must simply send a `Request` to the `terminal:terminal:nectar` module.

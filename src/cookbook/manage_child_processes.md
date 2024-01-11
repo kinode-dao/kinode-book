@@ -117,7 +117,7 @@ OnExit is an enum with three potential values:
 
   - `None`: The process will take no action upon exiting.
   - `Restart`: The process will automatically restart after termination.
-  - `Requests: Vec<(Address, Request, Option<Payload>)>`: Upon process termination, a series of predefined requests will be dispatched.
+  - `Requests: Vec<(Address, Request, Option<LazyLoadBlob>)>`: Upon process termination, a series of predefined requests will be dispatched.
 - `request_capabilities: Vec<Capability>`: This argument is for passing immediate capabilities to the child process.
    As illustrated in the provided example, the parent's `http_client` messaging capability was shared with the child.
 
