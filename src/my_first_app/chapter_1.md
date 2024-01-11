@@ -114,10 +114,10 @@ $ cat my_chat_app/pkg/manifest.json
         "process_wasm_path": "/my_chat_app.wasm",
         "on_exit": "Restart",
         "request_networking": true,
-        "request_messaging": [
+        "request_capabilities": [
             "net:sys:nectar"
         ],
-        "grant_messaging": [],
+        "grant_capabilities": [],
         "public": true
     }
 ]
@@ -130,15 +130,15 @@ A package may start more than one of the same process, as long as they each have
 
 Each object has the following fields:
 
-Key                    | Required? | Value type
----------------------- | --------- | ----------
-`"process_name"`       | Yes       | string
-`"process_wasm_path"`  | Yes       | string (representing a path)
-`"on_exit"`            | Yes       | string (`"None"` or `"Restart"`) or object (covered elsewhere)
-`"request_networking"` | Yes       | bool
-`"request_messaging"`  | No        | array of strings to note process names, or objects to note custom capabilities and from what process to request them
-`"grant_messaging"`    | No        | array of strings to note process names, or objects to note custom capabilities to generate and send to a process
-`"public"`             | Yes       | bool
+Key                      | Required? | Value type
+------------------------ | --------- | ----------
+`"process_name"`         | Yes       | string
+`"process_wasm_path"`    | Yes       | string (representing a path)
+`"on_exit"`              | Yes       | string (`"None"` or `"Restart"`) or object (covered [elsewhere](./chapter_2.md#aside-on_exit))
+`"request_networking"`   | Yes       | bool
+`"request_capabilities"` | No        | array of strings to note process names, or objects to note custom capabilities and from what process to request them
+`"grant_capabilities"`   | No        | array of strings to note process names, or objects to note custom capabilities to generate and send to a process
+`"public"`               | Yes       | bool
 
 ### `pkg/metadata.json`
 

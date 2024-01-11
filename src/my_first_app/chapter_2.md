@@ -27,6 +27,7 @@ After generating the bindings, every process must define a `Component` struct an
 This is the entry point for the process, and the `init()` function is the first function called by the Nectar runtime when the process is started.
 
 The definition of the `Component` struct can be done manually, but it's easier to import the [`nectar_process_lib`](../process_stdlib/overview.md) crate (a sort of standard library for Nectar processes written in Rust) and use the `call_init!` macro.
+Note that running the process below [can lead to an infinite loop](#aside-on_exit):
 
 ```rust
 use nectar_process_lib::{call_init, Address};
@@ -188,7 +189,7 @@ loop {
 ```
 
 This code won't send a response back yet.
-To do that, import the `Response` type from process_lib and fire one off inside the request branch.
+To do that, import the `Response` type from `process_lib` and fire one off inside the request branch.
 
 ```rust
 use nectar_process_lib::{await_message, call_init, println, Address, Request, Response};
@@ -261,3 +262,22 @@ This basic structure can be found in the majority of Nectar processes.
 The other common structure is a thread-like process, that sends and handles a fixed series of messages and then exits.
 
 In the next chapter, we will cover how to turn this very basic request-response pattern into something that can be extensible and composable.
+
+## Aside: `on_exit`
+
+As mentioned in the [previous chapter](./chapter_1.md#pkgmanifestjson), one of the fields in the `manifest.json` is `on_exit`.
+When the process exits, it does one of:
+
+`on_exit` setting | Behavior
+----------------- | --------
+`"None"`          | Do nothing
+`"Restart"`       | Restart the process
+JSON object       | Send the message described by the JSON object
+
+A process intended to do something once and exit should have `"None"` or a JSON object `on_exit`.
+If it has `"Restart"`, it will repeat in an infinite loop, as reference [above](#starting-from-scratch).
+
+A process intended to run over a period of time and serve requests and responses will often have `"Restart"` `on_exit` so that, in case of crash, it will start again.
+Alternatively, a JSON object `on_exit` can be used to inform another process of its untimely demise.
+In this way, Nectar processes become quite similar to Erlang processes, and crashing can be [designed into your process to increase reliability](https://ferd.ca/the-zen-of-erlang.html).
+

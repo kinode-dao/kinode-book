@@ -149,7 +149,18 @@ http::send_response(http::StatusCode::OK, None, vec![]).unwrap();
 Request::to(our).body(body.bytes).send().unwrap();
 ```
 
-Putting it all together, you get a process which you can build and start, then use cURL to send Hello and Goodbye requests via HTTP PUTs! Here's the full code:
+Putting it all together, you get a process which you can build and start, then use cURL to send Hello and Goodbye requests via HTTP PUTs!
+
+Also, remember to request the capability to message `http_server` in `manifest.json`:
+```json
+...
+"request_capabilities": [
+    "http_server:sys:nectar"
+],
+...
+```
+
+Here's the full code:
 ```rust
 use serde::{Deserialize, Serialize};
 use nectar_process_lib::{
@@ -290,7 +301,7 @@ http::serve_index_html(&our, "ui").unwrap();
 ```
 
 Now you can add a static `index.html` file to the package.
-UI files are stored in the `ui/` directory and built into the application by `neddev build` automatically.
+UI files are stored in the `ui/` directory and built into the application by `necdev build` automatically.
 Create a new file in `ui/index.html` with the following contents.
 **Make sure to replace the fetch URL with your process ID!**
 ```html
@@ -335,10 +346,20 @@ Create a new file in `ui/index.html` with the following contents.
 ```
 
 This is a super barebones `index.html` that provides a form to make requests to the `/api` endpoint.
+
+Finally, add one more entry to `manifest.json`: messaging capabilities to the VFS which is required to store and access the UI `index.html`:
+```json
+...
+"request_capabilities": [
+    "vfs:sys:nectar"
+],
+...
+```
+
 After saving this file to `ui/index.html`, rebuilding the program, and starting the package again, you should be able to navigate to you `http://localhost:8080/<process_id>` and see the form page.
 Note that you can now set `authenticated` to `true` in the `/api` binding and the webpage will still work, but cURL will not.
 
 This frontend is now fully packaged with the process — there are no more steps!
 Of course, this can be made arbitrarily complex with various frontend frameworks that produce a static build.
 
-In the next and final chapter, we'll quickly go over the package metadata and discuss how to share this app across the Nectar network.
+In the next and final chapter, learn about the package metadata and how to share this app across the Nectar network.
