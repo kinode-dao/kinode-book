@@ -9,6 +9,33 @@ necdev boot-fake-node
 By default, `boot-fake-node` fetches a prebuilt binary and launches the node using it.
 Alternatively, `boot-fake-node` can use a local binary or build a local Nectar core repo and use the resulting binary.
 
+## Example Usage
+
+You can start a network of fake nodes that can communicate with each other (but not the live network).
+You'll need to start a new terminal for each fake node.
+For example, to start two fake nodes, `fake.nec` and `fake2.nec`:
+
+```bash
+necdev boot-fake-node
+
+# In a new terminal
+necdev boot-fake-node -h /tmp/nectar-fake-node-2 -p 8081 -f fake2.nec
+```
+
+## Discussion
+
+Fake nodes make development easier.
+A fake node is not connected to the network, but otherwise behaves the same as a live node.
+Fake nodes are connected to each other on your local machine through a network router that passes messages between them.
+Fake nodes also clean up after themselves, so you don't have to worry about state from a previous iterations messing up the current one.
+Thus, fake nodes are an excellent testing ground during development for fast iteration.
+
+There are some cases where fake nodes are not appropriate.
+One is for testing persistence of a package.
+Because fake nodes clean up after themselves, they will not persist data from run to run.
+Another weakness of fake nodes is also their strength: they are not connected to the live network.
+Though this lack of connectivity makes them easy to spin up and throw away, the downside is no access to services on the network, like remote LLMs.
+
 ## Arguments
 
 ```bash

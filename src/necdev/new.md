@@ -8,6 +8,36 @@ necdev new foo
 
 creates the default template (a Rust chat app with no UI) in the `foo/` directory.
 
+## Example Usage
+
+```bash
+# Create the default template: rust chat with no UI
+necdev new my_rust_chat
+
+# Create rust chat with UI
+necdev new my_rust_chat_with_ui --ui
+
+# Create fibonacci in python
+necdev new my_py_fib -l python -t fibonacci
+```
+
+## Discussion
+
+You can create a variety of templates using `necdev new`.
+Currently, three languages are supported: `rust` (the default), `python`, and `javascript`.
+Two templates are currently supported: `chat`, a simple chat application, and `fibonacci`, which computes Fibonacci numbers.
+In addition, some subset of these templates also have a UI-enabled version.
+
+The following table describes the matrix of "Exists/Has UI-enabled version" for each template/language combination:
+
+### Exists/Has UI-enabled vesion
+
+Language     | `chat`  | `fibonacci`
+------------ | ------- | -----------
+`rust`       | yes/yes | yes/no
+`python`     | yes/no  | yes/no
+`javascript` | yes/no  | yes/no
+
 ## Arguments
 
 ```bash

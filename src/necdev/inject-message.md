@@ -6,6 +6,16 @@
 necdev inject-message foo:foo:template.nec '{"Send": {"target": "fake2.nec", "message": "hello world"}}'
 ```
 
+## Discussion
+
+`necdev inject-message` injects the given message into the given node.
+It is useful for:
+1. Testing processes from the outside world during development
+2. Injecting data into the node
+3. Combining the above with `bash` or other scripting.
+For example, using the [`--blob`](#--blob) flag you can directly inject the contents of a file.
+You can script in the outside world, dump the result to a file, and inject it with `inject-message`.
+
 ## Arguments
 
 ```bash

@@ -15,6 +15,25 @@ necdev build
 `necdev build` builds each process in the package and places the `.wasm` binaries into the `pkg/` directory for installation.
 It automatically detects what language each process is, and builds it appropriately (from amongst the supported `rust`, `python`, and `javascript`).
 
+## Discussion
+
+`necdev build` builds a Nectar package directory.
+Specifically, it iterates through all directories within the given package directory and looks for `src/lib.??`, where the `??` is the file extension.
+Currently, `rs`, `py`, and `js` are supported, corresponding to processes written in `rust`, `python`, and `javascript`, respectively.
+Note that a package may have more than one process and those processes need not be written in the same language.
+
+After compiling each process, it places the output `.wasm` binaries within the `pkg/` directory at the top-level of the given package directory.
+The `pkg/` directory is the one that is zipped and injected into the node by [`necdev start-package`](./start-package.md).
+Thus, after `build`ing, the package is ready for `start-package`.
+
+`necdev build` also builds the UI if found in `ui/`.
+There must exist a `ui/package.json` file with `scripts` defined like:
+```
+"build": "tsc && vite build",
+"copy": "mkdir -p ../pkg/ui && rm -rf ../pkg/ui/* && cp -r dist/* ../pkg/ui/",
+"build:copy": "npm run build && npm run copy",
+```
+
 ## Arguments
 
 ```bash
