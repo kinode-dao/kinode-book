@@ -161,7 +161,7 @@ pleco = "0.5"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 url = "*"
-nectar_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "a0af5c1" }
+nectar_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "a2d3e9e" }
 wit-bindgen = { git = "https://github.com/bytecodealliance/wit-bindgen", rev = "efcc759" }
 
 [lib]

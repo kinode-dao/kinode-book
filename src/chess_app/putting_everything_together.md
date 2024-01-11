@@ -5,7 +5,7 @@ After adding a frontend in the previous chapter, your chess game is ready to pla
 Hopefully, you've been using `necdev build <your_chess_app_name>` to test the code as the tutorial has progressed.
 If not, do so now in order to get a compiled package we can install onto a node.
 
-Next, use `necdev start-package <your_chess_app_name> --url <your_test_node_url>` to install the package.
+Next, use `necdev start-package <your_chess_app_name> -p <your_test_node_port>` to install the package.
 You should see the printout we added to `init()` in your terminal: `chess by <your_node_name>: start`.
 
 Remember that you determine the process name, package name, and your developer name in the `manifest.json` and `metadata.json` files inside `/pkg`.
@@ -29,7 +29,7 @@ Alter the process to serve this use case, or add another process that can be spa
 There are also three extensions to this tutorial which dive into specific use cases which make the most of NectarOS:
 
 - [Chat](./chat.md)
-- [Payment Integration (using ETH)](./payment.md)
-- [LLM Integration (play chess against the AI!)](./llm.md)
+- [Payment Integration (using ETH)](./payment.md) [coming soon]
+- [LLM Integration (play chess against the AI!)](./llm.md) [coming soon]
 
 The full code is available [here](https://github.com/uqbar-dao/nectar/tree/main/modules/chess).

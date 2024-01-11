@@ -380,4 +380,14 @@ You'll need to add `our` as a parameter to the handler function.
 A good place to do this is right before saving the updated state.
 Local moves from the frontend will update on their own.
 
+Finally, add requests for `http_server` and `vfs` messaging capabilities to the `manifest.json`:
+```json
+...
+"request_capabilities": [
+    "http_server:sys:nectar",
+    "vfs:sys:nectar"
+],
+...
+```
+
 Continue to [Putting Everything Together](./putting_everything_together.md) to see the full code and screenshots of the app in action.
