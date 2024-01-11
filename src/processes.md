@@ -116,7 +116,7 @@ Processes can thus choose whether to ingest a `lazy_load_blob` based on the `bod
 `lazy_load_blob`s hold bytes alongside a `mime` field for explicit process-and-language-agnostic format declaration, if desired.
 See [inheriting a `lazy_load_blob`](#inheriting-a-lazy_load_blob) for a discussion of why lazy loading is useful.
 
-Lastly, messages contain an optional `metadata` field, expressed as a JSON-string, to enable middleware processes and other such things to manipulate the message without altering the IPC itself.
+Lastly, messages contain an optional `metadata` field, expressed as a JSON-string, to enable middleware processes and other such things to manipulate the message without altering the `body` itself.
 
 ##### Inheriting a `lazy_load_blob`
 

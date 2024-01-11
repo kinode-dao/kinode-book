@@ -48,7 +48,7 @@ fn init(our: Address) {
             println!(
                 "{our}: got request from {}: {}",
                 message.source().process(),
-                String::from_utf8_lossy(message.ipc())
+                String::from_utf8_lossy(message.body())
             );
         });
     }
@@ -60,7 +60,7 @@ Now, we have access to a chess board and can manipulate it easily.
 The [pleco docs](https://github.com/pleco-rs/Pleco#using-pleco-as-a-library) show everything you can do using the pleco library.
 But this isn't very interesting by itself!
 We want to play chess with other people.
-Let's start by creating a persisted state for the chess app and an IPC format for sending messages to other nodes.
+Let's start by creating a persisted state for the chess app and an `body` format for sending messages to other nodes.
 
 In `my_chess/src/lib.rs` add the following simple Request/Response interface and persistable game state:
 ```rust
@@ -135,7 +135,7 @@ You can interact with it in the terminal, primitively, like so (assuming your fi
 /m {"NewGame": {"white": "fake.nec", "black": "fake2.nec"}}
 /m {"Move": {"game_id": "fake2.nec", "move_str": "e2e4"}}
 ```
-(If you want to make a more ergonomic CLI app, consider parsing IPC as a string...)
+(If you want to make a more ergonomic CLI app, consider parsing `body` as a string...)
 
 As you read through the code, you might notice a problem with this app: there's no way to see your games!
 A fun project would be to add a CLI command that shows you, in-terminal, the board for a given `game_id`.
@@ -194,7 +194,7 @@ wit_bindgen::generate!({
 
 //
 // Our "chess protocol" request/response format. We'll always serialize these
-// to a byte vector and send them over IPC.
+// to a byte vector and send them over `body`.
 //
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -296,9 +296,9 @@ fn handle_request(our: &Address, message: &Message, state: &mut ChessState) -> a
     // requests from the same node, with the knowledge that the remote node can finagle with
     // which ProcessId a given message can be from. It's their code, after all.
     if message.source().node != our.node {
-        // Deserialize the request IPC to our format, and throw it away if it
+        // Deserialize the request `body` to our format, and throw it away if it
         // doesn't fit.
-        let Ok(chess_request) = serde_json::from_slice::<ChessRequest>(message.ipc()) else {
+        let Ok(chess_request) = serde_json::from_slice::<ChessRequest>(message.body()) else {
             return Err(anyhow::anyhow!("invalid chess request"));
         };
         handle_chess_request(&message.source().node, state, &chess_request)
@@ -308,7 +308,7 @@ fn handle_request(our: &Address, message: &Message, state: &mut ChessState) -> a
     } else if message.source().node == our.node
         && message.source().process == "terminal:terminal:nectar"
     {
-        let Ok(chess_request) = serde_json::from_slice::<ChessRequest>(message.ipc()) else {
+        let Ok(chess_request) = serde_json::from_slice::<ChessRequest>(message.body()) else {
             return Err(anyhow::anyhow!("invalid chess request"));
         };
         handle_local_request(our, state, &chess_request)
@@ -358,7 +358,7 @@ fn handle_chess_request(
             // Send a response to tell them we've accepted the game.
             // Remember, the other player is waiting for this.
             Response::new()
-                .ipc(serde_json::to_vec(&ChessResponse::NewGameAccepted)?)
+                .body(serde_json::to_vec(&ChessResponse::NewGameAccepted)?)
                 .send()
         }
         ChessRequest::Move { ref move_str, .. } => {
@@ -367,7 +367,7 @@ fn handle_chess_request(
             let Some(game) = state.games.get_mut(game_id) else {
                 // If we don't have a game with them, reject the move.
                 return Response::new()
-                    .ipc(serde_json::to_vec(&ChessResponse::MoveRejected)?)
+                    .body(serde_json::to_vec(&ChessResponse::MoveRejected)?)
                     .send()
             };
             // Convert the saved board to one we can manipulate.
@@ -375,7 +375,7 @@ fn handle_chess_request(
             if !board.apply_uci_move(move_str) {
                 // Reject invalid moves!
                 return Response::new()
-                    .ipc(serde_json::to_vec(&ChessResponse::MoveRejected)?)
+                    .body(serde_json::to_vec(&ChessResponse::MoveRejected)?)
                     .send();
             }
             game.turns += 1;
@@ -387,7 +387,7 @@ fn handle_chess_request(
             save_chess_state(&state);
             // Send a response to tell them we've accepted the move.
             Response::new()
-                .ipc(serde_json::to_vec(&ChessResponse::MoveAccepted)?)
+                .body(serde_json::to_vec(&ChessResponse::MoveAccepted)?)
                 .send()
         }
         ChessRequest::Resign(_) => {
@@ -427,14 +427,14 @@ fn handle_local_request(
             // Send the other player a NewGame request
             // The request is exactly the same as what we got from terminal.
             // We'll give them 5 seconds to respond...
-            let Ok(Message::Response { ref ipc, .. }) = Request::new()
+            let Ok(Message::Response { ref body, .. }) = Request::new()
                 .target((game_id.as_ref(), our.process.clone()))
-                .ipc(serde_json::to_vec(&action)?)
+                .body(serde_json::to_vec(&action)?)
                 .send_and_await_response(5)? else {
                     return Err(anyhow::anyhow!("other player did not respond properly to new game request"))
                 };
             // If they accept, create a new game — otherwise, error out.
-            if serde_json::from_slice::<ChessResponse>(ipc)? != ChessResponse::NewGameAccepted {
+            if serde_json::from_slice::<ChessResponse>(body)? != ChessResponse::NewGameAccepted {
                 return Err(anyhow::anyhow!("other player rejected new game request!"));
             }
             // New game with default board.
@@ -470,13 +470,13 @@ fn handle_local_request(
             // Send the move to the other player, then check if the game is over.
             // The request is exactly the same as what we got from terminal.
             // We'll give them 5 seconds to respond...
-            let Ok(Message::Response { ref ipc, .. }) = Request::new()
+            let Ok(Message::Response { ref body, .. }) = Request::new()
                 .target((game_id.as_ref(), our.process.clone()))
-                .ipc(serde_json::to_vec(&action)?)
+                .body(serde_json::to_vec(&action)?)
                 .send_and_await_response(5)? else {
                     return Err(anyhow::anyhow!("other player did not respond properly to our move"))
                 };
-            if serde_json::from_slice::<ChessResponse>(ipc)? != ChessResponse::MoveAccepted {
+            if serde_json::from_slice::<ChessResponse>(body)? != ChessResponse::MoveAccepted {
                 return Err(anyhow::anyhow!("other player rejected our move"));
             }
             game.turns += 1;
@@ -495,7 +495,7 @@ fn handle_local_request(
             // send the other player an end game request — no response expected
             Request::new()
                 .target((with_who.as_ref(), our.process.clone()))
-                .ipc(serde_json::to_vec(&action)?)
+                .body(serde_json::to_vec(&action)?)
                 .send()?;
             game.ended = true;
             save_chess_state(&state);

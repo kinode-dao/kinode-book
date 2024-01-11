@@ -100,7 +100,7 @@ It's very simple to use:
 ```rust
 Request::new()
     .target(my_target_address)
-    .ipc(my_ipc_bytes)
+    .body(my_body_bytes)
     .send();
 ```
 
@@ -109,12 +109,12 @@ Because this process might not have capabilities to message any other (local or 
 ```rust
 Request::new()
     .target(our)
-    .ipc(b"hello world")
+    .body(b"hello world")
     .send();
 ```
 
 Note that `send()` returns a Result.
-If you know that a `target` and `ipc` was set, you can safely unwrap this: send will only fail if one of those two fields are missing.
+If you know that a `target` and `body` was set, you can safely unwrap this: send will only fail if one of those two fields are missing.
 
 Here's the full process code, with both sending and handling the message:
 ```rust
@@ -135,7 +135,7 @@ fn my_init_fn(our: Address) {
 
     Request::new()
         .target(&our)
-        .ipc(b"hello world")
+        .body(b"hello world")
         .send()
         .unwrap();
 
@@ -153,7 +153,7 @@ Let's modify our request to expect a response, and our message-handling to send 
 
 ```rust
 Request::to(&our)
-    .ipc(b"hello world")
+    .body(b"hello world")
     .expects_response(5)
     .send()
 ```
@@ -196,7 +196,7 @@ use nectar_process_lib::{await_message, call_init, println, Address, Request, Re
 if message.is_request() {
     println!("{our}: got request: {message:?}");
     Response::new()
-        .ipc(b"hello world to you too!")
+        .body(b"hello world to you too!")
         .send()
         .unwrap();
 }
@@ -205,7 +205,7 @@ if message.is_request() {
 
 Building and starting the package now will show the request and response in the node's terminal.
 But it's still ugly.
-Let's put it all together and add a bit more handling to show the IPC value as a string:
+Let's put it all together and add a bit more handling to show the `body` value as a string:
 
 ```rust
 use nectar_process_lib::{await_message, call_init, println, Address, Request, Response};
@@ -225,7 +225,7 @@ fn my_init_fn(our: Address) {
 
     Request::new()
         .target(&our)
-        .ipc(b"hello world")
+        .body(b"hello world")
         .expects_response(5)
         .send()
         .unwrap();
@@ -236,16 +236,16 @@ fn my_init_fn(our: Address) {
                 if message.is_request() {
                     println!(
                         "{our}: got a message: {}",
-                        String::from_utf8_lossy(message.ipc())
+                        String::from_utf8_lossy(message.body())
                     );
                     Response::new()
-                        .ipc(b"hello world to you too!")
+                        .body(b"hello world to you too!")
                         .send()
                         .unwrap();
                 } else {
                     println!(
                         "{our}: got a response: {}",
-                        String::from_utf8_lossy(message.ipc())
+                        String::from_utf8_lossy(message.body())
                     );
                 }
             }

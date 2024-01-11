@@ -56,7 +56,7 @@ In `my_chess/src/lib.rs`, inside `handle_request()`:
         && message.source().process == "http_server:sys:nectar"
     {
         // receive HTTP requests and websocket connection messages from our server
-        match serde_json::from_slice::<http::HttpServerRequest>(message.ipc())? {
+        match serde_json::from_slice::<http::HttpServerRequest>(message.body())? {
             http::HttpServerRequest::Http(ref incoming) => {
                 match handle_http_request(our, state, incoming) {
                     Ok(()) => Ok(()),
@@ -155,7 +155,7 @@ See the [HTTP Server API](../apis/http_server.md) for more details.
 In `my_chess/src/lib.rs`:
 ```rust
 ...
-use nectar_process_lib::get_payload;
+use nectar_process_lib::get_blob;
 ...
 fn handle_http_request(
     our: &Address,
@@ -181,11 +181,11 @@ fn handle_http_request(
         ),
         // on POST: create a new game
         "POST" => {
-            let Some(payload) = get_payload() else {
+            let Some(blob) = get_blob() else {
                 return http::send_response(http::StatusCode::BAD_REQUEST, None, vec![]);
             };
-            let payload_json = serde_json::from_slice::<serde_json::Value>(&payload.bytes)?;
-            let Some(game_id) = payload_json["id"].as_str() else {
+            let blob_json = serde_json::from_slice::<serde_json::Value>(&blob.bytes)?;
+            let Some(game_id) = blob_json["id"].as_str() else {
                 return http::send_response(http::StatusCode::BAD_REQUEST, None, vec![]);
             };
             if let Some(game) = state.games.get(game_id)
@@ -194,11 +194,11 @@ fn handle_http_request(
                 return http::send_response(http::StatusCode::CONFLICT, None, vec![]);
             };
 
-            let player_white = payload_json["white"]
+            let player_white = blob_json["white"]
                 .as_str()
                 .unwrap_or(our.node.as_str())
                 .to_string();
-            let player_black = payload_json["black"]
+            let player_black = blob_json["black"]
                 .as_str()
                 .unwrap_or(game_id)
                 .to_string();
@@ -206,7 +206,7 @@ fn handle_http_request(
             // send the other player a new game request
             let Ok(msg) = Request::new()
                 .target((game_id, our.process.clone()))
-                .ipc(serde_json::to_vec(&ChessRequest::NewGame {
+                .body(serde_json::to_vec(&ChessRequest::NewGame {
                     white: player_white.clone(),
                     black: player_black.clone(),
                 })?)
@@ -215,7 +215,7 @@ fn handle_http_request(
                 };
             // if they accept, create a new game
             // otherwise, should surface error to FE...
-            if serde_json::from_slice::<ChessResponse>(msg.ipc())? != ChessResponse::NewGameAccepted
+            if serde_json::from_slice::<ChessResponse>(msg.body())? != ChessResponse::NewGameAccepted
             {
                 return Err(anyhow::anyhow!("other player rejected new game request"));
             }
@@ -242,11 +242,11 @@ fn handle_http_request(
         }
         // on PUT: make a move
         "PUT" => {
-            let Some(payload) = get_payload() else {
+            let Some(blob) = get_blob() else {
                 return http::send_response(http::StatusCode::BAD_REQUEST, None, vec![]);
             };
-            let payload_json = serde_json::from_slice::<serde_json::Value>(&payload.bytes)?;
-            let Some(game_id) = payload_json["id"].as_str() else {
+            let blob_json = serde_json::from_slice::<serde_json::Value>(&blob.bytes)?;
+            let Some(game_id) = blob_json["id"].as_str() else {
                 return http::send_response(http::StatusCode::BAD_REQUEST, None, vec![]);
             };
             let Some(game) = state.games.get_mut(game_id) else {
@@ -259,7 +259,7 @@ fn handle_http_request(
             } else if game.ended {
                 return http::send_response(http::StatusCode::CONFLICT, None, vec![]);
             }
-            let Some(move_str) = payload_json["move"].as_str() else {
+            let Some(move_str) = blob_json["move"].as_str() else {
                 return http::send_response(http::StatusCode::BAD_REQUEST, None, vec![]);
             };
             let mut board = Board::from_fen(&game.board).unwrap();
@@ -272,14 +272,14 @@ fn handle_http_request(
             // if so, update the records
             let Ok(msg) = Request::new()
                 .target((game_id, our.process.clone()))
-                .ipc(serde_json::to_vec(&ChessRequest::Move {
+                .body(serde_json::to_vec(&ChessRequest::Move {
                     game_id: game_id.to_string(),
                     move_str: move_str.to_string(),
                 })?)
                 .send_and_await_response(5)? else {
                     return Err(anyhow::anyhow!("other player did not respond properly to our move"))
                 };
-            if serde_json::from_slice::<ChessResponse>(msg.ipc())? != ChessResponse::MoveAccepted {
+            if serde_json::from_slice::<ChessResponse>(msg.body())? != ChessResponse::MoveAccepted {
                 return Err(anyhow::anyhow!("other player rejected our move"));
             }
             // update the game
@@ -312,7 +312,7 @@ fn handle_http_request(
             // send the other player an end game request
             Request::new()
                 .target((game_id.as_str(), our.process.clone()))
-                .ipc(serde_json::to_vec(&ChessRequest::Resign(our.node.clone()))?)
+                .body(serde_json::to_vec(&ChessRequest::Resign(our.node.clone()))?)
                 .send()?;
             game.ended = true;
             let body = serde_json::to_vec(&game)?;
@@ -335,7 +335,7 @@ fn handle_http_request(
 
 This is a lot of code.
 Mostly, it just handles the different HTTP methods and returns the appropriate responses.
-The only unfamiliar code here is the `get_payload()` function, which is used here to inspect the HTTP body.
+The only unfamiliar code here is the `get_blob()` function, which is used here to inspect the HTTP body.
 See the HTTP API docs ([client](../apis/http_client.md), [server](../apis/http_server.md)) for more details.
 
 Are you ready to play chess?
@@ -346,7 +346,7 @@ Since open channels are already tracked in process state, you just need to send 
 In `my_chess/src/lib.rs`, add a helper function:
 ```rust
 ...
-use nectar_process_lib::Payload;
+use nectar_process_lib::LazyLoadBlob;
 ...
 fn send_ws_update(
     our: &Address,
@@ -356,13 +356,13 @@ fn send_ws_update(
     for channel in open_channels {
         Request::new()
             .target((&our.node, "http_server", "sys", "nectar"))
-            .ipc(serde_json::to_vec(
+            .body(serde_json::to_vec(
                 &http::HttpServerAction::WebSocketPush {
                     channel_id: *channel,
                     message_type: http::WsMessageType::Binary,
                 },
             )?)
-            .payload(Payload {
+            .blob(LazyLoadBlob {
                 mime: Some("application/json".to_string()),
                 bytes: serde_json::json!({
                     "kind": "game_update",

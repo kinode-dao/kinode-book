@@ -10,15 +10,15 @@ If you're the type of person that prefers to learn by looking at a complete exam
 Using the built-in HTTP server will require handling a new type of request in our main loop, and serving a response to it.
 The [process_lib](../process_stdlib/overview.md) contains types and functions for doing so.
 
-At the top of your process, import `http`, `get_payload`, and `Message` from [`nectar_process_lib`](../process_stdlib/overview.md) along with the rest of the imports.
-You'll use `get_payload()` to grab the body bytes of an incoming HTTP request.
+At the top of your process, import `http`, `get_blob`, and `Message` from [`nectar_process_lib`](../process_stdlib/overview.md) along with the rest of the imports.
+You'll use `get_blob()` to grab the body bytes of an incoming HTTP request.
 ```rust
 use nectar_process_lib::{
-    await_message, call_init, get_payload, http, println, Address, Message, Request, Response,
+    await_message, call_init, get_blob, http, println, Address, Message, Request, Response,
 };
 ```
 
-Keep the custom IPC type the same, and keep using that for terminal input.
+Keep the custom `body` type the same, and keep using that for terminal input.
 
 At the beginning of the init function, in order to receieve HTTP requests, you must use the `nectar_process_lib::http` library to bind a new path. Binding a path will cause the process to receive all HTTP requests that match that path.
 You can also bind static content to a path using another function in the library.
@@ -68,29 +68,29 @@ Request handling can be separated out into as many functions is needed to keep t
 ```rust
 /// Returns true if the process should exit.
 fn handle_hello_message(message: &Message) -> bool {
-    let Ok(ipc) = MyIPC::parse(message.ipc()) else {
-        println!("received a message with weird IPC!");
+    let Ok(body) = MyBody::parse(message.body()) else {
+        println!("received a message with weird `body`!");
         return false;
     };
     if message.is_request() {
         // Respond to a Hello with a Hello, and a Goodbye by exiting
         // the loop, which will cause the process to exit.
-        match ipc {
-            MyIPC::Hello(text) => {
+        match body {
+            MyBody::Hello(text) => {
                 println!("got a Hello: {text}");
             }
-            MyIPC::Goodbye => {
+            MyBody::Goodbye => {
                 println!("goodbye!");
                 return true;
             }
         }
     } else {
         // we only expect Hello responses. If we get a Goodbye, ignore it.
-        match ipc {
-            MyIPC::Hello(text) => {
+        match body {
+            MyBody::Hello(text) => {
                 println!("got a Hello response: {text}");
             }
-            MyIPC::Goodbye => {}
+            MyBody::Goodbye => {}
         }
     }
     return false;
@@ -104,11 +104,11 @@ fn handle_http_message(our: &Address, message: &Message) {
 }
 ```
 
-Instead of parsing our IPC type from the message, parse the type that the `http_server` process gives us. This type is defined in the `nectar_process_lib::http` module for us:
+Instead of parsing our `body` type from the message, parse the type that the `http_server` process gives us. This type is defined in the `nectar_process_lib::http` module for us:
 ```rust
 // ...
-let Ok(server_request) = http::HttpServerRequest::from_bytes(message.ipc()) else {
-    println!("received a message with weird IPC!");
+let Ok(server_request) = http::HttpServerRequest::from_bytes(message.body()) else {
+    println!("received a message with weird `body`!");
     return;
 };
 // ...
@@ -137,23 +137,23 @@ if http_request.method().unwrap() != http::Method::PUT {
 // ...
 ```
 
-Finally, grab the payload from the request, send a 200 OK response to the client, and handle the payload, by sending a Request to ourselves with the payload as the IPC.
+Finally, grab the `blob` from the request, send a 200 OK response to the client, and handle the `blob`, by sending a Request to ourselves with the `blob` as the `body`.
 This could be done in a different way, but this simple pattern is useful for letting HTTP requests masquerade as in-Nectar requests.
 ```rust
 // ...
-let Some(body) = get_payload() else {
+let Some(body) = get_blob() else {
     println!("received a PUT HTTP request with no body, skipping");
     return;
 };
 http::send_response(http::StatusCode::OK, None, vec![]).unwrap();
-Request::to(our).ipc(body.bytes).send().unwrap();
+Request::to(our).body(body.bytes).send().unwrap();
 ```
 
 Putting it all together, you get a process which you can build and start, then use cURL to send Hello and Goodbye requests via HTTP PUTs! Here's the full code:
 ```rust
 use serde::{Deserialize, Serialize};
 use nectar_process_lib::{
-    await_message, call_init, get_payload, http, println, Address, Message, Request,
+    await_message, call_init, get_blob, http, println, Address, Message, Request,
 };
 
 wit_bindgen::generate!({
@@ -165,22 +165,22 @@ wit_bindgen::generate!({
 });
 
 #[derive(Serialize, Deserialize)]
-enum MyIPC {
+enum MyBody {
     Hello(String),
     Goodbye,
 }
 
-impl MyIPC {
+impl MyBody {
     fn hello(text: &str) -> Vec<u8> {
-        serde_json::to_vec(&MyIPC::Hello(text.to_string())).unwrap()
+        serde_json::to_vec(&MyBody::Hello(text.to_string())).unwrap()
     }
 
     fn goodbye() -> Vec<u8> {
-        serde_json::to_vec(&MyIPC::Goodbye).unwrap()
+        serde_json::to_vec(&MyBody::Goodbye).unwrap()
     }
 
-    fn parse(bytes: &[u8]) -> Result<MyIPC, serde_json::Error> {
-        serde_json::from_slice::<MyIPC>(bytes)
+    fn parse(bytes: &[u8]) -> Result<MyBody, serde_json::Error> {
+        serde_json::from_slice::<MyBody>(bytes)
     }
 }
 
@@ -193,7 +193,7 @@ fn my_init_fn(our: Address) {
 
     Request::new()
         .target(&our)
-        .ipc(MyIPC::hello("hello world"))
+        .body(MyBody::hello("hello world"))
         .send()
         .unwrap();
 
@@ -217,8 +217,8 @@ fn my_init_fn(our: Address) {
 
 /// Handle a message from the HTTP server.
 fn handle_http_message(our: &Address, message: &Message) {
-    let Ok(server_request) = http::HttpServerRequest::from_bytes(message.ipc()) else {
-        println!("received a message with weird IPC!");
+    let Ok(server_request) = http::HttpServerRequest::from_bytes(message.body()) else {
+        println!("received a message with weird `body`!");
         return;
     };
     let Some(http_request) = server_request.request() else {
@@ -229,39 +229,39 @@ fn handle_http_message(our: &Address, message: &Message) {
         println!("received a non-PUT HTTP request, skipping");
         return;
     }
-    let Some(body) = get_payload() else {
+    let Some(body) = get_blob() else {
         println!("received a PUT HTTP request with no body, skipping");
         return;
     };
     http::send_response(http::StatusCode::OK, None, vec![]).unwrap();
-    Request::to(our).ipc(body.bytes).send().unwrap();
+    Request::to(our).body(body.bytes).send().unwrap();
 }
 
 /// Returns true if the process should exit.
 fn handle_hello_message(message: &Message) -> bool {
-    let Ok(ipc) = MyIPC::parse(message.ipc()) else {
-        println!("received a message with weird IPC!");
+    let Ok(body) = MyBody::parse(message.body()) else {
+        println!("received a message with weird `body`!");
         return false;
     };
     if message.is_request() {
         // Respond to a Hello with a Hello, and a Goodbye by exiting
         // the loop, which will cause the process to exit.
-        match ipc {
-            MyIPC::Hello(text) => {
+        match body {
+            MyBody::Hello(text) => {
                 println!("got a Hello: {text}");
             }
-            MyIPC::Goodbye => {
+            MyBody::Goodbye => {
                 println!("goodbye!");
                 return true;
             }
         }
     } else {
         // we only expect Hello responses. If we get a Goodbye, ignore it.
-        match ipc {
-            MyIPC::Hello(text) => {
+        match body {
+            MyBody::Hello(text) => {
                 println!("got a Hello response: {text}");
             }
-            MyIPC::Goodbye => {}
+            MyBody::Goodbye => {}
         }
     }
     return false;

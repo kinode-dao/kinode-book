@@ -113,11 +113,11 @@ This is the current (super gross!!) code for handling PUT requests in `handle_ht
 ```rust
 // on PUT: make a move
 "PUT" => {
-    let Some(payload) = get_payload() else {
+    let Some(blob) = get_blob() else {
         return http::send_response(http::StatusCode::BAD_REQUEST, None, vec![]);
     };
-    let payload_json = serde_json::from_slice::<serde_json::Value>(&payload.bytes)?;
-    let Some(game_id) = payload_json["id"].as_str() else {
+    let blob_json = serde_json::from_slice::<serde_json::Value>(&blob.bytes)?;
+    let Some(game_id) = blob_json["id"].as_str() else {
         return http::send_response(http::StatusCode::BAD_REQUEST, None, vec![]);
     };
     let Some(game) = state.games.get_mut(game_id) else {
@@ -130,7 +130,7 @@ This is the current (super gross!!) code for handling PUT requests in `handle_ht
     } else if game.ended {
         return http::send_response(http::StatusCode::CONFLICT, None, vec![]);
     }
-    let Some(move_str) = payload_json["move"].as_str() else {
+    let Some(move_str) = blob_json["move"].as_str() else {
         return http::send_response(http::StatusCode::BAD_REQUEST, None, vec![]);
     };
     let mut board = Board::from_fen(&game.board).unwrap();
@@ -143,7 +143,7 @@ This is the current (super gross!!) code for handling PUT requests in `handle_ht
     // if so, update the records
     let Ok(msg) = Request::new()
         .target((game_id, our.process.clone()))
-        .ipc(serde_json::to_vec(&ChessRequest::Move {
+        .body(serde_json::to_vec(&ChessRequest::Move {
             game_id: game_id.to_string(),
             move_str: move_str.to_string(),
         })?)
@@ -153,7 +153,7 @@ This is the current (super gross!!) code for handling PUT requests in `handle_ht
             "other player did not respond properly to our move"
         ));
     };
-    if serde_json::from_slice::<ChessResponse>(msg.ipc())? != ChessResponse::MoveAccepted {
+    if serde_json::from_slice::<ChessResponse>(msg.body())? != ChessResponse::MoveAccepted {
         return Err(anyhow::anyhow!("other player rejected our move"));
     }
     // update the game
@@ -196,14 +196,14 @@ This is a modification of the code above:
 // on PUT: make a move OR send a message
 "PUT" => {
     // ... same as the previous snippet ...
-    let Some(move_str) = payload_json["move"].as_str() else {
-        let Some(message) = payload_json["message"].as_str() else {
+    let Some(move_str) = blob_json["move"].as_str() else {
+        let Some(message) = blob_json["message"].as_str() else {
             return http::send_response(http::StatusCode::BAD_REQUEST, None, vec![]);
         };
         // handle sending message to another player
         let Ok(_ack) = Request::new()
             .target((game_id, our.process.clone()))
-            .ipc(serde_json::to_vec(&ChessRequest::Message(message.to_string()))?)
+            .body(serde_json::to_vec(&ChessRequest::Message(message.to_string()))?)
             .send_and_await_response(5)?
         else {
             // Reader Note: handle a failed message send!
