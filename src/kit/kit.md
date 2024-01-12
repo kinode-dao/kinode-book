@@ -1,6 +1,6 @@
 # kit
 
-`kit` is a suite of tools that make development on NectarOS ergonomic.
+`kit` is a tool**kit** that make development on NectarOS ergonomic.
 
 These documents describe some ways you can use these tools, but do not attempt to be completely exhaustive.
 You are encouraged to make use of the `--help` flag, which can be used for the top-level `kit`:
@@ -34,6 +34,8 @@ or for any of the subcommands, e.g.:
 ```bash
 kit new --help
 ```
+
+The first chapter of the [Build and Deploy an App tutorial](../my_first_app/chapter_1.md) shows the `kit` tools in action.
 
 ## Getting kit
 

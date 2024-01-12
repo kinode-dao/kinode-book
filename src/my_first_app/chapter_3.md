@@ -202,6 +202,6 @@ This will cause the process to exit.
 
 If you try to send another Hello now, nothing will happen, because the process has exited [(assuming you have set `on_exit: "None"`; with `on_exit: "Restart"` it will immediately start up again)](./chapter_2.md#aside-on_exit).
 Nice!
-You can use `necdev start-package` to try again.
+You can use `kit start-package` to try again.
 
 In the next chapter, you'll add some basic HTTP logic to serve a frontend from your simple process.

@@ -3,7 +3,7 @@
 In this entry you're going to be building a file transfer app, letting nodes download files from a public directory.
 It will use the vfs to read and write files, and will spin up worker processes for the transfer.
 
-This guide assumes a basic understanding of nectar process building, some familiarity with necdev, requests and responses, and some knowledge of rust syntax.
+This guide assumes a basic understanding of nectar process building, some familiarity with `kit`, requests and responses, and some knowledge of rust syntax.
 
 ## Contents
 
@@ -16,12 +16,14 @@ This guide assumes a basic understanding of nectar process building, some famili
 
 ## Start
 
-First, initialize a new project with `necdev new file_transfer`
+First, initialize a new project with `kit new file_transfer`
 
 Here's a clean template so you have a complete fresh start:
 
-This guide will use the following nectar_process_lib version in Cargo.toml for this app:
-```nectar_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "412fbfe" }```
+This guide will use the following `nectar_process_lib` version in `Cargo.toml` for this app:
+```
+nectar_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "412fbfe" }
+```
 
 ```rust
 use serde::{Deserialize, Serialize};
@@ -86,7 +88,7 @@ Before delving into the code, you can handle the capabilities you need to reques
 Now, start by creating a drive (folder) in your vfs and opening it, where files will be downloaded by other nodes.
 You can add a whitelist a bit later!
 
-You can import a bunch of vfs functions from the process_lib, and you'll specifically use the `create_drive` and `open_dir` functions first.
+You can import a bunch of vfs functions from the `process_lib`, and you'll specifically use the `create_drive` and `open_dir` functions first.
 
 ```rust
 use nectar_process_lib::vfs::{create_drive, metadata, open_dir, Directory, FileType},
@@ -212,7 +214,7 @@ impl Guest for Component {
 }
 ```
 
-Now, you can fill in the ListFiles request and response behaviour, which is just a readDir action to the vfs.
+Now, you can fill in the ListFiles request and response behaviour, which is just a ReadDir action to the vfs.
 
 ```rust
 
@@ -240,7 +242,7 @@ match transfer_request {
 }
 ```
 
-And add the corresponding handle_transfer_response too!
+And add the corresponding `handle_transfer_response` too!
 
 ```rust
 
@@ -283,12 +285,13 @@ fn handle_transfer_response(
 
 You can now try this out by booting two nodes (fake or real), putting some files in the /files folder of one of them, and sending a request!
 
-```/m node2.nec@file_transfer:file_transfer:template.uq "ListFiles"```
+```
+/m node2.nec@file_transfer:file_transfer:template.uq "ListFiles"
+```
 
 And you'll see a response printed!
 
 ```md
-
 Thu 1/11 13:14 response from node2.nec@file_transfer:file_transfer:template.nec: {"ListFiles":[{"name":"file_transfer:template.nec/files/barry-lyndon.mp4","size":8760244}, {"name":"file_transfer:template.nec/files/blue-danube.mp3","size":9668359}]}
 ```
 
@@ -349,12 +352,12 @@ Workers will take an init function from their own node, that either tells them t
 
 Progress reports are sent back to the main process, which you can then pipe them through as websocket updates to the frontend!
 
-Code this out so it becomes clearer, we'll import the spawn function from the process_lib.
+Code this out so it becomes clearer, we'll import the spawn function from the `process_lib`.
 The only additional part you need to handle in the transfer app is the Download request you've added.
 
 It will handle 2 cases:
 
-1. A node sent us a download request, you spawn a worker, and tell it to send chunks to the target_worker you got in the request.
+1. A node sent us a download request, you spawn a worker, and tell it to send chunks to the `target_worker` you got in the request.
 2. You want to download a file from another node, you send yourself a download request, you spin up a worker and send it's address to the remote node.
 
 ```rust
@@ -413,15 +416,18 @@ It will handle 2 cases:
                         .send()?;
                 }
             }
-        }    
+        }
     }
 ```
 
-There you go. As you can see, the main transfer doesn't actually do much, all it handles is a handshake. This gives us the possibility to add more features easily later on.
+There you go. As you can see, the main transfer doesn't actually do much, all it handles is a handshake.
+This gives us the possibility to add more features easily later on.
 
-Now, the actual worker. Add this bit by bit:
+Now, the actual worker.
+Add this bit by bit:
 
-First, because when you spawn your worker, you give it `our_capabilities()`, it will have access to messaging and the vfs drive because you also do. So you can simply open the `files_dir` without issue.
+First, because when you spawn your worker, you give it `our_capabilities()`, it will have access to messaging and the vfs drive because you also do.
+So you can simply open the `files_dir` without issue.
 
 ```rust
 struct Component;
@@ -448,7 +454,7 @@ impl Guest for Component {
 
 You'll also need a bit of state, for the receiving worker.
 This is not persisted (you'll add that soon!), but when different chunks come in, you need to know what file to write to, and how long that file is for progress!
-This is not known at the point of spawning (init takes just a our: String), but you have created an Init request for it.
+This is not known at the point of spawning (init takes just a `our: String`), but you have created an Init request for it.
 
 The state will look like this, and will be wrapped in an Option, so you can set it as None at start.
 
@@ -457,7 +463,7 @@ let mut file: Option<File> = None;
 let mut size: Option<u64> = None;
 ```
 
-And then in the init function we pass it to handle_message:
+And then in the init function we pass it to `handle_message`:
 
 ```rust
 struct Component;
@@ -484,7 +490,7 @@ impl Guest for Component {
 }
 ```
 
-The handle_message function will handle 3 types: the requests Init, Chunk and Size.
+The `handle_message` function will handle 3 types: the requests Init, Chunk and Size.
 
 `WorkerRequest::Init` runs once, received from the spawner:
 
@@ -578,7 +584,7 @@ fn handle_message(
 So upon Init, you open the existing file or create an empty one, and then based on whether the worker is a sender or not you do 2 things:
 
 - if receiver, save the File to your state, and then send a Started response to parent.
-- if sender, get the file's length, send it as Size to the target_worker, and then chunk the data, loop, read into a buffer and send to target_worker.
+- if sender, get the file's length, send it as Size to the `target_worker`, and then chunk the data, loop, read into a buffer and send to `target_worker`.
 
 `WorkerRequest::Chunk` will look like this:
 
@@ -1067,6 +1073,10 @@ impl Guest for Component {
 
 And there you have it!
 
-Try and run it, you can download a file with the command `/m our@file_transfer:file_transfer:template.nec {"Download": {"name": "dawg.jpeg", "target": "buenosaires.nec@file_transfer:file_transfer:template.nec"}}`, replacing node name and file name!
+Try and run it, you can download a file with the command
+```
+/m our@file_transfer:file_transfer:template.nec {"Download": {"name": "dawg.jpeg", "target": "buenosaires.nec@file_transfer:file_transfer:template.nec"}}
+```
+replacing node name and file name!
 
 Stay tuned for additions to this guide, including restarting transfers after rebooting your node or losing connections, and a simple UI!

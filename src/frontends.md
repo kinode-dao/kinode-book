@@ -34,7 +34,7 @@ The file `pkg/ui/assets/index.js` would be bound to `/process:process:my-node/as
 ## Local Development and "gotchas"
 
 When developing a frontend locally, particularly with a framework like React, it is helpful to proxy HTTP requests through to your node.
-The `vite.config.ts` provided in the `necdev` template, and listed in full below, has code to handle this proxying.
+The `vite.config.ts` provided in the `kit` template, and listed in full below, has code to handle this proxying.
 
 It is important to remember that the frontend will always have the process name as the first part of the HTTP path,
 so all HTTP requests and file sources should start with the process name.
@@ -42,7 +42,7 @@ Many frontend JavaScript frameworks will handle this by default if you set the `
 
 In development, websocket connections can be more annoying to proxy, so it is often easier to simply hardcode the URL if in development.
 See your framework documentation for how to check if you are in dev or prod.
-The `necdev` template already handles this for you.
+The `kit` template already handles this for you.
 
 Developing against a remote node is simple, you just have to change the proxy target in `vite.config.ts` to the URL of your node.
 By default the template will target `http://localhost:8080`.
