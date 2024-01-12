@@ -289,7 +289,7 @@ Messages can also be injected from the outside.
 From a bash terminal, use `uqdev inject-message`, like so:
 
 ```bash
-kit inject-message foo:foo:template.nec '{"Send": {"target": "fake2.nec", "message": "hello from the outside world"}}'
-kit inject-message foo:foo:template.nec '{"Send": {"target": "fake.nec", "message": "replying from fake2.nec using first method..."}}' --node fake2.nec
-kit inject-message foo:foo:template.nec '{"Send": {"target": "fake.nec", "message": "and second!"}}' -p 8081
+kit inject-message my_chat_app:my_chat_app:template.nec '{"Send": {"target": "fake2.nec", "message": "hello from the outside world"}}'
+kit inject-message my_chat_app:my_chat_app:template.nec '{"Send": {"target": "fake.nec", "message": "replying from fake2.nec using first method..."}}' --node fake2.nec
+kit inject-message my_chat_app:my_chat_app:template.nec '{"Send": {"target": "fake.nec", "message": "and second!"}}' -p 8081
 ```
