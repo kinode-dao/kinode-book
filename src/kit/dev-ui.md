@@ -1,27 +1,27 @@
-# `necdev dev-ui`
+# `kit dev-ui`
 
-`necdev dev-ui` starts a web development server with hot reloading for the indicated UI-enabled package (or the current working directory), e.g.,
+`kit dev-ui` starts a web development server with hot reloading for the indicated UI-enabled package (or the current working directory), e.g.,
 
 ```bash
-necdev dev-ui foo
+kit dev-ui foo
 ```
 
 or
 
 ```bash
-necdev dev-ui
+kit dev-ui
 ```
 
 ## Arguments
 
 ```bash
-$ necdev dev-ui --help
+$ kit d --help
 Start the web UI development server with hot reloading (same as `cd ui && npm i && npm start`)
 
-Usage: necdev dev-ui [OPTIONS] [DIR]
+Usage: kit dev-ui [OPTIONS] [DIR]
 
 Arguments:
-  [DIR]  The package directory to build (must contain a `ui` directory) [default: /home/nick/git/necdev]
+  [DIR]  The package directory to build (must contain a `ui` directory) [default: /home/nick/git/kit]
 
 Options:
   -p, --port <NODE_PORT>  Node port: for use on localhost (overridden by URL) [default: 8080]

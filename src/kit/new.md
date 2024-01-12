@@ -1,9 +1,9 @@
-# `necdev new`
+# `kit new`
 
-`necdev new` creates a Nectar package template at the specified path, e.g.,
+`kit new` creates a Nectar package template at the specified path, e.g.,
 
 ```bash
-necdev new foo
+kit new foo
 ```
 
 creates the default template (a Rust chat app with no UI) in the `foo/` directory.
@@ -12,18 +12,18 @@ creates the default template (a Rust chat app with no UI) in the `foo/` director
 
 ```bash
 # Create the default template: rust chat with no UI
-necdev new my_rust_chat
+kit new my_rust_chat
 
 # Create rust chat with UI
-necdev new my_rust_chat_with_ui --ui
+kit new my_rust_chat_with_ui --ui
 
 # Create fibonacci in python
-necdev new my_py_fib -l python -t fibonacci
+kit new my_py_fib -l python -t fibonacci
 ```
 
 ## Discussion
 
-You can create a variety of templates using `necdev new`.
+You can create a variety of templates using `kit new`.
 Currently, three languages are supported: `rust` (the default), `python`, and `javascript`.
 Two templates are currently supported: `chat`, a simple chat application, and `fibonacci`, which computes Fibonacci numbers.
 In addition, some subset of these templates also have a UI-enabled version.
@@ -41,10 +41,10 @@ Language     | `chat`  | `fibonacci`
 ## Arguments
 
 ```bash
-$ necdev new --help
+$ kit n --help
 Create a Nectar template package
 
-Usage: necdev new [OPTIONS] <DIR>
+Usage: kit new [OPTIONS] <DIR>
 
 Arguments:
   <DIR>  Path to create template directory at
