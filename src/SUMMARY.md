@@ -12,8 +12,8 @@
 # System Components
 
 - [Processes](./processes.md)
-    - [Capability-Based Security](./process-capabilities.md)
-    - [Startup, Spindown, and Crashes](./process-startup.md)
+  - [Capability-Based Security](./process-capabilities.md)
+  - [Startup, Spindown, and Crashes](./process-startup.md)
 - [Networking Protocol](./networking_protocol.md)
 - [Public Key Infrastructure](./pki.md)
 - [HTTP Server & Client](./http_server_and_client.md)
@@ -55,6 +55,7 @@
 - [Cookbook Overview](./cookbook/cookbook_overview.md)
 - [Managing Child Processes](./cookbook/manage_child_processes.md)
 - [Publishing a Website or Web App](./cookbook/publish_to_web.md)
+- [Simple File Transfer Guide](./cookbook/file_transfer.md)
 
 # API Reference
 
