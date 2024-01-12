@@ -9,6 +9,7 @@ This guide assumes a basic understanding of nectar process building, some famili
 
 - [Start](#start)
 - [Transfer](#transfer)
+- [Final Code](#final-code)
 - [Conclusion](#conclusion)
 - [VFS API](../apis/vfs.md)
 - [Github Repo](https://github.com/bitful-pannul/file_transfer)
@@ -484,7 +485,8 @@ impl Guest for Component {
 ```
 
 The handle_message function will handle 3 types: the requests Init, Chunk and Size.
-Init runs once, received from the spawner:
+
+`WorkerRequest::Init` runs once, received from the spawner:
 
 ```rust
 
@@ -578,7 +580,7 @@ So upon Init, you open the existing file or create an empty one, and then based 
 - if receiver, save the File to your state, and then send a Started response to parent.
 - if sender, get the file's length, send it as Size to the target_worker, and then chunk the data, loop, read into a buffer and send to target_worker.
 
-WorkerRequest::Chunk will look like this:
+`WorkerRequest::Chunk` will look like this:
 
 ```rust
 // someone sending a chunk to us!
@@ -629,7 +631,47 @@ WorkerRequest::Chunk {
 }
 ```
 
-Bam! Here's the worker in it's entirety:
+And `WorkerRequest::Size` is easy:
+
+```rust
+WorkerRequest::Size(incoming_size) => {
+    *size = Some(incoming_size);
+}
+```
+
+One more thing: once you're done sending, we can exit the process, the worker is not needed anymore.
+We You change our handle_message function to return a `Result<bool>` instead telling the main loop whether it should exit or not.
+
+```rust
+fn handle_message(
+    our: &Address,
+    file: &mut Option<File>,
+    files_dir: &Directory,
+    size: &mut Option<u64>,
+) -> anyhow::Result<bool> {
+```
+
+Changing the main loop and the places we return Ok(()) appropriately.
+
+```rust
+        loop {
+            match handle_message(&our, &mut file, &files_dir, &mut size) {
+                Ok(exit) => {
+                    if exit {
+                        println!("file_transfer worker done: exiting");
+                        break;
+                    }
+                }
+                Err(e) => {
+                    println!("file_transfer: worker error: {:?}", e);
+                }
+            };
+        }
+```
+
+### Final Code
+
+And Voilà! The worker and then the main process in entirety:
 
 ```rust
 use serde::{Deserialize, Serialize};
@@ -823,6 +865,197 @@ impl Guest for Component {
                 }
                 Err(e) => {
                     println!("file_transfer: worker error: {:?}", e);
+                }
+            };
+        }
+    }
+}
+```
+
+And the main process:
+
+```rust
+use nectar_process_lib::{
+    await_message, our_capabilities, println, spawn,
+    vfs::{create_drive, metadata, open_dir, Directory, FileType},
+    Address, Message, OnExit, Request, Response,
+};
+use serde::{Deserialize, Serialize};
+use std::str::FromStr;
+
+wit_bindgen::generate!({
+    path: "wit",
+    world: "process",
+    exports: {
+        world: Component,
+    },
+});
+
+#[derive(Serialize, Deserialize, Debug)]
+pub enum TransferRequest {
+    ListFiles,
+    Download { name: String, target: Address },
+    Progress { name: String, progress: u64 },
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub enum TransferResponse {
+    ListFiles(Vec<FileInfo>),
+    Download { name: String, worker: Address },
+    Done,
+    Started,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct FileInfo {
+    pub name: String,
+    pub size: u64,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub enum WorkerRequest {
+    Init {
+        name: String,
+        target_worker: Option<Address>,
+    },
+}
+
+fn handle_transfer_request(
+    our: &Address,
+    source: &Address,
+    body: &Vec<u8>,
+    files_dir: &Directory,
+) -> anyhow::Result<()> {
+    let transfer_request = serde_json::from_slice::<TransferRequest>(body)?;
+
+    match transfer_request {
+        TransferRequest::ListFiles => {
+            let entries = files_dir.read()?;
+            let files: Vec<FileInfo> = entries
+                .iter()
+                .filter_map(|file| match file.file_type {
+                    FileType::File => match metadata(&file.path) {
+                        Ok(metadata) => Some(FileInfo {
+                            name: file.path.clone(),
+                            size: metadata.len,
+                        }),
+                        Err(_) => None,
+                    },
+                    _ => None,
+                })
+                .collect();
+
+            Response::new()
+                .body(serde_json::to_vec(&TransferResponse::ListFiles(files))?)
+                .send()?;
+        }
+        TransferRequest::Download { name, target } => {
+            // spin up a worker, initialize based on whether it's a downloader or a sender.
+            let our_worker = spawn(
+                None,
+                &format!("{}/pkg/worker.wasm", our.package_id()),
+                OnExit::None,
+                our_capabilities(),
+                vec![],
+                false,
+            )?;
+
+            let our_worker_address = Address {
+                node: our.node.clone(),
+                process: our_worker,
+            };
+
+            match source.node == our.node {
+                true => {
+                    // we want to download a file
+                    let _resp = Request::new()
+                        .body(serde_json::to_vec(&WorkerRequest::Init {
+                            name: name.clone(),
+                            target_worker: None,
+                        })?)
+                        .target(&our_worker_address)
+                        .send_and_await_response(5)??;
+
+                    // send our initialized worker address to the other node
+                    Request::new()
+                        .body(serde_json::to_vec(&TransferRequest::Download {
+                            name: name.clone(),
+                            target: our_worker_address,
+                        })?)
+                        .target(&target)
+                        .send()?;
+                }
+                false => {
+                    // they want to download a file
+                    Request::new()
+                        .body(serde_json::to_vec(&WorkerRequest::Init {
+                            name: name.clone(),
+                            target_worker: Some(target),
+                        })?)
+                        .target(&our_worker_address)
+                        .send()?;
+                }
+            }
+        }
+        TransferRequest::Progress { name, progress } => {
+            println!("file: {} progress: {}%", name, progress);
+        }
+    }
+
+    Ok(())
+}
+
+fn handle_transfer_response(source: &Address, body: &Vec<u8>) -> anyhow::Result<()> {
+    let transfer_response = serde_json::from_slice::<TransferResponse>(body)?;
+
+    match transfer_response {
+        TransferResponse::ListFiles(files) => {
+            println!("got files from node: {:?} ,files: {:?}", source, files);
+        }
+        _ => {}
+    }
+
+    Ok(())
+}
+
+fn handle_message(our: &Address, files_dir: &Directory) -> anyhow::Result<()> {
+    let message = await_message()?;
+
+    match message {
+        Message::Response {
+            ref source,
+            ref body,
+            ..
+        } => {
+            handle_transfer_response(source, body)?;
+        }
+        Message::Request {
+            ref source,
+            ref body,
+            ..
+        } => {
+            handle_transfer_request(&our, source, body, files_dir)?;
+        }
+    };
+
+    Ok(())
+}
+
+struct Component;
+impl Guest for Component {
+    fn init(our: String) {
+        println!("file_transfer: begin");
+
+        let our = Address::from_str(&our).unwrap();
+
+        let drive_path = create_drive(our.package_id(), "files").unwrap();
+        let files_dir = open_dir(&drive_path, false).unwrap();
+
+        loop {
+            match handle_message(&our, &files_dir) {
+                Ok(()) => {}
+                Err(e) => {
+                    println!("file_transfer: error: {:?}", e);
                 }
             };
         }
