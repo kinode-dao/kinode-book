@@ -229,15 +229,7 @@ fn handle_transfer_request(
                 .send()?;
         }
     }
-    }
-    }
-};
-
-// ...
 }
-};
-
-// ...
 
 fn handle_transfer_response(
     our: &Address,
