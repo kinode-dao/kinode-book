@@ -1,9 +1,9 @@
 # File Transfer
 
-In this entry you're going to be building a file transfer app, letting nodes download files from a public directory.
+This entry will teach you to build a simple file transfer app, allowing nodes to download files from a public directory.
 It will use the vfs to read and write files, and will spin up worker processes for the transfer.
 
-This guide assumes a basic understanding of nectar process building, some familiarity with `kit`, requests and responses, and some knowledge of rust syntax.
+This guide assumes a basic understanding of Nectar process building, some familiarity with `kit`, requests and responses, and some knowledge of rust syntax.
 
 ## Contents
 
@@ -22,7 +22,7 @@ Here's a clean template so you have a complete fresh start:
 
 This guide will use the following `nectar_process_lib` version in `Cargo.toml` for this app:
 ```
-nectar_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "412fbfe" }
+nectar_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "64d2856" }
 ```
 
 ```rust
@@ -88,7 +88,7 @@ Before delving into the code, you can handle the capabilities you need to reques
 Now, start by creating a drive (folder) in your vfs and opening it, where files will be downloaded by other nodes.
 You can add a whitelist a bit later!
 
-You can import a bunch of vfs functions from the `process_lib`, and you'll specifically use the `create_drive` and `open_dir` functions first.
+Also, import some vfs functions from the `process_lib`.
 
 ```rust
 use nectar_process_lib::vfs::{create_drive, metadata, open_dir, Directory, FileType},
@@ -96,9 +96,9 @@ use nectar_process_lib::vfs::{create_drive, metadata, open_dir, Directory, FileT
 let drive_path = create_drive(our.package_id(), "files").unwrap();
 ```
 
-To start, this will be an app without UI, so the way to get files in, you simply copy them into the "files" folder located in `your_node/vfs/file_transfer:file_transfer:template.uq/files`
+To start, this will be an app without UI, so to upload files into your public directory, simply copy them into the "files" folder located in `your_node/vfs/file_transfer:file_transfer:template.uq/files`
 
-You now need some way for other nodes to know what files they can download from us, so add some message types!
+You now need to let other nodes know what files they can download from you, so add some message types.
 
 ```rust
 #[derive(Serialize, Deserialize, Debug)]
@@ -118,9 +118,7 @@ pub struct FileInfo {
 }
 ```
 
-You can start with this, a node can request a list of files, and you give them a list of file names and their sizes in bytes.
-
-Adding some matching for requests and responses, and deserializing into our TransferRequest type.
+You can handle these messages cleanly by modifying the handle message function slightly, it will match on whether a message is a request or a response, the errors get thrown to the main loop automatically with the `?` after the await_message() function.
 
 ```rust
 use nectar_process_lib::{
@@ -155,29 +153,16 @@ pub enum TransferResponse {
     ListFiles(Vec<FileInfo>),
 }
 
-fn handle_transfer_request(
-    our: &Address,
-    source: &Address,
-    body: &Vec<u8>,
-    file_dir: &Directory,
-) -> anyhow::Result<()> {
-    let transfer_request = serde_json::from_slice::<TransferRequest>(body)?;
-
-    match transfer_request {
-        TransferRequest::ListFiles => {
-            println!("hellö");
-        }
-    }
-
-    Ok(())
-}
-
 fn handle_message(our: &Address, file_dir: &Directory) -> anyhow::Result<()> {
     let message = await_message()?;
 
     match message {
-        Message::Response { .. } => {
-            return Ok(());
+        Message::Response {
+            ref source,
+            ref body,
+            ..
+        } => {
+            handle_transfer_response(our, source, body, file_dir)?;
         }
         Message::Request {
             ref source,
@@ -188,7 +173,6 @@ fn handle_message(our: &Address, file_dir: &Directory) -> anyhow::Result<()> {
         }
     };
 
-    println!("file_transfer: got message!: {:?}", message);
     Ok(())
 }
 
@@ -214,56 +198,40 @@ impl Guest for Component {
 }
 ```
 
-Now, you can fill in the ListFiles request and response behaviour, which is just a ReadDir action to the vfs.
+You can then add the `handle_transfer_request` and `handle_transfer_response` functions.
 
 ```rust
+fn handle_transfer_request(
+    our: &Address,
+    source: &Address,
+    body: &Vec<u8>,
+    files_dir: &Directory,
+) -> anyhow::Result<()> {
+    let transfer_request = serde_json::from_slice::<TransferRequest>(body)?;
 
-match transfer_request {
-    TransferRequest::ListFiles => {
-        let entries = file_dir.read()?;
-        let files: Vec<FileInfo> = entries
-            .iter()
-            .filter_map(|file| match file.file_type {
-                FileType::File => match metadata(&file.path) {
-                    Ok(metadata) => Some(FileInfo {
-                        name: file.path.clone(),
-                        size: metadata.len,
-                    }),
-                    Err(_) => None,
-                },
-                _ => None,
-            })
-            .collect();
+    match transfer_request {
+        TransferRequest::ListFiles => {
+            let entries = files_dir.read()?;
+            let files: Vec<FileInfo> = entries
+                .iter()
+                .filter_map(|file| match file.file_type {
+                    FileType::File => match metadata(&file.path) {
+                        Ok(metadata) => Some(FileInfo {
+                            name: file.path.clone(),
+                            size: metadata.len,
+                        }),
+                        Err(_) => None,
+                    },
+                    _ => None,
+                })
+                .collect();
 
-        Response::new()
-            .body(serde_json::to_vec(&TransferResponse::ListFiles(files))?)
-            .send()?;
+            Response::new()
+                .body(serde_json::to_vec(&TransferResponse::ListFiles(files))?)
+                .send()?;
+        }
     }
 }
-```
-
-And add the corresponding `handle_transfer_response` too!
-
-```rust
-
-match message {
-    Message::Response {
-        ref source,
-        ref body,
-        ..
-    } => {
-        handle_transfer_response(our, source, body, file_dir)?;
-    }
-    Message::Request {
-        ref source,
-        ref body,
-        ..
-    } => {
-        handle_transfer_request(&our, source, body, file_dir)?;
-    }
-};
-
-// ...
 
 fn handle_transfer_response(
     our: &Address,
@@ -283,13 +251,13 @@ fn handle_transfer_response(
 }
 ```
 
-You can now try this out by booting two nodes (fake or real), putting some files in the /files folder of one of them, and sending a request!
+Now try this out by booting two nodes (fake or real), placing files in the /files folder of one of them, and sending a request.
 
 ```
 /m node2.nec@file_transfer:file_transfer:template.uq "ListFiles"
 ```
 
-And you'll see a response printed!
+You should see a printed response.
 
 ```md
 Thu 1/11 13:14 response from node2.nec@file_transfer:file_transfer:template.nec: {"ListFiles":[{"name":"file_transfer:template.nec/files/barry-lyndon.mp4","size":8760244}, {"name":"file_transfer:template.nec/files/blue-danube.mp3","size":9668359}]}
@@ -297,11 +265,11 @@ Thu 1/11 13:14 response from node2.nec@file_transfer:file_transfer:template.nec:
 
 ### Transfer
 
-Now, you'll get to the fun part, downloading/sending files!
+Now the fun part, downloading/sending files!
 
-You could handle all of this within our file_transfer process, but something you can easily do better is to spin up another process, a worker, that does the downloading/sending, and just sends progress updates back to the main file_transfer!
+You could handle all of this within the file_transfer process, but you can also spin up another process, a worker, that handles the downloading/sending and then sends progress updates back to the main file_transfer.
 
-This way you can have several files downloading at the same time, not waiting for one to finish.
+This way you can download several files downloading at the same time without waiting for one to finish.
 
 Start by defining some types.
 
@@ -316,9 +284,9 @@ pub enum TransferRequest {
 }
 ```
 
-This will give you a request to say "I want to download this file", and you'll get back, "all good, you can do it by calling this worker".
+Now, a request to downoad a file will result in a respose to the requesting process to download the file using a worker.
 
-Also add a simple Start and Done variant, so you'll know when our worker has successfully been spawned and initialized.
+Add a simple Start and Done variant, so you'll know when the worker has successfully been spawned and initialized.
 
 ```rust
 #[derive(Serialize, Deserialize, Debug)]
@@ -335,7 +303,7 @@ Now, add the intra worker communication types:
 ```rust
 #[derive(Serialize, Deserialize, Debug)]
 pub enum WorkerRequest {
-    Init {
+    Initialize {
         name: String,
         target_worker: Option<Address>,
     },
@@ -348,14 +316,15 @@ pub enum WorkerRequest {
 }
 ```
 
-Workers will take an init function from their own node, that either tells them they're a receiver or a sender based on if they have a target worker `Option<Address>`.
+Workers will take an `Inititialize` request from their own node, that either tells them they're a receiver or a sender based on if they have a target worker `Option<Address>`.
 
-Progress reports are sent back to the main process, which you can then pipe them through as websocket updates to the frontend!
+Progress reports are sent back to the main process, which you can then pipe them through as websocket updates to the frontend.
 
-Code this out so it becomes clearer, we'll import the spawn function from the `process_lib`.
+To enable spawning, import the `spawn` function from the `process_lib`.
+
 The only additional part you need to handle in the transfer app is the Download request you've added.
 
-It will handle 2 cases:
+`TransferRequest::Download` will handle 2 cases:
 
 1. A node sent us a download request, you spawn a worker, and tell it to send chunks to the `target_worker` you got in the request.
 2. You want to download a file from another node, you send yourself a download request, you spin up a worker and send it's address to the remote node.
@@ -389,7 +358,7 @@ It will handle 2 cases:
                 true => {
                     // we want to download a file
                     let _resp = Request::new()
-                        .body(serde_json::to_vec(&WorkerRequest::Init {
+                        .body(serde_json::to_vec(&WorkerRequest::Initialize {
                             name: name.clone(),
                             target_worker: None,
                         })?)
@@ -408,7 +377,7 @@ It will handle 2 cases:
                 false => {
                     // they want to download a file
                     Request::new()
-                        .body(serde_json::to_vec(&WorkerRequest::Init {
+                        .body(serde_json::to_vec(&WorkerRequest::Initialize {
                             name: name.clone(),
                             target_worker: Some(target),
                         })?)
@@ -420,14 +389,15 @@ It will handle 2 cases:
     }
 ```
 
-There you go. As you can see, the main transfer doesn't actually do much, all it handles is a handshake.
-This gives us the possibility to add more features easily later on.
+There you go.
+As you can see, the main transfer doesn't actually do much — it only handles a handshake.
+This makes adding more features later on very simple.
 
 Now, the actual worker.
 Add this bit by bit:
 
-First, because when you spawn your worker, you give it `our_capabilities()`, it will have access to messaging and the vfs drive because you also do.
-So you can simply open the `files_dir` without issue.
+First, because when you spawn your worker you give it `our_capabilities()` (i.e. it has the same capabilities as the parent process), the worker will have the ability to message both `"net:sys:nectar"` and `"vfs:sys:nectar".
+As it's also within the same package, you can simply open the `files_dir` without issue.
 
 ```rust
 struct Component;
@@ -452,18 +422,18 @@ impl Guest for Component {
 }
 ```
 
-You'll also need a bit of state, for the receiving worker.
-This is not persisted (you'll add that soon!), but when different chunks come in, you need to know what file to write to, and how long that file is for progress!
-This is not known at the point of spawning (init takes just a `our: String`), but you have created an Init request for it.
+You'll also need a bit of state for the receiving worker.
+This is not persisted (you'll add that soon!), but when different chunks arrive, you need to know what file to write to and how long that file should eventually become to generate progress updates.
+This is not known at the point of spawning (`init` takes just an `our: String`), but you've created a `WorkerRequest::Initialize` precisely for this reason.
 
-The state will look like this, and will be wrapped in an Option, so you can set it as None at start.
+The state you'll initialize at the start of the worker will look like this:
 
 ```rust
 let mut file: Option<File> = None;
 let mut size: Option<u64> = None;
 ```
 
-And then in the init function we pass it to `handle_message`:
+And then in the main loop we pass it to `handle_message`:
 
 ```rust
 struct Component;
@@ -490,9 +460,9 @@ impl Guest for Component {
 }
 ```
 
-The `handle_message` function will handle 3 types: the requests Init, Chunk and Size.
+The `handle_message` function will handle 3 types: the requests Initialize, Chunk and Size.
 
-`WorkerRequest::Init` runs once, received from the spawner:
+`WorkerRequest::Initialize` runs once, received from the spawner:
 
 ```rust
 
@@ -513,7 +483,7 @@ fn handle_message(
             let request = serde_json::from_slice::<WorkerRequest>(body)?;
 
             match request {
-                WorkerRequest::Init {
+                WorkerRequest::Initialize {
                     name,
                     target_worker,
                 } => {
@@ -581,7 +551,7 @@ fn handle_message(
 }
 ```
 
-So upon Init, you open the existing file or create an empty one, and then based on whether the worker is a sender or not you do 2 things:
+So upon `Initialize`, you open the existing file or create an empty one. Then, depending on whether the worker is a sender or receiver, you take one of two options:
 
 - if receiver, save the File to your state, and then send a Started response to parent.
 - if sender, get the file's length, send it as Size to the `target_worker`, and then chunk the data, loop, read into a buffer and send to `target_worker`.
@@ -611,7 +581,6 @@ WorkerRequest::Chunk {
         }
     };
 
-    file.seek(SeekFrom::Start(offset))?;
     file.write_at(&bytes)?;
 
     // if sender has sent us a size, give a progress update to main transfer!
@@ -633,6 +602,11 @@ WorkerRequest::Chunk {
             })?)
             .target(&main_app)
             .send()?;
+
+        if progress >= 100 {
+            Response::new().body(serde_json::to_vec(&"Done")?).send()?;
+            return Ok(());
+        }
     }
 }
 ```
@@ -645,8 +619,10 @@ WorkerRequest::Size(incoming_size) => {
 }
 ```
 
-One more thing: once you're done sending, we can exit the process, the worker is not needed anymore.
-We You change our handle_message function to return a `Result<bool>` instead telling the main loop whether it should exit or not.
+One more thing: once you're done sending, you can exit the process; the worker is not needed anymore.
+Change your `handle_message` function to return a `Result<bool>` instead telling the main loop whether it should exit or not.
+
+As a bonus, we can add a print when it exits of how long it took to send/receive!
 
 ```rust
 fn handle_message(
@@ -657,14 +633,31 @@ fn handle_message(
 ) -> anyhow::Result<bool> {
 ```
 
-Changing the main loop and the places we return Ok(()) appropriately.
+Changing the main loop and the places we return `Ok(())` appropriately.
 
 ```rust
+struct Component;
+impl Guest for Component {
+    fn init(our: String) {
+        println!("file_transfer worker: begin");
+        let start = std::time::Instant::now();
+
+        let our = Address::from_str(&our).unwrap();
+
+        let drive_path = format!("{}/files", our.package_id());
+        let files_dir = open_dir(&drive_path, false).unwrap();
+
+        let mut file: Option<File> = None;
+        let mut size: Option<u64> = None;
+
         loop {
             match handle_message(&our, &mut file, &files_dir, &mut size) {
                 Ok(exit) => {
                     if exit {
-                        println!("file_transfer worker done: exiting");
+                        println!(
+                            "file_transfer worker done: exiting, took {:?}",
+                            start.elapsed()
+                        );
                         break;
                     }
                 }
@@ -673,6 +666,8 @@ Changing the main loop and the places we return Ok(()) appropriately.
                 }
             };
         }
+    }
+}
 ```
 
 ### Final Code
@@ -701,7 +696,7 @@ const CHUNK_SIZE: u64 = 1048576; // 1MB
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum WorkerRequest {
-    Init {
+    Initialize {
         name: String,
         target_worker: Option<Address>,
     },
@@ -735,7 +730,7 @@ fn handle_message(
             let request = serde_json::from_slice::<WorkerRequest>(body)?;
 
             match request {
-                WorkerRequest::Init {
+                WorkerRequest::Initialize {
                     name,
                     target_worker,
                 } => {
@@ -812,9 +807,7 @@ fn handle_message(
                         }
                     };
 
-                    file.seek(SeekFrom::Start(offset))?;
-                    file.write_at(&bytes)?;
-
+                    file.write_all(&bytes)?;
                     // if sender has sent us a size, give a progress update to main transfer!
                     if let Some(size) = size {
                         let progress = ((offset + length) as f64 / *size as f64 * 100.0) as u64;
@@ -834,6 +827,11 @@ fn handle_message(
                             })?)
                             .target(&main_app)
                             .send()?;
+
+                        if progress >= 100 {
+                            Response::new().body(serde_json::to_vec(&"Done")?).send()?;
+                            return Ok(true);
+                        }
                     }
                 }
                 WorkerRequest::Size(incoming_size) => {
@@ -852,6 +850,7 @@ struct Component;
 impl Guest for Component {
     fn init(our: String) {
         println!("file_transfer worker: begin");
+        let start = std::time::Instant::now();
 
         let our = Address::from_str(&our).unwrap();
 
@@ -865,7 +864,10 @@ impl Guest for Component {
             match handle_message(&our, &mut file, &files_dir, &mut size) {
                 Ok(exit) => {
                     if exit {
-                        println!("file_transfer worker done: exiting");
+                        println!(
+                            "file_transfer worker done: exiting, took {:?}",
+                            start.elapsed()
+                        );
                         break;
                     }
                 }
@@ -920,7 +922,7 @@ pub struct FileInfo {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum WorkerRequest {
-    Init {
+    Initialize {
         name: String,
         target_worker: Option<Address>,
     },
@@ -975,7 +977,7 @@ fn handle_transfer_request(
                 true => {
                     // we want to download a file
                     let _resp = Request::new()
-                        .body(serde_json::to_vec(&WorkerRequest::Init {
+                        .body(serde_json::to_vec(&WorkerRequest::Initialize {
                             name: name.clone(),
                             target_worker: None,
                         })?)
@@ -994,7 +996,7 @@ fn handle_transfer_request(
                 false => {
                     // they want to download a file
                     Request::new()
-                        .body(serde_json::to_vec(&WorkerRequest::Init {
+                        .body(serde_json::to_vec(&WorkerRequest::Initialize {
                             name: name.clone(),
                             target_worker: Some(target),
                         })?)
@@ -1071,7 +1073,7 @@ impl Guest for Component {
 
 ### Conclusion
 
-And there you have it!
+There you have it!
 
 Try and run it, you can download a file with the command
 ```
