@@ -1,9 +1,9 @@
-# `necdev boot-fake-node`
+# `kit boot-fake-node`
 
-`necdev boot-fake-node` starts a "fake" (i.e. not connected to the live network) node, e.g.,
+`kit boot-fake-node` starts a "fake" (i.e. not connected to the live network) node, e.g.,
 
 ```bash
-necdev boot-fake-node
+kit boot-fake-node
 ```
 
 By default, `boot-fake-node` fetches a prebuilt binary and launches the node using it.
@@ -16,10 +16,10 @@ You'll need to start a new terminal for each fake node.
 For example, to start two fake nodes, `fake.nec` and `fake2.nec`:
 
 ```bash
-necdev boot-fake-node
+kit boot-fake-node
 
 # In a new terminal
-necdev boot-fake-node -h /tmp/nectar-fake-node-2 -p 8081 -f fake2.nec
+kit boot-fake-node -h /tmp/nectar-fake-node-2 -p 8081 -f fake2.nec
 ```
 
 ## Discussion
@@ -39,26 +39,28 @@ Though this lack of connectivity makes them easy to spin up and throw away, the 
 ## Arguments
 
 ```bash
-$ necdev boot-fake-node --help
+$ kit f --help
 Boot a fake node for development
 
-Usage: necdev boot-fake-node [OPTIONS]
+Usage: kit boot-fake-node [OPTIONS]
 
 Options:
-      --runtime-path <PATH>
+  -r, --runtime-path <PATH>
           Path to Nectar core repo or runtime binary (overrides --version)
   -v, --version <VERSION>
-          Version of Nectar binary to use (overridden by --runtime-path) [default: 0.5.0]
-  -h, --home <HOME>
-          Where to place the home directory for the fake node [default: /tmp/nectar-fake-node]
+          Version of Nectar binary to use (overridden by --runtime-path) [default: 0.4.0]
   -p, --port <NODE_PORT>
           The port to run the fake node on [default: 8080]
-      --network-router-port <NETWORK_ROUTER_PORT>
-          The port to run the network router on (or to connect to) [default: 9001]
-  -r, --rpc <RPC_ENDPOINT>
-          Ethereum RPC endpoint (wss://)
+  -h, --home <HOME>
+          Where to place the home directory for the fake node [default: /tmp/nectar-fake-node]
   -f, --fake-node-name <NODE_NAME>
           Name for fake node [default: fake.nec]
+      --network-router-port <NETWORK_ROUTER_PORT>
+          The port to run the network router on (or to connect to) [default: 9001]
+      --rpc <RPC_ENDPOINT>
+          Ethereum RPC endpoint (wss://)
+      --persist
+          Do not delete node home after exit
       --password <PASSWORD>
           Password to login [default: secret]
       --help
@@ -70,7 +72,7 @@ Options:
 Pass to run a local binary or build a local Nectar core repo and use the resulting binary, e.g.
 
 ```bash
-necdev boot-fake-node --runtime-path ~/git/nectar
+kit boot-fake-node --runtime-path ~/git/nectar
 ```
 
 for a system with the Nectar core repo living at `~/git/nectar`.
@@ -82,13 +84,17 @@ Overrides `--version`.
 Fetch and run a specific version of the binary; defaults to most recent version (here, `0.5.0`).
 Overridden by `--runtime-path`.
 
+### `--port`
+
+Run the fake node on this port; defaults to `8080`.
+
 ### `--home`
 
 Path to place fake node home directory at; defaults to `/tmp/nectar-fake-node`.
 
-### `--port`
+### `--fake-node-name`
 
-Run the fake node on this port; defaults to `8080`.
+The name of the fake node; defaults to `fake.nec`.
 
 ### `--network-router-port`
 
@@ -99,9 +105,9 @@ Additional fake nodes should point to the same port to connect to the fake node 
 
 The Ethereum RPC endpoint to use, if desired.
 
-### `--fake-node-name`
+### `--persist`
 
-The name of the fake node; defaults to `fake.nec`.
+Persist the node home directory after exit, rather than cleaning it up.
 
 ### `--password`
 

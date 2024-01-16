@@ -1,32 +1,32 @@
-# `necdev build`
+# `kit build`
 
-`necdev build` builds the indicated package directory, or the current working directory if none supplied, e.g.,
+`kit build` builds the indicated package directory, or the current working directory if none supplied, e.g.,
 
 ```bash
-necdev build foo
+kit build foo
 ```
 
 or
 
 ```bash
-necdev build
+kit build
 ```
 
-`necdev build` builds each process in the package and places the `.wasm` binaries into the `pkg/` directory for installation.
+`kit build` builds each process in the package and places the `.wasm` binaries into the `pkg/` directory for installation.
 It automatically detects what language each process is, and builds it appropriately (from amongst the supported `rust`, `python`, and `javascript`).
 
 ## Discussion
 
-`necdev build` builds a Nectar package directory.
+`kit build` builds a Nectar package directory.
 Specifically, it iterates through all directories within the given package directory and looks for `src/lib.??`, where the `??` is the file extension.
 Currently, `rs`, `py`, and `js` are supported, corresponding to processes written in `rust`, `python`, and `javascript`, respectively.
 Note that a package may have more than one process and those processes need not be written in the same language.
 
 After compiling each process, it places the output `.wasm` binaries within the `pkg/` directory at the top-level of the given package directory.
-The `pkg/` directory is the one that is zipped and injected into the node by [`necdev start-package`](./start-package.md).
+The `pkg/` directory is the one that is zipped and injected into the node by [`kit start-package`](./start-package.md).
 Thus, after `build`ing, the package is ready for `start-package`.
 
-`necdev build` also builds the UI if found in `ui/`.
+`kit build` also builds the UI if found in `ui/`.
 There must exist a `ui/package.json` file with `scripts` defined like:
 ```
 "build": "tsc && vite build",
@@ -37,19 +37,18 @@ There must exist a `ui/package.json` file with `scripts` defined like:
 ## Arguments
 
 ```bash
-$ necdev build --help
-Build a Nectar process
+$ kit b --help
+Build a Nectar package
 
-Usage: necdev build [OPTIONS] [DIR]
+Usage: kit build [OPTIONS] [DIR]
 
 Arguments:
-  [DIR]  The package directory to build [default: /home/nick/git/necdev]
+  [DIR]  The package directory to build [default: /home/nick/git/kit]
 
 Options:
       --ui-only  If set, build ONLY the web UI for the process
   -q, --quiet    If set, do not print build stdout/stderr
   -h, --help     Print help
-
 ```
 
 ### Optional positional arg: `DIR`

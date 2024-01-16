@@ -1,15 +1,15 @@
-# `necdev run-tests`
+# `kit run-tests`
 
-`necdev run-tests` runs the tests specified by the given `.toml` file, or `tests.toml`, e.g.,
+`kit run-tests` runs the tests specified by the given `.toml` file, or `tests.toml`, e.g.,
 
 ```bash
-necdev run-tests my_tests.toml
+kit run-tests my_tests.toml
 ```
 
 or
 
 ```bash
-necdev run-tests
+kit run-tests
 ```
 
 to run the current working directory's `tests.toml`.
@@ -21,10 +21,10 @@ to run the current working directory's `tests.toml`.
 ## Arguments
 
 ```bash
-$ necdev run-tests --help
+$ kit t --help
 Run Nectar tests
 
-Usage: necdev run-tests [PATH]
+Usage: kit run-tests [PATH]
 
 Arguments:
   [PATH]  Path to tests configuration file [default: tests.toml]

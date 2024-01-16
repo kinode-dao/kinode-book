@@ -39,16 +39,17 @@
 - [Putting Everything Together](./chess_app/putting_everything_together.md)
 - [Extension 1: Chat](./chess_app/chat.md)
 
-# NecDev: Development Tools
+# Kit: Development Tool**kit**
 
-- [NecDev](./necdev/necdev.md)
-- [`necdev boot-fake-node`](./necdev/boot-fake-node.md)
-- [`necdev new`](./necdev/new.md)
-- [`necdev build`](./necdev/build.md)
-- [`necdev start-package`](./necdev/start-package.md)
-- [`necdev dev-ui`](./necdev/dev-ui.md)
-- [`necdev inject-message`](./necdev/inject-message.md)
-- [`necdev run-tests`](./necdev/run-tests.md)
+- [`kit`](./kit/kit.md)
+- [`boot-fake-node`](./kit/boot-fake-node.md)
+- [`new`](./kit/new.md)
+- [`build`](./kit/build.md)
+- [`start-package`](./kit/start-package.md)
+- [`remove-package`](./kit/remove-package.md)
+- [`dev-ui`](./kit/dev-ui.md)
+- [`inject-message`](./kit/inject-message.md)
+- [`run-tests`](./kit/run-tests.md)
 
 # Cookbook (Handy Recipes)
 

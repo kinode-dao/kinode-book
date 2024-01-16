@@ -1,14 +1,14 @@
-# `necdev inject-message`
+# `kit inject-message`
 
-`necdev inject-message` injects the given message to the node running at given port/URL, e.g.,
+`kit inject-message` injects the given message to the node running at given port/URL, e.g.,
 
 ```bash
-necdev inject-message foo:foo:template.nec '{"Send": {"target": "fake2.nec", "message": "hello world"}}'
+kit inject-message foo:foo:template.nec '{"Send": {"target": "fake2.nec", "message": "hello world"}}'
 ```
 
 ## Discussion
 
-`necdev inject-message` injects the given message into the given node.
+`kit inject-message` injects the given message into the given node.
 It is useful for:
 1. Testing processes from the outside world during development
 2. Injecting data into the node
@@ -19,14 +19,14 @@ You can script in the outside world, dump the result to a file, and inject it wi
 ## Arguments
 
 ```bash
-$ necdev inject-message --help
+$ kit i --help
 Inject a message to a running Nectar node
 
-Usage: necdev inject-message [OPTIONS] <PROCESS> <JSON>
+Usage: kit inject-message [OPTIONS] <ADDRESS> <BODY_JSON>
 
 Arguments:
-  <PROCESS>  Process to send message to
-  <JSON>     Body in JSON format
+  <ADDRESS>    Address to send message to
+  <BODY_JSON>  Body in JSON format
 
 Options:
   -p, --port <NODE_PORT>  Node port: for use on localhost (overridden by URL) [default: 8080]
@@ -61,7 +61,7 @@ Node to target (i.e. the node portion of the address).
 E.g.
 
 ```bash
-necdev inject-message foo:foo:template.nec '{"Send": {"target": "fake.nec", "message": "wow, it works!"}}' --node fake2.nec
+kit inject-message foo:foo:template.nec '{"Send": {"target": "fake.nec", "message": "wow, it works!"}}' --node fake2.nec
 ```
 
 sent to the port running `fake.nec` will forward the message from `fake.nec`s HTTP server to `fake2@foo:foo:template.nec`.

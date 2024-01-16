@@ -3,7 +3,7 @@
 This entry will teach you to build a simple file transfer app, allowing nodes to download files from a public directory.
 It will use the vfs to read and write files, and will spin up worker processes for the transfer.
 
-This guide assumes a basic understanding of Nectar process building, some familiarity with `necdev`, requests and responses, and some knowledge of rust syntax.
+This guide assumes a basic understanding of Nectar process building, some familiarity with `kit`, requests and responses, and some knowledge of rust syntax.
 
 ## Contents
 
@@ -16,12 +16,14 @@ This guide assumes a basic understanding of Nectar process building, some famili
 
 ## Start
 
-First, initialize a new project with `necdev new file_transfer`
+First, initialize a new project with `kit new file_transfer`
 
 Here's a clean template so you have a complete fresh start:
 
-This guide will use the following nectar_process_lib version in Cargo.toml for this app:
-```nectar_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "64d2856" }```
+This guide will use the following `nectar_process_lib` version in `Cargo.toml` for this app:
+```
+nectar_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "64d2856" }
+```
 
 ```rust
 use serde::{Deserialize, Serialize};
@@ -86,7 +88,7 @@ Before delving into the code, you can handle the capabilities you need to reques
 Now, start by creating a drive (folder) in your vfs and opening it, where files will be downloaded by other nodes.
 You can add a whitelist a bit later!
 
-Also, import some vfs functions from the process_lib.
+Also, import some vfs functions from the `process_lib`.
 
 ```rust
 use nectar_process_lib::vfs::{create_drive, metadata, open_dir, Directory, FileType},
@@ -251,7 +253,9 @@ fn handle_transfer_response(
 
 Now try this out by booting two nodes (fake or real), placing files in the /files folder of one of them, and sending a request.
 
-```/m node2.nec@file_transfer:file_transfer:template.uq "ListFiles"```
+```
+/m node2.nec@file_transfer:file_transfer:template.uq "ListFiles"
+```
 
 You should see a printed response.
 
@@ -322,8 +326,8 @@ The only additional part you need to handle in the transfer app is the Download 
 
 `TransferRequest::Download` will handle 2 cases:
 
-1. A node sent you a download request, your process spawns a worker and tells it to send chunks to the target_worker it received in the download request.
-2. You want to download a file from another node, you send yourself a download request, and then you spin up a worker, whose address you send to the remote node.
+1. A node sent us a download request, you spawn a worker, and tell it to send chunks to the `target_worker` you got in the request.
+2. You want to download a file from another node, you send yourself a download request, you spin up a worker and send it's address to the remote node.
 
 ```rust
     match transfer_request {
@@ -381,15 +385,19 @@ The only additional part you need to handle in the transfer app is the Download 
                         .send()?;
                 }
             }
-        }    
+        }
     }
 ```
 
-There you go. As you can see, the main transfer doesn't actually do much — it only handles a handshake. This makes adding more features later on very simple.
+There you go.
+As you can see, the main transfer doesn't actually do much — it only handles a handshake.
+This makes adding more features later on very simple.
 
-Now, the actual worker. Add this bit by bit:
+Now, the actual worker.
+Add this bit by bit:
 
-First, because when you spawn your worker you give it `our_capabilities()` (i.e. it has the same capabilities as the parent process), the worker will have the ability to message both "net:sys:nectar" and "vfs:sys:nectar". As it's also within the same package, you can simply open the `files_dir` without issue.
+First, because when you spawn your worker you give it `our_capabilities()` (i.e. it has the same capabilities as the parent process), the worker will have the ability to message both `"net:sys:nectar"` and `"vfs:sys:nectar".
+As it's also within the same package, you can simply open the `files_dir` without issue.
 
 ```rust
 struct Component;
@@ -425,7 +433,7 @@ let mut file: Option<File> = None;
 let mut size: Option<u64> = None;
 ```
 
-And then in the main loop we pass it to handle_message:
+And then in the main loop we pass it to `handle_message`:
 
 ```rust
 struct Component;
@@ -452,7 +460,7 @@ impl Guest for Component {
 }
 ```
 
-The handle_message function will handle 3 types: the requests Initialize, Chunk and Size.
+The `handle_message` function will handle 3 types: the requests Initialize, Chunk and Size.
 
 `WorkerRequest::Initialize` runs once, received from the spawner:
 
@@ -546,7 +554,7 @@ fn handle_message(
 So upon `Initialize`, you open the existing file or create an empty one. Then, depending on whether the worker is a sender or receiver, you take one of two options:
 
 - if receiver, save the File to your state, and then send a Started response to parent.
-- if sender, get the file's length, send it as Size to the target_worker, and then chunk the data, loop, read into a buffer and send to target_worker.
+- if sender, get the file's length, send it as Size to the `target_worker`, and then chunk the data, loop, read into a buffer and send to `target_worker`.
 
 `WorkerRequest::Chunk` will look like this:
 
@@ -594,7 +602,7 @@ WorkerRequest::Chunk {
             })?)
             .target(&main_app)
             .send()?;
-        
+
         if progress >= 100 {
             Response::new().body(serde_json::to_vec(&"Done")?).send()?;
             return Ok(());
@@ -1067,6 +1075,10 @@ impl Guest for Component {
 
 There you have it!
 
-Try and run it, you can download a file with the command `/m our@file_transfer:file_transfer:template.nec {"Download": {"name": "dawg.jpeg", "target": "buenosaires.nec@file_transfer:file_transfer:template.nec"}}`, replacing node name and file name!
+Try and run it, you can download a file with the command
+```
+/m our@file_transfer:file_transfer:template.nec {"Download": {"name": "dawg.jpeg", "target": "buenosaires.nec@file_transfer:file_transfer:template.nec"}}
+```
+replacing node name and file name!
 
 Stay tuned for additions to this guide, including restarting transfers after rebooting your node or losing connections, and a simple UI!
