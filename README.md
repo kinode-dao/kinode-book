@@ -1,6 +1,6 @@
-# nectar-book
+# kinode-book
 
-"Rust Book"-style introduction and documentation to Nectar OS and building on Nectar.
+"Rust Book"-style introduction and documentation to Kinode OS and building on Kinode.
 
 ## To build:
 
