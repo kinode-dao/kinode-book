@@ -34,6 +34,8 @@ There must exist a `ui/package.json` file with `scripts` defined like:
 "build:copy": "npm run build && npm run copy",
 ```
 
+To both `build` and `start-package` in one command, use `kit build-start-package`.
+
 ## Arguments
 
 ```bash
@@ -46,9 +48,10 @@ Arguments:
   [DIR]  The package directory to build [default: /home/nick/git/kit]
 
 Options:
-      --ui-only  If set, build ONLY the web UI for the process
-  -q, --quiet    If set, do not print build stdout/stderr
-  -h, --help     Print help
+      --ui-only          If set, build ONLY the web UI for the process
+  -q, --quiet            If set, do not print build stdout/stderr
+  -s, --skip-deps-check  If set, do not check for dependencies
+  -h, --help             Print help
 ```
 
 ### Optional positional arg: `DIR`
@@ -63,3 +66,7 @@ Otherwise, for a package with a UI, both the package and the UI will be built.
 ### `--quiet`
 
 Don't print the build stdout/stderr.
+
+### `--skip-deps-check`
+
+Don't check for dependencies.

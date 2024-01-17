@@ -19,6 +19,8 @@ kit start-package
 Specifically, it first zips and injects the `pkg/` directory within the given package directory, which contains metadata about the package for the node as well as the `.wasm` binaries for each process.
 Then it injects a message to the node to start the package.
 
+To both `build` and `start-package` in one command, use `kit build-start-package`.
+
 ## Arguments
 
 ```bash
