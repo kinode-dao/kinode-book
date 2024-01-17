@@ -184,8 +184,8 @@ Often, it is optimal to develop on a fake node.
 Fake nodes are simple to set up, easy to restart if broken, and mocked networking makes development testing very straightforward.
 To boot a fake Kinode for development purposes, use the `kit boot-fake-node` tool.
 
-`kit boot-fake-node` downloads the OS- and architecture-appropriate Kinode core binary and runs it without co.osting to the live network.
-Instead, it co.osts to a mocked local network, allowing different fake nodes on the same machine to communicate with each other.
+`kit boot-fake-node` downloads the OS- and architecture-appropriate Kinode core binary and runs it without connecting to the live network.
+Instead, it connects to a mocked local network, allowing different fake nodes on the same machine to communicate with each other.
 `kit boot-fake-node` has many optional configuration flags, but the defaults should work fine:
 
 ```bash
@@ -217,7 +217,7 @@ where `~/path/to/kinode` must be replaced with a path to the Kinode core repo or
 
 Alternatively, development sometimes calls for a real node, which has access to the actual Kinode network and its providers, such as integrated LLMs.
 
-To develop on a real Kinode, co.ost to the network and follow the instructions to [setup an Kinode](../install.md).
+To develop on a real Kinode, connect to the network and follow the instructions to [setup an Kinode](../install.md).
 
 ## Starting the Package
 

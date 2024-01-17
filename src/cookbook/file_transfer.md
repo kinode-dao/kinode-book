@@ -1083,4 +1083,4 @@ Try and run it, you can download a file with the command
 
 replacing node name and file name!
 
-Stay tuned for additions to this guide, including restarting transfers after rebooting your node or losing co.ostions, and a simple UI!
+Stay tuned for additions to this guide, including restarting transfers after rebooting your node or losing connections, and a simple UI!

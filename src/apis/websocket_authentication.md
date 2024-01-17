@@ -1,14 +1,14 @@
 # WebSocket API
 
-In Kinode OS, WebSocket co.osts are made with a Rust `warp` server in the core `http_server:distro:sys` process.
-Each co.ostion is assigned a `channel_id` that can be bound to a given process using a `WsRegister` message.
+In Kinode OS, WebSocket connects are made with a Rust `warp` server in the core `http_server:distro:sys` process.
+Each connection is assigned a `channel_id` that can be bound to a given process using a `WsRegister` message.
 The process receives the `channel_id` for pushing data into the WebSocket, and any subsequent messages from that client will be forwarded to the bound process.
 
 ## Opening a WebSocket Channel from a Client
 
-To open a WebSocket channel, co.ost to the main route on the node `/` and send a `WsRegister` message as either text or bytes.
+To open a WebSocket channel, connect to the main route on the node `/` and send a `WsRegister` message as either text or bytes.
 
-The simplest way to co.ost from a browser is to use the `@uqbar/client-encryptor-api` like so:
+The simplest way to connect from a browser is to use the `@uqbar/client-encryptor-api` like so:
 
 ```
 const api = new KinodeEncryptorApi({
@@ -53,7 +53,7 @@ websocket.send(message);
 Incoming WebSocket messages will be enums of `HttpServerRequest` with type `WebSocketOpen`, `WebSocketPush`, or `WebSocketClose`.
 
 You will want to store the `channel_id` that comes in with `WebSocketOpen` so that you can push data to that WebSocket.
-If you expect to have more than one client co.osted at a time, then you will most likely want to store the channel IDs in a Set (Rust `HashSet`).
+If you expect to have more than one client connected at a time, then you will most likely want to store the channel IDs in a Set (Rust `HashSet`).
 
 With a `WebSocketPush`, the incoming message will be on the `LazyLoadBlob`, accessible with `get_blob()`.
 
@@ -108,7 +108,7 @@ fn handle_http_server_request(
 
 ## Pushing Data to a Client via WebSocket
 
-Pushing data to a co.osted WebSocket is very simple. Call the `send_ws_push` function from `process_lib`:
+Pushing data to a connected WebSocket is very simple. Call the `send_ws_push` function from `process_lib`:
 
 ```
 pub fn send_ws_push(
