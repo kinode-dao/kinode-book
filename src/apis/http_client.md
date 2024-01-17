@@ -6,13 +6,13 @@
 
 The HTTP client is used for sending and receiving HTTP requests and responses.
 It is also used for connecting to a websocket endpoint as a client.
-From a process, you may send an `HttpClientAction` to the `http_client:sys:nectar` process.
+From a process, you may send an `HttpClientAction` to the `http_client:distro:sys` process.
 The action must be serialized to JSON and sent in the `body` of a request.
 `HttpClientAction` is an `enum` type that includes both HTTP and websocket actions.
 
 ```rust
 /// Request type that can be shared over WASM boundary to apps.
-/// This is the one you send to the `http_client:sys:nectar` service.
+/// This is the one you send to the `http_client:distro:sys` service.
 #[derive(Debug, Serialize, Deserialize)]
 pub enum HttpClientAction {
     Http(OutgoingHttpRequest),
@@ -38,7 +38,7 @@ Two or more connections can have the same `channel_id` if they are from differen
 
 ```rust
 /// HTTP Request type that can be shared over WASM boundary to apps.
-/// This is the one you send to the `http_client:sys:nectar` service.
+/// This is the one you send to the `http_client:distro:sys` service.
 #[derive(Debug, Serialize, Deserialize)]
 pub struct OutgoingHttpRequest {
     pub method: String,          // must parse to http::Method
@@ -57,7 +57,7 @@ A websocket request (open, push, close) will simply respond with a `HttpClientRe
 
 ```rust
 /// HTTP Client Response type that can be shared over WASM boundary to apps.
-/// This is the one you receive from the `http_client:sys:nectar` service.
+/// This is the one you receive from the `http_client:distro:sys` service.
 #[derive(Debug, Serialize, Deserialize)]
 pub enum HttpClientResponse {
     Http(HttpResponse),
@@ -96,7 +96,7 @@ The message itself is accessible with `get_blob()`.
 
 ```rust
 /// WebSocket Client Request type that can be shared over WASM boundary to apps.
-/// This comes from an open websocket client connection in the `http_client:sys:nectar` service.
+/// This comes from an open websocket client connection in the `http_client:distro:sys` service.
 #[derive(Debug, Serialize, Deserialize)]
 pub enum HttpClientRequest {
     WebSocketPush {

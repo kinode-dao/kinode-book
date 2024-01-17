@@ -1,6 +1,6 @@
 # `kit new`
 
-`kit new` creates a Nectar package template at the specified path, e.g.,
+`kit new` creates a Kinode package template at the specified path, e.g.,
 
 ```bash
 kit new foo
@@ -42,7 +42,7 @@ Language     | `chat`  | `echo` | `fibonacci`
 
 ```bash
 $ kit n --help
-Create a Nectar template package
+Create a Kinode template package
 
 Usage: kit new [OPTIONS] <DIR>
 
@@ -51,7 +51,7 @@ Arguments:
 
 Options:
   -a, --package <PACKAGE>      Name of the package [default: DIR]
-  -u, --publisher <PUBLISHER>  Name of the publisher [default: template.nec]
+  -u, --publisher <PUBLISHER>  Name of the publisher [default: template.os]
   -l, --language <LANGUAGE>    Programming language of the template [default: rust] [possible values: rust, python, javascript]
   -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: chat, echo, fibonacci]
       --ui                     If set, use the template with UI

@@ -1,9 +1,9 @@
 # In-Depth Guide: Chess App
 
-This guide will walk you through building a very simple chess app on NectarOS.
-The final result will look like [this](https://github.com/uqbar-dao/nectar/tree/main/modules/chess): chess is in the basic runtime distribution so you can try it yourself.
+This guide will walk you through building a very simple chess app on Kinode OS.
+The final result will look like [this](https://github.com/uqbar-dao/kinode/tree/main/modules/chess): chess is in the basic runtime distribution so you can try it yourself.
 
-To prepare for this tutorial, follow the environment setup guide [here](../my_first_app/chapter_1.md), i.e. [start a fake node](../my_first_app/chapter_1.md#booting-a-fake-nectar-node) and then, in another terminal, run:
+To prepare for this tutorial, follow the environment setup guide [here](../my_first_app/chapter_1.md), i.e. [start a fake node](../my_first_app/chapter_1.md#booting-a-fake-kinode-node) and then, in another terminal, run:
 ```bash
 kit new my_chess
 cd my_chess
@@ -15,11 +15,11 @@ Once you have the template app installed and can see it running on your testing 
 
 # Chess Engine
 
-Chess is a good example for an Nectar application walk-through because:
+Chess is a good example for an Kinode application walk-through because:
 1. The basic game logic is already readily available.
-   There are thousands of high-quality chess libraries across many languages that can be imported into a Wasm app that runs on Nectar.
+   There are thousands of high-quality chess libraries across many languages that can be imported into a Wasm app that runs on Kinode.
    We'll be using [pleco](https://github.com/pleco-rs/Pleco)
-2. It is a multiplayer game, showing Nectar's p2p communications and ability to serve frontends
+2. It is a multiplayer game, showing Kinode's p2p communications and ability to serve frontends
 3. It is fun!
 
 In `my_chess/Cargo.toml`, which should be in the `my_chess/` process directory inside the `my_chess/` package directory, add `pleco = "0.5"` to your dependencies.
@@ -27,7 +27,7 @@ In your `my_chess/src/lib.rs`, replace the existing code with:
 
 ```rust
 use pleco::Board;
-use nectar_process_lib::{await_message, call_init, println, Address};
+use kinode_process_lib::{await_message, call_init, println, Address};
 
 wit_bindgen::generate!({
     path: "wit",
@@ -105,7 +105,7 @@ If you get a response, you can do the same but with `ChessResponse`.
 And every request and response that you send can be serialized in kind.
 More advanced apps can take on different structures, but a top-level `enum` to serialize/deserialize and match on is always a good idea.
 
-The `ChessState` `struct` shown above can also be persisted using the `set_state` and `get_state` commands exposed by Nectar's runtime.
+The `ChessState` `struct` shown above can also be persisted using the `set_state` and `get_state` commands exposed by Kinode's runtime.
 Note that the `Game` `struct` here has `board` as a `String`.
 This is because the `Board` type from pleco doesn't implement `Serialize` or `Deserialize`.
 We'll have to convert it to a string using `fen()` before persisting it.
@@ -129,11 +129,11 @@ To keep things clean, leverage the request/response pattern and the `context` fi
 
 Below, you'll find the full code for the CLI version of the app.
 You can build it and install it on a node using `kit`.
-You can interact with it in the terminal, primitively, like so (assuming your first node is `fake.nec` and second is `fake2.nec`):
+You can interact with it in the terminal, primitively, like so (assuming your first node is `fake.os` and second is `fake2.os`):
 ```
-/a our@my_chess:my_chess:template.nec
-/m {"NewGame": {"white": "fake.nec", "black": "fake2.nec"}}
-/m {"Move": {"game_id": "fake2.nec", "move_str": "e2e4"}}
+/a our@my_chess:my_chess:template.os
+/m {"NewGame": {"white": "fake.os", "black": "fake2.os"}}
+/m {"Move": {"game_id": "fake2.os", "move_str": "e2e4"}}
 ```
 (If you want to make a more ergonomic CLI app, consider parsing `body` as a string...)
 
@@ -161,14 +161,14 @@ pleco = "0.5"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 url = "*"
-nectar_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "a2d3e9e" }
+kinode_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "a2d3e9e" }
 wit-bindgen = { git = "https://github.com/bytecodealliance/wit-bindgen", rev = "efcc759" }
 
 [lib]
 crate-type = ["cdylib"]
 
 [package.metadata.component]
-package = "nectar:process"
+package = "kinode:process"
 ```
 
 `my_chess/src/lib.rs`:
@@ -177,13 +177,13 @@ package = "nectar:process"
 use pleco::Board;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-use nectar_process_lib::{
+use kinode_process_lib::{
     await_message, call_init, get_typed_state, println, set_state, Address, Message, NodeId, Request, Response,
 };
 
 extern crate base64;
 
-// Boilerplate: generate the Wasm bindings for an Nectar app
+// Boilerplate: generate the Wasm bindings for an Kinode app
 wit_bindgen::generate!({
     path: "wit",
     world: "process",
@@ -306,7 +306,7 @@ fn handle_request(our: &Address, message: &Message, state: &mut ChessState) -> a
     // Note that since this is a local request, we *can* trust the ProcessId.
     // Here, we'll accept messages from the local terminal so as to make this a "CLI" app.
     } else if message.source().node == our.node
-        && message.source().process == "terminal:terminal:nectar"
+        && message.source().process == "terminal:terminal:sys"
     {
         let Ok(chess_request) = serde_json::from_slice::<ChessRequest>(message.body()) else {
             return Err(anyhow::anyhow!("invalid chess request"));

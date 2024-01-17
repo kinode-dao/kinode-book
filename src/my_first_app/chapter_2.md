@@ -1,7 +1,7 @@
 # Sending Some Messages, Using Some Tools
 
-This chapter assumes you've completed the steps outlined in [Chapter 1](./chapter_1.md) to construct your dev environment or otherwise have a basic Nectar app open in your code editor of choice.
-You should also be actively running an Nectar node ([live](../login.md) or [fake](./chapter_1.md#booting-a-fake-nectar-node)) such that you can quickly compile and test your code!
+This chapter assumes you've completed the steps outlined in [Chapter 1](./chapter_1.md) to construct your dev environment or otherwise have a basic Kinode app open in your code editor of choice.
+You should also be actively running an Kinode ([live](../login.md) or [fake](./chapter_1.md#booting-a-fake-kinode-node)) such that you can quickly compile and test your code!
 Tight feedback loops when building: very important.
 
 ## Starting from Scratch
@@ -11,7 +11,7 @@ Here, you'll start from scratch and learn about every line of boilerplate.
 
 The last chapter explained packages, the package manifest, and metadata.
 Every package contains one or more processes, which are the actual Wasm programs that will run on a node.
-In order to compile properly to the Nectar environment, every process must generate the WIT bindings for the `process` "world".
+In order to compile properly to the Kinode environment, every process must generate the WIT bindings for the `process` "world".
 
 ```rust
 wit_bindgen::generate!({
@@ -24,13 +24,13 @@ wit_bindgen::generate!({
 ```
 
 After generating the bindings, every process must define a `Component` struct and implement the `Guest` trait for it defining a single function, `init()`.
-This is the entry point for the process, and the `init()` function is the first function called by the Nectar runtime when the process is started.
+This is the entry point for the process, and the `init()` function is the first function called by the Kinode runtime when the process is started.
 
-The definition of the `Component` struct can be done manually, but it's easier to import the [`nectar_process_lib`](../process_stdlib/overview.md) crate (a sort of standard library for Nectar processes written in Rust) and use the `call_init!` macro.
+The definition of the `Component` struct can be done manually, but it's easier to import the [`kinode_process_lib`](../process_stdlib/overview.md) crate (a sort of standard library for Kinode processes written in Rust) and use the `call_init!` macro.
 Note that running the process below [can lead to an infinite loop](#aside-on_exit):
 
 ```rust
-use nectar_process_lib::{call_init, Address};
+use kinode_process_lib::{call_init, Address};
 
 wit_bindgen::generate!({
     path: "wit",
@@ -47,7 +47,7 @@ fn my_init_fn(our: Address) {
 }
 ```
 
-Every Nectar process written in Rust will need code that does the same thing as the above.
+Every Kinode process written in Rust will need code that does the same thing as the above.
 The `Address` parameter tells our process what its globally-unique name is. (TODO: link to docs)
 
 Let's fill out the init function with code that will stop it from exiting immediately.
@@ -55,7 +55,7 @@ Here's an infinite loop that will wait for a message and then print it out.
 Note that you are importing a few more things from the [process_lib](../process_stdlib/overview.md) including a `println!` macro that replaces the standard Rust one.
 
 ```rust
-use nectar_process_lib::{await_message, call_init, println, Address};
+use kinode_process_lib::{await_message, call_init, println, Address};
 
 wit_bindgen::generate!({
     path: "wit",
@@ -77,8 +77,8 @@ fn my_init_fn(our: Address) {
 }
 ```
 
-See [nectar.wit](./apis/nectar_wit.md) for more details on what is imported by the WIT bindgen macro.
-These imports are the necessary "system calls" for talking to other processes and runtime components in NectarOS.
+See [kinode.wit](./apis/kinode_wit.md) for more details on what is imported by the WIT bindgen macro.
+These imports are the necessary "system calls" for talking to other processes and runtime components in Kinode OS.
 
 Run
 ```bash
@@ -93,7 +93,7 @@ to see this code in the node you set up in the last chapter.
 Let's send a message to another process.
 The `Request` type in [process_lib](../process_stdlib/overview.md) will provide all the necessary functionality.
 ```rust
-use nectar_process_lib::{await_message, call_init, println, Address, Request};
+use kinode_process_lib::{await_message, call_init, println, Address, Request};
 ```
 
 `Request` is a builder struct that abstracts over the raw interface presented in the WIT bindings.
@@ -119,7 +119,7 @@ If you know that a `target` and `body` was set, you can safely unwrap this: send
 
 Here's the full process code, with both sending and handling the message:
 ```rust
-use nectar_process_lib::{await_message, call_init, println, Address, Request};
+use kinode_process_lib::{await_message, call_init, println, Address, Request};
 
 wit_bindgen::generate!({
     path: "wit",
@@ -192,7 +192,7 @@ This code won't send a response back yet.
 To do that, import the `Response` type from `process_lib` and fire one off inside the request branch.
 
 ```rust
-use nectar_process_lib::{await_message, call_init, println, Address, Request, Response};
+use kinode_process_lib::{await_message, call_init, println, Address, Request, Response};
 // ...
 if message.is_request() {
     println!("{our}: got request: {message:?}");
@@ -209,7 +209,7 @@ But it's still ugly.
 Let's put it all together and add a bit more handling to show the `body` value as a string:
 
 ```rust
-use nectar_process_lib::{await_message, call_init, println, Address, Request, Response};
+use kinode_process_lib::{await_message, call_init, println, Address, Request, Response};
 
 wit_bindgen::generate!({
     path: "wit",
@@ -258,7 +258,7 @@ fn my_init_fn(our: Address) {
 }
 ```
 
-This basic structure can be found in the majority of Nectar processes.
+This basic structure can be found in the majority of Kinode processes.
 The other common structure is a thread-like process, that sends and handles a fixed series of messages and then exits.
 
 In the next chapter, we will cover how to turn this very basic request-response pattern into something that can be extensible and composable.
@@ -279,5 +279,5 @@ If it has `"Restart"`, it will repeat in an infinite loop, as reference [above](
 
 A process intended to run over a period of time and serve requests and responses will often have `"Restart"` `on_exit` so that, in case of crash, it will start again.
 Alternatively, a JSON object `on_exit` can be used to inform another process of its untimely demise.
-In this way, Nectar processes become quite similar to Erlang processes, and crashing can be [designed into your process to increase reliability](https://ferd.ca/the-zen-of-erlang.html).
+In this way, Kinode processes become quite similar to Erlang processes, and crashing can be [designed into your process to increase reliability](https://ferd.ca/the-zen-of-erlang.html).
 

@@ -1,6 +1,6 @@
 # Spawning and Managing Child Processes
 
-In NectarOS, a "parent" process can create additional processes, known as "children".
+In Kinode OS, a "parent" process can create additional processes, known as "children".
 These child processes are particularly useful for handling intensive tasks (referred to as "workers") that require long computation times without hindering the performance of the main application.
 They are also beneficial for segregating distinct logical components.
 Each process is its own subdirectory within the package.
@@ -22,11 +22,11 @@ my-package/
 │  ├─ Cargo.toml
 │  ├─ Cargo.lock
 ```
-To initiate a child process, use the `spawn` function from `nectar_process_lib`.
+To initiate a child process, use the `spawn` function from `kinode_process_lib`.
 The following example demonstrates a basic parent process whose sole function is to spawn a child process and grant it the ability to send messages using `http_client`:
 ```rust
 // imports
-use nectar_process_lib::{println, spawn, Address, Capability, OnExit};
+use kinode_process_lib::{println, spawn, Address, Capability, OnExit};
 
 // boilerplate to generate types
 wit_bindgen::generate!({
@@ -59,7 +59,7 @@ impl Guest for Component {
                 // the parents app already has the capability to message http_client here
                 // so we are just passing it onto the child
                 Capability {
-                    issuer: Address::new(&our.node, ProcessId::from_str("http_client:sys:nectar").unwrap()),
+                    issuer: Address::new(&our.node, ProcessId::from_str("http_client:distro:sys").unwrap()),
                     params: "\"messaging\"".into(),
                 }
             ]),
@@ -79,7 +79,7 @@ impl Guest for Component {
 The child process can be anything, for simplicity's sake let's make it a degenerate process that does nothing but print it's name and die:
 ```rust
 // same boilerplate as above
-use nectar_process_lib::{println, Address};
+use kinode_process_lib::{println, Address};
 
 wit_bindgen::generate!({
     // note that the WIT file can be in any directory
@@ -104,10 +104,10 @@ impl Guest for Component {
     }
 }
 ```
-The spawn function in Nectar comprises several parameters, each serving a specific purpose in the process creation:
+The spawn function in Kinode comprises several parameters, each serving a specific purpose in the process creation:
 
 - `name: Option<String>`: This parameter specifies the name of the process.
-If set to None, the process is automatically assigned a numerical identifier, resulting in a ProcessId formatted like `123456789:my-package:john.nec`.
+If set to None, the process is automatically assigned a numerical identifier, resulting in a ProcessId formatted like `123456789:my-package:john.os`.
 
 - `wasm_path: String`: Indicates the location of the compiled WebAssembly (Wasm) bytecode for the process.
 This path should be relative to the `/pkg` directory in your project.

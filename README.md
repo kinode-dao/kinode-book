@@ -1,6 +1,6 @@
-# kinode-book
+# Kinode Book
 
-"Rust Book"-style introduction and documentation to Kinode OS and building on Kinode.
+"Rust Book"-style introduction and documentation for Kinode OS.
 
 ## To build:
 

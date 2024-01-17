@@ -3,7 +3,7 @@
 This entry will teach you to build a simple file transfer app, allowing nodes to download files from a public directory.
 It will use the vfs to read and write files, and will spin up worker processes for the transfer.
 
-This guide assumes a basic understanding of Nectar process building, some familiarity with `kit`, requests and responses, and some knowledge of rust syntax.
+This guide assumes a basic understanding of Kinode process building, some familiarity with `kit`, requests and responses, and some knowledge of rust syntax.
 
 ## Contents
 
@@ -20,17 +20,16 @@ First, initialize a new project with `kit new file_transfer`
 
 Here's a clean template so you have a complete fresh start:
 
-This guide will use the following `nectar_process_lib` version in `Cargo.toml` for this app:
-
+This guide will use the following `kinode_process_lib` version in `Cargo.toml` for this app:
 ```
-nectar_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "64d2856" }
+kinode_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "64d2856" }
 ```
 
 ```rust
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
-use nectar_process_lib::{await_message, println, Address, Message, ProcessId, Request, Response};
+use kinode_process_lib::{await_message, println, Address, Message, ProcessId, Request, Response};
 
 wit_bindgen::generate!({
     path: "wit",
@@ -65,7 +64,7 @@ impl Guest for Component {
 }
 ```
 
-Before delving into the code, you can handle the capabilities you need to request at spawn, these will be messaging capabilities to "net:sys:nectar" (as you'll want to talk to other nodes), and one to "vfs:sys:nectar" as you'll want to talk to the filesystem.
+Before delving into the code, you can handle the capabilities you need to request at spawn, these will be messaging capabilities to "net:distro:sys" (as you'll want to talk to other nodes), and one to "vfs:distro:sys" as you'll want to talk to the filesystem.
 
 `pkg/manifest.json`
 
@@ -77,8 +76,8 @@ Before delving into the code, you can handle the capabilities you need to reques
         "on_exit": "Restart",
         "request_networking": true,
         "request_capabilities": [
-            "net:sys:nectar",
-            "vfs:sys:nectar"
+            "net:distro:sys",
+            "vfs:distro:sys"
         ],
         "grant_capabilities": [],
         "public": true
@@ -92,7 +91,7 @@ You can add a whitelist a bit later!
 Also, import some vfs functions from the `process_lib`.
 
 ```rust
-use nectar_process_lib::vfs::{create_drive, metadata, open_dir, Directory, FileType},
+use kinode_process_lib::vfs::{create_drive, metadata, open_dir, Directory, FileType},
 
 let drive_path = create_drive(our.package_id(), "files").unwrap();
 ```
@@ -122,7 +121,7 @@ pub struct FileInfo {
 You can handle these messages cleanly by modifying the handle message function slightly, it will match on whether a message is a request or a response, the errors get thrown to the main loop automatically with the `?` after the await_message() function.
 
 ```rust
-use nectar_process_lib::{
+use kinode_process_lib::{
     await_message, println,
     vfs::{create_drive, metadata, open_dir, Directory, FileType},
     Address, Message, ProcessId, Request, Response,
@@ -255,13 +254,13 @@ fn handle_transfer_response(
 Now try this out by booting two nodes (fake or real), placing files in the /files folder of one of them, and sending a request.
 
 ```
-/m node2.nec@file_transfer:file_transfer:template.uq "ListFiles"
+/m node2.os@file_transfer:file_transfer:template.uq "ListFiles"
 ```
 
 You should see a printed response.
 
 ```md
-Thu 1/11 13:14 response from node2.nec@file_transfer:file_transfer:template.nec: {"ListFiles":[{"name":"file_transfer:template.nec/files/barry-lyndon.mp4","size":8760244}, {"name":"file_transfer:template.nec/files/blue-danube.mp3","size":9668359}]}
+Thu 1/11 13:14 response from node2.os@file_transfer:file_transfer:template.os: {"ListFiles":[{"name":"file_transfer:template.os/files/barry-lyndon.mp4","size":8760244}, {"name":"file_transfer:template.os/files/blue-danube.mp3","size":9668359}]}
 ```
 
 ### Transfer
@@ -397,7 +396,7 @@ This makes adding more features later on very simple.
 Now, the actual worker.
 Add this bit by bit:
 
-First, because when you spawn your worker you give it `our_capabilities()` (i.e. it has the same capabilities as the parent process), the worker will have the ability to message both `"net:sys:nectar"` and `"vfs:sys:nectar"`.
+First, because when you spawn your worker you give it `our_capabilities()` (i.e. it has the same capabilities as the parent process), the worker will have the ability to message both `"net:distro:sys"` and `"vfs:distro:sys".
 As it's also within the same package, you can simply open the `files_dir` without issue.
 
 ```rust
@@ -592,7 +591,7 @@ WorkerRequest::Chunk {
         let main_app = Address {
             node: our.node.clone(),
             process: ProcessId::from_str(
-                "file_transfer:file_transfer:template.nec",
+                "file_transfer:file_transfer:template.os",
             )?,
         };
 
@@ -679,7 +678,7 @@ And Voilà! The worker and then the main process in entirety:
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
-use nectar_process_lib::{
+use kinode_process_lib::{
     await_message, get_blob, println,
     vfs::{open_dir, open_file, Directory, File, SeekFrom},
     Address, Message, ProcessId, Request, Response,
@@ -817,7 +816,7 @@ fn handle_message(
                         let main_app = Address {
                             node: our.node.clone(),
                             process: ProcessId::from_str(
-                                "file_transfer:file_transfer:template.nec",
+                                "file_transfer:file_transfer:template.os",
                             )?,
                         };
 
@@ -884,7 +883,7 @@ impl Guest for Component {
 And the main process:
 
 ```rust
-use nectar_process_lib::{
+use kinode_process_lib::{
     await_message, our_capabilities, println, spawn,
     vfs::{create_drive, metadata, open_dir, Directory, FileType},
     Address, Message, OnExit, Request, Response,
@@ -1079,9 +1078,9 @@ There you have it!
 Try and run it, you can download a file with the command
 
 ```
-/m our@file_transfer:file_transfer:template.nec {"Download": {"name": "dawg.jpeg", "target": "buenosaires.nec@file_transfer:file_transfer:template.nec"}}
+/m our@file_transfer:file_transfer:template.os {"Download": {"name": "dawg.jpeg", "target": "buenosaires.os@file_transfer:file_transfer:template.os"}}
 ```
 
 replacing node name and file name!
 
-Stay tuned for additions to this guide, including restarting transfers after rebooting your node or losing connections, and a simple UI!
+Stay tuned for additions to this guide, including restarting transfers after rebooting your node or losing co.ostions, and a simple UI!

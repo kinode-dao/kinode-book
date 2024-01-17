@@ -3,7 +3,7 @@
 `kit inject-message` injects the given message to the node running at given port/URL, e.g.,
 
 ```bash
-kit inject-message foo:foo:template.nec '{"Send": {"target": "fake2.nec", "message": "hello world"}}'
+kit inject-message foo:foo:template.os '{"Send": {"target": "fake2.os", "message": "hello world"}}'
 ```
 
 ## Discussion
@@ -23,7 +23,7 @@ To instead "fire and forget" a message and exit immediately, use the [`--non-blo
 
 ```bash
 $ kit i --help
-Inject a message to a running Nectar node
+Inject a message to a running Kinode
 
 Usage: kit inject-message [OPTIONS] <PROCESS> <BODY_JSON>
 
@@ -65,10 +65,10 @@ Node to target (i.e. the node portion of the address).
 E.g.
 
 ```bash
-kit inject-message foo:foo:template.nec '{"Send": {"target": "fake.nec", "message": "wow, it works!"}}' --node fake2.nec
+kit inject-message foo:foo:template.os '{"Send": {"target": "fake.os", "message": "wow, it works!"}}' --node fake2.os
 ```
 
-sent to the port running `fake.nec` will forward the message from `fake.nec`s HTTP server to `fake2@foo:foo:template.nec`.
+sent to the port running `fake.os` will forward the message from `fake.os`s HTTP server to `fake2@foo:foo:template.os`.
 
 ### `--blob`
 

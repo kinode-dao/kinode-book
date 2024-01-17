@@ -31,7 +31,7 @@ If a given test `Pass`es, the next test in the series is run.
 
 ```bash
 $ kit t --help
-Run Nectar tests
+Run Kinode tests
 
 Usage: kit run-tests [PATH]
 
@@ -60,7 +60,7 @@ runtime_build_verbose = false
 
 setup_package_paths = ["chat"]
 test_packages = [
-    { path = "chat_test", "grant_capabilities" = ["chat:chat:nectar"] }
+    { path = "chat_test", "grant_capabilities" = ["chat:chat:template.os"] }
     { path = "key_value_test", grant_capabilities = [] },
     { path = "sqlite_test", grant_capabilities = [] },
 ]
@@ -72,14 +72,14 @@ network_router = { port = 9001, defects = "None" }
 
 port = 8080
 home = "home/first"
-fake_node_name = "first.nec"
+fake_node_name = "first.os"
 runtime_verbose = false
 
 [[tests.nodes]]
 
 port = 8081
 home = "home/second"
-fake_node_name = "second.nec"
+fake_node_name = "second.os"
 runtime_verbose = false
 
 
@@ -97,7 +97,7 @@ network_router = { port = 9001, defects = "None" }
 
 port = 8080
 home = "home/first"
-fake_node_name = "first.nec"
+fake_node_name = "first.os"
 runtime_verbose = false
 ```
 
@@ -207,7 +207,7 @@ Key               | Value Type     | Value Description
 `home`            | Path           | Where to place node's home directory
 `fake_node_name`  | String         | Name of fake node
 `password`        | String or Null | Password of fake node (default: `"secret"`)
-`rpc`             | String or Null | [`wss://` URI of Ethereum RPC](../login.md#starting-the-nectar-node)
+`rpc`             | String or Null | [`wss://` URI of Ethereum RPC](../login.md#starting-the-kinode-node)
 `runtime_verbose` | Boolean        | Whether to print `stdout`/`stderr` from the node
 
 ## Test package format
