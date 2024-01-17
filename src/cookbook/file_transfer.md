@@ -21,6 +21,7 @@ First, initialize a new project with `kit new file_transfer`
 Here's a clean template so you have a complete fresh start:
 
 This guide will use the following `nectar_process_lib` version in `Cargo.toml` for this app:
+
 ```
 nectar_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "64d2856" }
 ```
@@ -396,7 +397,7 @@ This makes adding more features later on very simple.
 Now, the actual worker.
 Add this bit by bit:
 
-First, because when you spawn your worker you give it `our_capabilities()` (i.e. it has the same capabilities as the parent process), the worker will have the ability to message both `"net:sys:nectar"` and `"vfs:sys:nectar".
+First, because when you spawn your worker you give it `our_capabilities()` (i.e. it has the same capabilities as the parent process), the worker will have the ability to message both `"net:sys:nectar"` and `"vfs:sys:nectar"`.
 As it's also within the same package, you can simply open the `files_dir` without issue.
 
 ```rust
@@ -581,7 +582,7 @@ WorkerRequest::Chunk {
         }
     };
 
-    file.write_at(&bytes)?;
+    file.write_all(&bytes)?;
 
     // if sender has sent us a size, give a progress update to main transfer!
     if let Some(size) = size {
@@ -1076,9 +1077,11 @@ impl Guest for Component {
 There you have it!
 
 Try and run it, you can download a file with the command
+
 ```
 /m our@file_transfer:file_transfer:template.nec {"Download": {"name": "dawg.jpeg", "target": "buenosaires.nec@file_transfer:file_transfer:template.nec"}}
 ```
+
 replacing node name and file name!
 
 Stay tuned for additions to this guide, including restarting transfers after rebooting your node or losing connections, and a simple UI!

@@ -61,7 +61,7 @@ file.write(&buffer)?;
 ```rust
 /// Write buffer to file at current position, overwriting any existing data.
 let buffer = b"World!";
-file.write_at(&buffer)?;
+file.write_all(&buffer)?;
 ```
 
 #### Read at position
