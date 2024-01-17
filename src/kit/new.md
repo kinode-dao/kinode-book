@@ -32,11 +32,11 @@ The following table describes the matrix of "Exists/Has UI-enabled version" for 
 
 ### Exists/Has UI-enabled vesion
 
-Language     | `chat`  | `fibonacci`
------------- | ------- | -----------
-`rust`       | yes/yes | yes/no
-`python`     | yes/no  | yes/no
-`javascript` | yes/no  | yes/no
+Language     | `chat`  | `echo` | `fibonacci`
+------------ | ------- | ------ | -----------
+`rust`       | yes/yes | yes/no | yes/no
+`python`     | yes/no  | yes/no | yes/no
+`javascript` | yes/no  | yes/no | yes/no
 
 ## Arguments
 
@@ -53,7 +53,7 @@ Options:
   -a, --package <PACKAGE>      Name of the package [default: DIR]
   -u, --publisher <PUBLISHER>  Name of the publisher [default: template.nec]
   -l, --language <LANGUAGE>    Programming language of the template [default: rust] [possible values: rust, python, javascript]
-  -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: chat, fibonacci]
+  -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: chat, echo, fibonacci]
       --ui                     If set, use the template with UI
   -h, --help                   Print help
 ```
@@ -81,7 +81,7 @@ Currently support `rust`, `python`, and `javascript`.
 ### `--template`
 
 Which template to create; defaults to `chat`.
-Currently have `chat`, a simple chat application, and `fibonacci`, a naive fibonacci-number-computer.
+Currently have `chat`, a simple chat application, `echo`, an application that prints and responds with the received message, and `fibonacci`, a naive fibonacci-number-computer.
 
 ### `--ui`
 

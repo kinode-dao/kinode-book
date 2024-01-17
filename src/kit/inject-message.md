@@ -16,16 +16,19 @@ It is useful for:
 For example, using the [`--blob`](#--blob) flag you can directly inject the contents of a file.
 You can script in the outside world, dump the result to a file, and inject it with `inject-message`.
 
+By default, `inject-message` expects a Response from the target process.
+To instead "fire and forget" a message and exit immediately, use the [`--non-block`](#--non-block) flag.
+
 ## Arguments
 
 ```bash
 $ kit i --help
 Inject a message to a running Nectar node
 
-Usage: kit inject-message [OPTIONS] <ADDRESS> <BODY_JSON>
+Usage: kit inject-message [OPTIONS] <PROCESS> <BODY_JSON>
 
 Arguments:
-  <ADDRESS>    Address to send message to
+  <PROCESS>    PROCESS to send message to
   <BODY_JSON>  Body in JSON format
 
 Options:
@@ -33,6 +36,7 @@ Options:
   -u, --url <URL>         Node URL (overrides NODE_PORT)
   -n, --node <NODE_NAME>  Node ID (default: our)
   -b, --blob <PATH>       Send file at Unix path as bytes blob
+  -l, --non-block         If set, don't block on the full node response
   -h, --help              Print help
 ```
 
@@ -69,3 +73,8 @@ sent to the port running `fake.nec` will forward the message from `fake.nec`s HT
 ### `--blob`
 
 Path to file to include as `lazy_load_blob`.
+
+### `--non-block`
+
+Don't block waiting for a Response from target process.
+Instead, inject the message and immediately return.

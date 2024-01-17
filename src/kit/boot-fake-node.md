@@ -60,7 +60,7 @@ Options:
       --rpc <RPC_ENDPOINT>
           Ethereum RPC endpoint (wss://)
       --persist
-          Do not delete node home after exit
+          If set, do not delete node home after exit
       --password <PASSWORD>
           Password to login [default: secret]
       --help
@@ -99,7 +99,7 @@ The name of the fake node; defaults to `fake.nec`.
 ### `--network-router-port`
 
 Run the fake node network router on this port; defaults to `9001`.
-Additional fake nodes should point to the same port to connect to the fake node network.
+Additional fake nodes must point to the same port to connect to the fake node network.
 
 ### `--rpc`
 

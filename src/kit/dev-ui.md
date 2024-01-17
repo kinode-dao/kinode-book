@@ -26,6 +26,7 @@ Arguments:
 Options:
   -p, --port <NODE_PORT>  Node port: for use on localhost (overridden by URL) [default: 8080]
   -u, --url <URL>         Node URL (overrides NODE_PORT)
+  -s, --skip-deps-check   If set, do not check for dependencies
   -h, --help              Print help
 ```
 
@@ -43,3 +44,7 @@ For nodes running on localhost, the port of the node; defaults to `8080`.
 The URL the node is hosted at.
 Can be either localhost or remote.
 `--url` overrides `--port` if both are supplied.
+
+### `--skip-deps-check`
+
+Don't check for dependencies.
