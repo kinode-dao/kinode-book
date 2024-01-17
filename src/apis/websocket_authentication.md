@@ -15,7 +15,7 @@ const api = new KinodeEncryptorApi({
   nodeId: window.our.node, // this is set if the /our.js script is present in index.html
   processId: "my_package:my_package:template.os",
   onOpen: (_event, api) => {
-    console.log('Co.osted to kinode node')
+    console.log('Connected to kinode node')
     // Send a message to the node via WebSocket
     api.send({ data: 'Hello World' })
   },
