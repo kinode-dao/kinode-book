@@ -8,16 +8,24 @@ Every request takes a path and a corresponding action.
 
 ## Drives
 
-VFS paths are normal relative paths within the folder `your_node_home/vfs`, but to be valid they need to be within a drive.
-A drive is just a folder within your vfs, consisting of 2 parts: `/package_id/drive_name/`.
+VFS paths are normal relative paths within the directory `/your_node_home/vfs/`, but to be valid they need to be within a drive.
+A drive is just a directory within your vfs, consisting of 2 parts: `/package_id/drive_name/`.
 
 For example: `/your_package:publisher.os/pkg/`.
-This folder is usually filled with files put into the /pkg folder when installing with app_store.
-Capabilities are checked on the drive part of the path.
-When calling CreateDrive you'll be given "read" and "write" caps that you can share with other processes.
+This directory is usually filled with files put into the `/pkg` directory when installing with app_store.
+[Capabilities](../process-capabilities.md) are checked on the drive part of the path.
+When calling `create_drive()` you'll be given "read" and "write" caps that you can share with other processes.
 
 Other processes within your package will have access by default.
 They can open and modify files and directories within their own package_id.
+
+### Imports
+
+```rust
+use kinode_process_lib::vfs::{
+  create_drive, open_file, open_dir, create_file, metadata, File, Directory,
+};
+```
 
 ### Opening/Creating a Drive
 
@@ -73,7 +81,7 @@ let file = open_file(&file_path, true);
 ```rust
 /// Creates a file at path, if file found at path, truncates it to 0.
 let file_path = format!("{}/hello.txt", &drive_path);
-let file = create(&file_path);
+let file = create_file(&file_path);
 ```
 
 #### Read a File
@@ -171,8 +179,8 @@ let metadata = metadata(&some_path)?;
 
 ```rust
 pub struct VfsRequest {
-    /// path is always prepended by package_id, the capabilities of the topmost folder are checked
-    /// "/your_package:publisher.os/drive_folder/another_folder_or_file"
+    /// path is always prepended by package_id, the capabilities of the topmost directory are checked
+    /// "/your_package:publisher.os/drive_dir/another_dir_or_file"
     pub path: String,
     pub action: VfsAction,
 }
