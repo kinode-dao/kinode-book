@@ -1,6 +1,6 @@
 # WebSocket API
 
-In NectarOS, WebSocket connects are made with a Rust `warp` server in the core `http_server:sys:nectar` process.
+In Kinode OS, WebSocket connects are made with a Rust `warp` server in the core `http_server:distro:sys` process.
 Each connection is assigned a `channel_id` that can be bound to a given process using a `WsRegister` message.
 The process receives the `channel_id` for pushing data into the WebSocket, and any subsequent messages from that client will be forwarded to the bound process.
 
@@ -11,11 +11,11 @@ To open a WebSocket channel, connect to the main route on the node `/` and send 
 The simplest way to connect from a browser is to use the `@uqbar/client-encryptor-api` like so:
 
 ```
-const api = new NectarEncryptorApi({
+const api = new KinodeEncryptorApi({
   nodeId: window.our.node, // this is set if the /our.js script is present in index.html
-  processId: "my_package:my_package:template.nec",
+  processId: "my_package:my_package:template.os",
   onOpen: (_event, api) => {
-    console.log('Connected to nectar node')
+    console.log('Connected to kinode node')
     // Send a message to the node via WebSocket
     api.send({ data: 'Hello World' })
   },
@@ -40,8 +40,8 @@ function getCookie(name) {
 const websocket = new WebSocket("http://localhost:8080/");
 
 const message = JSON.stringify({
-    "auth_token": getCookie(`nectar-auth_${nodeId}`),
-    "target_process": "my_package:my_package:template.nec",
+    "auth_token": getCookie(`kinode-auth_${nodeId}`),
+    "target_process": "my_package:my_package:template.os",
     "encrypted": false,
 });
 
@@ -127,7 +127,7 @@ If you would prefer to send the request without the helper function, this is tha
 Request::new()
     .target(Address::new(
         node,
-        ProcessId::from_str("http_server:sys:nectar").unwrap(),
+        ProcessId::from_str("http_server:distro:sys").unwrap(),
     ))
     .body(
         serde_json::json!(HttpServerRequest::WebSocketPush {

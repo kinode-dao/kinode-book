@@ -5,10 +5,10 @@
 **Note: Most processes will not use this API directly. Instead, they will use the [`process_lib`](./process_stdlib/overview.md) library, which papers over this API and provides a set of types and functions which are much easier to natively use. This is mostly useful for re-implementing this module in a different client or performing niche actions unsupported by the library.**
 
 The HTTP server is used by sending and receiving requests and responses.
-From a process, you may send an `HttpServerAction` to the `http_server:sys:nectar` process.
+From a process, you may send an `HttpServerAction` to the `http_server:distro:sys` process.
 
 ```rust
-/// Request type sent to `http_server:sys:nectar` in order to configure it.
+/// Request type sent to `http_server:distro:sys` in order to configure it.
 /// You can also send [`type@HttpServerAction::WebSocketPush`], which
 /// allows you to push messages across an existing open WebSocket connection.
 ///
@@ -79,7 +79,7 @@ pub enum WsMessageType {
 }
 ```
 
-This struct must be serialized to JSON and placed in the `body` of a requests to `http_server:sys:nectar`.
+This struct must be serialized to JSON and placed in the `body` of a requests to `http_server:distro:sys`.
 For actions that take additional data, such as `Bind` and `WebSocketPush`, it is placed in the `lazy_load_blob` of that request.
 
 After handling such a request, the HTTP server will always give a response of the shape `Result<(), HttpServerError>`, also serialized to JSON. This can be ignored, or awaited and handled.
@@ -114,7 +114,7 @@ If a process uses `WebSocketBind` or `WebSocketSecureBind`, future WebSocket con
 The incoming request, whether the binding is for HTTP or WebSocket, will look like this:
 ```rust
 /// HTTP Request type that can be shared over WASM boundary to apps.
-/// This is the one you receive from the `http_server:sys:nectar` service.
+/// This is the one you receive from the `http_server:distro:sys` service.
 #[derive(Debug, Serialize, Deserialize)]
 pub enum HttpServerRequest {
     Http(IncomingHttpRequest),

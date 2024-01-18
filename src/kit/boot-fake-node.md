@@ -7,19 +7,19 @@ kit boot-fake-node
 ```
 
 By default, `boot-fake-node` fetches a prebuilt binary and launches the node using it.
-Alternatively, `boot-fake-node` can use a local binary or build a local Nectar core repo and use the resulting binary.
+Alternatively, `boot-fake-node` can use a local binary or build a local Kinode core repo and use the resulting binary.
 
 ## Example Usage
 
 You can start a network of fake nodes that can communicate with each other (but not the live network).
 You'll need to start a new terminal for each fake node.
-For example, to start two fake nodes, `fake.nec` and `fake2.nec`:
+For example, to start two fake nodes, `fake.os` and `fake2.os`:
 
 ```bash
 kit boot-fake-node
 
 # In a new terminal
-kit boot-fake-node -h /tmp/nectar-fake-node-2 -p 8081 -f fake2.nec
+kit boot-fake-node -h /tmp/kinode-fake-node-2 -p 8081 -f fake2.os
 ```
 
 ## Discussion
@@ -46,15 +46,15 @@ Usage: kit boot-fake-node [OPTIONS]
 
 Options:
   -r, --runtime-path <PATH>
-          Path to Nectar core repo or runtime binary (overrides --version)
+          Path to Kinode core repo or runtime binary (overrides --version)
   -v, --version <VERSION>
-          Version of Nectar binary to use (overridden by --runtime-path) [default: 0.4.0]
+          Version of Kinode binary to use (overridden by --runtime-path) [default: 0.4.0]
   -p, --port <NODE_PORT>
           The port to run the fake node on [default: 8080]
   -h, --home <HOME>
-          Where to place the home directory for the fake node [default: /tmp/nectar-fake-node]
+          Where to place the home directory for the fake node [default: /tmp/kinode-fake-node]
   -f, --fake-node-name <NODE_NAME>
-          Name for fake node [default: fake.nec]
+          Name for fake node [default: fake.os]
       --network-router-port <NETWORK_ROUTER_PORT>
           The port to run the network router on (or to connect to) [default: 9001]
       --rpc <RPC_ENDPOINT>
@@ -69,13 +69,13 @@ Options:
 
 ### `--runtime-path`
 
-Pass to run a local binary or build a local Nectar core repo and use the resulting binary, e.g.
+Pass to run a local binary or build a local Kinode core repo and use the resulting binary, e.g.
 
 ```bash
-kit boot-fake-node --runtime-path ~/git/nectar
+kit boot-fake-node --runtime-path ~/git/kinode
 ```
 
-for a system with the Nectar core repo living at `~/git/nectar`.
+for a system with the Kinode core repo living at `~/git/kinode`.
 
 Overrides `--version`.
 
@@ -90,11 +90,11 @@ Run the fake node on this port; defaults to `8080`.
 
 ### `--home`
 
-Path to place fake node home directory at; defaults to `/tmp/nectar-fake-node`.
+Path to place fake node home directory at; defaults to `/tmp/kinode-fake-node`.
 
 ### `--fake-node-name`
 
-The name of the fake node; defaults to `fake.nec`.
+The name of the fake node; defaults to `fake.os`.
 
 ### `--network-router-port`
 

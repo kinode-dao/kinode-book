@@ -67,7 +67,7 @@
 - [Kernel API](./apis/kernel.md)
 - [KV API](./apis/kv.md)
 - [Net API](./apis/net.md)
-- [`nectar.wit`](./apis/nectar_wit.md)
+- [`kinode.wit`](./apis/kinode_wit.md)
 - [SQLITE API](./apis/sqlite.md)
 - [Terminal API](./apis/terminal.md)
 - [VFS API](./apis/vfs.md)

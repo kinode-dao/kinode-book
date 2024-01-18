@@ -2,8 +2,8 @@
 
 ### Overview
 
-On NectarOS, processes are the building blocks for peer-to-peer applications.
-The Nectar runtime handles message-passing between processes, plus the startup and teardown of said processes.
+On Kinode OS, processes are the building blocks for peer-to-peer applications.
+The Kinode runtime handles message-passing between processes, plus the startup and teardown of said processes.
 This section describes the message design as it relates to processes.
 
 Processes have a globally unique identifier, or "address", composed of four elements.
@@ -16,20 +16,20 @@ And finally, the node the process is running on (your node).
 Package IDs (TODO: link to docs) look like:
 
 ```
-my_cool_software:my_username.nec
+my_cool_software:my_username.os
 ```
 
 Process IDs (TODO: link to docs) look like:
 
 ```
-process_one:my_cool_software:my_username.nec
-8513024814:my_cool_software:my_username.nec
+process_one:my_cool_software:my_username.os
+8513024814:my_cool_software:my_username.os
 ```
 
 Addresses (TODO: link to docs) look like:
 
 ```
-some_user.nec@process_one:my_cool_software:my_username.nec
+some_user.os@process_one:my_cool_software:my_username.os
 ```
 
 Processes are compiled to Wasm.
@@ -38,7 +38,7 @@ They can spawn other processes, and coordinate in arbitrarily complex ways by pa
 
 ### Process State
 
-Nectar processes can be stateless or stateful.
+Kinode processes can be stateless or stateful.
 In this case, state refers to data that is persisted between process instantiations.
 Nodes get turned off, intentionally or otherwise.
 The kernel handles rebooting processes that were running previously, but their state is not persisted by default.
@@ -125,12 +125,12 @@ If process A sends a message with a blob to process B, process B can send a mess
 If process B does not attach a new `lazy_load_blob` to that inheriting message, the original blob from process A will be attached and accessible to C.
 
 For example, consider again the file-transfer process discussed [above](#awaiting-a-response).
-Say one node, `send.nec`, is transferring a file to another node, `recv.nec`.
+Say one node, `send.os`, is transferring a file to another node, `recv.os`.
 The process of sending a file chunk will look something like:
-1. `recv.nec` sends a request for chunk N
-2. `send.nec` receives the request and itself makes a request to the filesystem for the piece of the file
-3. `send.nec` receives a response from the filesystem with the piece of the file in the `lazy_load_blob`;
-   `send.nec` sends a response that inherits the blob back to `recv.nec` without itself having to load the blob, saving the compute and IO required to move the blob across the Wasm boundary.
+1. `recv.os` sends a request for chunk N
+2. `send.os` receives the request and itself makes a request to the filesystem for the piece of the file
+3. `send.os` receives a response from the filesystem with the piece of the file in the `lazy_load_blob`;
+   `send.os` sends a response that inherits the blob back to `recv.os` without itself having to load the blob, saving the compute and IO required to move the blob across the Wasm boundary.
 
 This is the second functionality of inheritance; the first is discussed above: [eliminating the need for bucket-brigading of responses](#inheriting-a-response).
 
@@ -173,6 +173,6 @@ This is a high-level overview of process semantics.
 In practice, processes are combined and shared in **packages**, which are generally synonymous with **apps**.
 
 It's briefly discussed here that processes are compiled to Wasm.
-The details of this are not covered in the Nectar Book, but can be found in the documentation for the [Nectar runtime](https://github.com/uqbar-dao/nectar), which uses [Wasmtime](https://wasmtime.dev/), a WebAssembly runtime, to load, execute, and provide an interface for the subset of Wasm processes that are valid Nectar processes.
+The details of this are not covered in the Kinode Book, but can be found in the documentation for the [Kinode runtime](https://github.com/uqbar-dao/kinode), which uses [Wasmtime](https://wasmtime.dev/), a WebAssembly runtime, to load, execute, and provide an interface for the subset of Wasm processes that are valid Kinode processes.
 Pragmatically, processes can be compiled using the [`kit` tools](https://github.com/uqbar-dao/kit).
-The long term goal of the Nectar runtime is to use [WASI](https://wasi.dev/) to provide a secure, sandboxed environment for processes to not only make use of the kernel features described in this document, but also to make full use of the entire WebAssembly ecosystem, including the ability to use sandboxed system calls provided by the host via WASI.
+The long term goal of the Kinode runtime is to use [WASI](https://wasi.dev/) to provide a secure, sandboxed environment for processes to not only make use of the kernel features described in this document, but also to make full use of the entire WebAssembly ecosystem, including the ability to use sandboxed system calls provided by the host via WASI.

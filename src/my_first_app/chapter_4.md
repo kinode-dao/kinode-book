@@ -10,17 +10,17 @@ If you're the type of person that prefers to learn by looking at a complete exam
 Using the built-in HTTP server will require handling a new type of request in our main loop, and serving a response to it.
 The [process_lib](../process_stdlib/overview.md) contains types and functions for doing so.
 
-At the top of your process, import `http`, `get_blob`, and `Message` from [`nectar_process_lib`](../process_stdlib/overview.md) along with the rest of the imports.
+At the top of your process, import `http`, `get_blob`, and `Message` from [`kinode_process_lib`](../process_stdlib/overview.md) along with the rest of the imports.
 You'll use `get_blob()` to grab the body bytes of an incoming HTTP request.
 ```rust
-use nectar_process_lib::{
+use kinode_process_lib::{
     await_message, call_init, get_blob, http, println, Address, Message, Request, Response,
 };
 ```
 
 Keep the custom `body` type the same, and keep using that for terminal input.
 
-At the beginning of the init function, in order to receieve HTTP requests, you must use the `nectar_process_lib::http` library to bind a new path. Binding a path will cause the process to receive all HTTP requests that match that path.
+At the beginning of the init function, in order to receieve HTTP requests, you must use the `kinode_process_lib::http` library to bind a new path. Binding a path will cause the process to receive all HTTP requests that match that path.
 You can also bind static content to a path using another function in the library.
 ```rust
 // ...
@@ -44,7 +44,7 @@ Put this right under the bind command:
 loop {
     match await_message() {
         Ok(message) => {
-            if message.source().process == "http_server:sys:nectar" {
+            if message.source().process == "http_server:distro:sys" {
                 handle_http_message(&our, &message);
             } else {
                 if handle_hello_message(&message) {
@@ -104,7 +104,7 @@ fn handle_http_message(our: &Address, message: &Message) {
 }
 ```
 
-Instead of parsing our `body` type from the message, parse the type that the `http_server` process gives us. This type is defined in the `nectar_process_lib::http` module for us:
+Instead of parsing our `body` type from the message, parse the type that the `http_server` process gives us. This type is defined in the `kinode_process_lib::http` module for us:
 ```rust
 // ...
 let Ok(server_request) = http::HttpServerRequest::from_bytes(message.body()) else {
@@ -115,7 +115,7 @@ let Ok(server_request) = http::HttpServerRequest::from_bytes(message.body()) els
 ```
 
 Next, you must parse out the HTTP request from the general type.
-This is necessary because the `HttpServerRequest` enum contains both HTTP protocol requests and requests related to WebSockets.
+This is.osessary because the `HttpServerRequest` enum contains both HTTP protocol requests and requests related to WebSockets.
 Note that it's quite possible to streamline this series of request refinements if you're only interested in one type of request — this example is overly thorough for demonstration purposes.
 
 ```rust
@@ -138,7 +138,7 @@ if http_request.method().unwrap() != http::Method::PUT {
 ```
 
 Finally, grab the `blob` from the request, send a 200 OK response to the client, and handle the `blob`, by sending a Request to ourselves with the `blob` as the `body`.
-This could be done in a different way, but this simple pattern is useful for letting HTTP requests masquerade as in-Nectar requests.
+This could be done in a different way, but this simple pattern is useful for letting HTTP requests masquerade as in-Kinode requests.
 ```rust
 // ...
 let Some(body) = get_blob() else {
@@ -155,7 +155,7 @@ Also, remember to request the capability to message `http_server` in `manifest.j
 ```json
 ...
 "request_capabilities": [
-    "http_server:sys:nectar"
+    "http_server:distro:sys"
 ],
 ...
 ```
@@ -163,7 +163,7 @@ Also, remember to request the capability to message `http_server` in `manifest.j
 Here's the full code:
 ```rust
 use serde::{Deserialize, Serialize};
-use nectar_process_lib::{
+use kinode_process_lib::{
     await_message, call_init, get_blob, http, println, Address, Message, Request,
 };
 
@@ -211,7 +211,7 @@ fn my_init_fn(our: Address) {
     loop {
         match await_message() {
             Ok(message) => {
-                if message.source().process == "http_server:sys:nectar" {
+                if message.source().process == "http_server:distro:sys" {
                     handle_http_message(&our, &message);
                 } else {
                     if handle_hello_message(&message) {
@@ -284,7 +284,7 @@ Make sure to replace the URL with your node's local port and the correct process
 Note: if you had not set `authenticated` to false in the bind command, you would need to add an `Authorization` header to this request with the JWT cookie of your node.
 This is saved in your browser automatically on login.
 ```bash
-curl -X PUT -H "Content-Type: application/json" -d '{"Hello": "greetings"}' "http://localhost:8080/tutorial:tutorial:template.nec"
+curl -X PUT -H "Content-Type: application/json" -d '{"Hello": "greetings"}' "http://localhost:8080/tutorial:tutorial:template.os"
 ```
 
 ## Serving a static frontend
@@ -322,7 +322,7 @@ Create a new file in `ui/index.html` with the following contents.
     </main>
 	<script>
         async function say_hello(text) {
-          const result = await fetch("/tutorial:tutorial:template.nec/api", {
+          const result = await fetch("/tutorial:tutorial:template.os/api", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ "Hello": text }),
@@ -351,7 +351,7 @@ Finally, add one more entry to `manifest.json`: messaging capabilities to the VF
 ```json
 ...
 "request_capabilities": [
-    "vfs:sys:nectar"
+    "vfs:distro:sys"
 ],
 ...
 ```
@@ -362,4 +362,4 @@ Note that you can now set `authenticated` to `true` in the `/api` binding and th
 This frontend is now fully packaged with the process — there are no more steps!
 Of course, this can be made arbitrarily complex with various frontend frameworks that produce a static build.
 
-In the next and final chapter, learn about the package metadata and how to share this app across the Nectar network.
+In the next and final chapter, learn about the package metadata and how to share this app across the Kinode network.

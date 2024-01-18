@@ -10,13 +10,13 @@ For example, part of the VFS might look like:
 
 ```text
 .
-├── app_store:nectar
+├── app_store:sys
 │   └── pkg
 │       ├── app_store.wasm
 │       ├── ft_worker.wasm
 │       ├── manifest.json
 │       └── metadata.json
-├── chess:nectar
+├── chess:sys
 │   └── pkg
 │       ├── chess.html
 │       ├── chess.wasm
@@ -24,7 +24,7 @@ For example, part of the VFS might look like:
 │       ├── index.js
 │       ├── manifest.json
 │       └── metadata.json
-├── homepage:nectar
+├── homepage:sys
 │   └── pkg
 │       ├── homepage.wasm
 │       ├── manifest.json

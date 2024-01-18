@@ -2,38 +2,39 @@
 
 Let's get onto the live network!
 
-These directions are particular to the NectarOS alpha release.
+These directions are particular to the Kinode OS alpha release.
 Joining the network will become significantly easier on subsequent releases.
 
-Note: While Nectar will eventually post identities to Optimism, the alpha release uses the Ethereum Sepolia testnet.
+Note: While Kinode will eventually post identities to Optimism, the alpha release uses the Ethereum Sepolia testnet.
 
 ## Creating an Alchemy Account
 
 Alchemy is used as an [Ethereum RPC endpoint](#acquiring-an-rpc-api-key) and as a [faucet for Sepolia testnet ETH](#aside-acquiring-sepolia-testnet-eth).
-An Ethereum RPC endpoint and Sepolia ETH are required to send and receive Ethereum transactions that support the Nectar identity system.
+An Ethereum RPC endpoint and Sepolia ETH are required to send and receive Ethereum transactions that support the Kinode identity system.
 If you do not already have one, register an [Alchemy account](https://www.alchemy.com/).
 The account is free and requires only an email address for registration.
 
-## Starting the Nectar node
+## Starting the Kinode
 
-Start an Nectar node using the binary acquired in the [previous section](./install.md).
+Start an Kinode using the binary acquired in the [previous section](./install.md).
 Locating the binary on your system, run:
 
 ```bash
-$ ./nectar --help
+$ ./kinode --help
 ```
-This will reveal the arguments expected by the binary:
+This will print the arguments expected by the binary:
 
 ```bash
 A General Purpose Sovereign Cloud Computing Platform
 
-Usage: nectar [OPTIONS] --rpc <WS_URL> <home>
+Usage: kinode [OPTIONS] --rpc <WS_URL> <home>
 
 Arguments:
   <home>  Path to home directory
 
 Options:
-      --port <PORT>   First port to try binding [default: 8080]
+      --port <PORT>   First port to try binding
+      --testnet       Use Sepolia testnet
       --rpc <WS_URL>  Ethereum RPC endpoint (must be wss://)
   -h, --help          Print help
   -V, --version       Print version
@@ -41,7 +42,7 @@ Options:
 
 A home directory must be supplied — where the node will store its files.
 The binary also takes a required `--rpc` flag.
-The `--rpc` flag is a `wss://` WebSocket link to an Ethereum RPC, allowing the Nectar node can send and receive Ethereum transactions — used in the [identity system](./identity_system.md) as mentioned [above](#creating-an-alchemy-account).
+The `--rpc` flag is a `wss://` WebSocket link to an Ethereum RPC, allowing the Kinode can send and receive Ethereum transactions — used in the [identity system](./identity_system.md) as mentioned [above](#creating-an-alchemy-account).
 Finally, by default, the node will bind to port 8080; this can be modified with the `--port` flag.
 
 ### Acquiring an RPC API Key
@@ -59,7 +60,7 @@ Copy the WebSocket API key from the API Key button:
 Replace the `--rpc` field below with the WebSocket API key link copied from [the previous step](#acquiring-an-rpc-api-key), and start the node with:
 
 ```bash
-./nectar home --rpc wss://eth-sepolia.g.alchemy.com/v2/<your-api-key>
+./kinode home --rpc wss://eth-sepolia.g.alchemy.com/v2/<your-api-key>
 ```
 
 A new browser tab should open, but if not, look in the terminal for a line like
@@ -87,7 +88,7 @@ Click `Register NecName` and proceed to [Connecting the Wallet](#connecting-the-
 
 ### Aside: Acquiring a Wallet
 
-To register an identity, Nectar must send an Ethereum transaction, which requires ETH and a cryptocurrency wallet.
+To register an identity, Kinode must send an Ethereum transaction, which requires ETH and a cryptocurrency wallet.
 While many wallets will work, the examples below use Metamask.
 Install Metamask [here](https://metamask.io/download/).
 
@@ -100,11 +101,11 @@ After registering a username, click through until you reach `Connect Wallet` and
 ### Aside: Acquiring Sepolia Testnet ETH
 
 Using the Alchemy account [registered above](#creating-an-alchemy-account), use the [Sepolia faucet](https://sepoliafaucet.com/) to acquire Sepolia ETH if you do not already have some in your wallet.
-Then, return to the Nectar node.
+Then, return to the Kinode.
 
 ### Setting Up Networking (Direct vs. Routed Nodes)
 
-When registering on Nectar, you may choose between running a direct or indirect (routed) node.
+When registering on Kinode, you may choose between running a direct or indirect (routed) node.
 Most users should use an indirect node.
 To do this, simply leave the box below name registration unchecked.
 

@@ -10,7 +10,7 @@ You should see the printout we added to `init()` in your terminal: `chess by <yo
 
 Remember that you determine the process name, package name, and your developer name in the `manifest.json` and `metadata.json` files inside `/pkg`.
 Open your chess frontend by navigating to your node's URL (probably something like `http://localhost:8080`), and use the names you chose as the path.
-For example, if your chess process name is `my_chess`, and your package is named `my_chess`, and your publisher name is `template.nec`, you would navigate to `http://localhost:8080/my_chess:my_chess:template.nec`.
+For example, if your chess process name is `my_chess`, and your package is named `my_chess`, and your publisher name is `template.os`, you would navigate to `http://localhost:8080/my_chess:my_chess:template.os`.
 
 You should see something like this:
 ![chess frontend](./chess_home.png)
@@ -19,17 +19,17 @@ To try it out, boot up another node, execute the `kit start-package` command, an
 Presto!
 
 This concludes the main Chess tutorial.
-If you're interested in learning more about how to write Nectar processes, there are several great options to extend the app:
+If you're interested in learning more about how to write Kinode processes, there are several great options to extend the app:
 
 - Consider how to handle network errors and surface those to the user
 - Add game tracking to the processes state, such that players can see their history
 - Consider what another app might look like that uses the chess engine as a library.
 Alter the process to serve this use case, or add another process that can be spawned to do such a thing.
 
-There are also three extensions to this tutorial which dive into specific use cases which make the most of NectarOS:
+There are also three extensions to this tutorial which dive into specific use cases which make the most of Kinode OS:
 
 - [Chat](./chat.md)
 - [Payment Integration (using ETH)](./payment.md) [coming soon]
 - [LLM Integration (play chess against the AI!)](./llm.md) [coming soon]
 
-The full code is available [here](https://github.com/uqbar-dao/nectar/tree/main/modules/chess).
+The full code is available [here](https://github.com/uqbar-dao/kinode/tree/main/modules/chess).

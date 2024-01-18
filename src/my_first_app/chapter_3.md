@@ -1,7 +1,7 @@
 # Defining Your Protocol
 
 In the last chapter, you created a simple request-response pattern that uses strings as an `body` field type.
-This is fine for certain limited cases, but in practice, most Nectar processes written in Rust use an `body` type that is serialized and deserialized to bytes using [Serde](https://serde.rs/).
+This is fine for certain limited cases, but in practice, most Kinode processes written in Rust use an `body` type that is serialized and deserialized to bytes using [Serde](https://serde.rs/).
 There are a multitude of libraries that implement Serde's `Serialize` and `Deserialize` traits, and the process developer is responsible for selecting a strategy that is appropriate for their use case.
 
 Some popular options are `bincode` and `serde_json`.
@@ -54,7 +54,7 @@ This comes with a number of benefits:
 
 Defining `body` types is just one step towards writing interoperable code.
 It's also critical to document the overall structure of the program along with message `blob`s and `metadata` used, if any.
-Writing interoperable code is necessary for enabling permissionless composability, and NectarOS aims to make this the default kind of program, unlike the centralized web.
+Writing interoperable code is necessary for enabling permissionless composability, and Kinode OS aims to make this the default kind of program, unlike the centralized web.
 
 First, create a request that uses the new `body` type (and stop expecting a response):
 ```rust
@@ -101,7 +101,7 @@ Go into the manifest, and under the process name, edit (or add) the `grant_capab
 ```json
 ...
 "grant_capabilities": [
-    "terminal:terminal:nectar"
+    "terminal:terminal:sys"
 ],
 ...
 ```
@@ -109,7 +109,7 @@ Go into the manifest, and under the process name, edit (or add) the `grant_capab
 After all this, your code should look like:
 ```rust
 use serde::{Serialize, Deserialize};
-use nectar_process_lib::{await_message, call_init, println, Address, Request, Response};
+use kinode_process_lib::{await_message, call_init, println, Address, Request, Response};
 
 #[derive(Serialize, Deserialize)]
 enum MyBody {

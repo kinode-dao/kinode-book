@@ -1,6 +1,6 @@
 # `kit start-package`
 
-`kit start-package` installs and starts the indicated package directory (or current working directory) on the given Nectar node, e.g.,
+`kit start-package` installs and starts the indicated package directory (or current working directory) on the given Kinode, e.g.,
 
 ```bash
 kit start-package foo
@@ -25,7 +25,7 @@ To both `build` and `start-package` in one command, use `kit build-start-package
 
 ```bash
 $ kit s --help
-Start a built Nectar process
+Start a built Kinode process
 
 Usage: kit start-package [OPTIONS] [DIR]
 
