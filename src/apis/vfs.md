@@ -52,6 +52,12 @@ if let Some(cap) = cap {
 }
 ```
 
+```rust
+// the receiving process can then save the capability to it's store, and open the drive.
+save_capabilities(incoming_request.capabilities);
+let dir = open_dir(&drive_path, false)?;
+```
+
 ### Files
 
 #### Open a File
@@ -142,7 +148,7 @@ let metadata = file.metadata()?;
 /// Opens or creates a directory at path.
 /// If trying to create an existing file, will just give you the path.
 let dir_path = format!("{}/my_pics", &drive_path);
-let dir = open_dir(&file_path, true);
+let dir = open_dir(&dir_path, true);
 ```
 
 #### Read a Directory
