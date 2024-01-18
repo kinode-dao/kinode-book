@@ -28,8 +28,8 @@ Kinode's kernel handles the startup and teardown of processes, as well as messag
 Processes are programs compiled to Wasm, which export a single `init()` function.
 They can be started once and complete immediately, or they can run "forever".
 
-Peers in Kinode OS are identified by their onchain username in the "NDNS": Kinode Domain Name System, which is modeled after ENS.
-The modular architecture of the NDNS allows for any Ethereum NFT, including ENS names themselves, to generate a unique Kinode identity once it is linked to a NDNS entry.
+Peers in Kinode OS are identified by their onchain username in the "KNS": Kinode Name System, which is modeled after ENS.
+The modular architecture of the KNS allows for any Ethereum NFT, including ENS names themselves, to generate a unique Kinode identity once it is linked to a KNS entry.
 
 Data persistence and blockchain access, as fundamental primitives for p2p apps, are built directly into the kernel.
 The filesystem is abstracted away from the developer, and data is automatically persisted across an arbitrary number of encrypted remote backups as configured at the user-system-level.

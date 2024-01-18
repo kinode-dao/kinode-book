@@ -1,12 +1,12 @@
 # Public Key Infrastructure
 
-The following is a high level overview of Kinode's public key infrastructure, the Kinode Identity System, or NDNS.
+The following is a high level overview of Kinode's public key infrastructure, the Kinode Identity System, or KNS.
 You can find a more general discussion of the Kinode [identity system](./identity_system.md) here.
 
 ## Identity Registration
 
-The NDNS Registry and Resolver are coupled in the same contract, the `NDNSRegistryResolver`.
-This contract issues nodes on the NDNS network and records the data.osessary for a node to interact with other nodes.
+The KNS Registry and Resolver are coupled in the same contract, the `KNSRegistryResolver`.
+This contract issues nodes on the KNS network and records the data.osessary for a node to interact with other nodes.
 
 At a high level, the PKI depends on two elements: public keys and networking information.
 
@@ -27,7 +27,7 @@ These router nodes communicate between indirect nodes and the network at large.
 ## Name Registration
 
 The `DotNecRegistrar` (AKA `.os`) is responsible for registering all `.os` domain names.
-It is also responsible for authorizing alterations to `.os` node records managed by the NDNSRegistryResolver. (Todo: just confused by this)
+It is also responsible for authorizing alterations to `.os` node records managed by the KNSRegistryResolver. (Todo: just confused by this)
 `DotNecRegistrar` implements ERC721 tokenization logic for the names it is charged with, so all `.os` names are NFTs that may be transferred to and from any address.
 There is currently a minimum length of 9 characters for Kinode IDs.
 
