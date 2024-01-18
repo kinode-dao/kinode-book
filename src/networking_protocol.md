@@ -71,7 +71,7 @@ struct RoutingRequest {
     pub target: String,
 }
 
-/// TODO indicate where to find Address, Rsvp, Message, and LazyLoadBlob type definitions
+/// Note: indicate where to find Address, Rsvp, Message, and LazyLoadBlob type definitions
 struct KernelMessage {
     pub id: u64,
     pub source: Address,

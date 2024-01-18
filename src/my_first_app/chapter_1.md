@@ -153,7 +153,7 @@ $ cat my_chat_app/pkg/metadata.json
 }
 ```
 
-Here, the `publisher` is some default value, but for a real package, this field should contain the NDNS id of the publishing node.
+Here, the `publisher` is some default value, but for a real package, this field should contain the KNS id of the publishing node.
 The `publisher` can also be set with a `kit new --publisher` flag.
 
 ## Building the Package
