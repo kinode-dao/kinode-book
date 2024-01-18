@@ -5,7 +5,7 @@
 These documents describe some ways you can use these tools, but do not attempt to be completely exhaustive.
 You are encouraged to make use of the `--help` flag, which can be used for the top-level `kit`:
 
-```bash
+```
 $ kit --help
 Development toolkit for Kinode OS
 

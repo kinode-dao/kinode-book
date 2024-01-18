@@ -14,6 +14,7 @@ This can be added to your package metadata.json like so:
 Next, review all the data in [`pkg/manifest.json`](./chapter_1.md#pkgmanifestjson) and [`pkg/metadata.json`](./chapter_1.md#pkgmetadatajson).
 The `package` field in `metadata.json` determines the name of the package.
 The `publisher` field determines the name of the publisher (you!).
+
 **Note: you *can* set any publisher name you want, but others will be able to verify that you are the publisher by comparing the value in this field with a signature attached to the entry in a (good) app store or package manager, so it's a good idea to put *your node identity* here.**
 
 Once you're ready to share, it's quite easy.

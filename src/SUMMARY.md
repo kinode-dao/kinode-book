@@ -68,7 +68,7 @@
 - [KV API](./apis/kv.md)
 - [Net API](./apis/net.md)
 - [`kinode.wit`](./apis/kinode_wit.md)
-- [SQLITE API](./apis/sqlite.md)
+- [SQLite API](./apis/sqlite.md)
 - [Terminal API](./apis/terminal.md)
 - [VFS API](./apis/vfs.md)
 - [Websocket API](./apis/websocket_authentication.md)

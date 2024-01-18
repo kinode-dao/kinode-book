@@ -1,14 +1,13 @@
 # Databases
 
-The runtime currently comes preloaded with 2 databases, a key value (RocksDB) and sqlite.
-
-These can be created, accessed, and shared amongst processes.
+The runtime currently provides key-value databases via RocksDB, and relational databases via SQLite.
+Processes can create independent databases using wrappers over these libraries, and can read, write, and share these databases with other processes.
 The APIs for doing so you can find here: [KV](./apis/kv.md) and [SQLite](./apis/sqlite.md).
 
 Similarly to files in the VFS, they are accessed by `package_id` and a `db` name.
 Capabilities to read and write can be shared with other processes; processes within a given package have access by default.
 
-All examples are using the [kinode_process_lib](https://github.com/uqbar-dao/process_lib) functions.
+All examples are using the [`kinode_process_lib`](./process_stdlib/overview.md) functions.
 
 ## Usage
 
@@ -57,4 +56,6 @@ println!("rows: {}", rows.len());
 - [SQLite API](./apis/sqlite.md)
 - [RocksDB](https://github.com/rust-rocksdb/rust-rocksdb)
 - [SQLite](https://www.sqlite.org/docs.html)
-- [kinode_process_lib](https://github.com/uqbar-dao/process_lib)
+- [`kinode_process_lib` book entry](./process_stdlib/overview.md)
+- [`kinode_process_lib` docs.rs](https://docs.rs/kinode_process_lib)
+- [`kinode_process_lib`](https://github.com/uqbar-dao/process_lib)
