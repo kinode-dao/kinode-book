@@ -5,11 +5,16 @@ Useful helper functions can be found in the [nectar_process_lib](https://github.
 The VFS API tries to map over the [std::fs](https://doc.rust-lang.org/std/fs/index.html) calls as directly as possible.
 
 Every request takes a path and a corresponding action.
-The paths look like normal relative paths within the folder `your_node_home/vfs`, but they include 2 parts at the start, a `package_id` and a `drive`.
 
-Example path: `/your_package:publisher.nec/pkg/`. This folder is usually filled with files put into the /pkg folder when installing with app_store.
+## Drives
 
-Capabilities are checked on the package_id/drive part of the path, when calling CreateDrive you'll be given "Read" and "Write" caps that you can share with other processes.
+VFS paths are normal relative paths within the folder `your_node_home/vfs`, but to be valid they need to be within a `drive`.
+
+A drive is just a folder within your vfs, consisting of 2 parts: `/package_id/drive_name`.
+
+For example: `/your_package:publisher.os/pkg/`. This folder is usually filled with files put into the /pkg folder when installing with app_store.
+
+Capabilities are checked on the drive part of the path, when calling CreateDrive you'll be given "Read" and "Write" caps that you can share with other processes.
 
 Other processes within your package will have access by default.
 They can open and modify files and directories within their own package_id.
