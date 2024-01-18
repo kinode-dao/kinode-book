@@ -319,15 +319,15 @@ pub enum WorkerRequest {
 }
 ```
 
-- Workers will take an `Inititialize` request from their own node, that either tells them they're a receiver or a sender based on if they have a target worker `Option<Address>`.
+- Workers will receive an `Inititialize` request from their own node, which tells the worker it is either a receiver or a sender based on if it has a target worker `Option<Address>`.
 - Progress reports are sent back to the main process, which you can then pipe them through as websocket updates to the frontend.
 - To enable spawning, import the `spawn` function from the `process_lib`.
-- The only additional part you need to handle in the transfer app is the Download request you've added.
+- Now, the only additional requirement is handling the Download request you recently added. 
 
 `TransferRequest::Download` will handle 2 cases:
 
-1. A node sent us a download request, you spawn a worker, and tell it to send chunks to the `target_worker` you got in the request.
-2. You want to download a file from another node, you send yourself a download request, you spin up a worker and send it's address to the remote node.
+1. A node sent you a download request, you spawn a worker and tell it to send chunks to the `target_worker` you got in the request.
+2. You want to download a file from another node, you send yourself a download request, spin up a worker, and send its address to the remote node.
 
 ```rust
     match transfer_request {
