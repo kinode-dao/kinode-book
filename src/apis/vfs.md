@@ -8,13 +8,13 @@ Every request takes a path and a corresponding action.
 
 ## Drives
 
-VFS paths are normal relative paths within the folder `your_node_home/vfs`, but to be valid they need to be within a `drive`.
+VFS paths are normal relative paths within the folder `your_node_home/vfs`, but to be valid they need to be within a drive.
+A drive is just a folder within your vfs, consisting of 2 parts: `/package_id/drive_name/`.
 
-A drive is just a folder within your vfs, consisting of 2 parts: `/package_id/drive_name`.
-
-For example: `/your_package:publisher.os/pkg/`. This folder is usually filled with files put into the /pkg folder when installing with app_store.
-
-Capabilities are checked on the drive part of the path, when calling CreateDrive you'll be given "Read" and "Write" caps that you can share with other processes.
+For example: `/your_package:publisher.os/pkg/`.
+This folder is usually filled with files put into the /pkg folder when installing with app_store.
+Capabilities are checked on the drive part of the path.
+When calling CreateDrive you'll be given "read" and "write" caps that you can share with other processes.
 
 Other processes within your package will have access by default.
 They can open and modify files and directories within their own package_id.
@@ -24,6 +24,7 @@ They can open and modify files and directories within their own package_id.
 ```rust
 let drive_path: String = create_drive(our.package_id(), "drive_name")?;
 // you can now prepend this path to any files/directories you're interacting with
+let file = open_file(&format!("{}/hello.txt", &drive_path), true);
 ```
 
 ### Sharing a Drive Capability
@@ -49,7 +50,7 @@ if let Some(cap) = cap {
         .body(b"hello".to_vec())
         .send()?;
 }
-``````
+```
 
 ### Files
 
