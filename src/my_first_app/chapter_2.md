@@ -6,7 +6,7 @@ Tight feedback loops when building: very important.
 
 ## Starting from Scratch
 
-If you want to hit the ground running, you can take the template code or the [chess tutorial](../chess_app/start.md) and start hacking away.
+If you want to hit the ground running, you can take the template code or the [chess tutorial](../chess_app/chess_engine.md) and start hacking away.
 Here, you'll start from scratch and learn about every line of boilerplate.
 
 The last chapter explained packages, the package manifest, and metadata.
@@ -77,7 +77,7 @@ fn my_init_fn(our: Address) {
 }
 ```
 
-See [kinode.wit](./apis/kinode_wit.md) for more details on what is imported by the WIT bindgen macro.
+See [kinode.wit](../apis/kinode_wit.md) for more details on what is imported by the WIT bindgen macro.
 These imports are the necessary "system calls" for talking to other processes and runtime components in Kinode OS.
 
 Run

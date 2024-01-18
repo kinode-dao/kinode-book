@@ -1,10 +1,10 @@
 # Spawning and Managing Child Processes
 
-In Kinode OS, a "parent" process can create additional processes, known as "children".
+In Kinode OS, a "parent" process can create additional processes, known as "children" (also discussed [here](../processes.md#spawning-child-processes)).
 These child processes are particularly useful for handling intensive tasks (referred to as "workers") that require long computation times without hindering the performance of the main application.
 They are also beneficial for segregating distinct logical components.
 Each process is its own subdirectory within the package.
-E.g., for Rust processes, each is its own Rust project, complete with a separate Cargo.toml file.
+E.g., for Kinode processes written in Rust, each is its own Rust project, complete with a separate Cargo.toml file.
 
 Your package's file structure might resemble the following:
 

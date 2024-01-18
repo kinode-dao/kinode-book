@@ -30,7 +30,7 @@ cargo install --git https://github.com/uqbar-dao/kit
 
 ## Creating a New Kinode Package Template
 
-The `kit` toolkit has a [variety of features](https://github.com/uqbar-dao/kit).
+The `kit` toolkit has a [variety of features](../kit/kit.md).
 One of those tools is `new`, which creates a template for an Kinode package.
 The `new` tool takes two arguments: a path to create the template directory and a name for the package:
 
@@ -155,10 +155,6 @@ $ cat my_chat_app/pkg/metadata.json
 
 Here, the `publisher` is some default value, but for a real package, this field should contain the NDNS id of the publishing node.
 The `publisher` can also be set with a `kit new --publisher` flag.
-
-### `src/lib.rs`
-
-TODO
 
 ## Building the Package
 
@@ -286,7 +282,7 @@ and replying, from the other terminal:
 ```
 
 Messages can also be injected from the outside.
-From a bash terminal, use `uqdev inject-message`, like so:
+From a bash terminal, use `kit inject-message`, like so:
 
 ```bash
 kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.os", "message": "hello from the outside world"}}'

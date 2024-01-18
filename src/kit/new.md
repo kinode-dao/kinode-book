@@ -28,7 +28,7 @@ Currently, three languages are supported: `rust` (the default), `python`, and `j
 Two templates are currently supported: `chat`, a simple chat application, and `fibonacci`, which computes Fibonacci numbers.
 In addition, some subset of these templates also have a UI-enabled version.
 
-The following table describes the matrix of "Exists/Has UI-enabled version" for each template/language combination:
+The following table describes the matrix of ["Exists/Has UI-enabled version"](#existshas-ui-enabled-vesion) for each template/language combination:
 
 ### Exists/Has UI-enabled vesion
 

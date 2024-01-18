@@ -1,11 +1,31 @@
 # Overview
 
 The [process standard library](https://github.com/uqbar-dao/process_lib) is the easiest way to write Rust apps on Kinode OS.
+Documentation can be found [here](https://docs.rs/kinode_process_lib), and the crate lives [here](https://crates.io/crates/kinode_process_lib).
+
+Note that the process lib is under heavy ongoing development.
+This means that the best way to use it is by selecting a tag or commit hash from the GitHub repo, and using that as the version in your `Cargo.toml` file.
+See [here](https://github.com/uqbar-dao/process_lib/releases) for a list of published versions.
+
+In your `Cargo.toml` file, use a version tag like this:
+```toml
+kinode_process_lib = { git = "https://github.com/uqbar-dao/process_lib.git", tag = "v0.5.4-alpha" }
+```
+
+To use a specific commit hash, use this:
+```toml
+kinode_process_lib = { git = "https://github.com/uqbar-dao/process_lib.git", rev = "5305453" }
+```
+
+Make sure to use a recent version of the process_lib while the system is in alpha and very active development.
+
+The major version of the process_lib will always match the major version of Kinode OS.
+Since the current major version of both is 0, breaking changes can occur at any time.
+Once the major version reaches 1, breaking changes will only occur between major versions.
+As is, developers may have to update the version of process_lib they use as they update Kinode OS.
 
 Since Kinode apps use the [WebAssembly Component Model](https://component-model.bytecodealliance.org/), they are built on top of a WIT (Wasm Interface Type) package.
 This interface contains the core types and functions that are available to all Kinode apps, and these are automatically generated in Rust when building a Wasm app.
 However, the types themselves are unwieldy to use directly, and runtime modules present APIs that can be drastically simplified by using helper functions and types in the process standard library.
 
-[link to the crate]
-
-[link to the crate-docs]
+Almost all code examples in this book make use of the process lib. For specific examples of its usage, check out the [docs](https://docs.rs/kinode_process_lib) or just follow the tutorials later in this book.

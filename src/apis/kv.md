@@ -1,6 +1,7 @@
 ### KV API
 
-Useful helper functions can be found in the [kinode_process_lib](https://github.com/uqbar-dao/process_lib)
+Useful helper functions can be found in the [`kinode_process_lib`](../process_stdlib/overview.md).
+More discussion of databases in Kinode can be found [here](./databases).
 
 #### Creating/Opening a database
 
@@ -19,8 +20,8 @@ let key = b"hello";
 let value= b"world";
 
 let returnvalue = kv.set(&key, &value, None)?;
-// The third argument None is for tx_id. 
-// You can group sets and deletes and commit them later. 
+// The third argument None is for tx_id.
+// You can group sets and deletes and commit them later.
 ```
 
 #### Get

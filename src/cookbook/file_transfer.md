@@ -1,9 +1,9 @@
 # File Transfer
 
 This entry will teach you to build a simple file transfer app, allowing nodes to download files from a public directory.
-It will use the vfs to read and write files, and will spin up worker processes for the transfer.
+It will use the [vfs](../apis/vfs.md) to read and write files, and will spin up worker processes for the transfer.
 
-This guide assumes a basic understanding of Kinode process building, some familiarity with `kit`, requests and responses, and some knowledge of rust syntax.
+This guide assumes a basic understanding of Kinode process building, some familiarity with [`kit`](../kit/kit.md), requests and responses, and some knowledge of rust syntax.
 
 ## Contents
 
@@ -16,7 +16,10 @@ This guide assumes a basic understanding of Kinode process building, some famili
 
 ## Start
 
-First, initialize a new project with `kit new file_transfer`
+First, initialize a new project with
+```
+kit new file_transfer
+```
 
 Here's a clean template so you have a complete fresh start:
 
@@ -64,7 +67,7 @@ impl Guest for Component {
 }
 ```
 
-Before delving into the code, you can handle the capabilities you need to request at spawn, these will be messaging capabilities to "net:distro:sys" (as you'll want to talk to other nodes), and one to "vfs:distro:sys" as you'll want to talk to the filesystem.
+Before delving into the code, you can handle the capabilities you need to request at spawn, these will be messaging capabilities to `"net:distro:sys"` (as you'll want to talk to other nodes), and one to `"vfs:distro:sys"` as you'll want to talk to the filesystem.
 
 `pkg/manifest.json`
 
@@ -118,7 +121,8 @@ pub struct FileInfo {
 }
 ```
 
-You can handle these messages cleanly by modifying the handle message function slightly, it will match on whether a message is a request or a response, the errors get thrown to the main loop automatically with the `?` after the await_message() function.
+You can handle these messages cleanly by modifying the handle message function slightly.
+It will match on whether a message is a request or a response, the errors get thrown to the main loop automatically with the `?` after the `await_message()` function.
 
 ```rust
 use kinode_process_lib::{
@@ -267,13 +271,12 @@ Thu 1/11 13:14 response from node2.os@file_transfer:file_transfer:template.os: {
 
 Now the fun part, downloading/sending files!
 
-You could handle all of this within the file_transfer process, but you can also spin up another process, a worker, that handles the downloading/sending and then sends progress updates back to the main file_transfer.
-
+You could handle all of this within the `file_transfer` process, but you can also spin up another process, a worker, that handles the downloading/sending and then sends progress updates back to the main `file_transfer`.
 This way you can download several files downloading at the same time without waiting for one to finish.
 
 Start by defining some types.
-
-You'll need a request that tells our main process to spin up a worker, requesting the node you're downloading from to do the same. Also, a progress report would be nice!
+You'll need a request that tells our main process to spin up a worker, requesting the node you're downloading from to do the same.
+Also, a progress report would be nice!
 
 ```rust
 #[derive(Serialize, Deserialize, Debug)]
@@ -286,7 +289,7 @@ pub enum TransferRequest {
 
 Now, a request to downoad a file will result in a respose to the requesting process to download the file using a worker.
 
-Add a simple Start and Done variant, so you'll know when the worker has successfully been spawned and initialized.
+Add a simple `Start` and `Done` variant, so you'll know when the worker has successfully been spawned and initialized.
 
 ```rust
 #[derive(Serialize, Deserialize, Debug)]
@@ -316,13 +319,10 @@ pub enum WorkerRequest {
 }
 ```
 
-Workers will take an `Inititialize` request from their own node, that either tells them they're a receiver or a sender based on if they have a target worker `Option<Address>`.
-
-Progress reports are sent back to the main process, which you can then pipe them through as websocket updates to the frontend.
-
-To enable spawning, import the `spawn` function from the `process_lib`.
-
-The only additional part you need to handle in the transfer app is the Download request you've added.
+- Workers will take an `Inititialize` request from their own node, that either tells them they're a receiver or a sender based on if they have a target worker `Option<Address>`.
+- Progress reports are sent back to the main process, which you can then pipe them through as websocket updates to the frontend.
+- To enable spawning, import the `spawn` function from the `process_lib`.
+- The only additional part you need to handle in the transfer app is the Download request you've added.
 
 `TransferRequest::Download` will handle 2 cases:
 
@@ -396,7 +396,7 @@ This makes adding more features later on very simple.
 Now, the actual worker.
 Add this bit by bit:
 
-First, because when you spawn your worker you give it `our_capabilities()` (i.e. it has the same capabilities as the parent process), the worker will have the ability to message both `"net:distro:sys"` and `"vfs:distro:sys".
+First, because when you spawn your worker you give it `our_capabilities()` (i.e. it has the same capabilities as the parent process), the worker will have the ability to message both `"net:distro:sys"` and `"vfs:distro:sys"`.
 As it's also within the same package, you can simply open the `files_dir` without issue.
 
 ```rust
@@ -460,7 +460,7 @@ impl Guest for Component {
 }
 ```
 
-The `handle_message` function will handle 3 types: the requests Initialize, Chunk and Size.
+The `handle_message` function will handle three `WorkerRequest` variants: the requests `Initialize`, `Chunk` and `Size`.
 
 `WorkerRequest::Initialize` runs once, received from the spawner:
 
@@ -553,8 +553,8 @@ fn handle_message(
 
 So upon `Initialize`, you open the existing file or create an empty one. Then, depending on whether the worker is a sender or receiver, you take one of two options:
 
-- if receiver, save the File to your state, and then send a Started response to parent.
-- if sender, get the file's length, send it as Size to the `target_worker`, and then chunk the data, loop, read into a buffer and send to `target_worker`.
+- if receiver, save the `File` to your state, and then send a Started response to parent.
+- if sender, get the file's length, send it as `Size` to the `target_worker`, and then chunk the data, loop, read into a buffer and send to `target_worker`.
 
 `WorkerRequest::Chunk` will look like this:
 
