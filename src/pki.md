@@ -27,7 +27,7 @@ These router nodes communicate between indirect nodes and the network at large.
 ## Name Registration
 
 The `DotOsRegistrar` (AKA `.os`) is responsible for registering all `.os` domain names.
-It is also responsible for authorizing alterations to `.os` node records managed by the KNSRegistryResolver. (TODO: just confused by this).
+It is also responsible for authorizing alterations to `.os` node records managed by the KNSRegistryResolver.
 `DotOsRegistrar` implements ERC721 tokenization logic for the names it is charged with, so all `.os` names are NFTs that may be transferred to and from any address.
 There is currently a minimum length of 9 characters for Kinode IDs.
 

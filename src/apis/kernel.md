@@ -33,7 +33,7 @@ pub enum KernelCommand {
         capabilities: Vec<Capability>,
     },
     /// Tell the kernel to run a process that has already been installed.
-    /// TODO: in the future, this command could be extended to allow for
+    /// Note: in the future, this command could be extended to allow for
     /// resource provision.
     RunProcess(ProcessId),
     /// Kill a running process immediately. This may result in the dropping / mishandling of messages!

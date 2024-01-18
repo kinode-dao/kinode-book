@@ -26,7 +26,7 @@ When users first boot a node, they may decide between these two domain types as 
 Direct nodes share their literal IP address and port in their metadata, allowing other nodes to message them directly.
 Again, this is similar to registering a WWW domain name and pointing it at your web server.
 However, running a direct node is both technically demanding (you must maintain the ability of your machine to be accessed remotely) and a security risk (you must open ports on the server to the public internet).
-Therefore, indirect nodes are the best choice for the majority of users that choose to run their own node (TODO: what about those who have someone else run it? A hosting service?).
+Therefore, indirect nodes are the best choice for the majority of users that choose to run their own node.
 
 Instead of sharing their IP and port, indirect nodes simply post a list of *routers* onchain.
 These routers are other *direct* nodes that have agreed to forward messages to indirect nodes.

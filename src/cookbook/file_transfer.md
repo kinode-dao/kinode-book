@@ -88,7 +88,7 @@ Before delving into the code, you can handle the capabilities you need to reques
 ]
 ```
 
-Now, start by creating a drive (folder) in your vfs and opening it, where files will be downloaded by other nodes.
+Now, start by creating a [drive](../apis/vfs.md#drives) in your vfs and opening it, where files will be downloaded by other nodes.
 You can add a whitelist a bit later!
 
 Also, import some vfs functions from the `process_lib`.
