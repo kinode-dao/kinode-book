@@ -19,7 +19,7 @@ The received `Request`s are handled in one of three ways:
 - If the `source.node` is our domain, but the `target.node` is not, the message is sent to the target using the [networking protocol](../networking_protocol.md) implementation.
 
 Let's look at `NetActions`. Note that this message type can be received from remote or local processes.
-Different implementations of the networking protocol may reject actions depending on whether they were instigated locally or remotely, and also discriminate on what remote node sent the action.
+Different implementations of the networking protocol may reject actions depending on whether they were instigated locally or remotely, and also discriminate on which remote node sent the action.
 This is, for example, where a router would choose whether or not to perform routing for a specific node<>node connection.
 
 ```rust
