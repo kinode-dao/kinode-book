@@ -75,7 +75,7 @@
   --icons: #c06346; /* Rusty red */
   --icons-hover: #b7c6cc; /* Soft slate gray */
 
-  --links: #c78919; /* Burnt orange for higher contrast */
+  --links: #ffcb69;
 
   --inline-code-color: #c78919; /* Burnt orange */
 
@@ -105,52 +105,6 @@
 }
 
 .light {
-  /* Rename this class to '.meadow' */
-
-  --bg: #8db495; /* Sage green */
-  --fg: #bf4315; /* Terracotta */
-
-  --sidebar-bg: #9b72aa; /* Soft purple */
-  --sidebar-fg: #4a235a; /* Darker purple */
-  --sidebar-non-existant: #a8b88d; /* Olive */
-  --sidebar-active: #ecb910; /* Sunflower yellow */
-  --sidebar-spacer: #e8d58e; /* Beige */
-
-  --scrollbar: var(--sidebar-fg);
-
-  --icons: #31667a; /* Deep sea teal */
-  --icons-hover: #d78d27; /* Amber */
-
-  --links: #31667a; /* Deep sea teal */
-
-  --inline-code-color: #d78d27; /* Amber */
-
-  --theme-popup-bg: #98a944; /* Olive green */
-  --theme-popup-border: #70887c; /* Sea green */
-  --theme-hover: #a8b88d; /* Olive */
-
-  --quote-bg: #8db495; /* Sage green */
-  --quote-border: #70887c; /* Sea green */
-
-  --warning-border: #c83237; /* Crimson */
-
-  --table-border-color: #a8b88d; /* Olive */
-  --table-header-bg: #98a944; /* Olive green */
-  --table-alternate-bg: #e8d58e; /* Beige */
-
-  --searchbar-border-color: #bf4315; /* Terracotta */
-  --searchbar-bg: #e8d58e; /* Beige */
-  --searchbar-fg: #bf4315; /* Terracotta */
-  --searchbar-shadow-color: #31667a; /* Deep sea teal */
-  --searchresults-header-fg: #70887c; /* Sea green */
-  --searchresults-border-color: #a8b88d; /* Olive */
-  --searchresults-li-bg: #8db495; /* Sage green */
-  --search-mark-bg: #d78d27; /* Amber */
-
-  --color-scheme: light;
-}
-
-.navy {
   /* rename to .light */
 
   --bg: #f0f8ff; /* Soft sky blue */
@@ -192,6 +146,52 @@
   --searchresults-border-color: #dcdcdc; /* Light grey */
   --searchresults-li-bg: #e6e6e6; /* Light grey */
   --search-mark-bg: #ffcb69; /* Nectar gold */
+
+  --color-scheme: light;
+}
+
+.navy {
+  /* Rename this class to '.meadow' */
+
+  --bg: #8db495; /* Sage green */
+  --fg: #bf4315; /* Terracotta */
+
+  --sidebar-bg: #9b72aa; /* Soft purple */
+  --sidebar-fg: #4a235a; /* Darker purple */
+  --sidebar-non-existant: #a8b88d; /* Olive */
+  --sidebar-active: #ecb910; /* Sunflower yellow */
+  --sidebar-spacer: #e8d58e; /* Beige */
+
+  --scrollbar: var(--sidebar-fg);
+
+  --icons: #31667a; /* Deep sea teal */
+  --icons-hover: #d78d27; /* Amber */
+
+  --links: #31667a; /* Deep sea teal */
+
+  --inline-code-color: #d78d27; /* Amber */
+
+  --theme-popup-bg: #98a944; /* Olive green */
+  --theme-popup-border: #70887c; /* Sea green */
+  --theme-hover: #a8b88d; /* Olive */
+
+  --quote-bg: #8db495; /* Sage green */
+  --quote-border: #70887c; /* Sea green */
+
+  --warning-border: #c83237; /* Crimson */
+
+  --table-border-color: #a8b88d; /* Olive */
+  --table-header-bg: #98a944; /* Olive green */
+  --table-alternate-bg: #e8d58e; /* Beige */
+
+  --searchbar-border-color: #bf4315; /* Terracotta */
+  --searchbar-bg: #e8d58e; /* Beige */
+  --searchbar-fg: #bf4315; /* Terracotta */
+  --searchbar-shadow-color: #31667a; /* Deep sea teal */
+  --searchresults-header-fg: #70887c; /* Sea green */
+  --searchresults-border-color: #a8b88d; /* Olive */
+  --searchresults-li-bg: #8db495; /* Sage green */
+  --search-mark-bg: #d78d27; /* Amber */
 
   --color-scheme: light;
 }
