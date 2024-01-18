@@ -3,7 +3,7 @@
 Throughout this book, readers will see references to [WIT](https://component-model.bytecodealliance.org/design/wit.html), the [WebAssembly Component Model](https://github.com/WebAssembly/component-model).
 WIT, or Wasm Interface Type, is a language for describing the types and functions that are available to a WebAssembly module.
 In conjunction with the Component Model itself, WIT allows for the creation of WebAssembly modules that can be used as components in a larger system.
-This standard has been under development for many years, and while still under construction, it's the perfect tool for building an operating-system-like environment for apps built in Wasm.
+This standard has been under development for many years, and while still under construction, it's the perfect tool for building an operating-system-like environment for Wasm apps.
 
 Kinode OS uses WIT to present a standard interface for Kinode processes.
 This interface is a set of types and functions that are available to all processes.
@@ -15,9 +15,9 @@ To see exactly how to use WIT to write Kinode processes, see the [My First App](
 
 To see `kinode.wit` for itself, see the [file in the GitHub repo](https://github.com/uqbar-dao/kinode-wit/blob/master/kinode.wit).
 Since this interface applies to all processes, it's one of the places in the OS where breaking changes are most likely to make an impact.
-To that end, the version of the WIT file that a process uses must be compatible with the version of Kinode OS that it's running on.
+To that end, the version of the WIT file that a process uses must be compatible with the version of Kinode OS on which it runs. 
 We intend to achieve perfect backwards compatibility upon first major release (1.0.0) of the OS and the WIT file.
-After that point, since processes signal the version of the WIT file they use, subsequent updates can be made without breaking existing processes needing to change the version they use.
+After that point, since processes signal the version of the WIT file they use, subsequent updates can be made without breaking existing processes or needing to change the version they use.
 
 ## Types
 
