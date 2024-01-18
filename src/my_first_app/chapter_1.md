@@ -3,7 +3,7 @@
 Welcome!
 In these tutorials, you'll setup your development environment and learn about the `kit` tools.
 You'll learn about templates and also walk through writing an application from the group up, backend and frontend.
-And finally, you'll learn how to deploy applications through the Nectar app store.
+And finally, you'll learn how to deploy applications through the Kinode app store.
 
 For the purposes of this documentation, terminal commands are provided as-is for ease of copying EXCEPT when the output of the command is also shown.
 In that case, the command is prepended with a `$ ` to distinguish the command from the output.
@@ -11,32 +11,32 @@ The `$ ` should not be copied into the terminal.
 
 # Environment Setup
 
-In this chapter, you'll walk through setting up an Nectar development environment.
-By the end, you will have created an Nectar application, or package, composed of one or more processes that run on a live Nectar node.
+In this chapter, you'll walk through setting up an Kinode development environment.
+By the end, you will have created an Kinode application, or package, composed of one or more processes that run on a live Kinode.
 The application will be a simple chat interface: `my_chat_app`.
 
 The following assumes a Unix environment — macOS or Linux.
 If on Windows, [get WSL](https://learn.microsoft.com/en-us/windows/wsl/install) first.
-In general, NectarOS does not support Windows.
+In general, Kinode OS does not support Windows.
 
-## Acquiring Rust and the Nectar Development Tools (`kit`)
+## Acquiring Rust and the Kinode Development Tools (`kit`)
 
-Install Rust and the Nectar Development Tools, or `kit`:
+Install Rust and the Kinode Development Tools, or `kit`:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 cargo install --git https://github.com/uqbar-dao/kit
 ```
 
-## Creating a New Nectar Package Template
+## Creating a New Kinode Package Template
 
 The `kit` toolkit has a [variety of features](https://github.com/uqbar-dao/kit).
-One of those tools is `new`, which creates a template for an Nectar package.
+One of those tools is `new`, which creates a template for an Kinode package.
 The `new` tool takes two arguments: a path to create the template directory and a name for the package:
 
 ```
 $ kit new --help
-Create a Nectar template package
+Create a Kinode template package
 
 Usage: kit new [OPTIONS] <DIR>
 
@@ -45,7 +45,7 @@ Arguments:
 
 Options:
   -a, --package <PACKAGE>      Name of the package [default: DIR]
-  -u, --publisher <PUBLISHER>  Name of the publisher [default: template.nec]
+  -u, --publisher <PUBLISHER>  Name of the publisher [default: template.os]
   -l, --language <LANGUAGE>    Programming language of the template [default: rust] [possible values: rust, python, javascript]
   -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: chat, fibonacci]
       --ui                     If set, use the template with UI
@@ -60,8 +60,8 @@ kit new my_chat_app
 
 ## Exploring the Package
 
-Nectar packages are sets of one or more Nectar [processes](../processes.md).
-An Nectar package is represented in Unix as a directory that has a `pkg/` directory within.
+Kinode packages are sets of one or more Kinode [processes](../processes.md).
+An Kinode package is represented in Unix as a directory that has a `pkg/` directory within.
 Each process within the package is its own directory.
 By default, the `kit new` command creates a simple, one-process package, a chat app.
 Other templates, including a Python template and a UI-enabled template can be used by passing different flags to `kit new` (see `kit new --help`).
@@ -89,9 +89,9 @@ It is exhaustively defined [here](https://doc.rust-lang.org/cargo/reference/mani
 The `src/` directory is where the code for the process lives.
 
 Also within the package directory is a `pkg/` directory.
-The `pkg/` directory contains two files, `manifest.json` and `metadata.json`, that specify information the Nectar node needs to run the package, which will be enumerated below.
+The `pkg/` directory contains two files, `manifest.json` and `metadata.json`, that specify information the Kinode needs to run the package, which will be enumerated below.
 The `pkg/` directory is also where `.wasm` binaries will be deposited by [`kit build`](#building-the-package).
-The files in the `pkg/` directory contents are injected into the Nectar node with [`kit start-package`](#starting-the-package).
+The files in the `pkg/` directory contents are injected into the Kinode with [`kit start-package`](#starting-the-package).
 
 Though not included in this template, packages with a frontend have a `ui/` directory as well.
 For an example, look at the result of:
@@ -104,7 +104,7 @@ As of 240111, only the Rust chat template has a UI-enabled version.
 
 ### `pkg/manifest.json`
 
-The `manifest.json` file contains information the Nectar node needs in order to run the package:
+The `manifest.json` file contains information the Kinode needs in order to run the package:
 
 ```bash
 $ cat my_chat_app/pkg/manifest.json
@@ -115,7 +115,7 @@ $ cat my_chat_app/pkg/manifest.json
         "on_exit": "Restart",
         "request_networking": true,
         "request_capabilities": [
-            "net:sys:nectar"
+            "net:distro:sys"
         ],
         "grant_capabilities": [],
         "public": true
@@ -148,7 +148,7 @@ The `metadata.json` file contains information about the package and the publishe
 $ cat my_chat_app/pkg/metadata.json
 {
     "package": "my_chat_app",
-    "publisher": "template.nec",
+    "publisher": "template.os",
     "version": [0, 1, 0]
 }
 ```
@@ -178,13 +178,13 @@ cd my_chat_app
 kit build
 ```
 
-## Booting a Fake Nectar Node
+## Booting a Fake Kinode Node
 
 Often, it is optimal to develop on a fake node.
 Fake nodes are simple to set up, easy to restart if broken, and mocked networking makes development testing very straightforward.
-To boot a fake Nectar node for development purposes, use the `kit boot-fake-node` tool.
+To boot a fake Kinode for development purposes, use the `kit boot-fake-node` tool.
 
-`kit boot-fake-node` downloads the OS- and architecture-appropriate Nectar core binary and runs it without connecting to the live network.
+`kit boot-fake-node` downloads the OS- and architecture-appropriate Kinode core binary and runs it without connecting to the live network.
 Instead, it connects to a mocked local network, allowing different fake nodes on the same machine to communicate with each other.
 `kit boot-fake-node` has many optional configuration flags, but the defaults should work fine:
 
@@ -203,21 +203,21 @@ Fri 12/8 15:43 http_server: running on port 8080
 ```
 
 `kit boot-fake-node` also accepts a `--runtime-path` argument.
-When supplied, if it is a path to the Nectar core repo, it will compile and use that binary to start the node.
-Or, if it is a path to an Nectar binary, it will use that binary to start the node.
+When supplied, if it is a path to the Kinode core repo, it will compile and use that binary to start the node.
+Or, if it is a path to an Kinode binary, it will use that binary to start the node.
 For example:
 
 ```bash
-kit boot-fake-node --runtime-path ~/path/to/nectar
+kit boot-fake-node --runtime-path ~/path/to/kinode
 ```
 
-where `~/path/to/nectar` must be replaced with a path to the Nectar core repo or an Nectar binary.
+where `~/path/to/kinode` must be replaced with a path to the Kinode core repo or an Kinode binary.
 
-## Optional: Starting a Real Nectar Node
+## Optional: Starting a Real Kinode Node
 
-Alternatively, development sometimes calls for a real node, which has access to the actual Nectar network and its providers, such as integrated LLMs.
+Alternatively, development sometimes calls for a real node, which has access to the actual Kinode network and its providers, such as integrated LLMs.
 
-To develop on a real Nectar node, connect to the network and follow the instructions to [setup an Nectar node](../install.md).
+To develop on a real Kinode, connect to the network and follow the instructions to [setup an Kinode](../install.md).
 
 ## Starting the Package
 
@@ -241,7 +241,7 @@ or, if you are already in the correct package directory:
 kit start-package -p 8080
 ```
 
-where here the port provided following `-p` must match the port bound by the node or fake node (see discussion [above](#booting-a-fake-nectar-node)).
+where here the port provided following `-p` must match the port bound by the node or fake node (see discussion [above](#booting-a-fake-kinode-node)).
 
 The node's terminal should display something like
 
@@ -249,14 +249,14 @@ The node's terminal should display something like
 Fri 12/8 15:54 my_chat_app: begin
 ```
 
-Congratulations on completing the first steps towards developing applications on Nectar!
+Congratulations on completing the first steps towards developing applications on Kinode!
 
 ## Using the Package
 
 To test out the functionality of `my_chat_app`, spin up another fake node to chat with in a new terminal:
 
 ```bash
-kit boot-fake-node -h /tmp/nectar-fake-node-2 -p 8081 -f fake2.nec
+kit boot-fake-node -h /tmp/kinode-fake-node-2 -p 8081 -f fake2.os
 ```
 
 The fake nodes communicate over a mocked local network.
@@ -276,20 +276,20 @@ kit start-package -p 8081
 To send a chat message from the first node, run the following in its terminal:
 
 ```
-/m our@my_chat_app:my_chat_app:template.nec {"Send": {"target": "fake2.nec", "message": "hello world"}}
+/m our@my_chat_app:my_chat_app:template.os {"Send": {"target": "fake2.os", "message": "hello world"}}
 ```
 
 and replying, from the other terminal:
 
 ```
-/m our@my_chat_app:my_chat_app:template.nec {"Send": {"target": "fake.nec", "message": "wow, it works!"}}
+/m our@my_chat_app:my_chat_app:template.os {"Send": {"target": "fake.os", "message": "wow, it works!"}}
 ```
 
 Messages can also be injected from the outside.
 From a bash terminal, use `uqdev inject-message`, like so:
 
 ```bash
-kit inject-message my_chat_app:my_chat_app:template.nec '{"Send": {"target": "fake2.nec", "message": "hello from the outside world"}}'
-kit inject-message my_chat_app:my_chat_app:template.nec '{"Send": {"target": "fake.nec", "message": "replying from fake2.nec using first method..."}}' --node fake2.nec
-kit inject-message my_chat_app:my_chat_app:template.nec '{"Send": {"target": "fake.nec", "message": "and second!"}}' -p 8081
+kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.os", "message": "hello from the outside world"}}'
+kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.os", "message": "replying from fake2.os using first method..."}}' --node fake2.os
+kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.os", "message": "and second!"}}' -p 8081
 ```

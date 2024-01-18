@@ -17,7 +17,7 @@ It automatically detects what language each process is, and builds it appropriat
 
 ## Discussion
 
-`kit build` builds a Nectar package directory.
+`kit build` builds a Kinode package directory.
 Specifically, it iterates through all directories within the given package directory and looks for `src/lib.??`, where the `??` is the file extension.
 Currently, `rs`, `py`, and `js` are supported, corresponding to processes written in `rust`, `python`, and `javascript`, respectively.
 Note that a package may have more than one process and those processes need not be written in the same language.
@@ -40,7 +40,7 @@ To both `build` and `start-package` in one command, use `kit build-start-package
 
 ```bash
 $ kit b --help
-Build a Nectar package
+Build a Kinode package
 
 Usage: kit build [OPTIONS] [DIR]
 

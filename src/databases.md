@@ -8,7 +8,7 @@ The APIs for doing so you can find here: [KV](./apis/kv.md) and [SQLite](./apis/
 Similarly to files in the VFS, they are accessed by `package_id` and a `db` name.
 Capabilities to read and write can be shared with other processes; processes within a given package have access by default.
 
-All examples are using the [nectar_process_lib](https://github.com/uqbar-dao/process_lib) functions.
+All examples are using the [kinode_process_lib](https://github.com/uqbar-dao/process_lib) functions.
 
 ## Usage
 
@@ -57,4 +57,4 @@ println!("rows: {}", rows.len());
 - [SQLite API](./apis/sqlite.md)
 - [RocksDB](https://github.com/rust-rocksdb/rust-rocksdb)
 - [SQLite](https://www.sqlite.org/docs.html)
-- [nectar_process_lib](https://github.com/uqbar-dao/process_lib)
+- [kinode_process_lib](https://github.com/uqbar-dao/process_lib)

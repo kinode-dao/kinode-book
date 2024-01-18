@@ -1,6 +1,6 @@
 # VFS API
 
-Useful helper functions can be found in the [nectar_process_lib](https://github.com/uqbar-dao/process_lib)
+Useful helper functions can be found in the [kinode_process_lib](https://github.com/uqbar-dao/process_lib)
 
 The VFS API tries to map over the [std::fs](https://doc.rust-lang.org/std/fs/index.html) calls as directly as possible.
 
@@ -172,7 +172,7 @@ let metadata = metadata(&some_path)?;
 ```rust
 pub struct VfsRequest {
     /// path is always prepended by package_id, the capabilities of the topmost folder are checked
-    /// "/your_package:publisher.nec/drive_folder/another_folder_or_file"
+    /// "/your_package:publisher.os/drive_folder/another_folder_or_file"
     pub path: String,
     pub action: VfsAction,
 }
