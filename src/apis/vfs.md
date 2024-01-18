@@ -19,12 +19,37 @@ Capabilities are checked on the drive part of the path, when calling CreateDrive
 Other processes within your package will have access by default.
 They can open and modify files and directories within their own package_id.
 
-### Opening/Creating a drive
+### Opening/Creating a Drive
 
 ```rust
 let drive_path: String = create_drive(our.package_id(), "drive_name")?;
 // you can now prepend this path to any files/directories you're interacting with
 ```
+
+### Sharing a Drive Capability
+
+```rust
+let vfs_read_cap = serde_json::json!({
+    "kind": "read",
+    "drive": drive_path,
+}).to_string();
+
+let vfs_address = Address {
+    node: our.node.clone(),
+    process: ProcessId::from_str("vfs:distro:sys").unwrap(),
+};
+
+// get this capability from our store
+let cap = get_capability(&vfs_address, &vfs_read_cap);
+
+// now if we have that Capability, we can attach it to a subsequent message.
+if let Some(cap) = cap {
+    Request::new()
+        .capabilities(vec![cap])
+        .body(b"hello".to_vec())
+        .send()?;
+}
+``````
 
 ### Files
 
