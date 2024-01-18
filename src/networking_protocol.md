@@ -26,7 +26,8 @@ A new key transaction may be posted at any time, but because agreement on networ
 Therefore, all nodes must have robust access to the onchain PKI, meaning: multiple backup options and multiple pathways to read onchain data.
 Because it may take time for a new networking key to proliferate to all nodes, (anywhere from seconds to days depending on chain indexing access) a node that changes its networking key should expect downtime immediately after doing so.
 
-Nodes that wish to make direct connections must post an IP and port onchain.The registry contract has one IP slot per node, which the owner address of a node can update at will.
+Nodes that wish to make direct connections must post an IP and port onchain.
+The registry contract has one IP slot per node, which the owner address of a node can update at will.
 The contract has four port slots, one each for WebSockets (`ws`), TCP, UDP, and WebTransport (`wt`).
 Each port slot can be updated individually by the owner address of a node.
 Indirect nodes must leave these slots blank, and instead fill out a `routing` field, which contains a list of nodes that are allowed and expected to route messages to them.
@@ -115,7 +116,8 @@ pub struct RoutingRequest {
 ```
 The `protocol_version` is the current protocol version, which is 1.
 The `source` is the initiator's node ID, as provided onchain.
-The `signature` must be created by the initiator's networking public key. The content is the routing target's node ID (i.e., the node which the initiator would like to establish an e2e encrypted connection with) concatenated with the router's node ID (i.e., the node which the initiator is sending the `RoutingRequest` to, which will serve as a router for the connection if it accepts).
+The `signature` must be created by the initiator's networking public key.
+The content is the routing target's node ID (i.e., the node which the initiator would like to establish an e2e encrypted connection with) concatenated with the router's node ID (i.e., the node which the initiator is sending the `RoutingRequest` to, which will serve as a router for the connection if it accepts).
 The `target` is the routing target's node ID that must be signed above.
 
 [TODO document the rejection/acceptance of RoutingRequests]
@@ -153,7 +155,8 @@ Every message sent over the connection is a `KernelMessage`, serialized with Mes
 
 When listening for messages, the protocol may ignore messages other than Binary, but should also respond to Ping messages with Pongs.
 
-When a Binary message is received, it should first be decrypted using the keys exchanged in the handshake exchange, then deserialized as a `KernelMessage`. If this fails, the message should be ignored and the connection must be closed.
+When a Binary message is received, it should first be decrypted using the keys exchanged in the handshake exchange, then deserialized as a `KernelMessage`.
+If this fails, the message should be ignored and the connection must be closed.
 
 Successfully decrypted and deserialized messages should have their `source` field checked for the correct node ID and then passed to the kernel.
 
@@ -184,7 +187,8 @@ Messages do not have to expect a response.
 If no response is expected, a networking-level offline or timeout error may still be thrown.
 Local messages will only receive timeout errors if they expect a response.
 
-If a peer is direct, i.e. they have networking information published onchain, determining their offline status is simple: try to create a connection and send a message; it will throw an offline error if this message fails. If a message is not responded to before the timeout counter expires, it will throw a timeout.
+If a peer is direct, i.e. they have networking information published onchain, determining their offline status is simple: try to create a connection and send a message; it will throw an offline error if this message fails.
+If a message is not responded to before the timeout counter expires, it will throw a timeout.
 
 If a peer is indirect, i.e. they have routers, multiple attempts must be made before either an offline error is thrown.
 The specific implementation of the protocol may vary in this regard (e.g. it may try to connect to all routers, or limit the number of attempts to a subset of routers).
