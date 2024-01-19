@@ -70,7 +70,7 @@ Must be URL-safe.
 
 ### `--publisher`
 
-Name of the publisher; defaults to `template.uq`.
+Name of the publisher; defaults to `template.os`.
 Must be URL-safe.
 
 ### `--language`

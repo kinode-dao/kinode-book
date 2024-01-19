@@ -8,11 +8,11 @@ Every request takes a path and a corresponding action.
 
 ## Drives
 
-VFS paths are normal relative paths within the directory `/your_node_home/vfs/`, but to be valid they need to be within a drive.
-A drive is just a directory within your vfs, consisting of 2 parts: `/package_id/drive_name/`.
+VFS paths are normal relative paths within the directory `your_node_home/vfs/`, but to be valid they need to be within a drive.
+A drive is just a directory within your VFS, consisting of 2 parts: `package_id/drive_name/`.
 
-For example: `/your_package:publisher.os/pkg/`.
-This directory is usually filled with files put into the `/pkg` directory when installing with app_store.
+For example: `your_package:publisher.os/pkg/`.
+This directory is usually filled with files put into the `pkg/` directory when installing with `app_store`.
 [Capabilities](../process-capabilities.md) are checked on the drive part of the path.
 When calling `create_drive()` you'll be given "read" and "write" caps that you can share with other processes.
 
