@@ -38,4 +38,4 @@ Accessing global state in the form of the Ethereum blockchain is now trivial, wi
 Several other I/O primitives also come with the kernel: an HTTP server and client framework, as well as a simple key-value store.
 Together, these tools can be used to build performant and self-custodied full-stack applications.
 
-Finally, by the end of this book, you will learn how to deploy applications to the Kinode network, where they will be discoverable and installable by any user with an Kinode.
+Finally, by the end of this book, you will learn how to deploy applications to the Kinode network, where they will be discoverable and installable by any user with a Kinode.

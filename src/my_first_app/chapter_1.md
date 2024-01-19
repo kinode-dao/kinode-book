@@ -11,8 +11,8 @@ The `$ ` should not be copied into the terminal.
 
 # Environment Setup
 
-In this chapter, you'll walk through setting up an Kinode development environment.
-By the end, you will have created an Kinode application, or package, composed of one or more processes that run on a live Kinode.
+In this chapter, you'll walk through setting up a Kinode development environment.
+By the end, you will have created a Kinode application, or package, composed of one or more processes that run on a live Kinode.
 The application will be a simple chat interface: `my_chat_app`.
 
 The following assumes a Unix environment — macOS or Linux.
@@ -31,7 +31,7 @@ cargo install --git https://github.com/uqbar-dao/kit
 ## Creating a New Kinode Package Template
 
 The `kit` toolkit has a [variety of features](../kit/kit.md).
-One of those tools is `new`, which creates a template for an Kinode package.
+One of those tools is `new`, which creates a template for a Kinode package.
 The `new` tool takes two arguments: a path to create the template directory and a name for the package:
 
 ```
@@ -207,7 +207,7 @@ Fri 12/8 15:43 http_server: running on port 8080
 
 `kit boot-fake-node` also accepts a `--runtime-path` argument.
 When supplied, if it is a path to the Kinode core repo, it will compile and use that binary to start the node.
-Or, if it is a path to an Kinode binary, it will use that binary to start the node.
+Or, if it is a path to a Kinode binary, it will use that binary to start the node.
 For example:
 
 ```bash
@@ -220,7 +220,7 @@ where `~/path/to/kinode` must be replaced with a path to the Kinode core repo.
 
 Alternatively, development sometimes calls for a real node, which has access to the actual Kinode network and its providers, such as integrated LLMs.
 
-To develop on a real Kinode, connect to the network and follow the instructions to [setup an Kinode](../install.md).
+To develop on a real Kinode, connect to the network and follow the instructions to [setup a Kinode](../install.md).
 
 ## Starting the Package
 

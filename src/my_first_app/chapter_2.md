@@ -1,7 +1,7 @@
 # Sending Some Messages, Using Some Tools
 
 This chapter assumes you've completed the steps outlined in [Chapter 1](./chapter_1.md) to construct your dev environment or otherwise have a basic Kinode app open in your code editor of choice.
-You should also be actively running an Kinode ([live](../login.md) or [fake](./chapter_1.md#booting-a-fake-kinode-node)) such that you can quickly compile and test your code!
+You should also be actively running a Kinode ([live](../login.md) or [fake](./chapter_1.md#booting-a-fake-kinode-node)) such that you can quickly compile and test your code!
 Tight feedback loops when building: very important.
 
 ## Starting from Scratch

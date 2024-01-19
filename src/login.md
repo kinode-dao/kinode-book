@@ -16,15 +16,11 @@ The account is free and requires only an email address for registration.
 
 ## Starting the Kinode
 
-Start an Kinode using the binary acquired in the [previous section](./install.md).
-Locating the binary on your system, run:
+Start a Kinode using the binary acquired in the [previous section](./install.md).
+Locating the binary on your system, print out the arguments expected by the binary:
 
-```bash
-$ ./kinode --help
 ```
-This will print the arguments expected by the binary:
-
-```bash
+$ ./kinode --help
 A General Purpose Sovereign Cloud Computing Platform
 
 Usage: kinode [OPTIONS] --rpc <WS_URL> <home>

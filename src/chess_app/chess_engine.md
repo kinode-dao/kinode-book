@@ -15,7 +15,7 @@ Once you have the template app installed and can see it running on your testing 
 
 # Chess Engine
 
-Chess is a good example for an Kinode application walk-through because:
+Chess is a good example for a Kinode application walk-through because:
 1. The basic game logic is already readily available.
    There are thousands of high-quality chess libraries across many languages that can be imported into a Wasm app that runs on Kinode.
    We'll be using [pleco](https://github.com/pleco-rs/Pleco)
@@ -183,7 +183,7 @@ use kinode_process_lib::{
 
 extern crate base64;
 
-// Boilerplate: generate the Wasm bindings for an Kinode app
+// Boilerplate: generate the Wasm bindings for a Kinode app
 wit_bindgen::generate!({
     path: "wit",
     world: "process",
