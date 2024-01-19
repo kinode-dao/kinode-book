@@ -14,4 +14,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const navyButton = document.getElementById("navy");
   if (navyButton) navyButton.textContent = "Light"; // New name for 'Navy'
+
+  const sidebar = document.querySelector(".sidebar-scrollbox");
+  if (sidebar) {
+    const logo = document.createElement("img");
+    logo.src = "assets/KINODE_SYMBOL_BLACK_TRANSPARENT.png";
+    logo.alt = "Kinode OS Logo";
+    logo.style =
+      "height: 40px; width: auto; display: block; margin: 10px auto;";
+
+    sidebar.insertBefore(logo, sidebar.firstChild); // This adds the logo to the top of the sidebar
+  }
 });
