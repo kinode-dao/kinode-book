@@ -157,11 +157,11 @@ lto = true
 anyhow = "1.0"
 base64 = "0.13"
 bincode = "1.3.3"
+kinode_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", tag = "v0.5.4-alpha" }
 pleco = "0.5"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 url = "*"
-kinode_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", rev = "a2d3e9e" }
 wit-bindgen = { git = "https://github.com/bytecodealliance/wit-bindgen", rev = "efcc759" }
 
 [lib]

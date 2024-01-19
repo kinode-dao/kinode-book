@@ -1,20 +1,18 @@
 # Adding a Frontend
 
-Here, we'll add a web frontend to the code from the [previous section](./chess_engine.md).
+Here, you'll add a web frontend to the code from the [previous section](./chess_engine.md).
 
 Creating a web frontend has two parts:
 1. Altering the process code to serve and handle HTTP requests
 2. Writing a webpage to interact with the process.
 Here, you'll use React to make a single-page app that displays your current games and allows us to: create new games, resign from games, and make moves on the chess board.
 
-JavaScript and React development aren't in the scope of this tutorial, so we'll provide that code [here](https://github.com/uqbar-dao/chess-ui).
+JavaScript and React development aren't in the scope of this tutorial, so you can find that code [here](https://github.com/uqbar-dao/chess-ui).
 
-The important part of the frontend for the purpose of this tutorial is the build, specifically the `pkg/ui` directory that will be loaded into the VFS during installation.
-Serve these as static files, [which you can get here](https://github.com/uqbar-dao/chess-ui/tree/tutorial/tutorial_build) if you don't want to build them yourself.
-
-Run `npm run build` in the `chess-ui` repo and copy the output `dist` folder into the `pkg` folder in your app, so it'll be ingested on-install.
+The important part of the frontend for the purpose of this tutorial is how to set up those pre-existing files to be built and installed by `kit`.
+When files found in the `ui/` directory, if a `package.json` file is found with a `build:copy` field in `scripts`, `kit` will run that to build the UI (see [here](https://github.com/uqbar-dao/chess-ui/blob/82419ea0e53e6d86d6dc6c8ed7f656c3ab51fdc8/package.json#L10)).
+The `build:copy` in that file builds the UI and then places the resulting files into the `pkg/ui/` directory where they will be installed by `kit start-package`.
 This allows your process to fetch them from the virtual filesystem, as all files in `pkg` are mounted.
-Rename it to `ui` so that you have the files in `pkg/ui`.
 See the [VFS API overview](../apis/vfs.md) to see how to use files mounted in `pkg`.
 
 Chess will use the `http_server` runtime module to serve a static frontend and receive HTTP requests from it.
