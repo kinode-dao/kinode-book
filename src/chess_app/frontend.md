@@ -12,8 +12,13 @@ JavaScript and React development aren't in the scope of this tutorial, so you ca
 The important part of the frontend for the purpose of this tutorial is how to set up those pre-existing files to be built and installed by `kit`.
 When files found in the `ui/` directory, if a `package.json` file is found with a `build:copy` field in `scripts`, `kit` will run that to build the UI (see [here](https://github.com/uqbar-dao/chess-ui/blob/82419ea0e53e6d86d6dc6c8ed7f656c3ab51fdc8/package.json#L10)).
 The `build:copy` in that file builds the UI and then places the resulting files into the `pkg/ui/` directory where they will be installed by `kit start-package`.
-This allows your process to fetch them from the virtual filesystem, as all files in `pkg` are mounted.
-See the [VFS API overview](../apis/vfs.md) to see how to use files mounted in `pkg`.
+This allows your process to fetch them from the virtual filesystem, as all files in `pkg/` are mounted.
+See the [VFS API overview](../apis/vfs.md) to see how to use files mounted in `pkg/`.
+
+Get the chess UI files and place them in the proper place (next to `pkg/`):
+```bash
+git clone https://github.com/uqbar-dao/chess-ui ui
+```
 
 Chess will use the `http_server` runtime module to serve a static frontend and receive HTTP requests from it.
 You'll also use a WebSocket connection to send updates to the frontend when the game state changes.
@@ -160,14 +165,14 @@ fn handle_http_request(
     state: &mut ChessState,
     http_request: &http::IncomingHttpRequest,
 ) -> anyhow::Result<()> {
-    if http_request.path()? != "games" {
+    if http_request.path()? != "/games" {
         return http::send_response(
             http::StatusCode::NOT_FOUND,
             None,
             "Not Found".to_string().as_bytes().to_vec(),
         );
     }
-    match http_request.method.as_str() {
+    match http_request.method()?.as_str() {
         // on GET: give the frontend all of our active games
         "GET" => http::send_response(
             http::StatusCode::OK,
@@ -353,7 +358,7 @@ fn send_ws_update(
 ) -> anyhow::Result<()> {
     for channel in open_channels {
         Request::new()
-            .target((&our.node, "http_server", "sys", "kinode"))
+            .target((&our.node, "http_server", "distro", "sys"))
             .body(serde_json::to_vec(
                 &http::HttpServerAction::WebSocketPush {
                     channel_id: *channel,
