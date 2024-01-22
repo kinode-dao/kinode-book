@@ -22,7 +22,7 @@ Make sure to use a recent version of the process_lib while the system is in alph
 The major version of the process_lib will always match the major version of Kinode OS.
 Since the current major version of both is 0, breaking changes can occur at any time.
 Once the major version reaches 1, breaking changes will only occur between major versions.
-As is, developers may have to update thir version of process_lib as they update Kinode OS.
+As is, developers may have to update their version of process_lib as they update Kinode OS.
 
 Since Kinode apps use the [WebAssembly Component Model](https://component-model.bytecodealliance.org/), they are built on top of a WIT (Wasm Interface Type) package.
 This interface contains the core types and functions that are available to all Kinode apps, and these are automatically generated in Rust when building a Wasm app.
