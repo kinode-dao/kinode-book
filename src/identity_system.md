@@ -6,7 +6,7 @@ Kinode OS uses a domain system similar to [ENS](https://ens.domains/) to achieve
 It should be noted that, in our system, the concepts of `domain`, `identity`, and `username` are identical and interchangeable.
 
 Like ENS, Kinode domains (managed by our KNS) are registered by a wallet and owned in the form of an NFT.
-However, unlike ENS, Kinode domains never expire. Additionally, they contain metadata.osessary to both:
+However, unlike ENS, Kinode domains never expire. Additionally, they contain metadata necessary to both:
 - demonstrate the provenance of a given identity.
 - route messages to the identity on the Kinode network.
 

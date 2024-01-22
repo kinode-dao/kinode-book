@@ -6,7 +6,7 @@ You can find a more general discussion of the Kinode [identity system](./identit
 ## Identity Registration
 
 The KNS Registry and Resolver are coupled in the same contract, the `KNSRegistryResolver`.
-This contract issues nodes on the KNS network and records the data.osessary for a node to interact with other nodes.
+This contract issues nodes on the KNS network and records the data necessary for a node to interact with other nodes.
 
 At a high level, the PKI depends on two elements: public keys and networking information.
 
