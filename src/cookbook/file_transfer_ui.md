@@ -38,7 +38,7 @@ The file transfer app already has the following features:
 - download files from other nodes to yours
 - display download progress
 
-We just need to build a UI to take advantage of these capabilities.
+You just need to build a UI to take advantage of these capabilities.
 
 ## UI
 
@@ -55,7 +55,7 @@ Our UI will need to enable all of the above features.
 
 ### Vite
 
-We will develop your UI on [Vite](https://vitejs.dev/), a fast, opinionated frontend build tool.
+You will develop your UI on [Vite](https://vitejs.dev/), a fast, opinionated frontend build tool.
 It's like [Webpack](https://webpack.js.org/), but faster and with less configuration.
 If you've never used Vite before, check out the [docs](https://vitejs.dev/guide/).
 
@@ -68,7 +68,7 @@ However, you will need to configure Vite to allow your UI to communicate seamles
 
 ### Configure Vite
 
-We will be configuring your Vite environment in order to enable development on Kinode.
+You will be configuring your Vite environment in order to enable development on Kinode.
 This step is necessary to allow your *development* UI (which will change often, and rebuild quickly) to communicate with the `file_transfer` app on your node (which will change rarely, and rebuild slowly).
 
 #### Example `vite.config.ts`
@@ -120,7 +120,7 @@ export default defineConfig({
 
 #### Example `index.html`
 
-We only need to change one line in the default `index.html` file: Add `<script type="module" src="/our.js"></script>` to the `<head>`.
+You only need to change one line in the default `index.html` file: Add `<script type="module" src="/our.js"></script>` to the `<head>`.
 
 ```html
 <!doctype html>
@@ -153,7 +153,7 @@ If you've never used React before, check out the [docs](https://reactjs.org/docs
 
 ### Types and Stores
 
-We will use [Zustand](http://npmjs.org/package/zustand) to manage your state.
+You will use [Zustand](http://npmjs.org/package/zustand) to manage your state.
 Zustand is a simple state management library that uses React hooks.
 If you've never used Zustand before, check out the [docs](https://github.com/pmndrs/zustand?tab=readme-ov-file). 
 
