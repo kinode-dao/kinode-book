@@ -2,7 +2,7 @@
 
 This entry will teach you to add a simple UI to the [file transfer app](./file_transfer.md), using [`kit`](../kit/kit.md)'s built-in UI template.
 
-This guide assumes a basic understanding of Kinode process building, some familiarity with [`kit`](../kit/kit.md), requests and responses, and some knowledge of rust syntax.
+This guide assumes a basic understanding of Kinode process building, some familiarity with [`kit`](../kit/kit.md), requests and responses, and some knowledge of Rust syntax.
 It's also strongly recommended that you read and understand the [file transfer app](./file_transfer.md) before continuing.
 
 ## Contents
@@ -25,24 +25,24 @@ This will create a new project with a `ui` directory for the Vite/React UI code,
 
 ## File Transfer
 
-The file transfer app is a simple app that allows users to upload and download files to and from the node. 
+The file transfer app is a simple app that allows users to upload and download files to and from their node. 
 It's a good example of a simple app that can be built on Kinode.
 
 ### Existing Features
 
 The file transfer app already has the following features:
 
-- upload files to our node's [VFS](../apis/vfs.md)
-- list the files on our node
+- upload files to your node's [VFS](../apis/vfs.md)
+- list the files on your node
 - search for and list the files on other nodes
-- download files from other nodes to ours
+- download files from other nodes to yours
 - display download progress
 
 We just need to build a UI to take advantage of these capabilities.
 
 ## UI
 
-`kit` has a built-in UI template that we can use to build our UI.
+`kit` has a built-in UI template that you can use to build your UI.
 The UI template is a simple [React](https://reactjs.org/) app that uses [Vite](https://vitejs.dev/) as a build tool.
 
 Our objective is a UI that looks something like this: 
@@ -55,7 +55,7 @@ Our UI will need to enable all of the above features.
 
 ### Vite
 
-We will develop our UI on [Vite](https://vitejs.dev/), a fast, opinionated frontend build tool.
+We will develop your UI on [Vite](https://vitejs.dev/), a fast, opinionated frontend build tool.
 It's like [Webpack](https://webpack.js.org/), but faster and with less configuration.
 If you've never used Vite before, check out the [docs](https://vitejs.dev/guide/).
 
@@ -64,12 +64,12 @@ If you've never used Vite before, check out the [docs](https://vitejs.dev/guide/
 To build the UI, run `kit build` (or just `kit b`).
 This will build the UI and copy the files into the `pkg/ui` directory, then build `file_transfer` as usual.
 The UI will be served from `http://localhost:8080` (or your custom node URL/port) at `/file_transfer:file_transfer:template.os`.
-However, we will need to configure Vite to allow your UI to communicate seamlessly with the `file_transfer` app on your node.
+However, you will need to configure Vite to allow your UI to communicate seamlessly with the `file_transfer` app on your node.
 
 ### Configure Vite
 
-We will be configuring our Vite environment in order to enable development on Kinode.
-This step is necessary to allow our *development* UI (which will change often, and rebuild quickly) to communicate with the `file_transfer` app on our node (which will change rarely, and rebuild slowly).
+We will be configuring your Vite environment in order to enable development on Kinode.
+This step is necessary to allow your *development* UI (which will change often, and rebuild quickly) to communicate with the `file_transfer` app on your node (which will change rarely, and rebuild slowly).
 
 #### Example `vite.config.ts`
 ```ts
@@ -97,18 +97,18 @@ export default defineConfig({
   server: {
     open: true,
     proxy: {
-      // '/our' is an endpoint that simply serves the node's name via GET.
+      // '/our' is an endpoint that simply serves your node's name via GET.
       '/our': {
         target: PROXY_URL,
         changeOrigin: true,
       },
-      // 'our.js' is a js file containing information about the node which will be used by our UI.
+      // 'our.js' is a js file containing information about your node, which will be used by your UI.
       [`${BASE_URL}/our.js`]: {
         target: PROXY_URL,
         changeOrigin: true,
         rewrite: (path) => path.replace(BASE_URL, ''),
       },
-      // This route will match all other HTTP requests to the backend: when your ui makes a request to BASE_URL, it will be proxied to the node.
+      // This route will match all other HTTP requests to the backend: when your ui makes a request to BASE_URL, it will be proxied to your node.
       [`^${BASE_URL}/(?!(@vite/client|src/.*|node_modules/.*|@react-refresh|$))`]: {
         target: PROXY_URL,
         changeOrigin: true,
@@ -153,14 +153,14 @@ If you've never used React before, check out the [docs](https://reactjs.org/docs
 
 ### Types and Stores
 
-We will use [Zustand](http://npmjs.org/package/zustand) to manage our state.
+We will use [Zustand](http://npmjs.org/package/zustand) to manage your state.
 Zustand is a simple state management library that uses React hooks.
 If you've never used Zustand before, check out the [docs](https://github.com/pmndrs/zustand?tab=readme-ov-file). 
 
 #### `ui/src/types/KinoFile.ts`
 
-This interface represents a file in our UI.
-It doesn't need much, because most of the information about the file is stored on the node.
+This interface represents a file in your UI.
+It doesn't need much, because most of the information about the file is stored on your node.
 
 ```ts
 interface KinoFile {
@@ -173,7 +173,7 @@ export default KinoFile;
 
 #### `ui/src/store/fileTransferStore.ts`
 
-The `fileTransferStore` is a Zustand store that will manage our state.
+The `fileTransferStore` is a Zustand store that will manage your state.
 
 ```ts
 import { create } from 'zustand'
@@ -185,7 +185,7 @@ export interface FileTransferStore {
   // handleWsMessage is a function that will be called when the websocket receives a message.
   handleWsMessage: (message: string) => void
 
-  // the list of files in our node's VFS
+  // the list of files in your node's VFS
   files: KinoFile[]
   setFiles: (files: KinoFile[]) => void
 
@@ -193,7 +193,7 @@ export interface FileTransferStore {
   filesInProgress: { [key: string]: number }
   setFilesInProgress: (filesInProgress: { [key: string]: number }) => void
 
-  // the initialized Kinode api which we will communicate with
+  // the initialized Kinode api which you will communicate with
   api: KinodeEncryptorApi | null
   setApi: (api: KinodeEncryptorApi) => void
   
@@ -201,8 +201,8 @@ export interface FileTransferStore {
   set: (partial: FileTransferStore | Partial<FileTransferStore>) => void
 }
 
-// ProgressMessage is the type of message we will receive from the node's websocket. It indicates the progress of a file upload, 0-100.
-// If we wanted more complex messages, we could define a union type here.
+// ProgressMessage is the type of message you will receive from your node's websocket connection. It indicates the progress of a file upload, 0-100.
+// If you wanted more complex messages, you could define a union type here.
 interface ProgressMessage { name: string, progress: number }
 type WsMessage = { kind: string, data: ProgressMessage }
 
@@ -218,14 +218,14 @@ const useFileTransferStore = create<FileTransferStore>()(
 
       handleWsMessage: (json: string | Blob) => {
         // This function will be called when the websocket receives a message.
-        // Right now we only care about progress messages, but we could add more types of messages here.
+        // Right now you only care about progress messages, but you could add more types of messages here.
         const { filesInProgress, setFilesInProgress } = get()
         if (typeof json === 'string') {
           try {
             console.log('WS: GOT MESSAGE', json)
             const { kind, data } = JSON.parse(json) as WsMessage;
             if (kind === 'progress') {
-              // If we receive a progress message, update the progress of the file in filesInProgress.
+              // If you receive a progress message, update the progress of the file in filesInProgress.
               // This will show up in the UI as a percentage.
               const { name, progress } = data
               const fip = { ...filesInProgress, [name]: progress }
@@ -279,8 +279,8 @@ This will create a `tailwind.config.js` file in your project's root directory.
 
 #### Configuring Tailwind
 
-Next, we need to configure Tailwind to purge unused styles in production.
-This will reduce the size of our CSS bundle.
+Next, you need to configure Tailwind to purge unused styles in production.
+This will reduce the size of your CSS bundle.
 
 Open `tailwind.config.js` and add the following:
 
@@ -300,7 +300,7 @@ module.exports = {
 
 #### Importing Tailwind
 
-Finally, we need to import Tailwind in our `index.css` file:
+Finally, you need to import Tailwind in your `index.css` file:
 
 ```css
 @tailwind base;
@@ -313,7 +313,7 @@ Finally, we need to import Tailwind in our `index.css` file:
 #### `ui/src/App.tsx`
 
 This is the main UI component.
-We'll want to show the files on our node, the files on other nodes, and a way to upload files to our node.
+We'll want to show the files on your node, the files on other nodes, and a way to upload files to your node.
 
 ```tsx
 import { useEffect, useState } from 'react'
@@ -323,8 +323,8 @@ import KinodeEncryptorApi from '@uqbar/client-encryptor-api'
 import useFileTransferStore from './store/fileTransferStore';
 import SearchFiles from './components/SearchFiles';
 
-// This global declaration allows us to access the name of our node and process in a type-safe way.
-// These fields are populated by `/our.js`, which is served by the node, and fetched automatically by index.html.
+// This global declaration allows us to access the name of your node and process in a type-safe way.
+// These fields are populated by `/our.js`, which is served by your node, and fetched automatically by index.html.
 declare global {
   var window: Window & typeof globalThis;
   var our: { node: string, process: string };
@@ -338,16 +338,16 @@ function App() {
   const [filesToUpload, setFilesToUpload] = useState<File[]>([])
   const { files, setFiles, handleWsMessage, setApi } = useFileTransferStore();
 
-  // BASE_URL is the URL where the UI is served from.
+  // BASE_URL is the endpoint on which your node is serving the UI.
   const BASE_URL = import.meta.env.BASE_URL;
-  // PROXY_TARGET is the URL where the node is running.
+  // PROXY_TARGET is the URL where your node is running.
   const PROXY_TARGET = `${(import.meta.env.VITE_NODE_URL || "http://localhost:8080")}${BASE_URL}`;
-  // WEBSOCKET_URL is the URL where the node's websocket is running, e.g. ws://localhost:8080.
+  // WEBSOCKET_URL is the URL where your node's websocket is running, e.g. ws://localhost:8080.
   const WEBSOCKET_URL = import.meta.env.DEV
   ? `${PROXY_TARGET.replace('http', 'ws')}`
   : undefined;
 
-  // Set the node and process names in the global window object.
+  // Set your node and process names in the global window object.
   if (window.our) window.our.process = BASE_URL?.replace("/", "");
 
   // This effect will run once, when the component is mounted.
@@ -355,7 +355,7 @@ function App() {
     if (!inited) {
       inited = true
 
-      // Connect to the node's websocket, for this process.
+      // Connect to your node's websocket for this process.
       const api = new KinodeEncryptorApi({
         uri: WEBSOCKET_URL,
         nodeId: window.our.node,
@@ -367,11 +367,6 @@ function App() {
     }
   }, []) 
 
-  useEffect(() => {
-    // Fetch the files from the node.
-    refreshFiles()
-  }, [])
-
   // This function is called when the user selects files to upload.
   const onAddFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -379,7 +374,7 @@ function App() {
     }
   }
 
-  // This function refreshes the files on the node's VFS.
+  // This function refreshes the files on your node's VFS.
   const refreshFiles = () => {
     fetch(`${BASE_URL}/files`)
       .then((response) => response.json())
@@ -392,7 +387,11 @@ function App() {
       })
   }
 
-  // When the user clicks the upload button, POST the queued files to the node.
+  useEffect(() => {
+    refreshFiles()
+  }, [])
+
+  // When you click the upload button, POST the queued files to your node.
   const onUploadFiles = () => {
     const formData = new FormData()
     filesToUpload.forEach((file) => {
@@ -420,7 +419,7 @@ function App() {
           <div className='flex flex-col px-2 py-1'>
             {/*
               This button opens a file selection dialog.
-              When the user selects files to upload to their node, we stage them here.
+              When the user selects files to upload to their node, you stage them here.
             */}
             <label htmlFor='files' className='bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded cursor-pointer text-center'>
               Choose Files
@@ -428,8 +427,8 @@ function App() {
             </label>
 
             {/* 
-              If the user has selected files to upload, show them here.
-              When the user clicks the upload button, we POST the files to the node.
+              If you have selected files to upload, show them here.
+              When you click the upload button, you POST the files to the node.
             */}
             {filesToUpload.length > 0 && (
               <div className='flex flex-col px-2 py-1'>
@@ -444,7 +443,7 @@ function App() {
             )}
           </div>
           {/* 
-            Show the files on our node.
+            Show the files on your node.
             This component is defined below.
           */}
           <MyFiles node={window.our.node} files={files} />
@@ -524,7 +523,7 @@ function FileEntry({ file, node }: Props) {
 
     useEffect(() => {
         // To display the filename ergonomically,
-        //   we strip the `file_transfer:file_transfer:template.os/files/` 
+        //   you strip the `file_transfer:file_transfer:template.os/files/` 
         //   prefix from the file name.
         const filename = file.name.split('/files/').pop() || '';
         setActualFilename(filename);
@@ -659,7 +658,7 @@ export default SearchFiles;
 
 ### Build it!
 
-Now that we've written our UI code, we can build it.
+Now that you've written your UI code, you can build it.
 
 1. Run `kit build` (or just `kit b`) to build the UI and file_transfer process.
 1. Run `kit start-package -p 8080` (or just `kit s`) to install the package to your node running on port 8080.
