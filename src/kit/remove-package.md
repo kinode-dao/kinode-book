@@ -13,7 +13,7 @@ kit remove-package foo
 or
 
 ```bash
-kit remove-package -package foo --publisher template.uq
+kit remove-package -package foo --publisher template.os
 ```
 
 ## Discussion

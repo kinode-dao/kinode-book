@@ -20,7 +20,7 @@ use kinode_process_lib::{
 
 Keep the custom `body` type the same, and keep using that for terminal input.
 
-At the beginning of the init function, in order to receieve HTTP requests, you must use the `kinode_process_lib::http` library to bind a new path. Binding a path will cause the process to receive all HTTP requests that match that path.
+At the beginning of the init function, in order to receive HTTP requests, you must use the `kinode_process_lib::http` library to bind a new path. Binding a path will cause the process to receive all HTTP requests that match that path.
 You can also bind static content to a path using another function in the library.
 ```rust
 // ...
@@ -115,7 +115,7 @@ let Ok(server_request) = http::HttpServerRequest::from_bytes(message.body()) els
 ```
 
 Next, you must parse out the HTTP request from the general type.
-This is.osessary because the `HttpServerRequest` enum contains both HTTP protocol requests and requests related to WebSockets.
+This is necessary because the `HttpServerRequest` enum contains both HTTP protocol requests and requests related to WebSockets.
 Note that it's quite possible to streamline this series of request refinements if you're only interested in one type of request — this example is overly thorough for demonstration purposes.
 
 ```rust

@@ -24,6 +24,18 @@
 
 - [Overview](./process_stdlib/overview.md)
 
+# Kit: Development Tool**kit**
+
+- [`kit`](./kit/kit.md)
+- [`boot-fake-node`](./kit/boot-fake-node.md)
+- [`new`](./kit/new.md)
+- [`build`](./kit/build.md)
+- [`start-package`](./kit/start-package.md)
+- [`remove-package`](./kit/remove-package.md)
+- [`dev-ui`](./kit/dev-ui.md)
+- [`inject-message`](./kit/inject-message.md)
+- [`run-tests`](./kit/run-tests.md)
+
 # Tutorial: Build and Deploy an App
 
 - [Environment Setup](./my_first_app/chapter_1.md)
@@ -38,18 +50,6 @@
 - [Adding a Frontend](./chess_app/frontend.md)
 - [Putting Everything Together](./chess_app/putting_everything_together.md)
 - [Extension 1: Chat](./chess_app/chat.md)
-
-# Kit: Development Tool**kit**
-
-- [`kit`](./kit/kit.md)
-- [`boot-fake-node`](./kit/boot-fake-node.md)
-- [`new`](./kit/new.md)
-- [`build`](./kit/build.md)
-- [`start-package`](./kit/start-package.md)
-- [`remove-package`](./kit/remove-package.md)
-- [`dev-ui`](./kit/dev-ui.md)
-- [`inject-message`](./kit/inject-message.md)
-- [`run-tests`](./kit/run-tests.md)
 
 # Cookbook (Handy Recipes)
 
@@ -71,4 +71,4 @@
 - [SQLite API](./apis/sqlite.md)
 - [Terminal API](./apis/terminal.md)
 - [VFS API](./apis/vfs.md)
-- [Websocket API](./apis/websocket_authentication.md)
+- [WebSocket API](./apis/websocket_authentication.md)

@@ -90,15 +90,17 @@ When sending a request, a process can await a response to that specific request,
 Awaiting a response leads to easier-to-read code:
 * The response is handled in the next line of code, rather than in a separate iteration of the message-handling loop
 * Therefore, the `context` need not be set.
-The downside of awaiting a response is that all other messages to a process will be queued until that response is received and handled.
 
+The downside of awaiting a response is that all other messages to a process will be queued until that response is received and handled.
 As such, certain applications lend themselves to blocking with an await, and others don't.
 A rule of thumb is: await responses (because simpler code) except when a process needs to performantly handle other messages in the meantime.
 
 For example, if a file-transfer process can only transfer one file at a time, requests can simply await responses, since the only possible next message will be a response to the request just sent.
-In contrast, if a file-transfer process can transfer more than one file at a time, requests that await responses will block others in the meantime; for performance it may make sense to write the process fully asynchronously.
+In contrast, if a file-transfer process can transfer more than one file at a time, requests that await responses will block others in the meantime; for performance it may make sense to write the process fully asynchronously, i.e. without ever awaiting.
 The constraint on awaiting is a primary reason why it is desirable to [spawn child processes](#spawning-child-processes).
 Continuing the file-transfer example, by spawning one child "worker" process per file to be transferred, each worker can use the await mechanic to simplify the code, while not limiting performance.
+
+There is more discussion of child processes [here](cookbook/manage_child_processes.md), and an example of them in action in the [`file_transfer` cookbook](cookbook/file_transfer.md).
 
 #### Message Structure
 
@@ -158,7 +160,7 @@ A process can optionally mark itself as `public`, meaning that it can be message
 
 ### Spawning child processes
 
-A process can spawn "child" processes -- in which case the spawner is known as the "parent".
+A process can spawn "child" processes — in which case the spawner is known as the "parent".
 As discussed [above](#awaiting-a-response), one of the primary reasons to write an application with multiple processes is to enable both simple code and high performance.
 
 Child processes can be used to:
@@ -166,6 +168,8 @@ Child processes can be used to:
 2. Run compute-heavy code without blocking the parent
 3. Run IO-heavy code without blocking the parent
 4. Break out code that is more easily written with awaits to avoid blocking the parent
+
+There is more discussion of child processes [here](cookbook/manage_child_processes.md), and an example of them in action in the [`file_transfer` cookbook](cookbook/file_transfer.md).
 
 ### Conclusion
 

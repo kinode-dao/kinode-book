@@ -105,52 +105,6 @@
 }
 
 .light {
-  /* rename to .light */
-
-  --bg: #f0f8ff; /* Soft sky blue */
-  --fg: #27496d; /* Deep ocean blue */
-
-  --sidebar-bg: #dcedc1; /* Light leaf green */
-  --sidebar-fg: #405d27; /* Dark green */
-  --sidebar-non-existant: #a4b3b6; /* Muted stone grey */
-  --sidebar-active: #ff6b6b; /* Vibrant flower red */
-  --sidebar-spacer: #e8e8e8; /* Very light grey */
-
-  --scrollbar: var(--sidebar-fg);
-
-  --icons: #8a5a44; /* Earthy brown */
-  --icons-hover: #ffcb69; /* Nectar gold */
-
-  --links: #ff7043; /* Bright coral */
-
-  --inline-code-color: #ffcb69; /* Nectar gold */
-
-  --theme-popup-bg: #e6e6e6; /* Light grey */
-  --theme-popup-border: #c0c0c0; /* Medium grey */
-  --theme-hover: #d0d0d0; /* Soft grey */
-
-  --quote-bg: #f2f2f2; /* Very light grey */
-  --quote-border: #dcdcdc; /* Light grey */
-
-  --warning-border: #e67e22; /* Pumpkin orange */
-
-  --table-border-color: #dcdcdc; /* Light grey */
-  --table-header-bg: #e6e6e6; /* Light grey */
-  --table-alternate-bg: #f2f2f2; /* Very light grey */
-
-  --searchbar-border-color: #a0a0a0; /* Medium grey */
-  --searchbar-bg: #f0f0f0; /* Soft grey */
-  --searchbar-fg: #27496d; /* Deep ocean blue */
-  --searchbar-shadow-color: #c0c0c0; /* Medium grey */
-  --searchresults-header-fg: #405d27; /* Dark green */
-  --searchresults-border-color: #dcdcdc; /* Light grey */
-  --searchresults-li-bg: #e6e6e6; /* Light grey */
-  --search-mark-bg: #ffcb69; /* Nectar gold */
-
-  --color-scheme: light;
-}
-
-.navy {
   /* Rename this class to '.meadow' */
 
   --bg: #8db495; /* Sage green */
@@ -192,6 +146,52 @@
   --searchresults-border-color: #a8b88d; /* Olive */
   --searchresults-li-bg: #8db495; /* Sage green */
   --search-mark-bg: #d78d27; /* Amber */
+
+  --color-scheme: light;
+}
+
+.navy {
+  /* rename to .light */
+
+  --bg: #f0f8ff; /* Soft sky blue */
+  --fg: #27496d; /* Deep ocean blue */
+
+  --sidebar-bg: #dcedc1; /* Light leaf green */
+  --sidebar-fg: #405d27; /* Dark green */
+  --sidebar-non-existant: #a4b3b6; /* Muted stone grey */
+  --sidebar-active: #ff6b6b; /* Vibrant flower red */
+  --sidebar-spacer: #e8e8e8; /* Very light grey */
+
+  --scrollbar: var(--sidebar-fg);
+
+  --icons: #8a5a44; /* Earthy brown */
+  --icons-hover: #ffcb69; /* Nectar gold */
+
+  --links: #ff7043; /* Bright coral */
+
+  --inline-code-color: #ffcb69; /* Nectar gold */
+
+  --theme-popup-bg: #e6e6e6; /* Light grey */
+  --theme-popup-border: #c0c0c0; /* Medium grey */
+  --theme-hover: #d0d0d0; /* Soft grey */
+
+  --quote-bg: #f2f2f2; /* Very light grey */
+  --quote-border: #dcdcdc; /* Light grey */
+
+  --warning-border: #e67e22; /* Pumpkin orange */
+
+  --table-border-color: #dcdcdc; /* Light grey */
+  --table-header-bg: #e6e6e6; /* Light grey */
+  --table-alternate-bg: #f2f2f2; /* Very light grey */
+
+  --searchbar-border-color: #a0a0a0; /* Medium grey */
+  --searchbar-bg: #f0f0f0; /* Soft grey */
+  --searchbar-fg: #27496d; /* Deep ocean blue */
+  --searchbar-shadow-color: #c0c0c0; /* Medium grey */
+  --searchresults-header-fg: #405d27; /* Dark green */
+  --searchresults-border-color: #dcdcdc; /* Light grey */
+  --searchresults-li-bg: #e6e6e6; /* Light grey */
+  --search-mark-bg: #ffcb69; /* Nectar gold */
 
   --color-scheme: light;
 }

@@ -33,7 +33,7 @@ For example, part of the VFS might look like:
 
 ## Usage
 
-To access files in the vfs, you need to create or open a drive, this can be done with the function `create_drive` from the [standard library](./process_stdlib/overview.md):
+To access files in the VFS, you need to create or open a [drive](./apis/vfs.md#drives), this can be done with the function `create_drive` from the [standard library](./process_stdlib/overview.md):
 
 ```rust
 let drive_path: String = create_drive(our.package_id(), "drive_name")?;
@@ -41,7 +41,7 @@ let drive_path: String = create_drive(our.package_id(), "drive_name")?;
 let test_file = create_file(&format("{}/test.txt", &drive_path))?;
 
 let text = b"hello world!"
-file.write(&text);
+file.write(&text)?;
 ```
 
 ## References

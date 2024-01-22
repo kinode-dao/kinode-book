@@ -69,7 +69,7 @@ impl Guest for Component {
         ) {
             Ok(spawned_process_id) => spawned_process_id,
             Err(e) => {
-                panic!("couldn't spawn"); //  TODO
+                panic!("couldn't spawn"); // 
             }
         }
     }
