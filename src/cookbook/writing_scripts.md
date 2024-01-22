@@ -1,6 +1,8 @@
 # Scripts
-Scripts are just processes. They are written almost exactly like applications, with a few key differences:
-- Scripts always terminate, while apps may run indefinitely. When writing a script, you cannot control the `OnExit` behavior like you can with an application
+Scripts are just processes.
+They are written almost exactly like applications, with a few key differences:
+- Scripts always terminate, while apps may run indefinitely.
+When writing a script, you cannot control the `OnExit` behavior like you can with an application
 - Scripts are called with an initial set of arguments (passed in via the `terminal`)
 - Scripts are registered in the `scripts.json` file instead of the `manifest.json` file
 
@@ -52,8 +54,9 @@ While very similar, there are a few important differences; let's take a look at 
     }
 }
 ```
-This `scripts.json` file corresponds to a package which publishes a single script, `echo`, which doesn't request `root` capabilities, or any capabilities for tha matter.
-The keys of this object are the process paths inside of the `pkg/` folder. The name of the script will be the file path, with `.wasm` taken off.
+This `scripts.json` file corresponds to a package which publishes a single script, `echo`, which doesn't request `root` capabilities, or any capabilities for that matter.
+The keys of this object are the process paths inside of the `pkg/` folder.
+The name of the script will be the file path, with `.wasm` taken off.
 The object that `echo.wasm` points to is very similar to `manifest.json`, with a few things removed, and `root` has been added:
 - `root` means that all the capabilities held by the `terminal:terminal:sys` are passed to this script. This is rarely needed.
 - `public`: same as `manfiest.json` - corresponds to whether or not other processes can message `echo.wasm` without the messsaging cap
