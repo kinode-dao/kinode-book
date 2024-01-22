@@ -334,15 +334,13 @@ pub enum WorkerRequest {
 ```
 
 Some notes:
-
-- Workers will take an `Inititialize` request from their own node, that either tells them they're a receiver or a sender based on if they have a target worker `Option<Address>`.
+- Workers will receive an `Inititialize` request from their own node, which tells the worker it is either a receiver or a sender based on if it has a target worker `Option<Address>`.
 - Progress reports are sent back to the main process; if adding a frontend, these could be sent to it via WebSocket updates.
 
 The only additional part you need to handle in the transfer app is the Download request you've added.
 `TransferRequest::Download` will handle 2 cases:
 1. An incoming download request; spawn a worker, which sends chunks to the remote `target_worker` given in the request,
 2. An outgoing download request: spawn a worker, which sends its address to the remote node hosting the file.
-
 
 To enable spawning and other features, change `file_transfer/src/lib.rs`s imports to:
 ```rust
