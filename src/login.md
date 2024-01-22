@@ -67,6 +67,7 @@ Replace the `--rpc` field below with the WebSocket API key link copied from [the
 # For Sepolia testnet
 ./kinode home --rpc wss://eth-sepolia.g.alchemy.com/v2/<your-api-key>
 ```
+(See runtime README if you wish to boot on Optimism mainnet)
 
 A new browser tab should open, but if not, look in the terminal for a line like
 
