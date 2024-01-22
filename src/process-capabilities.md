@@ -21,8 +21,9 @@ For example, the filesystem has read/write capabilities that determine whether y
 
 ## Startup Capabilities with `manifest.json`
 
-When developing a process, the first encounter you will have with capabilities is with the `manifest.json` file, where capabilities are directly granted to a process on startup.
-Upon install, the package manager (also referred to as "app store") surfaces these requested capabilities to the user, who can then choose to grant them or not.Here is a `manfiest.json` example for the `chess` app:
+When developing an application, `manifest.json` will be your first encounter with capabilties. With this file, capabilities are directly granted to a process on startup.
+Upon install, the package manager (also referred to as "app store") surfaces these requested capabilities to the user, who can then choose to grant them or not.
+Here is a `manfiest.json` example for the `chess` app:
 ```json
 [
     {
