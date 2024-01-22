@@ -1,7 +1,7 @@
 # Sending Some Messages, Using Some Tools
 
 This chapter assumes you've completed the steps outlined in [Chapter 1](./chapter_1.md) to construct your dev environment or otherwise have a basic Kinode app open in your code editor of choice.
-You should also be actively running an Kinode ([live](../login.md) or [fake](./chapter_1.md#booting-a-fake-kinode-node)) such that you can quickly compile and test your code!
+You should also be actively running a Kinode ([live](../login.md) or [fake](./chapter_1.md#booting-a-fake-kinode-node)) such that you can quickly compile and test your code!
 Tight feedback loops when building: very important.
 
 ## Starting from Scratch
@@ -268,16 +268,15 @@ In the next chapter, we will cover how to turn this very basic request-response 
 As mentioned in the [previous chapter](./chapter_1.md#pkgmanifestjson), one of the fields in the `manifest.json` is `on_exit`.
 When the process exits, it does one of:
 
-`on_exit` setting | Behavior
------------------ | --------
+`on_exit` Setting | Behavior When Process Exits
+----------------- | ---------------------------
 `"None"`          | Do nothing
 `"Restart"`       | Restart the process
-JSON object       | Send the message described by the JSON object
+JSON object       | Send the requests described by the JSON object
 
 A process intended to do something once and exit should have `"None"` or a JSON object `on_exit`.
-If it has `"Restart"`, it will repeat in an infinite loop, as reference [above](#starting-from-scratch).
+If it has `"Restart"`, it will repeat in an infinite loop, as referenced [above](#starting-from-scratch).
 
 A process intended to run over a period of time and serve requests and responses will often have `"Restart"` `on_exit` so that, in case of crash, it will start again.
 Alternatively, a JSON object `on_exit` can be used to inform another process of its untimely demise.
-In this way, Kinode processes become quite similar to Erlang processes, and crashing can be [designed into your process to increase reliability](https://ferd.ca/the-zen-of-erlang.html).
-
+In this way, Kinode processes become quite similar to Erlang processes in that crashing can be [designed into your process to increase reliability](https://ferd.ca/the-zen-of-erlang.html).

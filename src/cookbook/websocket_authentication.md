@@ -1,1 +1,1 @@
-# Websocket Authentication
+# WebSocket Authentication

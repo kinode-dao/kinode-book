@@ -11,8 +11,8 @@ The `$ ` should not be copied into the terminal.
 
 # Environment Setup
 
-In this chapter, you'll walk through setting up an Kinode development environment.
-By the end, you will have created an Kinode application, or package, composed of one or more processes that run on a live Kinode.
+In this chapter, you'll walk through setting up a Kinode development environment.
+By the end, you will have created a Kinode application, or package, composed of one or more processes that run on a live Kinode.
 The application will be a simple chat interface: `my_chat_app`.
 
 The following assumes a Unix environment — macOS or Linux.
@@ -31,7 +31,7 @@ cargo install --git https://github.com/uqbar-dao/kit
 ## Creating a New Kinode Package Template
 
 The `kit` toolkit has a [variety of features](../kit/kit.md).
-One of those tools is `new`, which creates a template for an Kinode package.
+One of those tools is `new`, which creates a template for a Kinode package.
 The `new` tool takes two arguments: a path to create the template directory and a name for the package:
 
 ```
@@ -47,7 +47,7 @@ Options:
   -a, --package <PACKAGE>      Name of the package [default: DIR]
   -u, --publisher <PUBLISHER>  Name of the publisher [default: template.os]
   -l, --language <LANGUAGE>    Programming language of the template [default: rust] [possible values: rust, python, javascript]
-  -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: chat, fibonacci]
+  -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: chat, echo, fibonacci]
       --ui                     If set, use the template with UI
   -h, --help                   Print help
 ```
@@ -61,7 +61,7 @@ kit new my_chat_app
 ## Exploring the Package
 
 Kinode packages are sets of one or more Kinode [processes](../processes.md).
-An Kinode package is represented in Unix as a directory that has a `pkg/` directory within.
+A Kinode package is represented in Unix as a directory that has a `pkg/` directory within.
 Each process within the package is its own directory.
 By default, the `kit new` command creates a simple, one-process package, a chat app.
 Other templates, including a Python template and a UI-enabled template can be used by passing different flags to `kit new` (see `kit new --help`).
@@ -77,8 +77,6 @@ my_chat_app
 └── pkg
     ├── manifest.json
     └── metadata.json
-
-3 directories, 4 files
 ```
 
 The `my_chat_app/` package here contains one process, also named `my_chat_app/`.
@@ -91,7 +89,7 @@ The `src/` directory is where the code for the process lives.
 Also within the package directory is a `pkg/` directory.
 The `pkg/` directory contains two files, `manifest.json` and `metadata.json`, that specify information the Kinode needs to run the package, which will be enumerated below.
 The `pkg/` directory is also where `.wasm` binaries will be deposited by [`kit build`](#building-the-package).
-The files in the `pkg/` directory contents are injected into the Kinode with [`kit start-package`](#starting-the-package).
+The files in the `pkg/` directory are injected into the Kinode with [`kit start-package`](#starting-the-package).
 
 Though not included in this template, packages with a frontend have a `ui/` directory as well.
 For an example, look at the result of:
@@ -100,7 +98,7 @@ kit new my_chat_app_with_ui --ui
 tree my_chat_app_with_ui
 ```
 Note that not all templates have a UI-enabled version.
-As of 240111, only the Rust chat template has a UI-enabled version.
+As of 240118, only the Rust chat template has a UI-enabled version.
 
 ### `pkg/manifest.json`
 
@@ -115,6 +113,7 @@ $ cat my_chat_app/pkg/manifest.json
         "on_exit": "Restart",
         "request_networking": true,
         "request_capabilities": [
+            "http_server:distro:sys",
             "net:distro:sys"
         ],
         "grant_capabilities": [],
@@ -128,17 +127,17 @@ Each object represents one process that will be started when the package is inst
 A package with multiple processes need not start them all at install time.
 A package may start more than one of the same process, as long as they each have a unique `process_name`.
 
-Each object has the following fields:
+Each object requires the following fields:
 
-Key                      | Required? | Value type
------------------------- | --------- | ----------
-`"process_name"`         | Yes       | string
-`"process_wasm_path"`    | Yes       | string (representing a path)
-`"on_exit"`              | Yes       | string (`"None"` or `"Restart"`) or object (covered [elsewhere](./chapter_2.md#aside-on_exit))
-`"request_networking"`   | Yes       | bool
-`"request_capabilities"` | No        | array of strings to note process names, or objects to note custom capabilities and from what process to request them
-`"grant_capabilities"`   | No        | array of strings to note process names, or objects to note custom capabilities to generate and send to a process
-`"public"`               | Yes       | bool
+Key                      | Value Type                                                                                     | Description
+------------------------ | ---------------------------------------------------------------------------------------------- | -----------
+`"process_name"`         | String                                                                                         | The name of the process
+`"process_wasm_path"`    | String                                                                                         | The path to the process
+`"on_exit"`              | String (`"None"` or `"Restart"`) or Object (covered [elsewhere](./chapter_2.md#aside-on_exit)) | What to do in case the process exits
+`"request_networking"`   | Boolean                                                                                        | Whether to ask for networking capabilities from kernel
+`"request_capabilities"` | Array of Strings or Objects                                                                    | Strings are process IDs to request messaging capabilties from; Objects have a `"process"` field (process ID to request from) and a `"params"` field (capability to request)
+`"grant_capabilities"`   | Array of Strings or Objects                                                                    | Strings are process IDs to grant messaging capabilties to; Objects have a `"process"` field (process ID to grant to) and a `"params"` field (capability to grant)
+`"public"`               | Boolean                                                                                        | Whether to allow any process to message us
 
 ### `pkg/metadata.json`
 
@@ -155,6 +154,14 @@ $ cat my_chat_app/pkg/metadata.json
 
 Here, the `publisher` is some default value, but for a real package, this field should contain the KNS id of the publishing node.
 The `publisher` can also be set with a `kit new --publisher` flag.
+
+As an aside: each process has a unique process ID, used to address messages to that process, that looks like
+
+```
+<process_name>:<package>:<publisher>
+```
+
+You can read more about process IDs [here](../processes.md#overview).
 
 ## Building the Package
 
@@ -174,7 +181,7 @@ cd my_chat_app
 kit build
 ```
 
-## Booting a Fake Kinode Node
+## Booting a Fake Kinode
 
 Often, it is optimal to develop on a fake node.
 Fake nodes are simple to set up, easy to restart if broken, and mocked networking makes development testing very straightforward.
@@ -200,29 +207,32 @@ Fri 12/8 15:43 http_server: running on port 8080
 
 `kit boot-fake-node` also accepts a `--runtime-path` argument.
 When supplied, if it is a path to the Kinode core repo, it will compile and use that binary to start the node.
-Or, if it is a path to an Kinode binary, it will use that binary to start the node.
+Or, if it is a path to a Kinode binary, it will use that binary to start the node.
 For example:
 
 ```bash
 kit boot-fake-node --runtime-path ~/path/to/kinode
 ```
 
-where `~/path/to/kinode` must be replaced with a path to the Kinode core repo or an Kinode binary.
+where `~/path/to/kinode` must be replaced with a path to the Kinode core repo.
 
-## Optional: Starting a Real Kinode Node
+## Optional: Starting a Real Kinode
 
 Alternatively, development sometimes calls for a real node, which has access to the actual Kinode network and its providers, such as integrated LLMs.
 
-To develop on a real Kinode, connect to the network and follow the instructions to [setup an Kinode](../install.md).
+To develop on a real Kinode, connect to the network and follow the instructions to [setup a Kinode](../install.md).
 
 ## Starting the Package
 
-Time to load and initiate the `my_chat_app` package. For this, you will use the `kit start-package` tool.
-Like [`kit build`](#building-the-package), the `kit start-package` tool receives an optional directory containing the package or, if no directory is received, tries the current working directory.
-It also requires a URL: the address of the node on which to initiate the package.
+Now it is time to load and initiate the `my_chat_app` package. For this, you will use the `kit start-package` tool.
+Like [`kit build`](#building-the-package), the `kit start-package` tool takes an optional directory argument — the package — defaulting to the current working directory.
+It also accepts a URL: the address of the node on which to initiate the package.
 The node's URL can be input in one of two ways:
+
 1. If running on localhost, the port can be supplied with `-p` or `--port`,
 2. More generally, the node's entire URL can be supplied with a `-u` or `--url` flag.
+
+If neither the `--port` nor the `--url` is given, `kit start-package` defaults to `http://localhost:8080`.
 
 You can start the package from either within or outside `my_chat_app` directory.
 After completing the previous step, you should be one directory above the `my_chat_app` directory and can use the following:
@@ -245,7 +255,7 @@ The node's terminal should display something like
 Fri 12/8 15:54 my_chat_app: begin
 ```
 
-Congratulations on completing the first steps towards developing applications on Kinode!
+Congratulations: you've now built and installed your first application on Kinode!
 
 ## Using the Package
 

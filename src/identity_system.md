@@ -6,7 +6,7 @@ Kinode OS uses a domain system similar to [ENS](https://ens.domains/) to achieve
 It should be noted that, in our system, the concepts of `domain`, `identity`, and `username` are identical and interchangeable.
 
 Like ENS, Kinode domains (managed by our KNS) are registered by a wallet and owned in the form of an NFT.
-However, unlike ENS, Kinode domains never expire. Additionally, they contain metadata.osessary to both:
+However, unlike ENS, Kinode domains never expire. Additionally, they contain metadata necessary to both:
 - demonstrate the provenance of a given identity.
 - route messages to the identity on the Kinode network.
 
@@ -18,7 +18,7 @@ Instead, it is designed to easily extend and wrap existing NFTs, enabling users 
 What does this look like in practice?
 
 It's easy enough to check for provenance of a given identity.
-If you have an Kinode domain, you can prove ownership by signing a message with the wallet that owns the domain.
+If you have a Kinode domain, you can prove ownership by signing a message with the wallet that owns the domain.
 However, to essentially use your Kinode identity as a domain name for your personal server, KNS domains have routing information, similar to a DNS record, that points to an IP address.
 
 A KNS domain can either be `direct` or `indirect`.

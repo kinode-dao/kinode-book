@@ -71,4 +71,4 @@
 - [SQLite API](./apis/sqlite.md)
 - [Terminal API](./apis/terminal.md)
 - [VFS API](./apis/vfs.md)
-- [Websocket API](./apis/websocket_authentication.md)
+- [WebSocket API](./apis/websocket_authentication.md)
