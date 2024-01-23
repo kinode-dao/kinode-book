@@ -105,6 +105,97 @@
 }
 
 .light {
+  /* rename theme to .harmony */
+  --bg: #f4f9f4; /* Light mint green */
+  --fg: #5d4037; /* Rich brown */
+
+  --sidebar-bg: #fff3e0; /* Soft peach */
+  --sidebar-fg: #6d4c41; /* Darker brown */
+  --sidebar-non-existant: #cfd8dc; /* Light grey */
+  --sidebar-active: #ffb74d; /* Warm orange */
+  --sidebar-spacer: #e0f2f1; /* Pale turquoise */
+
+  --scrollbar: var(--sidebar-fg);
+
+  --icons: #8d6e63; /* Earthy rose */
+  --icons-hover: #ffccbc; /* Light coral */
+
+  --links: #007bff; /* Bright blue */
+
+  --inline-code-color: #d35400; /* Pumpkin orange */
+
+  --theme-popup-bg: #eceff1; /* Very light grey */
+  --theme-popup-border: #b0bec5; /* Cool grey */
+  --theme-hover: #f8fdfa; /* Very light mint */
+
+  --quote-bg: #e8f5e9; /* Pale green */
+  --quote-border: #a5d6a7; /* Medium green */
+
+  --warning-border: #ff7043; /* Bright coral */
+
+  --table-border-color: #b0bec5; /* Cool grey */
+  --table-header-bg: #eceff1; /* Very light grey */
+  --table-alternate-bg: #e8f5e9; /* Pale green */
+
+  --searchbar-border-color: #8d6e63; /* Earthy rose */
+  --searchbar-bg: #ffccbc; /* Light coral */
+  --searchbar-fg: #5d4037; /* Rich brown */
+  --searchbar-shadow-color: #b0bec5; /* Cool grey */
+  --searchresults-header-fg: #6d4c41; /* Darker brown */
+  --searchresults-border-color: #cfd8dc; /* Light grey */
+  --searchresults-li-bg: #fff3e0; /* Soft peach */
+  --search-mark-bg: #ffb74d; /* Warm orange */
+
+  --color-scheme: light;
+}
+
+.navy {
+  /* rename to .light */
+
+  --bg: #f0f8ff; /* Soft sky blue */
+  --fg: #27496d; /* Deep ocean blue */
+
+  --sidebar-bg: #dcedc1; /* Light leaf green */
+  --sidebar-fg: #405d27; /* Dark green */
+  --sidebar-non-existant: #a4b3b6; /* Muted stone grey */
+  --sidebar-active: #ff6b6b; /* Vibrant flower red */
+  --sidebar-spacer: #e8e8e8; /* Very light grey */
+
+  --scrollbar: var(--sidebar-fg);
+
+  --icons: #8a5a44; /* Earthy brown */
+  --icons-hover: #ffcb69; /* Nectar gold */
+
+  --links: #ff7043; /* Bright coral */
+
+  --inline-code-color: #d35400; /* Pumpkin orange */
+
+  --theme-popup-bg: #e6e6e6; /* Light grey */
+  --theme-popup-border: #c0c0c0; /* Medium grey */
+  --theme-hover: #d0d0d0; /* Soft grey */
+
+  --quote-bg: #f2f2f2; /* Very light grey */
+  --quote-border: #dcdcdc; /* Light grey */
+
+  --warning-border: #e67e22; /* Pumpkin orange */
+
+  --table-border-color: #dcdcdc; /* Light grey */
+  --table-header-bg: #e6e6e6; /* Light grey */
+  --table-alternate-bg: #f2f2f2; /* Very light grey */
+
+  --searchbar-border-color: #a0a0a0; /* Medium grey */
+  --searchbar-bg: #f0f0f0; /* Soft grey */
+  --searchbar-fg: #27496d; /* Deep ocean blue */
+  --searchbar-shadow-color: #c0c0c0; /* Medium grey */
+  --searchresults-header-fg: #405d27; /* Dark green */
+  --searchresults-border-color: #dcdcdc; /* Light grey */
+  --searchresults-li-bg: #e6e6e6; /* Light grey */
+  --search-mark-bg: #ffcb69; /* Nectar gold */
+
+  --color-scheme: light;
+}
+
+.rust {
   /* Rename this class to '.meadow' */
 
   --bg: #8db495; /* Sage green */
@@ -147,98 +238,7 @@
   --searchresults-li-bg: #8db495; /* Sage green */
   --search-mark-bg: #d78d27; /* Amber */
 
-  --color-scheme: light;
-}
-
-.navy {
-  /* rename to .light */
-
-  --bg: #f0f8ff; /* Soft sky blue */
-  --fg: #27496d; /* Deep ocean blue */
-
-  --sidebar-bg: #dcedc1; /* Light leaf green */
-  --sidebar-fg: #405d27; /* Dark green */
-  --sidebar-non-existant: #a4b3b6; /* Muted stone grey */
-  --sidebar-active: #ff6b6b; /* Vibrant flower red */
-  --sidebar-spacer: #e8e8e8; /* Very light grey */
-
-  --scrollbar: var(--sidebar-fg);
-
-  --icons: #8a5a44; /* Earthy brown */
-  --icons-hover: #ffcb69; /* Nectar gold */
-
-  --links: #ff7043; /* Bright coral */
-
-  --inline-code-color: #ffcb69; /* Nectar gold */
-
-  --theme-popup-bg: #e6e6e6; /* Light grey */
-  --theme-popup-border: #c0c0c0; /* Medium grey */
-  --theme-hover: #d0d0d0; /* Soft grey */
-
-  --quote-bg: #f2f2f2; /* Very light grey */
-  --quote-border: #dcdcdc; /* Light grey */
-
-  --warning-border: #e67e22; /* Pumpkin orange */
-
-  --table-border-color: #dcdcdc; /* Light grey */
-  --table-header-bg: #e6e6e6; /* Light grey */
-  --table-alternate-bg: #f2f2f2; /* Very light grey */
-
-  --searchbar-border-color: #a0a0a0; /* Medium grey */
-  --searchbar-bg: #f0f0f0; /* Soft grey */
-  --searchbar-fg: #27496d; /* Deep ocean blue */
-  --searchbar-shadow-color: #c0c0c0; /* Medium grey */
-  --searchresults-header-fg: #405d27; /* Dark green */
-  --searchresults-border-color: #dcdcdc; /* Light grey */
-  --searchresults-li-bg: #e6e6e6; /* Light grey */
-  --search-mark-bg: #ffcb69; /* Nectar gold */
-
-  --color-scheme: light;
-}
-
-.rust {
-  /* rename theme to .harmony */
-  --bg: #f4f9f4; /* Light mint green */
-  --fg: #5d4037; /* Rich brown */
-
-  --sidebar-bg: #fff3e0; /* Soft peach */
-  --sidebar-fg: #6d4c41; /* Darker brown */
-  --sidebar-non-existant: #cfd8dc; /* Light grey */
-  --sidebar-active: #ffb74d; /* Warm orange */
-  --sidebar-spacer: #e0f2f1; /* Pale turquoise */
-
-  --scrollbar: var(--sidebar-fg);
-
-  --icons: #8d6e63; /* Earthy rose */
-  --icons-hover: #ffccbc; /* Light coral */
-
-  --links: #9575cd; /* Soft lavender */
-
-  --inline-code-color: #d35400; /* Pumpkin orange */
-
-  --theme-popup-bg: #eceff1; /* Very light grey */
-  --theme-popup-border: #b0bec5; /* Cool grey */
-  --theme-hover: #f8fdfa; /* Very light mint */
-
-  --quote-bg: #e8f5e9; /* Pale green */
-  --quote-border: #a5d6a7; /* Medium green */
-
-  --warning-border: #ff7043; /* Bright coral */
-
-  --table-border-color: #b0bec5; /* Cool grey */
-  --table-header-bg: #eceff1; /* Very light grey */
-  --table-alternate-bg: #e8f5e9; /* Pale green */
-
-  --searchbar-border-color: #8d6e63; /* Earthy rose */
-  --searchbar-bg: #ffccbc; /* Light coral */
-  --searchbar-fg: #5d4037; /* Rich brown */
-  --searchbar-shadow-color: #b0bec5; /* Cool grey */
-  --searchresults-header-fg: #6d4c41; /* Darker brown */
-  --searchresults-border-color: #cfd8dc; /* Light grey */
-  --searchresults-li-bg: #fff3e0; /* Soft peach */
-  --search-mark-bg: #ffb74d; /* Warm orange */
-
-  --color-scheme: light;
+  --color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
