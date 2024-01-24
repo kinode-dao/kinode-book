@@ -17,6 +17,7 @@ This guide assumes a basic understanding of Kinode process building, some famili
 ## Start
 
 First, initialize a new project with
+
 ```
 kit new file_transfer
 cd file_transfer
@@ -25,11 +26,13 @@ cd file_transfer
 Here's a clean template so you have a complete fresh start:
 
 This guide will use the following `kinode_process_lib` version in `file_transfer/Cargo.toml`:
+
 ```
 kinode_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", tag = "v0.5.4-alpha" }
 ```
 
 Replace the `file_transfer/src/lib.rs` with:
+
 ```rust
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
@@ -93,12 +96,15 @@ These will be messaging capabilities to `"net:distro:sys"` (as you'll want to ta
 
 Now, look at `file_transfer/src/lib.rs`.
 First, add an import of some VFS functions from the `process_lib`:
+
 ```rust
 use kinode_process_lib::vfs::{create_drive, metadata, open_dir, Directory, FileType},
 ```
+
 and, to `init()`, create a [drive](../apis/vfs.md#drives) in your VFS and open it.
 This is where files will be downloaded by other nodes.
 You can add a whitelist a bit later!
+
 ```rust
 let drive_path = create_drive(our.package_id(), "files").unwrap();
 ```
@@ -253,6 +259,7 @@ fn handle_transfer_response(
 ```
 
 Now try this out by [booting two nodes](../kit/boot-fake-node.md#example-usage), i.e.,
+
 ```
 kit f
 
@@ -260,7 +267,15 @@ kit f
 kit f --home /tmp/kinode-fake-node-2 -p 8081 -f fake2.os
 ```
 
-and then placing files in the `/files` directory of the second (the `--home` dir path is specified as an argument to `boot-fake-node`), and sending a request from the first:
+and [starting the package](../kit/start-package.md) on both nodes,
+
+```
+kit b
+kit s
+kit s -p 8081
+```
+
+and then placing files in the `/vfs/file_transfer:file_transfer/files/` directory of the second (the `--home` dir path is specified as an argument to `boot-fake-node`), and sending a request from the first:
 
 ```
 /m fake.os@file_transfer:file_transfer:template.os "ListFiles"
@@ -334,15 +349,18 @@ pub enum WorkerRequest {
 ```
 
 Some notes:
+
 - Workers will receive an `Inititialize` request from their own node, which tells the worker it is either a receiver or a sender based on if it has a target worker `Option<Address>`.
 - Progress reports are sent back to the main process; if adding a frontend, these could be sent to it via WebSocket updates.
 
 The only additional part you need to handle in the transfer app is the Download request you've added.
 `TransferRequest::Download` will handle 2 cases:
+
 1. An incoming download request; spawn a worker, which sends chunks to the remote `target_worker` given in the request,
 2. An outgoing download request: spawn a worker, which sends its address to the remote node hosting the file.
 
 To enable spawning and other features, change `file_transfer/src/lib.rs`s imports to:
+
 ```rust
 use kinode_process_lib::{
     await_message, our_capabilities, println, spawn,
@@ -352,6 +370,7 @@ use kinode_process_lib::{
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 ```
+
 and change `handle_transfer_request()` to:
 
 ```rust
@@ -452,9 +471,11 @@ Now, the actual worker.
 The worker is its own process, just like the `file_transfer` process.
 Therefore, you need to create a new process directory, `worker`, next to the `file_transfer` process, inside the `file_transfer` package.
 E.g.,
+
 ```bash
 cp -r file_transfer worker
 ```
+
 and change the `worker/Cargo.toml` `name` to `worker`.
 
 First, its worth noting that because when you spawn `worker` you give it `our_capabilities()` (i.e. it has the same capabilities as the parent process), the worker will have the ability to message both `"net:distro:sys"` and `"vfs:distro:sys"`.
@@ -652,6 +673,7 @@ fn handle_message(
 
 So upon `Initialize`, you open the existing file or create an empty one.
 Then:
+
 - if receiver, save the `File` to your state, and then send a Started response to parent.
 - if sender, get the file's length, send it as `Size` to the `target_worker`, and then iteratively send chunks to `target_worker`.
 
