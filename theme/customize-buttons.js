@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (ayuButton) ayuButton.textContent = "Wynn"; // New name for 'Ayu'
 
   const navyButton = document.getElementById("navy");
-  if (navyButton) navyButton.textContent = "Light"; // New name for 'Navy'
+  if (navyButton) navyButton.textContent = "Dark"; // New name for 'Navy'
 
   const sidebar = document.querySelector(".sidebar-scrollbox");
   if (sidebar) {

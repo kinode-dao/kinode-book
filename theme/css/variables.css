@@ -150,49 +150,49 @@
 }
 
 .navy {
-  /* rename to .light */
+  /* rename to .dark */
 
-  --bg: #f0f8ff; /* Soft sky blue */
-  --fg: #27496d; /* Deep ocean blue */
+  --bg: #0a2239; /* Dark navy blue, instead of Soft sky blue */
+  --fg: #cad2d3; /* Soft mist grey, contrasting Deep ocean blue */
 
-  --sidebar-bg: #dcedc1; /* Light leaf green */
-  --sidebar-fg: #405d27; /* Dark green */
-  --sidebar-non-existant: #a4b3b6; /* Muted stone grey */
-  --sidebar-active: #ff6b6b; /* Vibrant flower red */
-  --sidebar-spacer: #e8e8e8; /* Very light grey */
+  --sidebar-bg: #345b29; /* Deep forest green, darker than Light leaf green */
+  --sidebar-fg: #d4e2d4; /* Pale mint green, contrast for Dark green */
+  --sidebar-non-existant: #5c6975; /* Darker shade of Muted stone grey */
+  --sidebar-active: #bf2f2f; /* Darker shade of Vibrant flower red */
+  --sidebar-spacer: #434343; /* Dark grey, instead of Very light grey */
 
   --scrollbar: var(--sidebar-fg);
 
-  --icons: #8a5a44; /* Earthy brown */
-  --icons-hover: #ffcb69; /* Nectar gold */
+  --icons: #563f31; /* Darker Earthy brown */
+  --icons-hover: #b38600; /* Darker, more subdued Nectar gold */
 
-  --links: #ff7043; /* Bright coral */
+  --links: #b34700; /* Darker, more subdued Bright coral */
 
-  --inline-code-color: #d35400; /* Pumpkin orange */
+  --inline-code-color: #a04000; /* Darker, Burnt orange, instead of Pumpkin orange */
 
-  --theme-popup-bg: #e6e6e6; /* Light grey */
-  --theme-popup-border: #c0c0c0; /* Medium grey */
-  --theme-hover: #d0d0d0; /* Soft grey */
+  --theme-popup-bg: #404040; /* Dark grey, instead of Light grey */
+  --theme-popup-border: #5a5a5a; /* Darker Medium grey */
+  --theme-hover: #4f4f4f; /* Darker Soft grey */
 
-  --quote-bg: #f2f2f2; /* Very light grey */
-  --quote-border: #dcdcdc; /* Light grey */
+  --quote-bg: #3a3a3a; /* Dark grey, instead of Very light grey */
+  --quote-border: #525252; /* Darker Light grey */
 
-  --warning-border: #e67e22; /* Pumpkin orange */
+  --warning-border: #994515; /* Darker, earthier shade of Pumpkin orange */
 
-  --table-border-color: #dcdcdc; /* Light grey */
-  --table-header-bg: #e6e6e6; /* Light grey */
-  --table-alternate-bg: #f2f2f2; /* Very light grey */
+  --table-border-color: #525252; /* Darker Light grey */
+  --table-header-bg: #404040; /* Dark grey, instead of Light grey */
+  --table-alternate-bg: #3a3a3a; /* Dark grey, instead of Very light grey */
 
-  --searchbar-border-color: #a0a0a0; /* Medium grey */
-  --searchbar-bg: #f0f0f0; /* Soft grey */
-  --searchbar-fg: #27496d; /* Deep ocean blue */
-  --searchbar-shadow-color: #c0c0c0; /* Medium grey */
-  --searchresults-header-fg: #405d27; /* Dark green */
-  --searchresults-border-color: #dcdcdc; /* Light grey */
-  --searchresults-li-bg: #e6e6e6; /* Light grey */
-  --search-mark-bg: #ffcb69; /* Nectar gold */
+  --searchbar-border-color: #4f4f4f; /* Dark grey, instead of Medium grey */
+  --searchbar-bg: #363636; /* Dark grey, instead of Soft grey */
+  --searchbar-fg: #d4e2d4; /* Pale mint green, contrasting Deep ocean blue */
+  --searchbar-shadow-color: #5a5a5a; /* Darker Medium grey */
+  --searchresults-header-fg: #d4e2d4; /* Pale mint green, contrast for Dark green */
+  --searchresults-border-color: #525252; /* Darker Light grey */
+  --searchresults-li-bg: #404040; /* Dark grey, instead of Light grey */
+  --search-mark-bg: #b38600; /* Darker, more subdued Nectar gold */
 
-  --color-scheme: light;
+  --color-scheme: dark;
 }
 
 .rust {

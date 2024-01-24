@@ -7,5 +7,5 @@ title = "Kinode Book"
 
 [output.html]
 additional-js = ["theme/customize-buttons.js"]
-additional-css = ["theme/fonts/custom-fonts.css", "theme/css/variables.css", "theme/css/highlight.css"]
+additional-css = ["theme/fonts/custom-fonts.css", "theme/css/variables.css"]
 edit-url-template = "https://github.com/uqbar-dao/kinode-book/edit/main/{path}"
