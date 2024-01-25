@@ -58,6 +58,7 @@
 - [Publishing a Website or Web App](./cookbook/publish_to_web.md)
 - [Simple File Transfer Guide](./cookbook/file_transfer.md)
 - [Intro to Web UI with File Transfer](./cookbook/file_transfer_ui.md)
+- [Writing and Running Scripts](./cookbook/writing_scripts.md)
 
 # API Reference
 
