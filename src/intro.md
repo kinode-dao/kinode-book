@@ -2,10 +2,6 @@
 
 The Kinode Book describes the Kinode operating system, both in conceptual and practical terms.
 
-* To get your hands dirty developing, jump to [My First Kinode Application](./my_first_app/chapter_1.md).
-* To learn about high-level concepts, keep reading these documents in-order.
-* To learn about how the system functions, start reading about [System Components](./processes.md).
-
 Kinode OS is a decentralized operating system, peer-to-peer app framework, and node network designed to simplify the development and deployment of decentralized applications.
 It is also a *sovereign cloud computer*, in that Kinode can be deployed anywhere and act as a server controlled by anyone.
 Ultimately, Kinode facilitates the writing and distribution of software that runs on privately-held, personal server nodes or node clusters.

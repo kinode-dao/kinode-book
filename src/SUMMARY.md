@@ -1,5 +1,6 @@
 # Summary
 
+[Quick Start](./quick-start.md)
 [Introduction](./intro.md)
 [Identity System](./identity_system.md)
 [Design Philosophy](./design_philosophy.md)
