@@ -1,7 +1,7 @@
 # In-Depth Guide: Chess App
 
 This guide will walk you through building a very simple chess app on Kinode OS.
-The final result will look like [this](https://github.com/uqbar-dao/kinode/tree/main/modules/chess): chess is in the basic runtime distribution so you can try it yourself.
+The final result will look like [this](https://github.com/kinode-dao/kinode/tree/main/modules/chess): chess is in the basic runtime distribution so you can try it yourself.
 
 To prepare for this tutorial, follow the environment setup guide [here](../my_first_app/chapter_1.md), i.e. [start a fake node](../my_first_app/chapter_1.md#booting-a-fake-kinode-node) and then, in another terminal, run:
 ```bash
@@ -157,7 +157,7 @@ lto = true
 anyhow = "1.0"
 base64 = "0.13"
 bincode = "1.3.3"
-kinode_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", tag = "v0.5.4-alpha" }
+kinode_process_lib = { git = "ssh://git@github.com/kinode-dao/process_lib.git", tag = "v0.5.4-alpha" }
 pleco = "0.5"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"

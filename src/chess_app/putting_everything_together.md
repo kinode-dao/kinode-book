@@ -32,4 +32,4 @@ There are also three extensions to this tutorial which dive into specific use ca
 - [Payment Integration (using ETH)](./payment.md) [coming soon]
 - [LLM Integration (play chess against the AI!)](./llm.md) [coming soon]
 
-The full code is available [here](https://github.com/uqbar-dao/kinode/tree/main/modules/chess).
+The full code is available [here](https://github.com/kinode-dao/kinode/tree/main/modules/chess).
