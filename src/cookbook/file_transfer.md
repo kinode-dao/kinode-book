@@ -278,7 +278,7 @@ kit s -p 8081
 and then placing files in the `/vfs/file_transfer:file_transfer/files/` directory of the second (the `--home` dir path is specified as an argument to `boot-fake-node`), and sending a request from the first:
 
 ```
-/m fake.os@file_transfer:file_transfer:template.os "ListFiles"
+/m fake2.os@file_transfer:file_transfer:template.os "ListFiles"
 ```
 
 You should see a printed response.
