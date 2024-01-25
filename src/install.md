@@ -9,7 +9,7 @@ However, if you are just interested in starting development as fast as possible,
 The recommended method for most users is to use a precompiled binary.
 If you want to make edits to the Kinode core software, see [Build From Source](#build-from-source).
 
-First, get the software itself by downloading a [precompiled release binary](https://github.com/uqbar-dao/kinode/releases).
+First, get the software itself by downloading a [precompiled release binary](https://github.com/kinode-dao/kinode/releases).
 Choose the correct binary for your particular computer architecture and OS. 
 There is no need to download the `simulation-mode` binary — it is used behind the scenes. 
 Extract the `.zip` file and the binary is inside.
@@ -48,7 +48,7 @@ For more information, or debugging, see the [Rust lang install page](https://www
 Clone and set up the repository:
 
 ```bash
-git clone git@github.com:uqbar-dao/kinode.git
+git clone git@github.com:kinode-dao/kinode.git
 
 cd kinode
 mkdir .cargo

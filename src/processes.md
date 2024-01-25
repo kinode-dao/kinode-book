@@ -177,6 +177,6 @@ This is a high-level overview of process semantics.
 In practice, processes are combined and shared in **packages**, which are generally synonymous with **apps**.
 
 It's briefly discussed here that processes are compiled to Wasm.
-The details of this are not covered in the Kinode Book, but can be found in the documentation for the [Kinode runtime](https://github.com/uqbar-dao/kinode), which uses [Wasmtime](https://wasmtime.dev/), a WebAssembly runtime, to load, execute, and provide an interface for the subset of Wasm processes that are valid Kinode processes.
-Pragmatically, processes can be compiled using the [`kit` tools](https://github.com/uqbar-dao/kit).
+The details of this are not covered in the Kinode Book, but can be found in the documentation for the [Kinode runtime](https://github.com/kinode-dao/kinode), which uses [Wasmtime](https://wasmtime.dev/), a WebAssembly runtime, to load, execute, and provide an interface for the subset of Wasm processes that are valid Kinode processes.
+Pragmatically, processes can be compiled using the [`kit` tools](https://github.com/kinode-dao/kit).
 The long term goal of the Kinode runtime is to use [WASI](https://wasi.dev/) to provide a secure, sandboxed environment for processes to not only make use of the kernel features described in this document, but also to make full use of the entire WebAssembly ecosystem, including the ability to use sandboxed system calls provided by the host via WASI.

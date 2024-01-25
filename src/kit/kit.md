@@ -43,7 +43,7 @@ The first chapter of the [Build and Deploy an App tutorial](../my_first_app/chap
 To get `kit`, run
 
 ```bash
-cargo install --git https://github.com/uqbar-dao/kit
+cargo install --git https://github.com/kinode-dao/kit
 ```
 
 To update, run that same command or
@@ -52,7 +52,7 @@ To update, run that same command or
 kit update
 ```
 
-You can find the source for `kit` at [https://github.com/uqbar-dao/kit](https://github.com/uqbar-dao/kit).
+You can find the source for `kit` at [https://github.com/kinode-dao/kit](https://github.com/kinode-dao/kit).
 
 ## Table of Contents
 

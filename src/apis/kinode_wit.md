@@ -13,7 +13,7 @@ So far, we've written Kinode processes in Rust, Javascript, Go, and Python.
 
 To see exactly how to use WIT to write Kinode processes, see the [My First App](../my_first_app/chapter_1.md) chapter or the [Chess Tutorial](../chess_app/chess_engine.md).
 
-To see `kinode.wit` for itself, see the [file in the GitHub repo](https://github.com/uqbar-dao/kinode-wit/blob/master/kinode.wit).
+To see `kinode.wit` for itself, see the [file in the GitHub repo](https://github.com/kinode-dao/kinode-wit/blob/master/kinode.wit).
 Since this interface applies to all processes, it's one of the places in the OS where breaking changes are most likely to make an impact.
 To that end, the version of the WIT file that a process uses must be compatible with the version of Kinode OS on which it runs. 
 We intend to achieve perfect backwards compatibility upon first major release (1.0.0) of the OS and the WIT file.
@@ -21,12 +21,12 @@ After that point, since processes signal the version of the WIT file they use, s
 
 ## Types
 
-[These 14 types](https://github.com/uqbar-dao/kinode-wit/blob/373542a9a94ae61a7d216159f9f7bdf9266cd935/kinode.wit#L8-L103) make up the entirety of the shared type system between processes and the kernel.
+[These 14 types](https://github.com/kinode-dao/kinode-wit/blob/373542a9a94ae61a7d216159f9f7bdf9266cd935/kinode.wit#L8-L103) make up the entirety of the shared type system between processes and the kernel.
 Most types presented here are implemented in the [process standard library](../process_stdlib/overview.md) for ease of use.
 
 ## Functions
 
-[These 15 functions](https://github.com/uqbar-dao/kinode-wit/blob/373542a9a94ae61a7d216159f9f7bdf9266cd935/kinode.wit#L105-L184) are available to processes.
+[These 15 functions](https://github.com/kinode-dao/kinode-wit/blob/373542a9a94ae61a7d216159f9f7bdf9266cd935/kinode.wit#L105-L184) are available to processes.
 They are implemented in the kernel.
 Again, the process standard library makes it such that these functions often don't need to be directly called in processes, but they are always available.
 The functions are generally separated into 4 categories: system utilities, process management, capabilities management, and message I/O.

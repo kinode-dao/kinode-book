@@ -28,7 +28,7 @@ Here's a clean template so you have a complete fresh start:
 This guide will use the following `kinode_process_lib` version in `file_transfer/Cargo.toml`:
 
 ```
-kinode_process_lib = { git = "ssh://git@github.com/uqbar-dao/process_lib.git", tag = "v0.5.4-alpha" }
+kinode_process_lib = { git = "ssh://git@github.com/kinode-dao/process_lib.git", tag = "v0.5.4-alpha" }
 ```
 
 Replace the `file_transfer/src/lib.rs` with:

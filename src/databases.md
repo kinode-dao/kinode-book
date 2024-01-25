@@ -58,4 +58,4 @@ println!("rows: {}", rows.len());
 - [SQLite](https://www.sqlite.org/docs.html)
 - [`kinode_process_lib` book entry](./process_stdlib/overview.md)
 - [`kinode_process_lib` docs.rs](https://docs.rs/kinode_process_lib)
-- [`kinode_process_lib`](https://github.com/uqbar-dao/process_lib)
+- [`kinode_process_lib`](https://github.com/kinode-dao/process_lib)

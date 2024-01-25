@@ -1,6 +1,6 @@
 # VFS API
 
-Useful helper functions can be found in the [kinode_process_lib](https://github.com/uqbar-dao/process_lib)
+Useful helper functions can be found in the [kinode_process_lib](https://github.com/kinode-dao/process_lib)
 
 The VFS API tries to map over the [std::fs](https://doc.rust-lang.org/std/fs/index.html) calls as directly as possible.
 
