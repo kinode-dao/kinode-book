@@ -24,6 +24,10 @@ The simplest way to serve a UI is using the `serve_ui` function from `process_li
 serve_ui(&our, "ui").unwrap();
 ```
 
+This will serve the `index.html` in the specified folder at the home path of your process.
+If your process is called `main:my_package:myusername.os` and your Kinode is running locally on port 8080,
+then the UI will be served at `http://localhost:8080/main:my_package:myusername.os`.
+
 `serve_ui` takes two arguments: `&our` (&Address) and the directory where the UI assets are stored.
 By convention, this is the `ui` directory inside of the `pkg` directory that will be uploaded when you install the process.
 There must be an `index.html` in the `"ui"` directory (or whatever your top-level directory is called).
