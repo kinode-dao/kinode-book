@@ -191,13 +191,13 @@ At this point, you can use the terminal to test your message types!
 First, try a hello. Get the address of your process by looking at the "started" printout that came from it in the terminal.
 As a reminder, these values are set in the `metadata.json` and `manifest.json` package files.
 ```bash
-/m our@<your_process>:<your_package>:<your_publisher> {"Hello": "hey there"}
+m our@<your_process>:<your_package>:<your_publisher> {"Hello": "hey there"}
 ```
 
 You should see the message text printed. Next, try a goodbye.
 This will cause the process to exit.
 ```bash
-/m our@<your_process>:<your_package>:<your_publisher> "Goodbye"
+m our@<your_process>:<your_package>:<your_publisher> "Goodbye"
 ```
 
 If you try to send another Hello now, nothing will happen, because the process has exited [(assuming you have set `on_exit: "None"`; with `on_exit: "Restart"` it will immediately start up again)](./chapter_2.md#aside-on_exit).

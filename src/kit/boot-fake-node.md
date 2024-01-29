@@ -23,7 +23,7 @@ kit boot-fake-node -h /tmp/kinode-fake-node-2 -p 8081 -f fake2.os
 
 # Send a message from fake2.os to fake.os
 # In the terminal of fake2.os:
-/hi fake.os hello!
+hi fake.os hello!
 
 # You should see "hello!" in the first node's terminal
 ```

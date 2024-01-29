@@ -71,3 +71,15 @@ For instance, the `echo` script is published as part of `terminal:sys`, so you c
 ```bash
 echo:terminal:sys Hello World!
 ```
+
+## Aliasing a Script
+If you are going to be calling your script very often, you can alias it to something shorter like so:
+```bash
+alias echo echo:terminal:sys
+```
+so now you can call `echo` like `echo Hello World!`.
+
+To remove the alias, simply run:
+```bash
+alias echo
+```
