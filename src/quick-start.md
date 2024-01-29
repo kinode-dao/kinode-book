@@ -39,10 +39,10 @@ kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fak
 
 # Or, from the terminal running one of the fake nodes:
 ## First fake node terminal:
-m our@my_chat_app:my_chat_app:template.os {"Send": {"target": "fake2.os", "message": "hello world"}}
+m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.os", "message": "hello world"}}'
 
 ## Second fake node terminal:
-m our@my_chat_app:my_chat_app:template.os {"Send": {"target": "fake.os", "message": "wow, it works!"}}
+m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.os", "message": "wow, it works!"}}'
 ```
 
 ## Next steps

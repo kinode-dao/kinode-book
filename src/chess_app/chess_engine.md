@@ -131,8 +131,8 @@ Below, you'll find the full code for the CLI version of the app.
 You can build it and install it on a node using `kit`.
 You can interact with it in the terminal, primitively, like so (assuming your first node is `fake.os` and second is `fake2.os`):
 ```
-m our@my_chess:my_chess:template.os {"NewGame": {"white": "fake.os", "black": "fake2.os"}}
-m our@my_chess:my_chess:template.os {"Move": {"game_id": "fake2.os", "move_str": "e2e4"}}
+m our@my_chess:my_chess:template.os '{"NewGame": {"white": "fake.os", "black": "fake2.os"}}'
+m our@my_chess:my_chess:template.os '{"Move": {"game_id": "fake2.os", "move_str": "e2e4"}}'
 ```
 (If you want to make a more ergonomic CLI app, consider parsing `body` as a string...)
 

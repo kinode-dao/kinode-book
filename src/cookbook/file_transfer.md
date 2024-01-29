@@ -1189,7 +1189,7 @@ There you have it!
 Try and run it, you can download a file with the command
 
 ```
-m our@file_transfer:file_transfer:template.os {"Download": {"name": "dawg.jpeg", "target": "fake2.os@file_transfer:file_transfer:template.os"}}
+m our@file_transfer:file_transfer:template.os '{"Download": {"name": "dawg.jpeg", "target": "fake2.os@file_transfer:file_transfer:template.os"}}'
 ```
 
 replacing node name and file name!

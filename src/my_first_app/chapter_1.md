@@ -282,13 +282,13 @@ kit start-package -p 8081
 To send a chat message from the first node, run the following in its terminal:
 
 ```
-m our@my_chat_app:my_chat_app:template.os {"Send": {"target": "fake2.os", "message": "hello world"}}
+m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.os", "message": "hello world"}}'
 ```
 
 and replying, from the other terminal:
 
 ```
-m our@my_chat_app:my_chat_app:template.os {"Send": {"target": "fake.os", "message": "wow, it works!"}}
+m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.os", "message": "wow, it works!"}}'
 ```
 
 Messages can also be injected from the outside.
