@@ -9,10 +9,10 @@ When writing a script, you cannot control the `OnExit` behavior like you can wit
 ## Writing a Script
 Let's look at the simplest possible script: `echo`, which takes in an argument, and prints it out again:
 ```rust
-use kinode_process_lib::{await_next_request_body, call_init, println, Address};
+use kinode_process_lib::{await_next_request_body, call_init, println, Address, Response};
 
 wit_bindgen::generate!({
-    path: "wit",
+    path: "../../../wit",
     world: "process",
     exports: {
         world: Component,
@@ -27,10 +27,7 @@ fn init(_our: Address) {
         return;
     };
 
-    println!(
-        "{}",
-        String::from_utf8(args).unwrap_or("echo: error".into())
-    );
+    let _ = Response::new().body(args).send();
 }
 ```
 From writing applications, this should look very familiar - the imports, `wit_bindge::generate!`, `call_init!`, `init(our: Address)`, etc. are all exactly the same.
@@ -39,6 +36,11 @@ Instead, our initial arguments will come from a single message from the terminal
 Next, all we do is `String`ify the message body, and print it out.
 
 Arbitrary logic can be put below `await_next_message_body` - just like an app, you can fire-off a number of requests, choose to await their responses, handle errors, etc. just like normal.
+
+In this case, we send a `Response` containing the arguments passed in.
+The `Response` let's us compose `echo` with other scripts via [piping](../terminal.md#piping-and-composing-scripts).
+Not every script needs to end with a `Response`.
+It would be valid to simply `println` the `args` and terminate, but this would mean that our script has no "return value" to compose with other scripts via pipes.
 
 ## Publishing a Script
 Unlike processes accociated with a long-running application, which will be put into the `manifest.json`, scripts must be registered in a separate `scripts.json` file.
