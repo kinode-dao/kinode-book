@@ -20,6 +20,7 @@
 - [HTTP Server & Client](./http_server_and_client.md)
 - [Files](./files.md)
 - [Databases](./databases.md)
+- [Terminal](./terminal.md)
 
 # Process Standard Library
 

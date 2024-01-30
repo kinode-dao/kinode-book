@@ -278,7 +278,7 @@ kit s -p 8081
 and then placing files in the `/vfs/file_transfer:file_transfer/files/` directory of the second (the `--home` dir path is specified as an argument to `boot-fake-node`), and sending a request from the first:
 
 ```
-/m fake2.os@file_transfer:file_transfer:template.os "ListFiles"
+m fake2.os@file_transfer:file_transfer:template.os "ListFiles"
 ```
 
 You should see a printed response.
@@ -1189,7 +1189,7 @@ There you have it!
 Try and run it, you can download a file with the command
 
 ```
-/m our@file_transfer:file_transfer:template.os {"Download": {"name": "dawg.jpeg", "target": "fake2.os@file_transfer:file_transfer:template.os"}}
+m our@file_transfer:file_transfer:template.os '{"Download": {"name": "dawg.jpeg", "target": "fake2.os@file_transfer:file_transfer:template.os"}}'
 ```
 
 replacing node name and file name!
