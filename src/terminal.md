@@ -3,7 +3,7 @@
 ## Commands
 
 All commands in the terminal are calling scripts - a special kind of process.
-KinodeOS comes pre-loaded with a number of scripts useful for debugging and everyday use.
+Kinode OS comes pre-loaded with a number of scripts useful for debugging and everyday use.
 These scripts are fully named `<SCRIPT>:terminal:sys` e.g `hi:terminal:sys`, but the distro [aliases](#alias---alias-a-script-name) these to short names, in this case just `hi`, for convenience.
 
 
