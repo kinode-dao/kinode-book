@@ -78,9 +78,9 @@ Example:
 
 For more information on writing your own scripts, see the [cookbook](./cookbook/writing_scripts.md).
 
-## `scripts.json`
+## Packaging Scripts with `scripts.json`
 For your scripts to be usable by the terminal, you must include a `pkg/scripts.json` file.
-The JSON object in `scripts.json` describes a configuration for a set of WebAssembly (WASM) modules.
+The JSON object in `scripts.json` describes the configuration for each script in your package.
 Each top-level key represents the path of the WASM module in your package, usually just `"myscript.wasm"`, `"echo.wasm"`, etc.
 
 The value for each module is an object that specifies the configuration for that particular module.
@@ -95,40 +95,9 @@ The object can contain the following fields:
 Modules may not necessarily use all these fields. For instance, "m.wasm" only uses root, public, and requestNetworking, omitting requestCapabilities and grantCapabilities.
 
 ### Example
-This is the actual `scripts.json` file for the default `terminal:sys` scripts:
+This is a `scripts.json` that publishes a single script, `hi`, which doesn't receive `root` capabilities, is not `public`, can send messages over the network, will receive the capability to message `net:distro:sys`, and gives `net:distro:sys` the ability to message it back:
 ```json
 {
-    "alias.wasm": {
-        "root": false,
-        "public": false,
-        "requestNetworking": false,
-        "requestCapabilities": [
-            "terminal:terminal:sys"
-        ],
-        "grantCapabilities": []
-    },
-    "echo.wasm": {
-        "root": false,
-        "public": false,
-        "requestNetworking": false,
-        "requestCapabilities": [],
-        "grantCapabilities": []
-    },
-    "cat.wasm": {
-        "root": false,
-        "public": false,
-        "requestNetworking": false,
-        "requestCapabilities": [
-            "vfs:distro:sys",
-            {
-                "process": "vfs:distro:sys",
-                "params": {
-                    "root": true
-                }
-            }
-        ],
-        "grantCapabilities": []
-    },
     "hi.wasm": {
         "root": false,
         "public": false,
@@ -139,20 +108,6 @@ This is the actual `scripts.json` file for the default `terminal:sys` scripts:
         "grantCapabilities": [
             "net:distro:sys"
         ]
-    },
-    "top.wasm": {
-        "root": false,
-        "public": false,
-        "requestNetworking": false,
-        "requestCapabilities": [
-            "kernel:distro:sys"
-        ],
-        "grantCapabilities": []
-    },
-    "m.wasm": {
-        "root": true,
-        "public": false,
-        "requestNetworking": true
     }
 }
 ```
