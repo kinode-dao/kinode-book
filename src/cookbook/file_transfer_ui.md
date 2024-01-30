@@ -669,7 +669,7 @@ The UI will be served from `http://localhost:8080/file_transfer:file_transfer:te
 ## Next Steps
 
 Now that you've built a simple UI, you can try building your own app!
-Check out the [APIs](../apis/apis.md) to see what's possible.
+Check out the [APIs](../apis/overview.md) to see what's possible.
 
 ## Github Repo
 
