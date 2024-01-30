@@ -86,7 +86,7 @@ Each top-level key represents the path of the WASM module in your package, usual
 The value for each module is an object that specifies the configuration for that particular module.
 The object can contain the following fields:
 
-- `root` (Boolean): Indicates whether the script has root privileges
+- `root` (Boolean): Indicates whether the script has "root" privileges - meaning whether it gets *every* capability that the terminal has (not necessarily every capability in existence on your machine)
 - `public` (Boolean): Determines if the script is publicly accessible by other processes
 - `requestNetworking` (Boolean): Specifies whether the script will get networking capabilities
 - `requestCapabilities` (Array): An array that lists the capabilities requested by the script. Each element in the array can be either a string or an object. The string represents a `ProcessId` that this script will be able to message. When an object is used, it specifies a different kind of capability from `issuer` with `params` as an arbitrary json object.
@@ -138,7 +138,7 @@ As a simple example, let's look at the `echo` code:
 use kinode_process_lib::{await_next_request_body, call_init, println, Address, Response};
 
 wit_bindgen::generate!({
-    path: "../../../wit",
+    path: "wit",
     world: "process",
     exports: {
         world: Component,
