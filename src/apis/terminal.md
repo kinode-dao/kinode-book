@@ -1,4 +1,7 @@
 # Terminal API
+It is extremely rare for an app to have direct access to the terminal api.
+Normally, the terminal will be used to call scripts, which will have access to the process in question.
+For documentation on using, writing, publishing, and composing scripts, see the [terminal use documentation](../terminal.md), or for a quick start, the [script cookbook](../cookbook/writing_scripts.md).
 
 The Kinode terminal is broken up into two segments: a Wasm app, called `terminal:terminal:sys`, and a runtime module called `terminal:distro:sys`.
 The Wasm app is the central area where terminal logic and authority live.
@@ -21,7 +24,7 @@ For example, `hi:terminal:sys` can be shortened to just `hi` as in: `hi default-
 
 The other most commonly used script is `m:terminal:sys`, or just `m` - which stands for `Message`. `m` let's you send a request to any node or application like so:
 ```bash
-m john.os@proc:pkg:pub {"foo":"bar"}
+m john.os@proc:pkg:pub '{"foo":"bar"}'
 ```
 
 Note that if your process has the ability to message the `terminal` app, then that process can call any script - of which there may be many on a machine, so we cannot possibly write all of them down in this document.
