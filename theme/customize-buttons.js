@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const sidebar = document.querySelector(".sidebar-scrollbox");
   if (sidebar) {
     const logo = document.createElement("img");
-    logo.src = "assets/KINODE_SYMBOL_BLACK_TRANSPARENT.png";
+    logo.src = "/assets/KINODE_SYMBOL_BLACK_TRANSPARENT.png";
     logo.alt = "Kinode OS Logo";
     logo.style =
       "height: 40px; width: auto; display: block; margin: 10px auto;";
