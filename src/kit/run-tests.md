@@ -74,6 +74,7 @@ port = 8080
 home = "home/first"
 fake_node_name = "first.os"
 runtime_verbose = false
+is_testnet = true
 
 [[tests.nodes]]
 
@@ -81,6 +82,7 @@ port = 8081
 home = "home/second"
 fake_node_name = "second.os"
 runtime_verbose = false
+is_testnet = true
 
 
 [[tests]]
@@ -99,6 +101,7 @@ port = 8080
 home = "home/first"
 fake_node_name = "first.os"
 runtime_verbose = false
+is_testnet = true
 ```
 
 which has the directory structure
@@ -209,6 +212,7 @@ Key               | Value Type     | Value Description
 `password`        | String or Null | Password of fake node (default: `"secret"`)
 `rpc`             | String or Null | [`wss://` URI of Ethereum RPC](../login.md#starting-the-kinode-node)
 `runtime_verbose` | Boolean        | Whether to print `stdout`/`stderr` from the node
+`is_testnet`      | Boolean        | Whether to connect to Sepolia testnet (`false` -> Optimism mainnet)
 
 ## Test package format
 
