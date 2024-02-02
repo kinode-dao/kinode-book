@@ -57,9 +57,24 @@ Copy the WebSocket API key from the API Key button:
 
 ![Alchemy API Key](./assets/alchemy-api-key.png)
 
+### Alternative to Alchemy
+
+As an alternative to using Alchemy's RPC API key, [Infura's](https://app.infura.io) endpoints may be used. Upon creating an Infura account, the first key is already created and titled 'My First Key'. Click on the title to edit the key.
+
+![Infura My First Key](./assets/my_first_key_infura.png)
+
+Next, check the box next to Ethereum "SEPOLIA" or Optimism "MAINNET" according to whichever is needed. After one is chosen, click "SAVE CHANGES". Then, at the top, click "Active Endpoints".
+
+![Create Endpoint Infura](./assets/create_endpoint_infura.png)
+
+On the "Active Endpoints" tab, there are tabs for "HTTPS" and "WebSockets". Select the WebSockets tab. Copy this endpoint and use it in place of the Alchemy endpoint in the following step, "Running the Binary".
+
+![Active Endpoints Infura](./assets/active_endpoints_infura.png)
+
 ### Running the Binary
 
 Replace the `--rpc` field below with the WebSocket API key link copied from [the previous step](#acquiring-an-rpc-api-key), and start the node with:
+
 ```bash
 # For Optimism mainnet
 ./kinode home --rpc wss://opt-mainnet.g.alchemy.com/v2/<your-api-key>
@@ -67,6 +82,7 @@ Replace the `--rpc` field below with the WebSocket API key link copied from [the
 # For Sepolia testnet
 ./kinode home --rpc wss://eth-sepolia.g.alchemy.com/v2/<your-api-key>
 ```
+
 (See runtime README if you wish to boot on Optimism mainnet)
 
 A new browser tab should open, but if not, look in the terminal for a line like
@@ -144,7 +160,6 @@ As an indirect node, only your router knows your IP.
 After clicking `Register .os name`, click through the wallet prompts to send the transaction:
 
 ![Register wallet prompt](./assets/register-wallet-prompt.png)
-
 
 ### What Does the Password Do?
 
