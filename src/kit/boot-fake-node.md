@@ -54,7 +54,7 @@ Options:
   -r, --runtime-path <PATH>
           Path to Kinode core repo or runtime binary (overrides --version)
   -v, --version <VERSION>
-          Version of Kinode binary to use (overridden by --runtime-path) [default: 0.4.0]
+          Version of Kinode binary to use (overridden by --runtime-path) [default: latest] [possible values: latest, v0.5.2-alpha, v0.5.1-alpha, v0.5.0-alpha]
   -p, --port <NODE_PORT>
           The port to run the fake node on [default: 8080]
   -h, --home <HOME>
@@ -65,6 +65,8 @@ Options:
           The port to run the network router on (or to connect to) [default: 9001]
       --rpc <RPC_ENDPOINT>
           Ethereum RPC endpoint (wss://)
+      --testnet
+          If set, use Sepolia testnet
       --persist
           If set, do not delete node home after exit
       --password <PASSWORD>
@@ -110,6 +112,10 @@ Additional fake nodes must point to the same port to connect to the fake node ne
 ### `--rpc`
 
 The Ethereum RPC endpoint to use, if desired.
+
+### `--testnet`
+
+Connect to the Sepolia testnet rather than the Optimism mainnet.
 
 ### `--persist`
 
