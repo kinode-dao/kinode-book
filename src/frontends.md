@@ -23,13 +23,13 @@ New libraries will be added as they become necessary or helpful.
 ## process_lib
 
 In `process_lib::http` there is a function `serve_ui` which is helpful for serving your frontend from a node.
-The two arguments to `serve_ui` are the current process' `&Address` and the name of the folder that contains your frontend.
+The five arguments to `serve_ui` are the current process' `&Address`, the name of the folder that contains your frontend, whether the UI requires authentication, whether the UI is local-only, and the path(s) on which to serve the UI.
 The frontend folder must be placed in the `pkg` folder so that it is loaded into the virtual file system when the process is installed.
 So if you put the frontend files in `pkg/ui` (with `index.html` at the top level!), the second argument to `serve_ui` would be `ui`.
-Under the hood, `serve_ui` looks for `index.html` and binds it statically to your process' main route.
+Under the hood, `serve_ui` looks for `index.html` and binds it statically to the paths that were passed in.
 Then all of the other files in the frontend folder are bound to their respective paths.
-For example, if your process is called `process:process:my-node`, then `index.html` would be bound to `/process:process:my-node`.
-The file `pkg/ui/assets/index.js` would be bound to `/process:process:my-node/assets/index.js`
+For example, if your process is called `process:process:my-node` and you passed the paths `["/"]` then `index.html` would be bound to `/process:process:my-node`.
+The file `pkg/ui/assets/index.js` would be bound to `/process:process:my-node/assets/index.js`.
 
 ## Local Development and "gotchas"
 

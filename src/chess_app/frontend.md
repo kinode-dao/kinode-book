@@ -30,7 +30,7 @@ In `my_chess/src/lib.rs`, inside `init()`:
 use kinode_process_lib::http;
 ...
 // Serve the index.html and other UI files found in pkg/ui at the root path.
-http::serve_ui(&our, "ui").unwrap();
+http::serve_ui(&our, "ui", true, false, vec!["/"]).unwrap();
 
 // Allow HTTP requests to be made to /games; they will be handled dynamically.
 http::bind_http_path("/games", true, false).unwrap();
@@ -44,7 +44,7 @@ The above code should be inserted into the `init()` function such that the front
 
 The `http` library in [process_lib](../process_stdlib/overview.md) provides a simple interface for serving static files and handling HTTP requests.
 Use `serve_ui` to serve the static files includeded in the process binary, and `bind_http_path` to handle requests to `/games`.
-`serve_ui` takes two arguments: the process' `&Address` and the name of the folder inside `pkg` that contains the `index.html` and other associated UI files.
+`serve_ui` takes five arguments: the process' `&Address`, the name of the folder inside `pkg` that contains the `index.html` and other associated UI files, whether the UI requires authentication, whether the UI is local-only, and the path(s) on which to serve the UI (usually `["/"]`).
 See [process_lib docs](../process_stdlib/overview.md) for more functions and documentation on their parameters.
 These requests all serve HTTP that can only be accessed by a logged-in node user (the `true` parameter for `authenticated`) and can be accessed remotely (the `false` parameter for `local_only`).
 This API is under active development!
