@@ -21,14 +21,14 @@ my_package
 The simplest way to serve a UI is using the `serve_ui` function from `process_lib`:
 
 ```
-serve_ui(&our, "ui").unwrap();
+serve_ui(&our, "ui", true, false, vec!["/"]).unwrap();
 ```
 
 This will serve the `index.html` in the specified folder at the home path of your process.
 If your process is called `main:my_package:myusername.os` and your Kinode is running locally on port 8080,
 then the UI will be served at `http://localhost:8080/main:my_package:myusername.os`.
 
-`serve_ui` takes two arguments: `&our` (&Address) and the directory where the UI assets are stored.
+`serve_ui` takes five arguments: the process' `&Address`, the name of the folder inside `pkg` that contains the `index.html` and other associated UI files, whether the UI requires authentication, whether the UI is local-only, and the path(s) on which to serve the UI (usually `["/"]`).
 By convention, this is the `ui` directory inside of the `pkg` directory that will be uploaded when you install the process.
 There must be an `index.html` in the `"ui"` directory (or whatever your top-level directory is called).
 
@@ -52,7 +52,7 @@ Note that `serve_ui` caches all files in `http_server`, so if your website or we
 In this case, you would bind the `index.html` file to your main route, and then bind a given HTTP route to serve all of your assets like so:
 
 ```
-serve_index_html(&our, "ui").unwrap();
+serve_index_html(&our, "ui", true, false, vec!["/"]).unwrap();
 bind_http_path("/assets/*", true, false).unwrap();
 ```
 
