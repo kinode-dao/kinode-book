@@ -9,7 +9,7 @@ Any process that you build can bind (register) any number of HTTP paths with `ht
 Every path that you bind will be automatically prepended with the current process' ID.
 For example, bind the route `/messages` within a process called `main:my_package:myname.os` like so:
 
-```
+```rs
 use kinode_process_lib::{http::bind_http_path};
 
 bind_http_path("/messages", true, false).unwrap();
@@ -23,7 +23,7 @@ The other two parameters to `bind_http_path` are `authenticated: bool` and `loca
 Incoming HTTP requests will come via `http_server` and have both an `body` and a `lazy_load_blob`.
 The `lazy_load_blob` is the HTTP request body, and the `body` is an `IncomingHttpRequest`:
 
-```
+```rs
 pub struct IncomingHttpRequest {
     pub source_socket_addr: Option<String>, // will parse to SocketAddr
     pub method: String,                     // will parse to http::Method
@@ -44,7 +44,7 @@ Usually, you will want to:
 
 Here is an example from the `kit` UI-enabled chat app template that handles both `POST` and `GET` requests to the `/messages` path:
 
-```
+```rs
 fn handle_http_server_request(
     our: &Address,
     message_archive: &mut MessageArchive,
@@ -116,7 +116,7 @@ fn handle_http_server_request(
 
 `send_response` is a `process_lib` function that sends an HTTP response. The function signature is as follows:
 
-```
+```rs
 pub fn send_response(
     status: StatusCode,
     headers: Option<HashMap<String, String>>,

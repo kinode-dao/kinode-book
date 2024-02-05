@@ -11,7 +11,7 @@ Otherwise:
 
 ## Run two fake Kinodes and chat between them
 
-```
+```sh
 # Get Rust and `kit` Kinode development tools
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 cargo install --git https://github.com/kinode-dao/kit

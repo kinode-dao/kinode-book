@@ -4,7 +4,7 @@
 
 ## To build:
 
-```
+```sh
 cargo install mdbook
 
 mdbook serve
