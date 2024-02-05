@@ -20,7 +20,7 @@ my_package
 
 The simplest way to serve a UI is using the `serve_ui` function from `process_lib`:
 
-```
+```rs
 serve_ui(&our, "ui", true, false, vec!["/"]).unwrap();
 ```
 
@@ -35,7 +35,7 @@ There must be an `index.html` in the `"ui"` directory (or whatever your top-leve
 Under the hood, `serve_ui` uses `http_bind_static_path` which caches files in memory with `http_server` to respond to HTTP requests more quickly.
 The signature for `http_bind_static_path` is below:
 
-```
+```rs
 pub fn bind_http_static_path<T>(
     path: T,
     authenticated: bool,
@@ -51,14 +51,14 @@ The content will be served at the named route with the `Content-Type` header set
 Note that `serve_ui` caches all files in `http_server`, so if your website or web app has hundreds of MBs of asset files (like high-res images), then you will want to use a different method to serve content.
 In this case, you would bind the `index.html` file to your main route, and then bind a given HTTP route to serve all of your assets like so:
 
-```
+```rs
 serve_index_html(&our, "ui", true, false, vec!["/"]).unwrap();
 bind_http_path("/assets/*", true, false).unwrap();
 ```
 
 Then in your request handler, you can use `handle_ui_asset_request` to get the file whose path matches the HTTP route of the request:
 
-```
+```rs
 let body = message.body();
 if let Ok(http_request) = serde_json::from_slice::<HttpServerRequest>(body) {
     match http_request {

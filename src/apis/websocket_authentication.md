@@ -10,7 +10,7 @@ To open a WebSocket channel, connect to the main route on the node `/` and send 
 
 The simplest way to connect from a browser is to use the `@uqbar/client-encryptor-api` like so:
 
-```
+```rs
 const api = new KinodeEncryptorApi({
   nodeId: window.our.node, // this is set if the /our.js script is present in index.html
   processId: "my_package:my_package:template.os",
@@ -26,7 +26,7 @@ const api = new KinodeEncryptorApi({
 
 Simple JavaScript/JSON example:
 
-```
+```rs
 function getCookie(name) {
     const cookies = document.cookie.split(';');
     for (let i = 0; i < cookies.length; i++) {
@@ -61,7 +61,7 @@ With a `WebSocketPush`, the incoming message will be on the `LazyLoadBlob`, acce
 
 A full example:
 
-```
+```rs
 fn handle_http_server_request(
     our: &Address,
     message_archive: &mut MessageArchive,
@@ -110,7 +110,7 @@ fn handle_http_server_request(
 
 Pushing data to a connected WebSocket is very simple. Call the `send_ws_push` function from `process_lib`:
 
-```
+```rs
 pub fn send_ws_push(
     node: String,
     channel_id: u32,
@@ -123,7 +123,7 @@ pub fn send_ws_push(
 
 If you would prefer to send the request without the helper function, this is that what `send_ws_push` looks like under the hood:
 
-```
+```rs
 Request::new()
     .target(Address::new(
         node,

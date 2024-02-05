@@ -1,19 +1,34 @@
 @font-face {
-  font-family: "Kabel Black";
-  src: url("/fonts/Kabel_Black_Regular.otf") format("opentype");
+  font-family: "OpenSans";
+  src: url("/fonts/OpenSans-CondBold.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Montserrat";
-  src: url("/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
+  font-family: "Futura";
+  src: url("/fonts/Futura Heavy.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Barlow";
+  src: url("/fonts/BarlowCondensed-Black.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Iosevka";
+  src: url("/fonts/Iosevka-Regular.ttf") format("truetype");
 }
 
 .menu-title {
-  font-family: "Kabel Black", sans-serif;
+  font-family: "Futura", sans-serif;
+  text-transform: uppercase;
+}
+
+.header {
+  font-family: "OpenSans", sans-serif;
 }
 
 body {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Barlow", sans-serif;
 }
 
 h1,
@@ -22,5 +37,11 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Kabel Black", sans-serif;
+  font-family: "OpenSans", sans-serif;
+  font-weight: bold;
+}
+
+.tooltiptext {
+  font-family: "OpenSans", sans-serif;
+  font-style: normal;
 }

@@ -3,7 +3,7 @@ authors = ["dr-frmr", "jtneev", "hosted-fornet", "bitful-pannul", "willbach", "0
 language = "en"
 multilingual = false
 src = "src"
-title = "Kinode Book"
+title = "K I N O D E"
 
 [output.html]
 additional-js = ["theme/customize-buttons.js"]

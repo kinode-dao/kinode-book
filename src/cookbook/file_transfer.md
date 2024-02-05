@@ -18,7 +18,7 @@ This guide assumes a basic understanding of Kinode process building, some famili
 
 First, initialize a new project with
 
-```
+```sh
 kit new file_transfer
 cd file_transfer
 ```
@@ -27,7 +27,7 @@ Here's a clean template so you have a complete fresh start:
 
 This guide will use the following `kinode_process_lib` version in `file_transfer/Cargo.toml`:
 
-```
+```toml
 kinode_process_lib = { git = "ssh://git@github.com/kinode-dao/process_lib.git", tag = "v0.5.4-alpha" }
 ```
 
@@ -260,7 +260,7 @@ fn handle_transfer_response(
 
 Now try this out by [booting two nodes](../kit/boot-fake-node.md#example-usage), i.e.,
 
-```
+```sh
 kit f
 
 # In another terminal
@@ -269,7 +269,7 @@ kit f --home /tmp/kinode-fake-node-2 -p 8081 -f fake2.os
 
 and [starting the package](../kit/start-package.md) on both nodes,
 
-```
+```sh
 kit b
 kit s
 kit s -p 8081
