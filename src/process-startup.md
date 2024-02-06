@@ -1,1 +1,0 @@
-# Startup, Spindown, and Crashes
