@@ -12,9 +12,9 @@
 
 # System Components
 
-- [Processes](./processes.md)
-  - [Capability-Based Security](./process-capabilities.md)
-  - [Startup, Spindown, and Crashes](./process-startup.md)
+- [Processes](./process/processes.md)
+  - [Capability-Based Security](./process/capabilities.md)
+  - [Startup, Spindown, and Crashes](./process/startup.md)
 - [Networking Protocol](./networking_protocol.md)
 - [Public Key Infrastructure](./pki.md)
 - [HTTP Server & Client](./http_server_and_client.md)

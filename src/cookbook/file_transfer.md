@@ -299,7 +299,7 @@ There are two ways to accomplish this.
 The first is to add `context` to Requests sent so that different up/downloads can be disambiguated as they come in.
 The second is to spawn a child "worker" to handle each up/download.
 Using a child process also allows Requests to await the corresponding Response.
-For further reading, see discussion on [`contexts`](../processes.md#please-respond), [awaiting](../processes.md#awaiting-a-response), [spawning children](../processes.md#spawning-child-processes), and more on the [parent-child pattern](../cookbook/manage_child_processes.md).
+For further reading, see discussion on [`contexts`](../process/processes.md#please-respond), [awaiting](../process/processes.md#awaiting-a-response), [spawning children](../process/processes.md#spawning-child-processes), and more on the [parent-child pattern](../cookbook/manage_child_processes.md).
 
 #### The main process: `file_transfer`
 
