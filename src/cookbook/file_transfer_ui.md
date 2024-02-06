@@ -25,7 +25,7 @@ This will create a new project with a `ui` directory for the Vite/React UI code,
 
 ## File Transfer
 
-The file transfer app is a simple app that allows users to upload and download files to and from their node. 
+The file transfer app is a simple app that allows users to upload and download files to and from their node.
 It's a good example of a simple app that can be built on Kinode.
 
 ### Existing Features
@@ -45,9 +45,9 @@ You just need to build a UI to take advantage of these capabilities.
 `kit` has a built-in UI template that you can use to build your UI.
 The UI template is a simple [React](https://reactjs.org/) app that uses [Vite](https://vitejs.dev/) as a build tool.
 
-Our objective is a UI that looks something like this: 
+Our objective is a UI that looks something like this:
 
-![UI](./assets/kinofiles.png)
+![UI](../assets/kinofiles.png)
 
 ### Needed Features
 
@@ -76,7 +76,7 @@ This step is necessary to allow your *development* UI (which will change often, 
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// BASE_URL is process_name:package_name:publisher_node. 
+// BASE_URL is process_name:package_name:publisher_node.
 // It represents the URL where the UI will be served from.
 // If your node is running on localhost, you will access the UI at http://localhost:3000/process_name:package_name:publisher_node.
 import manifest from '../pkg/manifest.json'
@@ -130,8 +130,8 @@ You only need to change one line in the default `index.html` file: Add `<script 
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
-    
-    <!-- Add this line -->    
+
+    <!-- Add this line -->
     <script src="/our.js"></script>
 
   </head>
@@ -155,7 +155,7 @@ If you've never used React before, check out the [docs](https://reactjs.org/docs
 
 You will use [Zustand](http://npmjs.org/package/zustand) to manage your state.
 Zustand is a simple state management library that uses React hooks.
-If you've never used Zustand before, check out the [docs](https://github.com/pmndrs/zustand?tab=readme-ov-file). 
+If you've never used Zustand before, check out the [docs](https://github.com/pmndrs/zustand?tab=readme-ov-file).
 
 #### `ui/src/types/KinoFile.ts`
 
@@ -196,7 +196,7 @@ export interface FileTransferStore {
   // the initialized Kinode api which you will communicate with
   api: KinodeEncryptorApi | null
   setApi: (api: KinodeEncryptorApi) => void
-  
+
   // zustand's generic set function
   set: (partial: FileTransferStore | Partial<FileTransferStore>) => void
 }
@@ -214,7 +214,7 @@ const useFileTransferStore = create<FileTransferStore>()(
       api: null,
       setApi: (api) => set({ api }),
       setFilesInProgress: (filesInProgress) => set({ filesInProgress }),
-      setFiles: (files) => set({ files }),    
+      setFiles: (files) => set({ files }),
 
       handleWsMessage: (json: string | Blob) => {
         // This function will be called when the websocket receives a message.
@@ -252,7 +252,7 @@ const useFileTransferStore = create<FileTransferStore>()(
 export default useFileTransferStore
 ```
 
-### Style 
+### Style
 
 We'll use [Tailwind CSS](https://tailwindcss.com/) for styling.
 This is a popular CSS framework that allows you to style your app using only CSS classes.
@@ -265,7 +265,7 @@ First, install Tailwind and its dependencies:
 ```bash
 # npm:
 npm install -D tailwindcss@latest postcss@latest autoprefixer@latest classnames
-# yarn: 
+# yarn:
 yarn add -D tailwindcss@latest postcss@latest autoprefixer@latest classnames
 ```
 
@@ -331,7 +331,7 @@ declare global {
 }
 
 // Don't init the websocket connection more than once.
-let inited = false 
+let inited = false
 
 function App() {
   // filesToUpload is a list of files that the user has selected to upload.
@@ -365,7 +365,7 @@ function App() {
 
       setApi(api);
     }
-  }, []) 
+  }, [])
 
   // This function is called when the user selects files to upload.
   const onAddFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -411,7 +411,7 @@ function App() {
     <div className='flex text-white'>
       <div className='flex flex-col w-1/4 bg-gray-800 h-screen sidebar'>
         <h2 className='text-2xl font-bold px-2 py-1'>Kino Files</h2>
-        {/* 
+        {/*
           This is the sidebar.
         */}
         <div className='flex flex-col mt-4'>
@@ -426,7 +426,7 @@ function App() {
               <input id='files' type='file' hidden multiple onChange={onAddFiles} />
             </label>
 
-            {/* 
+            {/*
               If you have selected files to upload, show them here.
               When you click the upload button, you POST the files to the node.
             */}
@@ -442,7 +442,7 @@ function App() {
               </div>
             )}
           </div>
-          {/* 
+          {/*
             Show the files on your node.
             This component is defined below.
           */}
@@ -453,7 +453,7 @@ function App() {
         This is the main content area.
       */}
       <div className='flex flex-col w-3/4 bg-gray-900 h-screen content px-2 py-1'>
-        {/* 
+        {/*
           Show the files on other nodes.
           This component is defined below.
         */}
@@ -480,7 +480,7 @@ interface Props {
   node: string;
 }
 
-const MyFiles = ({ files, node }: Props) => {    
+const MyFiles = ({ files, node }: Props) => {
     return (
         <div className='flex flex-col'>
             <h3 className='font-bold text-white px-2 py-1 font-mono'>{node}</h3>
@@ -523,7 +523,7 @@ function FileEntry({ file, node }: Props) {
 
     useEffect(() => {
         // To display the filename ergonomically,
-        //   you strip the `file_transfer:file_transfer:template.os/files/` 
+        //   you strip the `file_transfer:file_transfer:template.os/files/`
         //   prefix from the file name.
         const filename = file.name.split('/files/').pop() || '';
         setActualFilename(filename);
@@ -569,17 +569,17 @@ function FileEntry({ file, node }: Props) {
     <div className='flex flex-row px-2 py-1 justify-between place-items-center'>
         <span className='break-all grow mr-1'>{actualFilename}</span>
         <span>{actualFileSize}</span>
-        {showDownload && <button 
+        {showDownload && <button
             disabled={isOurFile || downloadInProgress || downloadComplete}
             className={classNames('font-bold py-2 px-4 rounded ml-2', {
-            isOurFile, downloadInProgress, downloadComplete, 
-            'bg-gray-800': isOurFile || downloadInProgress || downloadComplete, 
+            isOurFile, downloadInProgress, downloadComplete,
+            'bg-gray-800': isOurFile || downloadInProgress || downloadComplete,
             'bg-blue-500 hover:bg-blue-700': !isOurFile && !downloadInProgress && !downloadComplete, })}
             onClick={onDownload}
         >
             {isOurFile
                 ? 'Saved'
-                : downloadComplete 
+                : downloadComplete
                     ? 'Saved'
                     : downloadInProgress
                         ? <span>{downloadInfo?.[1]}%</span>
@@ -646,7 +646,7 @@ const SearchFiles = function() {
             {foundFiles && foundFiles.length > 0 && <div className='flex flex-col px-2 py-1'>
                 <h2><span className='text-xl font-bold font-mono'>{searchTerm}:</span> <span className='text-xs'>{foundFiles.length} files</span></h2>
                 {foundFiles.map((file) => (
-                    <FileEntry node={searchTerm} key={file.name} file={file} />                
+                    <FileEntry node={searchTerm} key={file.name} file={file} />
                 ))}
             </div>}
         </div>
@@ -663,7 +663,7 @@ Now that you've written your UI code, you can build it.
 1. Run `kit build` (or just `kit b`) to build the UI and file_transfer process.
 1. Run `kit start-package -p 8080` (or just `kit s`) to install the package to your node running on port 8080.
 
-In the future, you can run both of these steps in a single command, with `kit bs`. 
+In the future, you can run both of these steps in a single command, with `kit bs`.
 The UI will be served from `http://localhost:8080/file_transfer:file_transfer:template.os`.
 
 ## Next Steps
