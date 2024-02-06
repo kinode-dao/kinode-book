@@ -156,7 +156,7 @@ The kernel gives out capabilities that allow a process to message another *local
 It also gives a capability allowing processes to send and receive messages over the network.
 A process can optionally mark itself as `public`, meaning that it can be messaged by any *local* process regardless of capabilities.
 
-[See the capabilities chapter for more details.](./process-capabilities.md)
+[See the capabilities chapter for more details.](./process/process-capabilities.md)
 
 ### Spawning child processes
 

@@ -7,7 +7,7 @@ The HTTP server is how most processes in the Kinode OS present their interface t
 
 The specification for the [server](./apis/http_server.md) and [client](./apis/http_client.md) APIs are available in the API reference.
 These APIs are accessible via messaging the `http_server:distro:sys` and `http_client:distro:sys` runtime extensions, respectively.
-The only [capability](./process-capabilities.md) required to use either process is the one to message it, granted by the kernel.
+The only [capability](./process/process-capabilities.md) required to use either process is the one to message it, granted by the kernel.
 
 WebSocket server/client functionality is presented alongside HTTP.
 

@@ -60,7 +60,7 @@ kit new my_chat_app
 
 ## Exploring the Package
 
-Kinode packages are sets of one or more Kinode [processes](../processes.md).
+Kinode packages are sets of one or more Kinode [processes](../process/processes.md).
 A Kinode package is represented in Unix as a directory that has a `pkg/` directory within.
 Each process within the package is its own directory.
 By default, the `kit new` command creates a simple, one-process package, a chat app.
@@ -161,7 +161,7 @@ As an aside: each process has a unique process ID, used to address messages to t
 <process_name>:<package>:<publisher>
 ```
 
-You can read more about process IDs [here](../processes.md#overview).
+You can read more about process IDs [here](../process/processes.md#overview).
 
 ## Building the Package
 
