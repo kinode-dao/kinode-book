@@ -17,31 +17,3 @@
   font-family: "Iosevka";
   src: url("/fonts/Iosevka-Regular.ttf") format("truetype");
 }
-
-.menu-title {
-  font-family: "Futura", sans-serif;
-  text-transform: uppercase;
-}
-
-.header {
-  font-family: "OpenSans", sans-serif;
-}
-
-body {
-  font-family: "Barlow", sans-serif;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "OpenSans", sans-serif;
-  font-weight: bold;
-}
-
-.tooltiptext {
-  font-family: "OpenSans", sans-serif;
-  font-style: normal;
-}

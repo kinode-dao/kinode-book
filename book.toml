@@ -3,9 +3,5 @@ authors = ["dr-frmr", "jtneev", "hosted-fornet", "bitful-pannul", "willbach", "0
 language = "en"
 multilingual = false
 src = "src"
-title = "K I N O D E"
-
-[output.html]
-additional-js = ["theme/customize-buttons.js"]
-additional-css = ["theme/fonts/custom-fonts.css", "theme/css/variables.css"]
+title = "Kinode"
 edit-url-template = "https://github.com/uqbar-dao/kinode-book/edit/main/{path}"
