@@ -31,16 +31,16 @@ a > .hljs {
 #menu-bar,
 #menu-bar-hover-placeholder {
     z-index: 101;
-    margin: auto calc(0px - var(--page-padding));
+    margin: 0 calc(0px - var(--page-padding));
+    padding: 8px;
 }
 #menu-bar {
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    background-color: var(--bg);
-    border-block-end-color: var(--bg);
-    border-block-end-width: 1px;
-    border-block-end-style: solid;
+    background-color: transparent;
+    place-content: center;
+    place-items: center;
 }
 #menu-bar.sticky,
 .js #menu-bar-hover-placeholder:hover + #menu-bar,
@@ -59,13 +59,16 @@ a > .hljs {
 #menu-bar.bordered {
     border-block-end-color: var(--table-border-color);
 }
-#menu-bar i, #menu-bar .icon-button {
+#menu-bar i {
     position: relative;
     padding: 0 8px;
     z-index: 10;
     line-height: var(--menu-bar-height);
     cursor: pointer;
     transition: color 0.5s;
+}
+#menu-bar .icon-button {
+    font-size: 14px;
 }
 @media only screen and (max-width: 420px) {
     #menu-bar i, #menu-bar .icon-button {
@@ -85,6 +88,9 @@ a > .hljs {
 
 .right-buttons {
     margin: 0 15px;
+    display: flex;
+    place-content: center;
+    place-items: center;
 }
 .right-buttons a {
     text-decoration: none;
@@ -92,7 +98,7 @@ a > .hljs {
 
 .left-buttons {
     display: flex;
-    margin: 0 5px;
+    margin: 0 5px 0 16px;
 }
 .no-js .left-buttons button {
     display: none;
@@ -104,8 +110,7 @@ a > .hljs {
     font-size: 2.4rem;
     line-height: var(--menu-bar-height);
     text-align: center;
-    margin: 0;
-    flex: 1;
+    margin: 0 32px 0 auto;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -179,13 +184,17 @@ a > .hljs {
 }
 
 /* Only Firefox supports flow-relative values */
-.previous { float: left; }
-[dir=rtl] .previous { float: right; }
+.previous { 
+    float: left; 
+}
+[dir=rtl] .previous {
+    float: right; 
+}
 
 /* Only Firefox supports flow-relative values */
 .next {
     float: right;
-    right: var(--page-padding);
+    right: 0;
 }
 [dir=rtl] .next {
     float: left;
@@ -214,6 +223,14 @@ a > .hljs {
     display: inline;
     padding: 0.1em 0.3em;
     border-radius: 3px;
+}
+.light :not(pre) > .hljs {
+    color: var(--inline-code-color);
+    background-color: var(--k-white);
+}
+.dark :not(pre) > .hljs {
+    color: var(--inline-code-color);
+    background-color: var(--k-darkgray);
 }
 
 :not(pre):not(a) > .hljs {
@@ -247,7 +264,7 @@ pre:hover > .buttons {
     opacity: 1
 }
 pre > .buttons :hover {
-    color: var(--sidebar-active);
+    color: var(--icons-hover);
     border-color: var(--icons-hover);
     background-color: var(--theme-hover);
 }
@@ -283,6 +300,18 @@ pre > .buttons button {
 pre > code {
     display: block;
     padding: 1rem;
+    border-radius: 4px;
+}
+.dark pre > code.hljs {
+    color: var(--k-white);
+    background-color: var(--k-darkgray);
+}
+.dark pre > code span[class^="hljs-"] {
+    filter: brightness(1.5) saturate(0.5);
+}
+.light pre > code.hljs {
+    color: var(--k-darkgray);
+    background-color: var(--k-white);
 }
 
 /* FIXME: ACE editors overlap their buttons because ACE does absolute
@@ -395,16 +424,18 @@ ul#searchresults span.teaser em {
 
 .sidebar {
     position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
+    left: 0.5em;
+    top: 0.5em;
+    bottom: 0.5em;
     width: var(--sidebar-width);
-    font-size: 0.875em;
+    font-size: 14px;
     box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: contain;
     background-color: var(--sidebar-bg);
     color: var(--sidebar-fg);
+    border-radius: 2em;
+    font-family: "OpenSans", sans-serif;
 }
 [dir=rtl] .sidebar { left: unset; right: 0; }
 .sidebar-resizing {
@@ -420,8 +451,14 @@ ul#searchresults span.teaser em {
 .sidebar img.logo {
     height: 40px; 
     width: auto;
-    display: block; 
-    margin: 40px auto;
+    display: block;
+    left: 12.5vw;
+    bottom: 10vw;
+    position: absolute;
+    color: var(--sidebar-fg);
+    fill: var(--sidebar-fg);
+    stroke: var(--sidebar-fg);
+    
 }
 .sidebar code {
     line-height: 2em;
@@ -433,7 +470,7 @@ ul#searchresults span.teaser em {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 10px 10px;
+    padding: 0.5em 2em;
 }
 .sidebar .sidebar-resize-handle {
     position: absolute;
@@ -512,14 +549,17 @@ ul#searchresults span.teaser em {
     padding: 0;
     text-decoration: none;
     color: var(--sidebar-fg);
+    opacity: 0.35;
 }
 
 .chapter li a:hover {
-    color: var(--sidebar-active);
+    color: var(--sidebar-fg);
+    opacity: 1;
 }
 
 .chapter li a.active {
     color: var(--sidebar-active);
+    opacity: 1;
 }
 
 .chapter li > a.toggle {
@@ -542,7 +582,7 @@ ul#searchresults span.teaser em {
 
 .chapter li.chapter-item {
     line-height: 1.5em;
-    margin-block-start: 0.6em;
+    /* margin-block-start: 0.6em; */
 }
 
 .chapter li.expanded > a.toggle div {
@@ -573,8 +613,8 @@ ul#searchresults span.teaser em {
 
 .theme-popup {
     position: absolute;
-    left: 10px;
-    top: var(--menu-bar-height);
+    right: 64px;
+    top: calc(2 * var(--page-padding));
     z-index: 1000;
     border-radius: 4px;
     font-size: 0.7em;

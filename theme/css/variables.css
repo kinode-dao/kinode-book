@@ -4,12 +4,12 @@
     --sidebar-width: 20vw;
     --sidebar-resize-indicator-width: 8px;
     --sidebar-resize-indicator-space: 2px;
-    --page-padding: 15px;
+    --page-padding: 16px;
     --content-max-width: 750px;
-    --menu-bar-height: 130px;
+    /* --menu-bar-height: 130px; */
     --mono-font: "Iosevka", "Source Code Pro", Consolas, "Ubuntu Mono", Menlo,
       "DejaVu Sans Mono", monospace, monospace;
-    --code-font-size: 0.875em; /* please adjust the ace font size accordingly in editor.js */
+    --code-font-size: 14px; /* please adjust the ace font size accordingly in editor.js */
   
     --k-black: #161512;
     --k-darkgray: #22211f;
@@ -25,86 +25,87 @@
     --page-bg: var(--k-beige);
     --fg: var(--k-black); 
   
-    --sidebar-bg: var(--k-beige); 
-    --sidebar-fg: var(--k-darkgray);
+    --sidebar-bg: var(--k-darkgray); 
+    --sidebar-fg: var(--k-beige);
     --sidebar-non-existant: var(--k-white);
     --sidebar-active: var(--k-orange);
-    --sidebar-spacer: var(--k-white);
+    --sidebar-spacer: var(--k-beige);
   
     --scrollbar: var(--sidebar-fg);
   
     --icons: var(--k-darkgray);
-    --icons-hover: var(--k-orange);
+    --icons-hover: var(--k-black);
   
     --links: var(--k-orange);
   
     --inline-code-color: var(--k-darkgray);
   
-    --theme-popup-bg: #2b3a42; /* Dark slate */
-    --theme-popup-border: #354f58; /* Deep forest green */
-    --theme-hover: #5a4d8e; /* Lighter violet for a subtle yet harmonious contrast */
+    --theme-popup-bg: var(--k-beige);
+    --theme-popup-border: var(--k-darkgray);
+    --theme-hover: var(--k-white);
   
-    --quote-bg: #441fa5; /* Deep violet */
-    --quote-border: #9473ba; /* Muted purple */
+    --quote-bg: var(--k-white);
+    --quote-border: var(--k-beige);
   
-    --warning-border: #f07327; /* Bright orange */
+    --warning-border: var(--k-orange);
   
-    --table-border-color: #bd766e; /* Warm taupe */
-    --table-header-bg: #7e99ff; /* Soft blue */
-    --table-alternate-bg: #9473ba; /* Muted purple */
+    --table-border-color: var(--k-darkgray);
+    --table-header-bg: var(--k-white);
+    --table-alternate-bg: var(--k-white);
   
-    --searchbar-border-color: #f07327; /* Bright orange */
-    --searchbar-bg: #ffc089; /* Light peach */
-    --searchbar-fg: #f6f6f2; /* Off-white */
-    --searchbar-shadow-color: #db84ad; /* Soft pink */
-    --searchresults-header-fg: #bd766e; /* Warm taupe */
-    --searchresults-border-color: #09090a; /* Muted purple */
-    --searchresults-li-bg: #441fa5; /* Deep violet */
-    --search-mark-bg: #890002; /* Dark red */
+    --searchbar-border-color: var(--k-black);
+    --searchbar-bg: var(--k-white);
+    --searchbar-fg: var(--k-darkgray);
+    --searchbar-shadow-color: transparent;
+    --searchresults-header-fg: var(--k-darkgray);
+    --searchresults-border-color: var(--k-black);
+    --searchresults-li-bg: var(--k-beige);
+    --search-mark-bg: var(--k-orange);
   
     --color-scheme: light;
 }
   
 .dark {
-    --bg: #441fa5; /* Deep violet */
-    --fg: #f6f6f2; /* Off-white */
+    --bg: var(--k-darkgray);
+    --page-bg: var(--k-black);
+    --fg: var(--k-beige);
   
-    --sidebar-bg: #9473ba; /* Muted purple */
-    --sidebar-fg: #f6f6f2; /* Off-white for clear contrast */
-    --sidebar-non-existant: #bd766e; /* Warm taupe */
-    --sidebar-active: #890002; /* Dark red */
-    --sidebar-spacer: #7e99ff; /* Soft blue */
+    --sidebar-bg: var(--k-black);
+    --sidebar-fg: var(--k-beige);
+    --sidebar-non-existant: var(--k-orange);
+    --sidebar-active: var(--k-orange);
+    --sidebar-spacer: var(--k-beige);
   
     --scrollbar: var(--sidebar-fg);
   
-    --icons: #ffc089; /* Light peach */
-    --icons-hover: #db84ad; /* Soft pink */
+    --icons: var(--k-beige);
+    --icons-hover: var(--k-white);
   
-    --links: #ffcb69; /* Bright nectar gold */
+    --links: var(--k-orange);
   
-    --inline-code-color: #f6f6f2; /* Off-white */
+    --inline-code-color: var(--k-white);
   
-    --theme-popup-bg: #2b3a42; /* Dark slate */
-    --theme-popup-border: #354f58; /* Deep forest green */
-    --theme-hover: #5a4d8e; /* Lighter violet for a subtle yet harmonious contrast */
+    --theme-popup-bg: var(--k-darkgray);
+    --theme-popup-border: var(--k-beige);
+    --theme-hover: var(--k-black);
   
-    --quote-bg: #441fa5; /* Deep violet */
-    --quote-border: #9473ba; /* Muted purple */
+    --quote-bg: var(--k-darkgray);
+    --quote-border: var(--k-beige);
   
-    --warning-border: #f07327; /* Bright orange */
+    --warning-border: var(--k-orange);
   
-    --table-border-color: #bd766e; /* Warm taupe */
-    --table-header-bg: #7e99ff; /* Soft blue */
-    --table-alternate-bg: #9473ba; /* Muted purple */
+    --table-border-color: var(--k-beige);
+    --table-header-bg: var(--k-darkgray);
+    --table-alternate-bg: var(--k-darkgray);
   
-    --searchbar-border-color: #f07327; /* Bright orange */
-    --searchbar-bg: #ffc089; /* Light peach */
-    --searchbar-fg: #f6f6f2; /* Off-white */
-    --searchbar-shadow-color: #db84ad; /* Soft pink */
-    --searchresults-header-fg: #bd766e; /* Warm taupe */
-    --searchresults-border-color: #09090a; /* Muted purple */
-    --searchresults-li-bg: #441fa5; /* Deep violet */
-    --search-mark-bg: #890002; /* Dark red */
+    --searchbar-border-color: var(--k-beige);
+    --searchbar-bg: var(--k-darkgray);
+    --searchbar-fg: var(--k-beige);
+    --searchbar-shadow-color: transparent;
+    --searchresults-header-fg: var(--k-white);
+    --searchresults-border-color: var(--k-beige);
+    --searchresults-li-bg: var(--k-darkgray);
+    --search-mark-bg: var(--k-orange);
   
     --color-scheme: dark;
 }

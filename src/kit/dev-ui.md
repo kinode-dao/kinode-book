@@ -14,7 +14,7 @@ kit dev-ui
 
 ## Arguments
 
-```bash
+```
 $ kit d --help
 Start the web UI development server with hot reloading (same as `cd ui && npm i && npm start`)
 

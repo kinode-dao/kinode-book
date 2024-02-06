@@ -20,6 +20,7 @@ body {
     margin: 0;
     font-size: 1.6rem;
     overflow-x: hidden;
+    background-color: var(--bg);
 }
 
 code {
@@ -99,10 +100,13 @@ h6 {
     padding: 0 var(--page-padding);
     margin-block-start: calc(0px - var(--menu-bar-height)); /* Compensate for the #menu-bar-hover-placeholder */
     background-color: var(--page-bg);
+    border-radius: 28px;
+    margin: 7px;
+    min-height: calc(100vh - var(--page-padding));
 }
 .page-wrapper {
     box-sizing: border-box;
-    background-color: var(--bg);
+    background-color: transparent;
 }
 .no-js .page-wrapper,
 .js:not(.sidebar-resizing) .page-wrapper {
