@@ -10,8 +10,8 @@ The recommended method for most users is to use a precompiled binary.
 If you want to make edits to the Kinode core software, see [Build From Source](#build-from-source).
 
 First, get the software itself by downloading a [precompiled release binary](https://github.com/kinode-dao/kinode/releases).
-Choose the correct binary for your particular computer architecture and OS. 
-There is no need to download the `simulation-mode` binary — it is used behind the scenes. 
+Choose the correct binary for your particular computer architecture and OS.
+There is no need to download the `simulation-mode` binary — it is used behind the scenes.
 Extract the `.zip` file and the binary is inside.
 
 Note that some operating systems, particularly Apple, may flag the download as suspicious.
@@ -49,20 +49,17 @@ Clone and set up the repository:
 
 ```bash
 git clone git@github.com:kinode-dao/kinode.git
-
-cd kinode
-mkdir .cargo
-echo "net.git-fetch-with-cli = true" > .cargo/config
 ```
 
 Build the binary:
 
 ```bash
-cargo +nightly build --release
+# OPTIONAL: --release flag
+cargo +nightly build -p kinode
 ```
 
-The resulting binary will be at path `target/release/kinode`.
+The resulting binary will be at path `target/debug/kinode`.
 
-You can also build the binary without the `--release` flag.
-This command will build the binary significantly faster, as it does not perform any optimizations during compilation, but it will run much more slowly after compiling.
-The non-release binary will be at path `target/debug/kinode`.
+You can also build the binary with the `--release` flag.
+Building without `--release` will produce the binary significantly faster, as it does not perform any optimizations during compilation, but the node will run much more slowly after compiling.
+The release binary will be at path `target/release/kinode`.
