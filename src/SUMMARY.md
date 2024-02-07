@@ -1,12 +1,11 @@
 # Summary
 
-[Quick Start](./quick-start.md)
-[Introduction](./intro.md)
-[Identity System](./identity_system.md)
-[Design Philosophy](./design_philosophy.md)
-
 # Getting Started
 
+- [Quick Start](./quick-start.md)
+- [Introduction](./intro.md)
+- [Identity System](./identity_system.md)
+- [Design Philosophy](./design_philosophy.md)
 - [Installation](./install.md)
 - [Join the Network](./login.md)
 
