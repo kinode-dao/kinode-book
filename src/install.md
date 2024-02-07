@@ -58,8 +58,8 @@ Build the binary:
 cargo +nightly build -p kinode
 ```
 
-The resulting binary will be at path `target/debug/kinode`.
+The resulting binary will be at path `kinode/target/debug/kinode`. (Note that this is the binary crate inside the `kinode` workspace.)
 
 You can also build the binary with the `--release` flag.
 Building without `--release` will produce the binary significantly faster, as it does not perform any optimizations during compilation, but the node will run much more slowly after compiling.
-The release binary will be at path `target/release/kinode`.
+The release binary will be at path `kinode/target/release/kinode`.
