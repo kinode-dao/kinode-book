@@ -532,7 +532,7 @@ ul#searchresults span.teaser em {
 .chapter {
     list-style: none outside none;
     padding-inline-start: 0;
-    line-height: 2.2em;
+    line-height: 0.9;
 }
 
 .chapter ol {
@@ -563,11 +563,12 @@ ul#searchresults span.teaser em {
 
 .chapter li > a.toggle {
     cursor: pointer;
-    display: block;
-    margin-inline-start: auto;
     padding: 0 10px;
     user-select: none;
     opacity: 0.68;
+    position: absolute;
+    left: -2em;
+    color: var(--links);
 }
 
 .chapter li > a.toggle div {
@@ -582,6 +583,7 @@ ul#searchresults span.teaser em {
 .chapter li.chapter-item {
     line-height: 1.25;
     /* margin-block-start: 0.6em; */
+    position: relative;
 }
 
 .chapter li.expanded > a.toggle div {

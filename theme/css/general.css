@@ -18,7 +18,7 @@ html {
 
 body {
     margin: 0;
-    font-size: 1.6rem;
+    font-size: 18px;
     overflow-x: hidden;
     background-color: var(--bg);
     border-radius: 32px;
@@ -136,7 +136,10 @@ h1 {
     margin-inline-end: auto;
     max-width: var(--content-max-width);
 }
-.content p { line-height: 1.45em; }
+.content p { 
+    line-height: 1.3em;
+    letter-spacing: 0.02em;
+}
 .content ol { line-height: 1.45em; }
 .content ul { line-height: 1.45em; }
 .content a { text-decoration: none; }
