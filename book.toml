@@ -7,3 +7,7 @@ title = "Kinode"
 
 [output.html]
 edit-url-template = "https://github.com/uqbar-dao/kinode-book/edit/main/{path}"
+
+[output.html.fold]
+enable = true
+level = 0

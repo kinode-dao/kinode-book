@@ -23,10 +23,11 @@
 .light {
     --bg: var(--k-white);
     --page-bg: var(--k-beige);
+    --bg-bg: var(--k-beige);
     --fg: var(--k-black); 
   
-    --sidebar-bg: var(--k-darkgray); 
-    --sidebar-fg: var(--k-beige);
+    --sidebar-bg: var(--k-beige); 
+    --sidebar-fg: var(--k-darkgray);
     --sidebar-non-existant: var(--k-white);
     --sidebar-active: var(--k-orange);
     --sidebar-spacer: var(--k-beige);
@@ -68,6 +69,7 @@
 .dark {
     --bg: var(--k-darkgray);
     --page-bg: var(--k-black);
+    --bg-bg: var(--k-beige);
     --fg: var(--k-beige);
   
     --sidebar-bg: var(--k-black);
@@ -87,7 +89,7 @@
   
     --theme-popup-bg: var(--k-darkgray);
     --theme-popup-border: var(--k-beige);
-    --theme-hover: var(--k-black);
+    --theme-hover: var(--k-darkgray);
   
     --quote-bg: var(--k-darkgray);
     --quote-border: var(--k-beige);

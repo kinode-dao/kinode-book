@@ -1,14 +1,13 @@
 # Summary
 
-[Quick Start](./quick-start.md)
-[Introduction](./intro.md)
-[Identity System](./identity_system.md)
-[Design Philosophy](./design_philosophy.md)
-
 # Getting Started
 
-- [Installation](./install.md)
-- [Join the Network](./login.md)
+- [Quick Start](./quick-start.md)
+  - [Introduction](./intro.md)
+  - [Identity System](./identity_system.md)
+  - [Design Philosophy](./design_philosophy.md)
+  - [Installation](./install.md)
+  - [Join the Network](./login.md)
 
 # System Components
 
@@ -30,51 +29,51 @@
 # Kit: Development Tool**kit**
 
 - [`kit`](./kit/kit.md)
-- [`boot-fake-node`](./kit/boot-fake-node.md)
-- [`new`](./kit/new.md)
-- [`build`](./kit/build.md)
-- [`start-package`](./kit/start-package.md)
-- [`remove-package`](./kit/remove-package.md)
-- [`dev-ui`](./kit/dev-ui.md)
-- [`inject-message`](./kit/inject-message.md)
-- [`run-tests`](./kit/run-tests.md)
+  - [`boot-fake-node`](./kit/boot-fake-node.md)
+  - [`new`](./kit/new.md)
+  - [`build`](./kit/build.md)
+  - [`start-package`](./kit/start-package.md)
+  - [`remove-package`](./kit/remove-package.md)
+  - [`dev-ui`](./kit/dev-ui.md)
+  - [`inject-message`](./kit/inject-message.md)
+  - [`run-tests`](./kit/run-tests.md)
 
 # Tutorial: Build and Deploy an App
 
 - [Environment Setup](./my_first_app/chapter_1.md)
-- [Sending Some Messages, Using Some Tools](./my_first_app/chapter_2.md)
-- [Defining Your Protocol](./my_first_app/chapter_3.md)
-- [Frontend Time](./my_first_app/chapter_4.md)
-- [Sharing with the World](./my_first_app/chapter_5.md)
+  - [Sending Some Messages, Using Some Tools](./my_first_app/chapter_2.md)
+  - [Defining Your Protocol](./my_first_app/chapter_3.md)
+  - [Frontend Time](./my_first_app/chapter_4.md)
+  - [Sharing with the World](./my_first_app/chapter_5.md)
 
 # In-Depth Guide: Chess App
 
 - [Chess Engine](./chess_app/chess_engine.md)
-- [Adding a Frontend](./chess_app/frontend.md)
-- [Putting Everything Together](./chess_app/putting_everything_together.md)
-- [Extension 1: Chat](./chess_app/chat.md)
+  - [Adding a Frontend](./chess_app/frontend.md)
+  - [Putting Everything Together](./chess_app/putting_everything_together.md)
+  - [Extension 1: Chat](./chess_app/chat.md)
 
 # Cookbook (Handy Recipes)
 
 - [Cookbook Overview](./cookbook/cookbook_overview.md)
-- [Managing Child Processes](./cookbook/manage_child_processes.md)
-- [Publishing a Website or Web App](./cookbook/publish_to_web.md)
-- [Simple File Transfer Guide](./cookbook/file_transfer.md)
-- [Intro to Web UI with File Transfer](./cookbook/file_transfer_ui.md)
-- [Writing and Running Scripts](./cookbook/writing_scripts.md)
-- [Writing an Extension](./cookbook/extensions.md)
+  - [Managing Child Processes](./cookbook/manage_child_processes.md)
+  - [Publishing a Website or Web App](./cookbook/publish_to_web.md)
+  - [Simple File Transfer Guide](./cookbook/file_transfer.md)
+  - [Intro to Web UI with File Transfer](./cookbook/file_transfer_ui.md)
+  - [Writing and Running Scripts](./cookbook/writing_scripts.md)
+  - [Writing an Extension](./cookbook/extensions.md)
 
 # API Reference
 
 - [APIs Overview](./apis/overview.md)
-- [HTTP API](./apis/http_authentication.md)
-- [HTTP Client API](./apis/http_client.md)
-- [HTTP Server API](./apis/http_server.md)
-- [Kernel API](./apis/kernel.md)
-- [KV API](./apis/kv.md)
-- [Net API](./apis/net.md)
-- [`kinode.wit`](./apis/kinode_wit.md)
-- [SQLite API](./apis/sqlite.md)
-- [Terminal API](./apis/terminal.md)
-- [VFS API](./apis/vfs.md)
-- [WebSocket API](./apis/websocket_authentication.md)
+  - [HTTP API](./apis/http_authentication.md)
+  - [HTTP Client API](./apis/http_client.md)
+  - [HTTP Server API](./apis/http_server.md)
+  - [Kernel API](./apis/kernel.md)
+  - [KV API](./apis/kv.md)
+  - [Net API](./apis/net.md)
+  - [`kinode.wit`](./apis/kinode_wit.md)
+  - [SQLite API](./apis/sqlite.md)
+  - [Terminal API](./apis/terminal.md)
+  - [VFS API](./apis/vfs.md)
+  - [WebSocket API](./apis/websocket_authentication.md)

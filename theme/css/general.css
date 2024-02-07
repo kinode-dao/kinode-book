@@ -11,7 +11,7 @@
 html {
     font-family: "Barlow", sans-serif;
     color: var(--fg);
-    background-color: var(--bg);
+    background-color: var(--bg-bg);
     text-size-adjust: none;
     -webkit-text-size-adjust: none;
 }
@@ -21,6 +21,9 @@ body {
     font-size: 1.6rem;
     overflow-x: hidden;
     background-color: var(--bg);
+    border-radius: 32px;
+    border: 1px solid transparent;
+    border-bottom-width: 2px;
 }
 
 code {
@@ -71,8 +74,8 @@ h5:target::before,
 h6:target::before {
     display: inline-block;
     content: "»";
-    margin-inline-start: -30px;
-    width: 30px;
+    margin-inline-start: -1em;
+    width: 1em;
 }
 
 
@@ -84,6 +87,14 @@ h5,
 h6 {
     font-family: "OpenSans", sans-serif;
     font-weight: bold;
+    margin-bottom: 0;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+}
+
+h1 {
+    font-size: 6em;
+    margin-top: 0.25em;
 }
 
 /* This is broken on Safari as of version 14, but is fixed

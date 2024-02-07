@@ -315,7 +315,7 @@ Finally, you need to import Tailwind in your `index.css` file:
 This is the main UI component.
 We'll want to show the files on your node, the files on other nodes, and a way to upload files to your node.
 
-```tsx
+```ts
 import { useEffect, useState } from 'react'
 import './App.css'
 import MyFiles from './components/MyFiles'
@@ -471,7 +471,7 @@ export default App
 This is just a list of files.
 Each file is rendered by the `FileEntry` component, which is below.
 
-```tsx
+```ts
 import FileEntry from './FileEntry';
 import KinoFile from '../types/KinoFile';
 
@@ -504,7 +504,7 @@ It requires a `node` prop, which is the name of the node where the file is locat
 Also, if the file is downloading, it shows the download progress.
 Once finished, the file will be saved to your node's VFS, and you will see "Saved".
 
-```tsx
+```ts
 import { useEffect, useState } from "react";
 import KinoFile from "../types/KinoFile";
 import useFileTransferStore from "../store/fileTransferStore";
@@ -597,7 +597,7 @@ export default FileEntry;
 This component shows the files on other nodes.
 It allows you to search for files on other nodes, and download them to your node.
 
-```tsx
+```ts
 import { useState } from 'react';
 import KinoFile from '../types/KinoFile';
 import FileEntry from './FileEntry';
