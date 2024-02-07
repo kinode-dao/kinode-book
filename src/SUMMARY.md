@@ -15,6 +15,7 @@
 - [Processes](./process/processes.md)
   - [Capability-Based Security](./process/capabilities.md)
   - [Startup, Spindown, and Crashes](./process/startup.md)
+  - [Extensions](./process/extensions.md)
 - [Networking Protocol](./networking_protocol.md)
 - [Public Key Infrastructure](./pki.md)
 - [HTTP Server & Client](./http_server_and_client.md)
@@ -61,6 +62,7 @@
 - [Simple File Transfer Guide](./cookbook/file_transfer.md)
 - [Intro to Web UI with File Transfer](./cookbook/file_transfer_ui.md)
 - [Writing and Running Scripts](./cookbook/writing_scripts.md)
+- [Writing an Extension](./cookbook/extensions.md)
 
 # API Reference
 
