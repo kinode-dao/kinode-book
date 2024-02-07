@@ -375,3 +375,9 @@
         --search-mark-bg: #355c7d;
     }
 }
+
+@media only screen and (max-width: 600px) {
+    html {
+        --sidebar-width: 50vw !important;
+    }
+}

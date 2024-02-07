@@ -6,8 +6,6 @@ Kinode OS is a decentralized operating system, peer-to-peer app framework, and n
 It is also a *sovereign cloud computer*, in that Kinode can be deployed anywhere and act as a server controlled by anyone.
 Ultimately, Kinode facilitates the writing and distribution of software that runs on privately-held, personal server nodes or node clusters.
 
-> A quote
-
 Kinode eliminates boilerplate and reduces the complexity of p2p software development by providing four basic and necessary primitives:
 
 Primitive        | Description

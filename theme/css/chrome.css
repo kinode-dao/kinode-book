@@ -38,7 +38,6 @@ a > .hljs {
     display: flex;
     flex-wrap: wrap;
     background-color: transparent;
-    place-content: center;
     place-items: center;
 }
 #menu-bar.sticky,
@@ -69,12 +68,6 @@ a > .hljs {
 #menu-bar .icon-button {
     font-size: 14px;
 }
-@media only screen and (max-width: 420px) {
-    #menu-bar i, #menu-bar .icon-button {
-        padding: 0 5px;
-    }
-}
-
 .icon-button {
     border: none;
     background: none;
@@ -600,7 +593,7 @@ ul#searchresults span.teaser em {
 }
 
 @media (-moz-touch-enabled: 1), (pointer: coarse) {
-    .chapter li a { padding: 5px 0; }
+    /* .chapter li a { padding: 5px 0; } */
     .spacer { margin: 10px 0; }
 }
 
@@ -655,4 +648,23 @@ ul#searchresults span.teaser em {
     content: "✓";
     margin-inline-start: -14px;
     width: 14px;
+}
+
+@media only screen and (max-width: 420px) {
+    .secondary-title {
+        display: none;
+    }
+    
+    #menu-bar i {
+        padding: 0 8px;
+    }
+    
+    .menu-title {
+        font-size: 0.75em;
+        margin-right: 8px;
+    }
+
+    h1 {
+        font-size: 3em;
+    }
 }
