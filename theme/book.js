@@ -305,7 +305,10 @@ function playground_text(playground, hidden = true) {
         themePopup.querySelectorAll('.theme-selected').forEach(function (el) {
             el.classList.remove('theme-selected');
         });
-        themePopup.querySelector("button#" + get_theme()).classList.add('theme-selected');
+        const theme = themePopup.querySelector("button#" + get_theme())
+        if (theme && theme.classList) {
+            theme.classList.add('theme-selected');
+        }
     }
 
     function hideThemes() {

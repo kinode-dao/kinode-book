@@ -153,6 +153,9 @@ a > .hljs {
     flex-direction: column;
 
     transition: color 0.5s, background-color 0.5s;
+
+    margin: calc(6 * var(--page-padding)) var(--page-padding);
+    border-radius: var(--page-padding);
 }
 
 .nav-chapters:hover {
@@ -561,11 +564,11 @@ ul#searchresults span.teaser em {
     opacity: 0.68;
     position: absolute;
     left: -2em;
-    color: var(--links);
+    color: var(--sidebar-fg);
 }
 
 .chapter li > a.toggle div {
-    transition: transform 0.5s;
+    transition: all 0.5s;
 }
 
 /* collapse the section */
@@ -581,6 +584,7 @@ ul#searchresults span.teaser em {
 
 .chapter li.expanded > a.toggle div {
     transform: rotate(90deg);
+    color: var(--links);
 }
 
 .spacer {
@@ -666,5 +670,9 @@ ul#searchresults span.teaser em {
 
     h1 {
         font-size: 3em;
+    }
+
+    .nav-chapters {
+        margin: 0;
     }
 }
