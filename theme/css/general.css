@@ -268,3 +268,8 @@ kbd {
 .result-no-output {
     font-style: italic;
 }
+
+.chapter > .chapter-item a {
+    color: var(--fg);
+    opacity: 1;
+}
