@@ -48,7 +48,7 @@ For more information, or debugging, see the [Rust lang install page](https://www
 Clone and set up the repository:
 
 ```bash
-git clone git@github.com:kinode-dao/kinode.git
+git clone https://github.com/kinode-dao/kinode.git
 ```
 
 Build the binary:
