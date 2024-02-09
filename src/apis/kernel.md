@@ -5,6 +5,7 @@ Those that can, such as the app store, have full control over starting and stopp
 
 The kernel runtime task accepts one kind of `Request`:
 ```rust
+/// IPC format for requests sent to kernel runtime module
 #[derive(Debug, Serialize, Deserialize)]
 pub enum KernelCommand {
     /// RUNTIME ONLY: used to notify the kernel that booting is complete and
@@ -32,8 +33,13 @@ pub enum KernelCommand {
         target: ProcessId,
         capabilities: Vec<Capability>,
     },
+    /// Drop capabilities. Does nothing if process doesn't have these caps
+    DropCapabilities {
+        target: ProcessId,
+        capabilities: Vec<Capability>,
+    },
     /// Tell the kernel to run a process that has already been installed.
-    /// Note: in the future, this command could be extended to allow for
+    /// TODO: in the future, this command could be extended to allow for
     /// resource provision.
     RunProcess(ProcessId),
     /// Kill a running process immediately. This may result in the dropping / mishandling of messages!
@@ -83,7 +89,11 @@ To do that, send a `RunProcess` command after a successful `InitializeProcess` c
 This command directly inserts a list of capabilities into another process' state.
 While you generally don't want to do this for security reasons, it helps you clean up the "handshake" process by which capabilities must be handed off between two processes before engaging in the business logic.
 For instance, if you want a kernel module like `http_server` to be able to message a process back, you do this by directly inserting that `"messaging"` cap into `http_server`'s store.
-Only the `app_store` and `tester` make use of this.
+Only the `app_store`, `terminal`, and `tester` make use of this.
+
+## `DropCapabilities`
+This command removes a list of capabilities from another process' state.
+Currently, no app makes use of this, as it is very powerful.
 
 ## `RunProcess`
 
