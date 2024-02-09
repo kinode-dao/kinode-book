@@ -13,7 +13,8 @@
   
     --k-black: #161512;
     --k-darkgray: #22211f;
-    --k-orange: #f35422;
+    --k-orange: #f25221;
+    --k-honey: #ffd4ae;
     --k-white: #fff5d9;
     --k-beige: #e2dac4;
 }
@@ -26,7 +27,7 @@
     --bg-bg: var(--k-beige);
     --fg: var(--k-black); 
   
-    --sidebar-bg: var(--k-beige); 
+    --sidebar-bg: var(--k-honey); 
     --sidebar-fg: var(--k-darkgray);
     --sidebar-non-existant: var(--k-white);
     --sidebar-active: var(--k-orange);

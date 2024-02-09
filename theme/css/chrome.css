@@ -297,14 +297,22 @@ pre > code {
     padding: 1rem;
     border-radius: 4px;
 }
-.dark pre > code.hljs {
+.dark pre > code.hljs,
+.gnucci pre > code.hljs,
+.classic-dark pre > code.hljs,
+.wynn pre > code.hljs {
     color: var(--k-white);
     background-color: var(--k-darkgray);
 }
-.dark pre > code span[class^="hljs-"] {
+.dark pre > code span[class^="hljs-"],
+.gnucci pre > code span[class^="hljs-"],
+.classic-dark pre > code span[class^="hljs-"],
+.wynn pre > code span[class^="hljs-"] {
     filter: brightness(1.5) saturate(0.5);
 }
-.light pre > code.hljs {
+.light pre > code.hljs,
+.harmony pre > code.hljs,
+.meadow pre > code.hljs {
     color: var(--k-darkgray);
     background-color: var(--k-white);
 }
@@ -544,7 +552,7 @@ ul#searchresults span.teaser em {
     padding: 0;
     text-decoration: none;
     color: var(--sidebar-fg);
-    opacity: 0.35;
+    opacity: 0.4;
 }
 
 .chapter li a:hover {
@@ -565,6 +573,7 @@ ul#searchresults span.teaser em {
     position: absolute;
     left: -2em;
     color: var(--sidebar-fg);
+    font-size: small;
 }
 
 .chapter li > a.toggle div {
@@ -577,14 +586,14 @@ ul#searchresults span.teaser em {
 }
 
 .chapter li.chapter-item {
-    line-height: 1.25;
+    line-height: 1.5;
     /* margin-block-start: 0.6em; */
     position: relative;
 }
 
 .chapter li.expanded > a.toggle div {
     transform: rotate(90deg);
-    color: var(--links);
+    /* color: var(--links); */
 }
 
 .spacer {
