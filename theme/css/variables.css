@@ -21,7 +21,7 @@
   
   /* Themes */
   
-.light {
+html, .light {
     --bg: var(--k-white);
     --page-bg: var(--k-beige);
     --bg-bg: var(--k-beige);
@@ -115,6 +115,8 @@
   
 .wynn {
     --bg: #441fa5; /* Deep violet */
+    --bg-bg: #441fa5; /* Deep violet */
+    --page-bg: #441fa5; /* Deep violet */
     --fg: #f6f6f2; /* Off-white */
   
     --sidebar-bg: #9473ba; /* Muted purple */
@@ -159,6 +161,8 @@
   
 .gnucci {
     --bg: #2a1b17; /* Deep espresso */
+    --bg-bg: #2a1b17; /* Deep espresso */
+    --page-bg: #2a1b17; /* Deep espresso */
     --fg: #b7c6cc; /* Soft slate gray */
   
     --sidebar-bg: #462a15; /* Dark walnut */
@@ -247,6 +251,8 @@
 
 .classic-dark {
     --bg: #0a2239; /* Dark navy blue, instead of Soft sky blue */
+    --bg-bg: #0a2239; /* Dark navy blue, instead of Soft sky blue */
+    --page-bg: #0a2239; /* Dark navy blue, instead of Soft sky blue */
     --fg: #cad2d3; /* Soft mist grey, contrasting Deep ocean blue */
   
     --sidebar-bg: #345b29; /* Deep forest green, darker than Light leaf green */
