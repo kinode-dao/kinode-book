@@ -228,10 +228,6 @@ a > .hljs {
     background-color: var(--k-darkgray);
 }
 
-:not(pre):not(a) > .hljs {
-    color: var(--inline-code-color);
-    overflow-x: initial;
-}
 
 a:hover > .hljs {
     text-decoration: underline;
