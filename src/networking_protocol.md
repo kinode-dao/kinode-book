@@ -120,8 +120,6 @@ The `signature` must be created by the initiator's networking public key.
 The content is the routing target's node ID (i.e., the node which the initiator would like to establish an e2e encrypted connection with) concatenated with the router's node ID (i.e., the node which the initiator is sending the `RoutingRequest` to, which will serve as a router for the connection if it accepts).
 The `target` is the routing target's node ID that must be signed above.
 
-[TODO document the rejection/acceptance of RoutingRequests]
-
 Once a connection is established, the initiator sends an `e` message, containing an empty payload.
 
 The target responds with the `e, ee, s, es` pattern, including a `HandshakePayload` serialized with MessagePack.
@@ -173,10 +171,6 @@ If a `KernelMessage`'s source is not the node ID which the message recipient is 
 These behaviors are necessary since they indicate that the networking information of a counterparty may have changed and a new connection must be established using the new data onchain.
 
 Connections may be closed due to inactivity or load-balancing. This behavior is implementation-specific.
-
-[TODO document the management of passthrough connections held open by routers]
-
-[TODO document the optionality of exposing IP vs. using a router, regardless of other node's status]
 
 ### 4. Connection Maintenance and Errors
 

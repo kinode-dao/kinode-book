@@ -83,7 +83,7 @@ struct ChessState {
 }
 ```
 
-Creating explicit `ChessRequest` and `ChessResponse` types is the easiest way to ensure reliable and easy-to-parse messages between two processes (TODO: something missing here gramatically, but can't quite find the correct word).
+Creating explicit `ChessRequest` and `ChessResponse` types is the easiest way to reliably communicate between two processes.
 It makes message-passing very simple.
 If you get a request, you can deserialize it to `ChessRequest` and ignore or throw an error if that fails.
 If you get a response, you can do the same but with `ChessResponse`.
