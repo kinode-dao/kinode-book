@@ -21,7 +21,7 @@
   
   /* Themes */
   
-html, .light {
+.light {
     --bg: var(--k-white);
     --page-bg: var(--k-beige);
     --bg-bg: var(--k-beige);
