@@ -113,6 +113,52 @@ html, .light {
     --color-scheme: dark;
 }
   
+.wynn {
+    --bg: #441fa5; /* Deep violet */
+    --bg-bg: #441fa5; /* Deep violet */
+    --page-bg: #441fa5; /* Deep violet */
+    --fg: #f6f6f2; /* Off-white */
+  
+    --sidebar-bg: #9473ba; /* Muted purple */
+    --sidebar-fg: #f6f6f2; /* Off-white for clear contrast */
+    --sidebar-non-existant: #bd766e; /* Warm taupe */
+    --sidebar-active: #890002; /* Dark red */
+    --sidebar-spacer: #7e99ff; /* Soft blue */
+  
+    --scrollbar: var(--sidebar-fg);
+  
+    --icons: #ffc089; /* Light peach */
+    --icons-hover: #db84ad; /* Soft pink */
+  
+    --links: #ffcb69; /* Bright nectar gold */
+  
+    --inline-code-color: #f6f6f2; /* Off-white */
+  
+    --theme-popup-bg: #2b3a42; /* Dark slate */
+    --theme-popup-border: #354f58; /* Deep forest green */
+    --theme-hover: #5a4d8e; /* Lighter violet for a subtle yet harmonious contrast */
+  
+    --quote-bg: #441fa5; /* Deep violet */
+    --quote-border: #9473ba; /* Muted purple */
+  
+    --warning-border: #f07327; /* Bright orange */
+  
+    --table-border-color: #bd766e; /* Warm taupe */
+    --table-header-bg: #7e99ff; /* Soft blue */
+    --table-alternate-bg: #9473ba; /* Muted purple */
+  
+    --searchbar-border-color: #f07327; /* Bright orange */
+    --searchbar-bg: #ffc089; /* Light peach */
+    --searchbar-fg: #f6f6f2; /* Off-white */
+    --searchbar-shadow-color: #db84ad; /* Soft pink */
+    --searchresults-header-fg: #bd766e; /* Warm taupe */
+    --searchresults-border-color: #09090a; /* Muted purple */
+    --searchresults-li-bg: #441fa5; /* Deep violet */
+    --search-mark-bg: #890002; /* Dark red */
+  
+    --color-scheme: dark;
+}
+  
 .gnucci {
     --bg: #2a1b17; /* Deep espresso */
     --bg-bg: #2a1b17; /* Deep espresso */
@@ -157,6 +203,50 @@ html, .light {
     --search-mark-bg: #c78919; /* Burnt orange */
   
     --color-scheme: dark;
+}
+
+.harmony {
+    --bg: #f4f9f4; /* Light mint green */
+    --fg: #5d4037; /* Rich brown */
+  
+    --sidebar-bg: #fff3e0; /* Soft peach */
+    --sidebar-fg: #6d4c41; /* Darker brown */
+    --sidebar-non-existant: #cfd8dc; /* Light grey */
+    --sidebar-active: #ffb74d; /* Warm orange */
+    --sidebar-spacer: #e0f2f1; /* Pale turquoise */
+  
+    --scrollbar: var(--sidebar-fg);
+  
+    --icons: #8d6e63; /* Earthy rose */
+    --icons-hover: #ffccbc; /* Light coral */
+  
+    --links: #007bff; /* Bright blue */
+  
+    --inline-code-color: #d35400; /* Pumpkin orange */
+  
+    --theme-popup-bg: #eceff1; /* Very light grey */
+    --theme-popup-border: #b0bec5; /* Cool grey */
+    --theme-hover: #f8fdfa; /* Very light mint */
+  
+    --quote-bg: #e8f5e9; /* Pale green */
+    --quote-border: #a5d6a7; /* Medium green */
+  
+    --warning-border: #ff7043; /* Bright coral */
+  
+    --table-border-color: #b0bec5; /* Cool grey */
+    --table-header-bg: #eceff1; /* Very light grey */
+    --table-alternate-bg: #e8f5e9; /* Pale green */
+  
+    --searchbar-border-color: #8d6e63; /* Earthy rose */
+    --searchbar-bg: #ffccbc; /* Light coral */
+    --searchbar-fg: #5d4037; /* Rich brown */
+    --searchbar-shadow-color: #b0bec5; /* Cool grey */
+    --searchresults-header-fg: #6d4c41; /* Darker brown */
+    --searchresults-border-color: #cfd8dc; /* Light grey */
+    --searchresults-li-bg: #fff3e0; /* Soft peach */
+    --search-mark-bg: #ffb74d; /* Warm orange */
+  
+    --color-scheme: light;
 }
 
 .classic-dark {
