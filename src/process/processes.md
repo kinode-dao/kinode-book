@@ -150,7 +150,6 @@ If the error results from a response, the process may optionally try to re-send 
 
 Processes must acquire capabilities from the kernel in order to perform certain operations.
 Processes themselves can also produce capabilities in order to give them to other processes.
-For more information about the general capabilities-based security paradigm, [insert link to good article here].
 
 The kernel gives out capabilities that allow a process to message another *local* process.
 It also gives a capability allowing processes to send and receive messages over the network.
