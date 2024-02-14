@@ -33,7 +33,7 @@
     --sidebar-active: var(--k-orange);
     --sidebar-spacer: var(--k-beige);
   
-    --scrollbar: var(--sidebar-bg);
+    --scrollbar: var(--page-bg);
   
     --icons: var(--k-darkgray);
     --icons-hover: var(--k-black);
@@ -79,7 +79,7 @@
     --sidebar-active: var(--k-orange);
     --sidebar-spacer: var(--k-beige);
   
-    --scrollbar: var(--sidebar-bg);
+    --scrollbar: var(--page-bg);
   
     --icons: var(--k-beige);
     --icons-hover: var(--k-white);
