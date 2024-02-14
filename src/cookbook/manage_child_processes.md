@@ -10,8 +10,8 @@ Your package's file structure might resemble the following:
 
 ```
 my-package/
+├─ metadata.json
 ├─ pkg/
-│  ├─ metadata.json
 │  ├─ manifest.json
 ├─ parent/
 │  ├─ src/

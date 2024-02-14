@@ -1,7 +1,7 @@
 # `kit remove-package`
 
 `kit remove-package` removes an installed package from the given node.
-If passed an optional positional argument `DIR`, the path to a package directory, the `pkg/metadata.json` therein is parsed and that package is removed from the node.
+If passed an optional positional argument `DIR`, the path to a package directory, the `metadata.json` therein is parsed and that package is removed from the node.
 If no arguments are provided, the same process happens for the current working directory.
 Alternatively, a `--package` and `--publisher` can be provided as arguments, and that package will be removed.
 

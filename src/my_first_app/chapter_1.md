@@ -59,13 +59,13 @@ The default template looks like:
 ```bash
 $ tree my_chat_app
 my_chat_app
+├── metadata.json
 ├── my_chat_app
 │   ├── Cargo.toml
 │   └── src
 │       └── lib.rs
 └── pkg
-    ├── manifest.json
-    └── metadata.json
+    └──  manifest.json
 ```
 
 The `my_chat_app/` package here contains one process, also named `my_chat_app/`.
@@ -128,26 +128,38 @@ Key                      | Value Type                                           
 `"grant_capabilities"`   | Array of Strings or Objects                                                                    | Strings are process IDs to grant messaging capabilties to; Objects have a `"process"` field (process ID to grant to) and a `"params"` field (capability to grant)
 `"public"`               | Boolean                                                                                        | Whether to allow any process to message us
 
-### `pkg/metadata.json`
+### `metadata.json`
 
-The `metadata.json` file contains information about the package and the publisher:
+The `metadata.json` file contains ERC721 compatible metadata about the package.
+The only required fields are `package_name`, `current_version`, and `publisher`, which are filled in with default values:
 
 ```bash
-$ cat my_chat_app/pkg/metadata.json
+$ cat my_chat_app/metadata.json
 {
-    "package": "my_chat_app",
-    "publisher": "template.os",
-    "version": [0, 1, 0]
+    "name": "my_chat_app",
+    "description": "",
+    "image": "",
+    "properties": {
+        "package_name": "my_chat_app",
+        "current_version": "0.1.0",
+        "publisher": "template.os",
+        "mirrors": [],
+        "code_hashes": {
+            "0.1.0": ""
+        }
+    },
+    "external_url": "",
+    "animation_url": ""
 }
 ```
-
 Here, the `publisher` is some default value, but for a real package, this field should contain the KNS id of the publishing node.
 The `publisher` can also be set with a `kit new --publisher` flag.
+The rest of these fields are not required for development, but become important when publishing a package with the `app_store`.
 
 As an aside: each process has a unique process ID, used to address messages to that process, that looks like
 
 ```
-<process_name>:<package>:<publisher>
+<process_name>:<package_name>:<publisher>
 ```
 
 You can read more about process IDs [here](../process/processes.md#overview).
