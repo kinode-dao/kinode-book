@@ -109,15 +109,16 @@ which has the directory structure
 ```bash
 core_tests
 ├── chat
+│   ├── metadata.json
 │   ├── chat
 │   │   ├── Cargo.lock
 │   │   ├── Cargo.toml
 │   │   └── src
 │   │       └── lib.rs
 │   └── pkg
-│       ├── manifest.json
-│       └── metadata.json
+│       └── manifest.json
 ├── chat_test
+│   ├── metadata.json
 │   ├── chat_test
 │   │   ├── Cargo.lock
 │   │   ├── Cargo.toml
@@ -125,9 +126,9 @@ core_tests
 │   │       ├── lib.rs
 │   │       └── tester_types.rs
 │   └── pkg
-│       ├── manifest.json
-│       └── metadata.json
+│       └── manifest.json
 ├── key_value_test
+│   ├── metadata.json
 │   ├── key_value_test
 │   │   ├── Cargo.lock
 │   │   ├── Cargo.toml
@@ -137,12 +138,11 @@ core_tests
 │   │       └── tester_types.rs
 │   └── pkg
 │       ├── key_value_test.wasm
-│       ├── manifest.json
-│       └── metadata.json
+│       └── manifest.json
 ├── sqlite_test
+│   ├── metadata.json
 │   ├── pkg
-│   │   ├── manifest.json
-│   │   └── metadata.json
+│   │   └── manifest.json
 │   └── sqlite_test
 │       ├── Cargo.lock
 │       ├── Cargo.toml
