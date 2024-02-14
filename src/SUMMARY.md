@@ -51,6 +51,7 @@
   - [Kernel API](./apis/kernel.md)
   - [KV API](./apis/kv.md)
   - [Net API](./apis/net.md)
+  - [ETH API](./apis/eth.md)
   - [`kinode.wit`](./apis/kinode_wit.md)
   - [SQLite API](./apis/sqlite.md)
   - [Terminal API](./apis/terminal.md)
