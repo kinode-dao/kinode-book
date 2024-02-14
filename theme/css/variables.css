@@ -33,7 +33,7 @@
     --sidebar-active: var(--k-orange);
     --sidebar-spacer: var(--k-beige);
   
-    --scrollbar: var(--sidebar-fg);
+    --scrollbar: var(--sidebar-bg);
   
     --icons: var(--k-darkgray);
     --icons-hover: var(--k-black);
@@ -79,7 +79,7 @@
     --sidebar-active: var(--k-orange);
     --sidebar-spacer: var(--k-beige);
   
-    --scrollbar: var(--sidebar-fg);
+    --scrollbar: var(--sidebar-bg);
   
     --icons: var(--k-beige);
     --icons-hover: var(--k-white);
@@ -125,7 +125,7 @@
     --sidebar-active: #b7c6cc; /* Soft slate gray for better contrast */
     --sidebar-spacer: #31667a; /* Ocean teal */
   
-    --scrollbar: var(--sidebar-fg);
+    --scrollbar: var(--sidebar-bg);
   
     --icons: #c06346; /* Rusty red */
     --icons-hover: #b7c6cc; /* Soft slate gray */
@@ -159,50 +159,6 @@
     --color-scheme: dark;
 }
 
-.harmony {
-    --bg: #f4f9f4; /* Light mint green */
-    --fg: #5d4037; /* Rich brown */
-  
-    --sidebar-bg: #fff3e0; /* Soft peach */
-    --sidebar-fg: #6d4c41; /* Darker brown */
-    --sidebar-non-existant: #cfd8dc; /* Light grey */
-    --sidebar-active: #ffb74d; /* Warm orange */
-    --sidebar-spacer: #e0f2f1; /* Pale turquoise */
-  
-    --scrollbar: var(--sidebar-fg);
-  
-    --icons: #8d6e63; /* Earthy rose */
-    --icons-hover: #ffccbc; /* Light coral */
-  
-    --links: #007bff; /* Bright blue */
-  
-    --inline-code-color: #d35400; /* Pumpkin orange */
-  
-    --theme-popup-bg: #eceff1; /* Very light grey */
-    --theme-popup-border: #b0bec5; /* Cool grey */
-    --theme-hover: #f8fdfa; /* Very light mint */
-  
-    --quote-bg: #e8f5e9; /* Pale green */
-    --quote-border: #a5d6a7; /* Medium green */
-  
-    --warning-border: #ff7043; /* Bright coral */
-  
-    --table-border-color: #b0bec5; /* Cool grey */
-    --table-header-bg: #eceff1; /* Very light grey */
-    --table-alternate-bg: #e8f5e9; /* Pale green */
-  
-    --searchbar-border-color: #8d6e63; /* Earthy rose */
-    --searchbar-bg: #ffccbc; /* Light coral */
-    --searchbar-fg: #5d4037; /* Rich brown */
-    --searchbar-shadow-color: #b0bec5; /* Cool grey */
-    --searchresults-header-fg: #6d4c41; /* Darker brown */
-    --searchresults-border-color: #cfd8dc; /* Light grey */
-    --searchresults-li-bg: #fff3e0; /* Soft peach */
-    --search-mark-bg: #ffb74d; /* Warm orange */
-  
-    --color-scheme: light;
-}
-
 .classic-dark {
     --bg: #0a2239; /* Dark navy blue, instead of Soft sky blue */
     --bg-bg: #0a2239; /* Dark navy blue, instead of Soft sky blue */
@@ -215,7 +171,7 @@
     --sidebar-active: #bf2f2f; /* Darker shade of Vibrant flower red */
     --sidebar-spacer: #434343; /* Dark grey, instead of Very light grey */
   
-    --scrollbar: var(--sidebar-fg);
+    --scrollbar: var(--sidebar-bg);
   
     --icons: #563f31; /* Darker Earthy brown */
     --icons-hover: #b38600; /* Darker, more subdued Nectar gold */

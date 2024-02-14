@@ -14,6 +14,8 @@ html {
     background-color: var(--bg-bg);
     text-size-adjust: none;
     -webkit-text-size-adjust: none;
+    max-height: 100vh;
+    overflow: hidden;
 }
 
 body {
@@ -113,7 +115,8 @@ h1 {
     background-color: var(--page-bg);
     border-radius: 28px;
     margin: 7px;
-    min-height: calc(100vh - var(--page-padding));
+    height: calc(100vh - var(--page-padding));
+    overflow-y: auto;
 }
 .page-wrapper {
     box-sizing: border-box;
