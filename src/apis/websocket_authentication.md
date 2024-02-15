@@ -97,7 +97,7 @@ fn handle_http_server_request(
         HttpServerRequest::WebSocketClose(_channel_id) => {
           channel_ids.remove(channel_id);
         }
-        HttpServerRequest::Http(IncomingHttpRequest { method, raw_path, .. }) => {
+        HttpServerRequest::Http(IncomingHttpRequest { method, url, bound_path, .. }) => {
             // Handle incoming HTTP requests here
         }
     };

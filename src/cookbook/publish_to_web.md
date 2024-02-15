@@ -62,9 +62,9 @@ Then in your request handler, you can use `handle_ui_asset_request` to get the f
 let body = message.body();
 if let Ok(http_request) = serde_json::from_slice::<HttpServerRequest>(body) {
     match http_request {
-        HttpServerRequest::Http(IncomingHttpRequest { raw_path, .. }) => {
-            if raw_path.contains(&format!("/{}/assets/", our.process.to_string())) {
-                return handle_ui_asset_request(our, "ui", &raw_path);
+        HttpServerRequest::Http(IncomingHttpRequest { url, .. }) => {
+            if url.contains(&format!("/{}/assets/", our.process.to_string())) {
+                return handle_ui_asset_request(our, "ui", &url);
             }
         }
         _ => {}
@@ -72,7 +72,7 @@ if let Ok(http_request) = serde_json::from_slice::<HttpServerRequest>(body) {
 }
 ```
 
-`handle_ui_asset_request` takes our (&Address), the top-level directory that contains the files, and the `raw_path` of the incoming request.
+`handle_ui_asset_request` takes our (&Address), the top-level directory that contains the files, and the `url` of the incoming request.
 In this case, the `/assets` directory must be in the `/ui` directory which must be uploaded from `pkg` when the process is installed.
 So your project would look like this:
 
