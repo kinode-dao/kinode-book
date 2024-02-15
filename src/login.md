@@ -40,7 +40,7 @@ Options:
 
 A home directory must be supplied — where the node will store its files.
 The binary also takes a required `--rpc` flag.
-The `--rpc` flag is a `wss://` WebSocket link to an Ethereum RPC, allowing the Kinode can send and receive Ethereum transactions — used in the [identity system](./identity_system.md) as mentioned [above](#creating-an-alchemy-account).
+The `--rpc` flag is a `wss://` WebSocket link to an Ethereum RPC, allowing the Kinode to send and receive Ethereum transactions — used in the [identity system](./identity_system.md) as mentioned [above](#creating-an-alchemy-account).
 If the `--port` flag is supplied, Kinode will attempt to bind that port and will exit if that port is already taken.
 If no `--port` flag is supplied, Kinode will bind to `8080` if it is available, or the first port above `8080` if not.
 

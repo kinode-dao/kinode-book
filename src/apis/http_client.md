@@ -1,6 +1,6 @@
 # HTTP Client API
 
-See also: [docs.rs for HTTP Client part of `process_lib`](https://docs.rs/kinode_process_lib/0.0.0-reserved/kinode_process_lib/http/index.html).
+See also: [docs.rs for HTTP Client part of `process_lib`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/index.html).
 
 **Note: Most processes will not use this API directly. Instead, they will use the [`process_lib`](../process_stdlib/overview.md) library, which papers over this API and provides a set of types and functions which are much easier to natively use. This is mostly useful for re-implementing this module in a different client or performing niche actions unsupported by the library.**
 

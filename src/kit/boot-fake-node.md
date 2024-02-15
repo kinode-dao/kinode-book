@@ -37,9 +37,7 @@ Fake nodes also clean up after themselves, so you don't have to worry about stat
 Thus, fake nodes are an excellent testing ground during development for fast iteration.
 
 There are some cases where fake nodes are not appropriate.
-One is for testing persistence of a package.
-Because fake nodes clean up after themselves, they will not persist data from run to run.
-Another weakness of fake nodes is also their strength: they are not connected to the live network.
+The weakness of fake nodes is also their strength: they are not connected to the live network.
 Though this lack of connectivity makes them easy to spin up and throw away, the downside is no access to services on the network, like remote LLMs.
 
 ## Arguments
@@ -54,7 +52,7 @@ Options:
   -r, --runtime-path <PATH>
           Path to Kinode core repo or runtime binary (overrides --version)
   -v, --version <VERSION>
-          Version of Kinode binary to use (overridden by --runtime-path) [default: latest] [possible values: latest, v0.5.2-alpha, v0.5.1-alpha, v0.5.0-alpha]
+          Version of Kinode binary to use (overridden by --runtime-path) [default: latest] [possible values: latest, v0.5.3-alpha, v0.5.2-alpha, v0.5.1-alpha]
   -p, --port <NODE_PORT>
           The port to run the fake node on [default: 8080]
   -h, --home <HOME>
@@ -71,6 +69,8 @@ Options:
           If set, do not delete node home after exit
       --password <PASSWORD>
           Password to login [default: secret]
+      --release
+          If set and given --runtime-path, compile release build [default: debug build]
       --help
           Print help
 ```
@@ -124,3 +124,7 @@ Persist the node home directory after exit, rather than cleaning it up.
 ### `--password`
 
 The password of the fake node; defaults to `secret`.
+
+### `--release`
+
+If --runtime-path is given, build the runtime for release; default is debug.

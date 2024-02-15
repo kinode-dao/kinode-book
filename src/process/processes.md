@@ -13,20 +13,20 @@ Third, the process identifier.
 Processes spawn with their own identifier: either a developer-selected string or a randomly-generated number as string.
 And finally, the node the process is running on (your node).
 
-[Package IDs](https://docs.rs/kinode_process_lib/0.0.0-reserved/kinode_process_lib/struct.PackageId.html) look like:
+[Package IDs](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/struct.PackageId.html) look like:
 
 ```
 my_cool_software:my_username.os
 ```
 
-[Process IDs](https://docs.rs/kinode_process_lib/0.0.0-reserved/kinode_process_lib/kinode/process/standard/struct.ProcessId.html) look like:
+[Process IDs](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.ProcessId.html) look like:
 
 ```
 process_one:my_cool_software:my_username.os
 8513024814:my_cool_software:my_username.os
 ```
 
-[Addresses](https://docs.rs/kinode_process_lib/0.0.0-reserved/kinode_process_lib/kinode/process/standard/struct.Address.html) look like:
+[Addresses](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) look like:
 
 ```
 some_user.os@process_one:my_cool_software:my_username.os
@@ -150,7 +150,6 @@ If the error results from a response, the process may optionally try to re-send 
 
 Processes must acquire capabilities from the kernel in order to perform certain operations.
 Processes themselves can also produce capabilities in order to give them to other processes.
-For more information about the general capabilities-based security paradigm, [insert link to good article here].
 
 The kernel gives out capabilities that allow a process to message another *local* process.
 It also gives a capability allowing processes to send and receive messages over the network.

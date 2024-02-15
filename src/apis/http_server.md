@@ -1,6 +1,6 @@
 # HTTP Server API
 
-See also: [docs.rs for HTTP Server part of `process_lib`](https://docs.rs/kinode_process_lib/0.0.0-reserved/kinode_process_lib/http/index.html).
+See also: [docs.rs for HTTP Server part of `process_lib`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/index.html).
 
 **Note: Most processes will not use this API directly. Instead, they will use the [`process_lib`](./process_stdlib/overview.md) library, which papers over this API and provides a set of types and functions which are much easier to natively use. This is mostly useful for re-implementing this module in a different client or performing niche actions unsupported by the library.**
 
@@ -50,16 +50,45 @@ pub enum HttpServerAction {
         path: String,
         authenticated: bool,
         encrypted: bool,
+        extension: bool,
     },
     /// SecureBind is the same as Bind, except that it forces new connections to be made
     /// from the unique subdomain of the process that bound the path. These are *always*
     /// authenticated. Since the subdomain is unique, it will require the user to be
     /// logged in separately to the general domain authentication.
-    WebSocketSecureBind { path: String, encrypted: bool },
+    WebSocketSecureBind {
+        path: String,
+        encrypted: bool,
+        extension: bool,
+    },
+    /// Processes will RECEIVE this kind of request when a client connects to them.
+    /// If a process does not want this websocket open, they should issue a *request*
+    /// containing a [`type@HttpServerAction::WebSocketClose`] message and this channel ID.
+    WebSocketOpen { path: String, channel_id: u32 },
     /// When sent, expects a lazy_load_blob containing the WebSocket message bytes to send.
     WebSocketPush {
         channel_id: u32,
         message_type: WsMessageType,
+    },
+    /// When sent, expects a `lazy_load_blob` containing the WebSocket message bytes to send.
+    /// Modifies the `lazy_load_blob` by placing into `WebSocketExtPushData` with id taken from
+    /// this `KernelMessage` and `kinode_message_type` set to `desired_reply_type`.
+    WebSocketExtPushOutgoing {
+        channel_id: u32,
+        message_type: WsMessageType,
+        desired_reply_type: MessageType,
+    },
+    /// For communicating with the ext.
+    /// Kinode's http_server sends this to the ext after receiving `WebSocketExtPushOutgoing`.
+    /// Upon receiving reply with this type from ext, http_server parses, setting:
+    /// * id as given,
+    /// * message type as given (Request or Response),
+    /// * body as HttpServerRequest::WebSocketPush,
+    /// * blob as given.
+    WebSocketExtPushData {
+        id: u64,
+        kinode_message_type: MessageType,
+        blob: Vec<u8>,
     },
     /// Sending will close a socket the process controls.
     WebSocketClose(u32),
@@ -165,3 +194,4 @@ pub struct HttpResponse {
 This response is only required for HTTP requests.
 `WebSocketOpen`, `WebSocketPush`, and `WebSocketClose` requests do not require a response.
 If a process is meant to send data over an open WebSocket connection, it must issue a `HttpServerAction::WebSocketPush` request with the appropriate `channel_id`.
+Find discussion of the `HttpServerAction::WebSocketExt*` requests in the [extensions document](../process/extensions.md).
