@@ -13,20 +13,20 @@ Third, the process identifier.
 Processes spawn with their own identifier: either a developer-selected string or a randomly-generated number as string.
 And finally, the node the process is running on (your node).
 
-[Package IDs](https://docs.rs/kinode_process_lib/0.0.0-reserved/kinode_process_lib/struct.PackageId.html) look like:
+[Package IDs](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/struct.PackageId.html) look like:
 
 ```
 my_cool_software:my_username.os
 ```
 
-[Process IDs](https://docs.rs/kinode_process_lib/0.0.0-reserved/kinode_process_lib/kinode/process/standard/struct.ProcessId.html) look like:
+[Process IDs](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.ProcessId.html) look like:
 
 ```
 process_one:my_cool_software:my_username.os
 8513024814:my_cool_software:my_username.os
 ```
 
-[Addresses](https://docs.rs/kinode_process_lib/0.0.0-reserved/kinode_process_lib/kinode/process/standard/struct.Address.html) look like:
+[Addresses](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) look like:
 
 ```
 some_user.os@process_one:my_cool_software:my_username.os

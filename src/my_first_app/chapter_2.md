@@ -48,7 +48,7 @@ fn my_init_fn(our: Address) {
 ```
 
 Every Kinode process written in Rust will need code that does the same thing as the above.
-The [`Address` parameter](https://docs.rs/kinode_process_lib/0.0.0-reserved/kinode_process_lib/kinode/process/standard/struct.Address.html) tells our process what its globally-unique name is.
+The [`Address` parameter](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) tells our process what its globally-unique name is.
 
 Let's fill out the init function with code that will stop it from exiting immediately.
 Here's an infinite loop that will wait for a message and then print it out.
