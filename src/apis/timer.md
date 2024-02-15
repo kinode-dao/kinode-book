@@ -19,6 +19,6 @@ The timer finishes by sending a `Response` once the timer has popped.
 The response will have no information in the `body`.
 To keep track of different timers, you can use two methods:
 - `send_and_await_response` which will block your app while it is waiting
-  - use [`kinode_process_lib::timer::set_and_await_timer`](https://docs.rs/kinode_process_lib/0.0.0-reserved/kinode_process_lib/timer/fn.set_and_await_timer.html) for this
+  - use [`kinode_process_lib::timer::set_and_await_timer`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/timer/fn.set_and_await_timer.html) for this
 - use `context` to keep track of multiple timers without blocking
-  - use [`kinode_process_lib::timer::set_timer`](https://docs.rs/kinode_process_lib/0.0.0-reserved/kinode_process_lib/timer/fn.set_timer.html) to set the timer with optional context
+  - use [`kinode_process_lib::timer::set_timer`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/timer/fn.set_timer.html) to set the timer with optional context
