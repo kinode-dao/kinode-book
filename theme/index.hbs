@@ -48,6 +48,7 @@
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         {{/if}}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LHTPVL3ZE5"></script>
     </head>
     <body class="sidebar-visible no-js">
     <div id="body-container">
@@ -267,7 +268,7 @@
         </script>
         {{/if}}
 
-        {{#if google_analytics}}
+        {{!-- {{#if google_analytics}}
         <!-- Google Analytics Tag -->
         <script>
             var localAddrs = ["localhost", "127.0.0.1", ""];
@@ -284,7 +285,15 @@
                 ga('send', 'pageview');
             }
         </script>
-        {{/if}}
+        {{/if}} --}}
+        <!-- Google tag (gtag.js) -->
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-LHTPVL3ZE5');
+        </script>
 
         {{#if playground_line_numbers}}
         <script>
