@@ -32,7 +32,7 @@ Options:
 
 or for any of the subcommands, e.g.:
 
-```bash
+```
 kit new --help
 ```
 
@@ -53,6 +53,18 @@ kit update
 ```
 
 You can find the source for `kit` at [https://github.com/kinode-dao/kit](https://github.com/kinode-dao/kit).
+
+## Logging
+
+Logs are printed to the screen and stored, by default, at `/tmp/kinode-kit-cache/logs/log.log`.
+The default logging level is `info`.
+
+These defaults can be changed by setting environment variables:
+
+Environment Variable | Description
+-------------------- | -----------
+`KIT_LOG_PATH`       | Set log path (default `/tmp/kinode-kit-cache/logs/log.log`).
+`RUST_LOG`           | Set log level (default `info`).
 
 ## Table of Contents
 
