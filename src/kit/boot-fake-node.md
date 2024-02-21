@@ -71,6 +71,8 @@ Options:
           Password to login [default: secret]
       --release
           If set and given --runtime-path, compile release build [default: debug build]
+      --verbosity <VERBOSITY>
+          Verbosity of node: higher is more verbose [default: 0]
       --help
           Print help
 ```
@@ -127,4 +129,8 @@ The password of the fake node; defaults to `secret`.
 
 ### `--release`
 
-If --runtime-path is given, build the runtime for release; default is debug.
+If `--runtime-path` is given, build the runtime for release; default is debug.
+
+### `--verbosity`
+
+Set the verbosity of the node; higher is more verbose; default is `0`.
