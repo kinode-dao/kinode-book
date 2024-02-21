@@ -50,9 +50,9 @@ While very similar, there are a few important differences; here's an example tha
     "echo.wasm": {
         "root": false,
         "public": false,
-        "requestNetworking": false,
-        "requestCapabilities": [],
-        "grantCapabilities": []
+        "request_networking": false,
+        "request_capabilities": [],
+        "grant_capabilities": []
     }
 }
 ```
@@ -61,14 +61,14 @@ The keys of this object are the process paths inside of the `pkg/` folder.
 The name of the script will be the file path, with `.wasm` taken off.
 The object that `echo.wasm` points to is very similar to `manifest.json`, with a few things removed, and `root` has been added:
 - `root` means that all the capabilities held by the `terminal:terminal:sys` are passed to this script (this is powerful, and rarely needed)
-- `public`: same as `manfiest.json` - corresponds to whether or not other processes can message `echo.wasm` without the messsaging cap
-- `requestNetworking`: same as `manfiest.json` - corresponds to whether or not this script will need to send messaages over the network
-- `requestCapabilities`: same as `manifest.json` - a list of capabilities that will be granted to this script on startup (NOTE if you have `root`, there is no reason to populate `requestCapabilities` as well)
-- `grantCapabilities`: same as `manifest.json` - a list of messaging caps to `echo.wasm` to be given to other processes on startup
+- `public`: same as `manifest.json` - corresponds to whether or not other processes can message `echo.wasm` without the messsaging cap
+- `request_networking`: same as `manifest.json` - corresponds to whether or not this script will need to send messaages over the network
+- `request_capabilities`: same as `manifest.json` - a list of capabilities that will be granted to this script on startup (NOTE if you have `root`, there is no reason to populate `request_capabilities` as well)
+- `grant_capabilities`: same as `manifest.json` - a list of messaging caps to `echo.wasm` to be given to other processes on startup
 As long as you have a `scripts.json` file, your scripts will be callable from the terminal when someone else downloads your package
 
 ## Calling a Script
-Calling a script is very easy, simply type in the terminal `my_script:my_package:publisher <ARGS>` in the terminal.
+After having called `kit bs`, simply type `my_script:my_package:publisher <ARGS>` in the terminal.
 For instance, the `echo` script is published as part of `terminal:sys`, so you can call
 ```bash
 echo:terminal:sys Hello World!
