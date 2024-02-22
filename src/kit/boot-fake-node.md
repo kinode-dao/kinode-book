@@ -42,7 +42,7 @@ Though this lack of connectivity makes them easy to spin up and throw away, the 
 
 ## Arguments
 
-```bash
+```
 $ kit f --help
 Boot a fake node for development
 
