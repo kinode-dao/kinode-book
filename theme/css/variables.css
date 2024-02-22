@@ -70,7 +70,7 @@
 .dark {
     --bg: var(--k-darkgray);
     --page-bg: var(--k-black);
-    --bg-bg: var(--k-beige);
+    --bg-bg: var(--k-black);
     --fg: var(--k-beige);
   
     --sidebar-bg: var(--k-black);

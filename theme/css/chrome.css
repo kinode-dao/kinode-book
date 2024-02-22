@@ -37,7 +37,7 @@ a > .hljs {
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    background-color: transparent;
+    background-color: var(--bg-bg);
     place-items: center;
 }
 #menu-bar.sticky,
@@ -307,7 +307,6 @@ pre > code {
     filter: brightness(1.5) saturate(0.5);
 }
 .light pre > code.hljs,
-.harmony pre > code.hljs,
 .meadow pre > code.hljs {
     color: var(--k-darkgray);
     background-color: var(--k-white);
