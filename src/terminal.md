@@ -117,23 +117,24 @@ This is a `scripts.json` that publishes a single script, `hi`, which doesn't rec
 The terminal lets you pipe the previous command's output into another script.
 For exapmle:
 ```bash
-echo default-router-1.os Hello! |1 hi
+m -a 5 our@kns_indexer:kns_indexer:sys {"NodeInfo":{"name":"goldfinger.os","block":299}} |5 echo
 ```
-Since the `echo` script just returns its arguments, we are piping the string `default-router-1.os Hello!` into `hi`, so the end result is just 
-```bash
-hi default-router-1.os Hello!
-```
+The `m` script sends an arbitrary message to an arbitrary `Address`.
+Here, we pipe that output into `echo`, which just prints out whatever it was given.
+We can combine `m` and `echo` to print out `Response`s from different procecesses.
+
 This is exactly the same as a unix pipe except for the number that comes after the pipe.
 This number after the pipe represents timeout in seconds.
-In this case: wait for `echo` to respond, and if it does not after 1 second, abort.
+In this case: wait for `echo` to respond, and if it does not after 5 seconds, abort.
 Any `u64` value is a valid timeout value.
+You can also choose to omit the timeout value and it will default to `5` seconds.
 
 ### Writing Your Script to be Pipe-able
 Not all scripts are pipable.
 For a script's output to be pipeable you must take the output and `.send()` it in a `Response`.
 The [cookbook](./cookbook/writing_scripts.md) describes how every script begins with a `Request` that contains arguments in the `body`.
 If you want the outputs of your script to be composable via pipes, you must terminate your script with a `Response` to this initial request.
-As a simple example, let's look at the `echo` code:
+As a simple example, let's look at a new script, `foo`:
 ```rust
 use kinode_process_lib::{await_next_request_body, call_init, println, Address, Response};
 
@@ -149,7 +150,7 @@ call_init!(init);
 
 fn init(_our: Address) {
     let Ok(args) = await_next_request_body() else {
-        println!("echo: failed to get args, aborting");
+        println!("foo: failed to get args, aborting");
         return;
     };
 
@@ -157,5 +158,5 @@ fn init(_our: Address) {
 }
 ```
 
-All we do here is get the args, and send a response back with the exact same args.
-If instead of sending a `Response` we simply `println`d the arguments out, then we wouldn't be able to compose `echo` with pipes.
+All we do here is get the args, and send a response back with the exact same args. 
+This is a lot like `echo`, but instead  of `println`ing the arguments, we send them as a response, which can be used as input to another script via pipes.
