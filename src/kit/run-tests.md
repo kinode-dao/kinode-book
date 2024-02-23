@@ -53,7 +53,6 @@ Consider the following example, from [core tests]():
 
 ```toml
 runtime = { FetchVersion = "latest" }
-mute_runtime_build = true
 runtime_build_release = true
 
 
@@ -64,7 +63,6 @@ test_packages = [
     { path = "key_value_test", grant_capabilities = ["kv:distro:sys"] },
     { path = "sqlite_test", grant_capabilities = ["sqlite:distro:sys"] },
 ]
-mute_package_build = true
 timeout_secs = 5
 # Plan to include defects = Latency, Dropping, ..., All
 network_router = { port = 9001, defects = "None" }
@@ -73,7 +71,6 @@ network_router = { port = 9001, defects = "None" }
 port = 8080
 home = "home/first"
 fake_node_name = "first.os"
-mute_runtime = false
 is_testnet = true
 runtime_verbosity = 0
 
@@ -81,7 +78,6 @@ runtime_verbosity = 0
 port = 8081
 home = "home/second"
 fake_node_name = "second.os"
-mute_runtime = false
 is_testnet = true
 runtime_verbosity = 0
 
@@ -99,7 +95,6 @@ network_router = { port = 9001, defects = "None" }
 port = 8080
 home = "home/first"
 fake_node_name = "first.os"
-mute_runtime = false
 is_testnet = true
 runtime_verbosity = 0
 ```
@@ -151,7 +146,7 @@ The top-level consists of three fields:
 Key                                               | Value Type
 ------------------------------------------------- | ----------
 [`runtime`](#runtime)                             | `{ FetchVersion = "<version>" }` or `{ RepoPath = "~/path/to/repo" }`
-[`runtime_build_verbose`](#runtime_build_verbose) | Boolean
+[`runtime_build_release`](#runtime_build_release) | Boolean
 [`tests`](#tests)                                 | Array of Tables
 
 ### `runtime`
@@ -168,9 +163,9 @@ The second is `RepoPath`.
 The value of the `RepoPath` Table is the path to a local copy of the runtime repo.
 Given a valid path, that repo will be compiled and used.
 
-### `mute_runtime_build`
+### `runtime_build_release`
 
-Whether to print `stdout`/`stderr` from building the given repo, if given `RepoPath` `runtime`.
+If given `runtime = RepoPath`, whether to build the runtime as `--release` or not.
 
 ### `tests`
 
@@ -182,7 +177,6 @@ Key                     | Value Type      | Value Description
 ----------------------- | --------------- | -----------------
 `setup_package_paths`   | Array of Paths  | Paths to packages to load into all nodes before running test
 `test_packages`         | Array of Tables | Table containing `path` (to test package) and `grant_capabilities` (which will be granted by test package)
-`mute_package_build`    | Boolean         | Whether to print `stdout`/`stderr` from building the setup & test packages
 `timeout_secs`          | Integer > 0     | Timeout for this entire series of test packages
 `network_router`        | Table           | Table containing `port` (of network router server) and `defects` (to simulate network weather/defects; currently only `"None"` accepted)
 [`nodes`](#nodes)       | Array of Tables | Each Table specifies configuration of one node to spin up for test
@@ -203,7 +197,6 @@ Key                 | Value Type     | Value Description
 `fake_node_name`    | String         | Name of fake node
 `password`          | String or Null | Password of fake node (default: `"secret"`)
 `rpc`               | String or Null | [`wss://` URI of Ethereum RPC](../login.md#starting-the-kinode-node)
-`mute_runtime`      | Boolean        | Whether to print `stdout`/`stderr` from the node
 `is_testnet`        | Boolean        | Whether to connect to Sepolia testnet (`false` -> Optimism mainnet)
 `runtime_verbosity` | Integer >= 0   | The verbosity level to start the runtime with; higher is more verbose (default: `0`)
 
