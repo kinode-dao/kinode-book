@@ -21,7 +21,7 @@ To instead "fire and forget" a message and exit immediately, use the [`--non-blo
 
 ## Arguments
 
-```bash
+```
 $ kit i --help
 Inject a message to a running Kinode
 

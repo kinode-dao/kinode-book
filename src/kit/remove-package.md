@@ -25,7 +25,7 @@ Then it injects a message to the node to start the package.
 
 ## Arguments
 
-```bash
+```
 $ kit r --help
 Remove a running package from a node
 
