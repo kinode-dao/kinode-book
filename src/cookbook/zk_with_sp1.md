@@ -12,7 +12,7 @@ kit boot-fake-node
 ```
 
 In another terminal, create a new app using [kit](../kit-dev-toolkit.md).
-Let's use the fibonacci template, which can then be modified to calculate fibonacci numbers in a *provably correct* way.
+Use the fibonacci template, which can then be modified to calculate fibonacci numbers in a *provably correct* way.
 ```bash
 kit new my_zk_app -t fibonacci
 cd my_zk_app
@@ -49,12 +49,12 @@ m fake.os@my_zk_app:my_zk_app:template.os -a 5 '{"Number": 10}'
 You should see `{"Number":55}` in the terminal of `fake2.os`!
 This reveals a fascinating possibility: with Kinode, one can build p2p services accessible to any node on the network.
 However, the current implementation of the fibonacci program is not provably correct.
-The node running the program could make up a number and send it to us -- without doing the work ourselves, there's no way to verify the result.
+The node running the program could make up a number -- without doing the work locally, there's no way to verify the result.
 ZK proofs can solve this problem.
 
 ### Introducing the proof
 
-To add ZK proofs to this simple fibonacci program, one can use the [SP1](https://github.com/succinctlabs/sp1) library to write a program in Rust, then produce proofs against it.
+To add ZK proofs to this simple fibonacci program, you can use the [SP1](https://github.com/succinctlabs/sp1) library to write a program in Rust, then produce proofs against it.
 
 First, add the SP1 dependency to the `Cargo.toml` file for `my_zk_app`:
 ```toml
@@ -64,12 +64,13 @@ sp1-core = { git = "https://github.com/succinctlabs/sp1.git" }
 ...
 ```
 
-Now follow the [SP1 install steps](https://succinctlabs.github.io/sp1/getting-started/install.html) to get the tooling for constructing a provable program. After installing you should be able to run
+Now follow the [SP1 install steps](https://succinctlabs.github.io/sp1/getting-started/install.html) to get the tooling for constructing a provable program.
+After installing you should be able to run
 ```
 cargo prove new fibonacci
 ```
 and navigate to a project, which conveniently contains a fibonacci function example.
-Let's modify it slightly to match what our fibonacci program does.
+Modify it slightly to match what our fibonacci program does.
 You can more or less copy-and-paste the fibonacci function from your Kinode app to the `program/src/main.rs` file in the SP1 project.
 It'll look like this:
 ```rust
@@ -94,14 +95,14 @@ pub fn main() {
 }
 ```
 
-Now, use SP1's `prove` tool to build the ELF that will actually be executed when we get a fibonacci request.
+Now, use SP1's `prove` tool to build the ELF that will actually be executed when the process get a fibonacci request.
 Run this inside the `program` dir of the SP1 project you created:
 ```bash
 cargo prove build
 ```
 
 Next, take the generated ELF file from `program/elf/riscv32im-succinct-zkvm-elf` and copy it into the `pkg` dir of your *Kinode* app.
-Go back to your Kinode app code and include this file as bytes so we can execute it in the SP1 zkVM:
+Go back to your Kinode app code and include this file as bytes so the process can execute it in the SP1 zkVM:
 ```rust
 const FIB_ELF: &[u8] = include_bytes!("../../pkg/riscv32im-succinct-zkvm-elf");
 ```
@@ -112,7 +113,7 @@ Now, this app can use this circuit to not only calculate fibonacci numbers, but 
 The subsequent proof can be serialized and shared across the network with the result.
 Take a moment to imagine the possibilities, then take a look at the full code example below:
 
-I've omitted some of the code from the original fibonacci program for clarity, and added functionality for verifying proofs our program receives from others.
+Some of the code from the original fibonacci program is omitted for clarity, and functionality for verifying proofs our program receives from others has been added.
 
 ```rust
 use kinode_process_lib::{println, *};
@@ -225,13 +226,13 @@ fn init(our: Address) {
 ### Test it out
 
 Install this app on two nodes -- they can be the fake `kit` nodes from before, or real ones on the network.
-Next, send a message from one to the other, asking it to generate a fibonacci proof for us!
+Next, send a message from one to the other, asking it to generate a fibonacci proof!
 ```
 m our@my_zk_app:my_zk_app:template.os -a 30 '{"ProveIt": {"target": "fake.os", "n": 10}}'
 ```
 As usual, set the process ID to what you used, and set the `target` JSON value to the other node's name.
-Try a few different numbers -- see if you can generate a timeout (we have it set at 30 seconds now, both in the terminal command and inside the app code).
+Try a few different numbers -- see if you can generate a timeout (it's set at 30 seconds now, both in the terminal command and inside the app code).
 If so, the power of this proof system is demonstrated: a user with little compute can ask a peer to do some work for them and quickly verify it!
 
-In just over 100 lines of code, we have a program that can create, share across the network, and verify ZK proofs.
+In just over 100 lines of code, you have written a program that can create, share across the network, and verify ZK proofs.
 Use this as a blueprint for similar programs to get started using ZK proofs in a brand new p2p environment!
