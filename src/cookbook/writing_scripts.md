@@ -27,7 +27,10 @@ fn init(_our: Address) {
         return;
     };
 
-    let _ = Response::new().body(args).send();
+    match String::from_utf8(args.clone()) {
+        Ok(s) => println!("{}", s),
+        Err(_) => println!("{:?}", args),
+    }
 }
 ```
 From writing applications, this should look very familiar - the imports, `wit_bindgen::generate!`, `call_init!`, `init(our: Address)`, etc. are all exactly the same.
@@ -37,10 +40,7 @@ Next, all we do is `String`ify the message body, and print it out.
 
 Arbitrary logic can be put below `await_next_message_body` - just like an app, you can fire-off a number of requests, choose to await their responses, handle errors, etc. just like normal.
 
-In this case, `echo` sends a `Response` containing the arguments passed in.
-The `Response` enables composition of scripts via [piping](../terminal.md#piping-and-composing-scripts), so that the output of `echo` can serve as the input to the next program.
-Not every script needs to end with a `Response`.
-It would be valid to simply `println` the `args` and terminate, but this would mean that the script has no "return value" to compose with other scripts via pipes.
+In this case, `echo` sends simply reserializes the body to a `String` and prints it out.
 
 ## Publishing a Script
 Unlike processes associated with a long-running application, which will be put into the `manifest.json`, scripts must be registered in a separate `scripts.json` file.
