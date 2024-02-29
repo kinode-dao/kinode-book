@@ -23,7 +23,6 @@ body {
     font-size: 18px;
     overflow-x: hidden;
     background-color: var(--bg);
-    border-radius: 32px;
     border: 1px solid transparent;
     border-bottom-width: 2px;
 }
@@ -95,7 +94,7 @@ h6 {
 }
 
 h1 {
-    font-size: 6em;
+    font-size: 5em;
     margin-top: 0.25em;
 }
 

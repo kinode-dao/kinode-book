@@ -32,11 +32,11 @@ The following table describes the matrix of ["Exists/Has UI-enabled version"](#e
 
 ### Exists/Has UI-enabled vesion
 
-Language     | `chat`  | `echo` | `fibonacci`
------------- | ------- | ------ | -----------
-`rust`       | yes/yes | yes/no | yes/no
-`python`     | yes/no  | yes/no | yes/no
-`javascript` | yes/no  | yes/no | yes/no
+Language     | `chat`  | `echo` | `fibonacci` | `file_transfer`
+------------ | ------- | ------ | ----------- | ---------------
+`rust`       | yes/yes | yes/no | yes/no      | yes/no
+`python`     | yes/no  | yes/no | yes/no      | no/no
+`javascript` | yes/no  | yes/no | yes/no      | no/no
 
 ## Arguments
 
@@ -53,7 +53,7 @@ Options:
   -a, --package <PACKAGE>      Name of the package [default: DIR]
   -u, --publisher <PUBLISHER>  Name of the publisher [default: template.os]
   -l, --language <LANGUAGE>    Programming language of the template [default: rust] [possible values: rust, python, javascript]
-  -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: chat, echo, fibonacci]
+  -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: chat, echo, fibonacci, file_transfer]
       --ui                     If set, use the template with UI
   -h, --help                   Print help
 ```

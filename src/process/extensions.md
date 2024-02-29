@@ -41,7 +41,7 @@ Check out the [examples below](#examples) to see some working extensions.
 The process [binds a WebSocket](#bind-an-extension-websocket), so Kinode acts as the WebSocket server.
 The extension acts as a client, connecting to the WebSocket served by the Kinode process.
 
-The process sends `HttpServerAction::WebSocketExtPushOutgoing` Requests to the `http_server` to communicate with the extension.
+The process sends `HttpServerAction::WebSocketExtPushOutgoing` Requests to the `http_server` to communicate with the extension (see the `enum` defined at the bottom of this section).
 
 Field Name           | Description
 -------------------- | -----------
@@ -51,14 +51,12 @@ Field Name           | Description
 
 The `lazy_load_blob` is the payload for the WebSocket message.
 
-The `http_server` converts the Request into a `HttpServerAction::WebSocketExtPushData` and sends it to the extension.
+The `http_server` converts the Request into a `HttpServerAction::WebSocketExtPushData`, [MessagePack](https://msgpack.org)s it, and sends it to the extension.
 Specifically, it attaches the Messages `id`, copies the `desired_reply_type` to the `kinode_message_type` field, and copies the `lazy_load_blob` to the `blob` field.
 
-The extension replies with a `HttpServerAction::WebSocketExtPushData`.
+The extension replies with a [MessagePack](https://msgpack.org)ed `HttpServerAction::WebSocketExtPushData`.
 It should copy the `id` and `kinode_message_type` of the message it is serving into those same fields of the reply.
 The `blob` is the payload.
-
-The `HttpServerAction::WebSocketExtPushData` is (de)serialized using [MessagePack](https://msgpack.org).
 
 ```rust
 pub enum HttpServerAction {
@@ -103,17 +101,17 @@ The [`kinode_process_lib`](../process_stdlib/overview.md) provides an easy way t
 kinode_process_lib::http::bind_ext_path("/")?;
 ```
 
-which, for a process with process ID `process:package:publisher.os`, serves a WebSocket server for the extension to connect to at `ws://localhost/process:package:publisher.os`.
-Passing a different endpoint like `bind_ext_path("/foo")` will append to the WebSocket endpoint like `ws://localhost/process:package:publisher.os/foo`.
+which, for a process with process ID `process:package:publisher.os`, serves a WebSocket server for the extension to connect to at `ws://localhost:8080/process:package:publisher.os`.
+Passing a different endpoint like `bind_ext_path("/foo")` will append to the WebSocket endpoint like `ws://localhost:8080/process:package:publisher.os/foo`.
 
 #### Handle Kinode Messages
 
 Like any Kinode process, the interface process must handle Kinode messages.
 These are how other Kinode processes will make Requests that are served by the extension:
-1. Process A sends Request
-2. Intermediary process receives Request, optionally does some logic, sends Request on to extension via WS
-3. Extension does computation, replies on WS
-4. Intermediary process optionally does some logic and then sends Response to process A
+1. Process A sends Request.
+2. Interface process receives Request, optionally does some logic, sends Request on to extension via WS.
+3. Extension does computation, replies on WS.
+4. Interface process receives Response, optionally does some logic, sends Response on to process A.
 
 The [WebSocket protocol section](#the-websocket-protocol) above discusses how to send messages to the extension over WebSockets.
 Briefly, a `HttpServerAction::WebSocketExtPushOutgoing` Request is sent to the `http_server`, with the payload in the `lazy_load_blob`.
@@ -121,7 +119,7 @@ Briefly, a `HttpServerAction::WebSocketExtPushOutgoing` Request is sent to the `
 It is recommended to use the following protocol:
 1. Use the `WsMessageType::Binary` WebSocket message type and use MessagePack to (de)serialize your messages.
    [MessagePack](https://msgpack.org) is space-efficient and well supported by a variety of languages.
-   Structs, dictionaries, arrays, etc can be (de)serialized in this way.
+   Structs, dictionaries, arrays, etc. can be (de)serialized in this way.
    The extension must support MessagePack anyways, since the `HttpServerAction::WebSocketExtPushData` is (de)serialized using it.
 2. Set `desired_reply_type` to `MessageType::Response`.
    Then the extension can indicate its reply is a Response, which will allow your Kinode process to properly route it back to the original requestor.
@@ -149,7 +147,7 @@ It can be written in any language and it is run natively on the host as a "side 
 
 The extension should first connect to the interface process.
 The recommended pattern is to then iteratively accept and process messages from the WebSocket.
-Messages come in at MessagePack'd `HttpServerAction::WebSocketExtPushData` and must be replied to in the same format.
+Messages come in as MessagePack'd `HttpServerAction::WebSocketExtPushData` and must be replied to in the same format.
 The `blob` field is recommended to also be MessagePack'd.
 The `id` and `kinode_message_type` should be mirrored by the extension: what it receives in those fields should be copied in its reply.
 

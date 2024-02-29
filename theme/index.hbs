@@ -21,9 +21,9 @@
 
         <link rel="icon" href="{{ path_to_root }}favicon.svg">
         <link rel="shortcut icon" href="{{ path_to_root }}favicon.png">
-        <link rel="stylesheet" href="{{ path_to_root }}css/variables.css?ver=4">
-        <link rel="stylesheet" href="{{ path_to_root }}css/general.css?ver=4">
-        <link rel="stylesheet" href="{{ path_to_root }}css/chrome.css?ver=4">
+        <link rel="stylesheet" href="{{ path_to_root }}css/variables.css?ver=8">
+        <link rel="stylesheet" href="{{ path_to_root }}css/general.css?ver=8">
+        <link rel="stylesheet" href="{{ path_to_root }}css/chrome.css?ver=8">
         {{#if print_enable}}
         <link rel="stylesheet" href="{{ path_to_root }}css/print.css" media="print">
         {{/if}}
@@ -48,6 +48,14 @@
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
         {{/if}}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LHTPVL3ZE5"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-LHTPVL3ZE5');
+        </script>
     </head>
     <body class="sidebar-visible no-js">
     <div id="body-container">
@@ -158,7 +166,6 @@
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="dark">Dark</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="harmony">Harmony</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="gnucci">Gnucci</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="classic-dark">Classic Dark</button></li>
                         </ul>
@@ -267,7 +274,7 @@
         </script>
         {{/if}}
 
-        {{#if google_analytics}}
+        {{!-- {{#if google_analytics}}
         <!-- Google Analytics Tag -->
         <script>
             var localAddrs = ["localhost", "127.0.0.1", ""];
@@ -284,7 +291,7 @@
                 ga('send', 'pageview');
             }
         </script>
-        {{/if}}
+        {{/if}} --}}
 
         {{#if playground_line_numbers}}
         <script>
@@ -313,8 +320,8 @@
         {{/if}}
 
         <script src="{{ path_to_root }}clipboard.min.js"></script>
-        <script src="{{ path_to_root }}highlight.js?ver=4"></script>
-        <script src="{{ path_to_root }}book.js?ver=4"></script>
+        <script src="{{ path_to_root }}highlight.js?ver=8"></script>
+        <script src="{{ path_to_root }}book.js?ver=8"></script>
 
         <!-- Custom JS scripts -->
         {{#each additional_js}}
