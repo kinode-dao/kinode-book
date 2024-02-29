@@ -54,5 +54,6 @@
   - [`kinode.wit`](./apis/kinode_wit.md)
   - [SQLite API](./apis/sqlite.md)
   - [Terminal API](./apis/terminal.md)
+  - [Timer API](./apis/timer.md)
   - [VFS API](./apis/vfs.md)
   - [WebSocket API](./apis/websocket_authentication.md)
