@@ -65,7 +65,7 @@ In `my_chess/src/lib.rs`, inside `handle_request()`:
                 match handle_http_request(our, state, incoming) {
                     Ok(()) => Ok(()),
                     Err(e) => {
-                        println!("chess: error handling http request: {:?}", e);
+                        println!("error handling http request: {:?}", e);
                         http::send_response(
                             http::StatusCode::SERVICE_UNAVAILABLE,
                             None,

@@ -40,7 +40,7 @@ Language     | `chat`  | `echo` | `fibonacci` | `file_transfer`
 
 ## Arguments
 
-```bash
+```
 $ kit n --help
 Create a Kinode template package
 

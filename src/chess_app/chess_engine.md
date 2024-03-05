@@ -25,7 +25,7 @@ wit_bindgen::generate!({
 call_init!(init);
 
 fn init(our: Address) {
-    println!("{our}: start");
+    println!("started");
 
     loop {
         let _ = await_message().map(|message| {
@@ -236,10 +236,7 @@ call_init!(init);
 
 fn init(our: Address) {
     // A little printout to show in terminal that the process has started.
-    println!(
-        "{} by {}: start",
-        our.process.process_name, our.process.publisher_node
-    );
+    println!("started");
 
     // Grab our state, then enter the main event loop.
     let mut state: ChessState = load_chess_state();
@@ -254,12 +251,12 @@ fn main_loop(our: &Address, state: &mut ChessState) {
         // this and surface it to the user.
         match await_message() {
             Err(send_error) => {
-                println!("{our}: got network error: {send_error:?}");
+                println!("got network error: {send_error:?}");
                 continue;
             }
             Ok(message) => match handle_request(&our, &message, state) {
                 Ok(()) => continue,
-                Err(e) => println!("{our}: error handling request: {:?}", e),
+                Err(e) => println!("error handling request: {:?}", e),
             },
         }
     }
@@ -312,7 +309,7 @@ fn handle_chess_request(
     state: &mut ChessState,
     action: &ChessRequest,
 ) -> anyhow::Result<()> {
-    println!("chess: handling action from {source_node}: {action:?}");
+    println!("handling action from {source_node}: {action:?}");
 
     // For simplicity's sake, we'll just use the node we're playing with as the game id.
     // This limits us to one active game per partner.
@@ -323,7 +320,7 @@ fn handle_chess_request(
             // Make a new game with source.node
             // This will replace any existing game with source.node!
             if state.games.contains_key(game_id) {
-                println!("chess: resetting game with {game_id} on their request!");
+                println!("resetting game with {game_id} on their request!");
             }
             let game = Game {
                 id: game_id.to_string(),
