@@ -46,6 +46,7 @@
   - [Simple File Transfer Guide](./cookbook/file_transfer.md)
   - [Intro to Web UI with File Transfer](./cookbook/file_transfer_ui.md)
   - [Writing and Running Scripts](./cookbook/writing_scripts.md)
+  - [Use ZK proofs with SP1](./cookbook/zk_with_sp1.md)
 - [API Reference](./api_reference.md)
   - [HTTP API](./apis/http_authentication.md)
   - [HTTP Client API](./apis/http_client.md)
