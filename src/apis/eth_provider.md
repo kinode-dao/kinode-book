@@ -1,8 +1,11 @@
 # ETH Provider API
 
-**Note: Most processes will not use this API directly. Instead, they will use the `eth` portion of the[`process_lib`](../process_stdlib/overview.md) library, which papers over this API and provides a set of types and functions which are much easier to natively use. This is mostly useful for re-implementing this module in a different client or performing niche actions unsupported by the library.**
+**Note: Most processes will not use this API directly. Instead, they will use the `eth` portion of the[`process_lib`](../process_stdlib/overview.md) library, which papers over this API and provides a set of types and functions which are much easier to natively use.
+This is mostly useful for re-implementing this module in a different client or performing niche actions unsupported by the library.**
 
-Processes can send two kinds of requests to `eth:distro:sys`: `EthAction` and `EthConfigAction`. The former only requires the capability to message the process, while the latter requires the root capability issued by `eth:distro:sys`. Most processes will only need to send `EthAction` requests.
+Processes can send two kinds of requests to `eth:distro:sys`: `EthAction` and `EthConfigAction`.
+The former only requires the capability to message the process, while the latter requires the root capability issued by `eth:distro:sys`.
+Most processes will only need to send `EthAction` requests.
 
 ```rust
 /// The Action and Request type that can be made to eth:distro:sys. Any process with messaging
@@ -30,7 +33,8 @@ pub enum EthAction {
 }
 ```
 
-The `Request` containing this action should always expect a response, since every action variant triggers one and relies on it to be useful. The ETH provider will respond with the following type:
+The `Request` containing this action should always expect a response, since every action variant triggers one and relies on it to be useful.
+The ETH provider will respond with the following type:
 
 ```rust
 /// The Response type which a process will get from requesting with an [`EthAction`] will be
@@ -67,7 +71,9 @@ pub enum EthError {
 }
 ```
 
-The `EthAction::SubscribeLogs` request will receive a response of `EthResponse::Ok` if the subscription was successfully created, or `EthResponse::Err(EthError)` if it was not. Then, after the subscription is successfully created, the process will receive *Requests* from `eth:distro:sys` containing subscription updates. That request will look like this:
+The `EthAction::SubscribeLogs` request will receive a response of `EthResponse::Ok` if the subscription was successfully created, or `EthResponse::Err(EthError)` if it was not.
+Then, after the subscription is successfully created, the process will receive *Requests* from `eth:distro:sys` containing subscription updates.
+That request will look like this:
 
 ```rust
 /// Incoming `Request` containing subscription updates or errors that processes will receive.
@@ -91,11 +97,13 @@ pub struct EthSubError {
 }
 ```
 
-Again, for most processes, this is the entire API. The `eth` portion of the `process_lib` library will handle the serialization and deserialization of these types, and provide a set of functions and types that are much easier to use.
+Again, for most processes, this is the entire API.
+The `eth` portion of the `process_lib` library will handle the serialization and deserialization of these types and provide a set of functions and types that are much easier to use.
 
 ### Config API
 
-If a process has the `root` capability from `eth:distro:sys`, it can send `EthConfigAction` requests. These actions are used to adjust the underlying providers and relays that the module uses, and its settings regarding acting as a relayer for other nodes.
+If a process has the `root` capability from `eth:distro:sys`, it can send `EthConfigAction` requests.
+These actions are used to adjust the underlying providers and relays used by the module, and its settings regarding acting as a relayer for other nodes (public/private/granular etc).
 
 ```rust
 /// The action type used for configuring eth:distro:sys. Only processes which have the "root"
@@ -183,6 +191,8 @@ pub struct AccessSettings {
 }
 ```
 
-A successful `GetProviders` request will receive a response of `EthConfigResponse::Providers(SavedConfigs)`, and a successful `GetAccessSettings` request will receive a response of `EthConfigResponse::AccessSettings(AccessSettings)`. The other requests will receive a response of `EthConfigResponse::Ok` if they were successful, or `EthConfigResponse::PermissionDenied` if they were not.
+A successful `GetProviders` request will receive a response of `EthConfigResponse::Providers(SavedConfigs)`, and a successful `GetAccessSettings` request will receive a response of `EthConfigResponse::AccessSettings(AccessSettings)`.
+The other requests will receive a response of `EthConfigResponse::Ok` if they were successful, or `EthConfigResponse::PermissionDenied` if they were not.
 
-All of these types are serialized to a JSON string via `serde_json` and stored as bytes in the request/response body. [The source code for this API can be found in the `eth` section of the Kinode runtime library.](https://github.com/kinode-dao/kinode/blob/main/lib/src/eth.rs)
+All of these types are serialized to a JSON string via `serde_json` and stored as bytes in the request/response body.
+[The source code for this API can be found in the `eth` section of the Kinode runtime library.](https://github.com/kinode-dao/kinode/blob/main/lib/src/eth.rs)

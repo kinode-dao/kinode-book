@@ -3,7 +3,8 @@
 For the purposes of this cookbook entry, all reads will be done from Ethereum Mainnet, but the same methods can easily be used on other networks by changing the `chain_id` parameter.
 
 <div class="warning">
-If a node does not have a provider for the given chain ID, calls and subscriptions will fail. To fix this, add some code on either the frontend or backend of your app that handles these failures by prompting the user to add a provider for the desired chain.
+If a node does not have a provider for the given chain ID, calls and subscriptions will fail.
+To fix this, add some code on either the frontend or backend of your app that handles these failures by prompting the user to add a provider for the desired chain.
 </div>
 
 Using the provider system starts in a process by importing the `eth` library from `kinode_process_lib`:
@@ -17,8 +18,8 @@ let provider = eth::Provider::new(chain_id, 30);
 ```
 The timeout set here will apply to all requests sent through the provider.
 If a request takes longer than the timeout, the request will fail with a timeout error.
-Generally, ETH calls can take longer than other requests in Kinode, because the call must be sent to an external RPC which may or may not be fast.
-Note also that larger calls will generally take longer for an RPC to respond to.
+Generally, ETH calls can take longer than other requests in Kinode, because the call must be sent to an external RPC that may or may not be fast.
+Note also that an RPC endpoint will generally take longer to respond to larger calls.
 If you need to adjust the timeout or chain ID, simply create another provider object with the new desired parameters.
 
 Calling various functions on the `Provider` allows the process to execute RPC calls like `get_balance`, `get_logs`, and `send_raw_transaction`.
