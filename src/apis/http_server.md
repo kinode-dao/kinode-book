@@ -144,7 +144,8 @@ If a process uses `Bind` or `SecureBind`, that process will need to field future
 
 If a process uses `WebSocketBind` or `WebSocketSecureBind`, future WebSocket connections to that path will be sent to the process, which is expected to issue a response that can then be sent to the client.
 
-Bindings can be removed using `Unbind` and `WebSocketUnbind` actions. Note that the HTTP server module will persist bindings until the node itself is restarted (and no later), so unbinding paths is usually not necessary unless cleaning up an old static resource.
+Bindings can be removed using `Unbind` and `WebSocketUnbind` actions.
+Note that the HTTP server module will persist bindings until the node itself is restarted (and no later), so unbinding paths is usually not necessary unless cleaning up an old static resource.
 
 The incoming request, whether the binding is for HTTP or WebSocket, will look like this:
 ```rust
