@@ -39,7 +39,7 @@ To both `build` and `start-package` in one command, use `kit build-start-package
 
 ## Arguments
 
-```bash
+```
 $ kit b --help
 Build a Kinode package
 

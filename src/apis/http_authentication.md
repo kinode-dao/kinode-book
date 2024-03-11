@@ -25,15 +25,18 @@ The `lazy_load_blob` is the HTTP request body, and the `body` is an `IncomingHtt
 
 ```rs
 pub struct IncomingHttpRequest {
-    pub source_socket_addr: Option<String>, // will parse to SocketAddr
-    pub method: String,                     // will parse to http::Method
-    pub raw_path: String,
+    pub source_socket_addr: Option<String>,   // will parse to SocketAddr
+    pub method: String,                       // will parse to http::Method
+    pub url: String,                          // will parse to url::Url
+    pub bound_path: String,                   // the path that was originally bound
     pub headers: HashMap<String, String>,
+    pub url_params: HashMap<String, String>, // comes from route-recognizer
     pub query_params: HashMap<String, String>,
 }
 ```
 
-Note that `raw_path` is the host and full path of the original HTTP request that came in.
+Note that `url` is the host and full path of the original HTTP request that came in.
+`bound_path` is the matching path that was originally bound in `http_server`.
 
 ## Handling HTTP Requests
 
@@ -61,9 +64,9 @@ fn handle_http_server_request(
 
         // IMPORTANT BIT:
 
-        HttpServerRequest::Http(IncomingHttpRequest { method, raw_path, .. }) => {
+        HttpServerRequest::Http(IncomingHttpRequest { method, url, .. }) => {
             // Check the path
-            if raw_path.ends_with(&format!("{}{}", our.process.to_string(), "/messages")) {
+            if url.ends_with(&format!("{}{}", our.process.to_string(), "/messages")) {
                 // Match on the HTTP method
                 match method.as_str() {
                     // Get all messages

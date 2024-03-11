@@ -11,24 +11,24 @@ For example, part of the VFS might look like:
 ```text
 .
 ├── app_store:sys
+│   ├── metadata.json
 │   └── pkg
 │       ├── app_store.wasm
 │       ├── ft_worker.wasm
-│       ├── manifest.json
-│       └── metadata.json
+│       └── manifest.json
 ├── chess:sys
+│   ├── metadata.json
 │   └── pkg
 │       ├── chess.html
 │       ├── chess.wasm
 │       ├── index.css
 │       ├── index.js
-│       ├── manifest.json
-│       └── metadata.json
+│       └── manifest.json
 ├── homepage:sys
+│   ├── metadata.json
 │   └── pkg
 │       ├── homepage.wasm
-│       ├── manifest.json
-│       └── metadata.json
+│       └── manifest.json
 ```
 
 ## Usage

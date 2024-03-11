@@ -44,6 +44,8 @@ pub enum HttpServerAction {
         /// lazy_load_blob bytes and serve them as the response to any request to this path.
         cache: bool,
     },
+    /// Unbind a previously-bound HTTP path
+    Unbind { path: String },
     /// Bind a path to receive incoming WebSocket connections.
     /// Doesn't need a cache since does not serve assets.
     WebSocketBind {
@@ -61,6 +63,8 @@ pub enum HttpServerAction {
         encrypted: bool,
         extension: bool,
     },
+    /// Unbind a previously-bound WebSocket path
+    WebSocketUnbind { path: String },
     /// Processes will RECEIVE this kind of request when a client connects to them.
     /// If a process does not want this websocket open, they should issue a *request*
     /// containing a [`type@HttpServerAction::WebSocketClose`] message and this channel ID.
@@ -140,6 +144,9 @@ If a process uses `Bind` or `SecureBind`, that process will need to field future
 
 If a process uses `WebSocketBind` or `WebSocketSecureBind`, future WebSocket connections to that path will be sent to the process, which is expected to issue a response that can then be sent to the client.
 
+Bindings can be removed using `Unbind` and `WebSocketUnbind` actions.
+Note that the HTTP server module will persist bindings until the node itself is restarted (and no later), so unbinding paths is usually not necessary unless cleaning up an old static resource.
+
 The incoming request, whether the binding is for HTTP or WebSocket, will look like this:
 ```rust
 /// HTTP Request type that can be shared over WASM boundary to apps.
@@ -168,10 +175,12 @@ pub enum HttpServerRequest {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct IncomingHttpRequest {
-    pub source_socket_addr: Option<String>, // will parse to SocketAddr
-    pub method: String,                     // will parse to http::Method
-    pub raw_path: String,
+    pub source_socket_addr: Option<String>,   // will parse to SocketAddr
+    pub method: String,                       // will parse to http::Method
+    pub url: String,                          // will parse to url::Url
+    pub bound_path: String,                   // the path that was originally bound
     pub headers: HashMap<String, String>,
+    pub url_params: HashMap<String, String>, // comes from route-recognizer
     pub query_params: HashMap<String, String>,
     // BODY is stored in the lazy_load_blob, as bytes
 }
