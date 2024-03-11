@@ -22,3 +22,22 @@ If you are developing on a fake node, you'll have to boot a real one, then insta
 If you're already on a real node, you can go ahead and navigate to the App Store on the homepage and go through the publishing flow.
 
 In the near future, you will be able to quickly and easily publish your applications to the network using a GUI from the App Store.
+
+Right now, you can deploy your app to the network by following the steps in the next section.
+
+## Ad-Hoc App Deployment
+
+While the App Store GUI is under development, this series of steps will allow you to deploy your app to the network.
+Soon, it will be a lot easier!
+
+1. Install the app on your node.
+1. In your terminal, navigate to `<your_node_dir>/vfs/<your_package>/pkg`.
+1. Hash the .zip file with SHA256: `sha256sum <your_package>.zip`
+1. Add the hash to your package's [`metadata.json`](./chapter_1.md#pkgmetadatajson), under `properties` -> `code_hashes` -> `<app_version>`.
+1. Save the `metadata.json` file and ensure it is hosted somewhere on the internet accessible via URL.
+For GitHub repositories, you can access the file's raw contents at the following link: `https://raw.githubusercontent.com/<your_package_repo>/main/pkg/metadata.json`
+1. Navigate to the App Store on the homepage and click "Publish" (the upload icon).
+1. Enter your package information, passing the URL of your `metadata.json` file in the `Metadata URL` field.
+1. Click "Publish".
+
+Congratulations, your app is now live on the network!
