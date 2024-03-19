@@ -35,7 +35,7 @@ Soon, it will be a lot easier!
 1. Hash the .zip file with SHA256: `sha256sum <your_package>.zip`
 1. Add the hash to your package's [`metadata.json`](./chapter_1.md#pkgmetadatajson), under `properties` -> `code_hashes` -> `<app_version>`.
 1. Save the `metadata.json` file and ensure it is hosted somewhere on the internet accessible via URL.
-For GitHub repositories, you can access the file's raw contents at the following link: `https://raw.githubusercontent.com/<your_package_repo>/main/pkg/metadata.json`
+For GitHub repositories, you can access the file's raw contents at the following link: `https://raw.githubusercontent.com/<your_package_repo>/main/metadata.json`
 1. Navigate to the App Store on the homepage and click "Publish" (the upload icon).
 1. Enter your package information, passing the URL of your `metadata.json` file in the `Metadata URL` field.
 1. Click "Publish".
