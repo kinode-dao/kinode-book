@@ -1,14 +1,15 @@
 # kit
 
-`kit` is a tool**kit** that make development on Kinode OS ergonomic.
+`kit` is a tool**kit** to make development on Kinode OS ergonomic.
 
 ## Table of Contents
 
-* [Install](./install.md)
-* [`kit boot-fake-node`](./boot-fake-node.md)
-* [`kit new`](./new.md)
-* [`kit build`](./build.md)
-* [`kit start-package`](./start-package.md)
-* [`kit dev-ui`](./dev-ui.md)
-* [`kit inject-message`](./inject-message.md)
-* [`kit run-tests`](./run-tests.md)
+* [Installation](./kit/install.md)
+* [`kit boot-fake-node`](./kit/boot-fake-node.md)
+* [`kit new`](./kit/new.md)
+* [`kit build`](./kit/build.md)
+* [`kit start-package`](./kit/start-package.md)
+* [`kit remove-package`](./kit/start-package.md)
+* [`kit dev-ui`](./kit/dev-ui.md)
+* [`kit inject-message`](./kit/inject-message.md)
+* [`kit run-tests`](./kit/run-tests.md)

@@ -20,7 +20,7 @@
   - [Terminal](./terminal.md)
 - [Process Standard Library](./process_stdlib/overview.md)
 - [Kit: Development Tool**kit**](./kit-dev-toolkit.md)
-  - [Install](./kit/install.md)
+  - [Installation](./kit/install.md)
   - [`boot-fake-node`](./kit/boot-fake-node.md)
   - [`new`](./kit/new.md)
   - [`build`](./kit/build.md)
