@@ -2,13 +2,13 @@
 
 `kit dev-ui` starts a web development server with hot reloading for the indicated UI-enabled package (or the current working directory), e.g.,
 
-```bash
+```
 kit dev-ui foo
 ```
 
 or
 
-```bash
+```
 kit dev-ui
 ```
 

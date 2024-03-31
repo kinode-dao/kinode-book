@@ -2,13 +2,13 @@
 
 `kit run-tests` runs the tests specified by the given `.toml` file, or `tests.toml`, e.g.,
 
-```bash
+```
 kit run-tests my_tests.toml
 ```
 
 or
 
-```bash
+```
 kit run-tests
 ```
 
@@ -29,7 +29,7 @@ If a given test `Pass`es, the next test in the series is run.
 
 ## Arguments
 
-```bash
+```
 $ kit t --help
 Run Kinode tests
 

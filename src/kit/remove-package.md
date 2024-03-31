@@ -6,13 +6,13 @@ If no arguments are provided, the same process happens for the current working d
 Alternatively, a `--package` and `--publisher` can be provided as arguments, and that package will be removed.
 
 For example,
-```bash
+```
 kit remove-package foo
 ```
 
 or
 
-```bash
+```
 kit remove-package -package foo --publisher template.os
 ```
 

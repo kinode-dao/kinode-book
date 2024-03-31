@@ -2,7 +2,7 @@
 
 `kit inject-message` injects the given message to the node running at given port/URL, e.g.,
 
-```bash
+```
 kit inject-message foo:foo:template.os '{"Send": {"target": "fake2.os", "message": "hello world"}}'
 ```
 

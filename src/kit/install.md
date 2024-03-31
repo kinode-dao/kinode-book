@@ -6,7 +6,7 @@ You are encouraged to make use of the `--help` flag, which can be used for the t
 
 ```
 $ kit --help
-Development toolkit for Kinode OS
+Development toolkit for Kinode
 
 Usage: kit <COMMAND>
 
@@ -14,11 +14,12 @@ Commands:
   boot-fake-node       Boot a fake node for development [aliases: f]
   build                Build a Kinode package [aliases: b]
   build-start-package  Build and start a Kinode package [aliases: bs]
-  dev-ui               Start the web UI development server with hot reloading (same as `cd ui && npm i && npm start`) [aliases: d]
+  dev-ui               Start the web UI development server with hot reloading (same as `cd ui && npm i && npm run dev` [aliases: d]
   inject-message       Inject a message to a running Kinode [aliases: i]
   new                  Create a Kinode template package [aliases: n]
-  run-tests            Run Kinode tests [aliases: t]
   remove-package       Remove a running package from a node [aliases: r]
+  reset-cache          Reset kit cache (Kinode core binaries, logs, etc.)
+  run-tests            Run Kinode tests [aliases: t]
   setup                Fetch & setup kit dependencies
   start-package        Start a built Kinode process [aliases: s]
   update               Fetch the most recent version of kit
@@ -41,13 +42,13 @@ The first chapter of the [Build and Deploy an App tutorial](../my_first_app/chap
 
 To get `kit`, run
 
-```bash
+```
 cargo install --git https://github.com/kinode-dao/kit
 ```
 
 To update, run that same command or
 
-```bash
+```
 kit update
 ```
 
