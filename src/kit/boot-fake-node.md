@@ -2,7 +2,7 @@
 
 `kit boot-fake-node` starts a "fake" (i.e. not connected to the live network) node, e.g.,
 
-```bash
+```
 kit boot-fake-node
 ```
 
@@ -15,7 +15,7 @@ You can start a network of fake nodes that can communicate with each other (but 
 You'll need to start a new terminal for each fake node.
 For example, to start two fake nodes, `fake.os` and `fake2.os`:
 
-```bash
+```
 kit boot-fake-node
 
 # In a new terminal
@@ -81,7 +81,7 @@ Options:
 
 Pass to run a local binary or build a local Kinode core repo and use the resulting binary, e.g.
 
-```bash
+```
 kit boot-fake-node --runtime-path ~/git/kinode
 ```
 

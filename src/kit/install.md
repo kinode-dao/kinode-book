@@ -42,13 +42,13 @@ The first chapter of the [Build and Deploy an App tutorial](../my_first_app/chap
 
 To get `kit`, run
 
-```bash
+```
 cargo install --git https://github.com/kinode-dao/kit
 ```
 
 To update, run that same command or
 
-```bash
+```
 kit update
 ```
 

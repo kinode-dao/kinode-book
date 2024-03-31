@@ -2,7 +2,7 @@
 
 `kit new` creates a Kinode package template at the specified path, e.g.,
 
-```bash
+```
 kit new foo
 ```
 
@@ -10,7 +10,7 @@ creates the default template (a Rust chat app with no UI) in the `foo/` director
 
 ## Example Usage
 
-```bash
+```
 # Create the default template: rust chat with no UI
 kit new my_rust_chat
 

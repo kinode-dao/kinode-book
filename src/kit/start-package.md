@@ -2,13 +2,13 @@
 
 `kit start-package` installs and starts the indicated package directory (or current working directory) on the given Kinode, e.g.,
 
-```bash
+```
 kit start-package foo
 ```
 
 or
 
-```bash
+```
 kit start-package
 ```
 

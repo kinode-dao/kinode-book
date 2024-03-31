@@ -10,7 +10,7 @@ If seeing confusing and difficult to explain behavior from `kit`, a `kit reset-c
 
 ## Arguments
 
-```bash
+```
 $ kit reset-cache --help
 Reset kit cache (Kinode core binaries, logs, etc.)
 
