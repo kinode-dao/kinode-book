@@ -29,6 +29,7 @@
   - [`dev-ui`](./kit/dev-ui.md)
   - [`inject-message`](./kit/inject-message.md)
   - [`run-tests`](./kit/run-tests.md)
+  - [`reset-cache`](./kit/reset-cache.md)
 - [Tutorial: Build and Deploy an App](./build-and-deploy-an-app.md)
   - [Environment Setup](./my_first_app/chapter_1.md)
   - [Sending Some Messages, Using Some Tools](./my_first_app/chapter_2.md)
