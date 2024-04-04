@@ -32,7 +32,7 @@ docker volume create kinode-volume
 Then run the following command to create the container:
 ```bash
 docker run -d -p 8080:8080 -it --name my-kinode \
-    --mount type=volume,source=kinode-volume,destination=/kinode \
+    --mount type=volume,source=kinode-volume,destination=/kinode-home \
     0xlynett/kinode
 ```
 (replace `kinode-volume` with the name of your volume)
