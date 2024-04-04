@@ -17,13 +17,9 @@ use kinode_process_lib::{await_message, call_init, println, Address};
 wit_bindgen::generate!({
     path: "wit",
     world: "process",
-    exports: {
-        world: Component,
-    },
 });
 
 call_init!(init);
-
 fn init(our: Address) {
     println!("started");
 
@@ -171,9 +167,6 @@ extern crate base64;
 wit_bindgen::generate!({
     path: "wit",
     world: "process",
-    exports: {
-        world: Component,
-    },
 });
 
 //
@@ -233,7 +226,6 @@ fn load_chess_state() -> ChessState {
 }
 
 call_init!(init);
-
 fn init(our: Address) {
     // A little printout to show in terminal that the process has started.
     println!("started");
