@@ -37,14 +37,11 @@ Replace the `file_transfer/src/lib.rs` with:
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
-use kinode_process_lib::{await_message, println, Address, Message, Response};
+use kinode_process_lib::{await_message, call_init, println, Address, Message, Response};
 
 wit_bindgen::generate!({
     path: "wit",
     world: "process",
-    exports: {
-        world: Component,
-    },
 });
 
 fn handle_message(our: &Address) -> anyhow::Result<()> {
@@ -53,21 +50,19 @@ fn handle_message(our: &Address) -> anyhow::Result<()> {
     Ok(())
 }
 
-struct Component;
-impl Guest for Component {
-    fn init(our: String) {
-        println!("file_transfer: begin");
+call_init!(init);
+fn init(our: Address) {
+    println!("file_transfer: begin");
 
-        let our = Address::from_str(&our).unwrap();
+    let our = Address::from_str(&our).unwrap();
 
-        loop {
-            match handle_message(&our) {
-                Ok(()) => {}
-                Err(e) => {
-                    println!("file_transfer: error: {:?}", e);
-                }
-            };
-        }
+    loop {
+        match handle_message(&our) {
+            Ok(()) => {}
+            Err(e) => {
+                println!("file_transfer: error: {:?}", e);
+            }
+        };
     }
 }
 ```
@@ -138,7 +133,7 @@ The skeleton of `file_transfer/src/lib.rs` ends up looking like:
 
 ```rust
 use kinode_process_lib::{
-    await_message, println,
+    await_message, call_init, println,
     vfs::{create_drive, metadata, open_dir, Directory, FileType},
     Address, Message, Response,
 };
@@ -148,9 +143,6 @@ use std::str::FromStr;
 wit_bindgen::generate!({
     path: "wit",
     world: "process",
-    exports: {
-        world: Component,
-    },
 });
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -182,24 +174,22 @@ fn handle_message(our: &Address, file_dir: &Directory) -> anyhow::Result<()> {
     Ok(())
 }
 
-struct Component;
-impl Guest for Component {
-    fn init(our: String) {
-        println!("file_transfer: begin");
+call_init!(init);
+fn init(our: Address) {
+    println!("file_transfer: begin");
 
-        let our = Address::from_str(&our).unwrap();
+    let our = Address::from_str(&our).unwrap();
 
-        let drive_path = create_drive(our.package_id(), "files").unwrap();
-        let file_dir = open_dir(&drive_path, false).unwrap();
+    let drive_path = create_drive(our.package_id(), "files").unwrap();
+    let file_dir = open_dir(&drive_path, false).unwrap();
 
-        loop {
-            match handle_message(&our, &file_dir) {
-                Ok(()) => {}
-                Err(e) => {
-                    println!("file_transfer: error: {:?}", e);
-                }
-            };
-        }
+    loop {
+        match handle_message(&our, &file_dir) {
+            Ok(()) => {}
+            Err(e) => {
+                println!("file_transfer: error: {:?}", e);
+            }
+        };
     }
 }
 ```
@@ -488,7 +478,7 @@ use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
 use kinode_process_lib::{
-    await_message, get_blob, println,
+    await_message, call_init, get_blob, println,
     vfs::{open_dir, open_file, Directory, File, SeekFrom},
     Address, Message, ProcessId, Request, Response,
 };
@@ -496,9 +486,6 @@ use kinode_process_lib::{
 wit_bindgen::generate!({
     path: "wit",
     world: "process",
-    exports: {
-        world: Component,
-    },
 });
 
 const CHUNK_SIZE: u64 = 1048576; // 1MB
@@ -524,24 +511,22 @@ pub enum TransferRequest {
     Progress { name: String, progress: u64 },
 }
 
-struct Component;
-impl Guest for Component {
-    fn init(our: String) {
-        println!("file_transfer worker: begin");
+call_init!(init);
+fn init(our: Address) {
+    println!("file_transfer worker: begin");
 
-        let our = Address::from_str(&our).unwrap();
+    let our = Address::from_str(&our).unwrap();
 
-        let drive_path = format!("{}/files", our.package_id());
-        let files_dir = open_dir(&drive_path, false).unwrap();
+    let drive_path = format!("{}/files", our.package_id());
+    let files_dir = open_dir(&drive_path, false).unwrap();
 
-        loop {
-            match handle_message(&our, &files_dir) {
-                Ok(()) => {}
-                Err(e) => {
-                    println!("file_transfer: error: {:?}", e);
-                }
-            };
-        }
+    loop {
+        match handle_message(&our, &files_dir) {
+            Ok(()) => {}
+            Err(e) => {
+                println!("file_transfer: error: {:?}", e);
+            }
+        };
     }
 }
 ```
@@ -799,7 +784,7 @@ use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
 use kinode_process_lib::{
-    await_message, get_blob, println,
+    await_message, call_init, get_blob, println,
     vfs::{open_dir, open_file, Directory, File, SeekFrom},
     Address, Message, ProcessId, Request, Response,
 };
@@ -807,9 +792,6 @@ use kinode_process_lib::{
 wit_bindgen::generate!({
     path: "wit",
     world: "process",
-    exports: {
-        world: Component,
-    },
 });
 
 const CHUNK_SIZE: u64 = 1048576; // 1MB
@@ -967,36 +949,34 @@ fn handle_message(
     Ok(false)
 }
 
-struct Component;
-impl Guest for Component {
-    fn init(our: String) {
-        println!("file_transfer worker: begin");
-        let start = std::time::Instant::now();
+call_init!(init);
+fn init(our: Address) {
+    println!("file_transfer worker: begin");
+    let start = std::time::Instant::now();
 
-        let our = Address::from_str(&our).unwrap();
+    let our = Address::from_str(&our).unwrap();
 
-        let drive_path = format!("{}/files", our.package_id());
-        let files_dir = open_dir(&drive_path, false).unwrap();
+    let drive_path = format!("{}/files", our.package_id());
+    let files_dir = open_dir(&drive_path, false).unwrap();
 
-        let mut file: Option<File> = None;
-        let mut size: Option<u64> = None;
+    let mut file: Option<File> = None;
+    let mut size: Option<u64> = None;
 
-        loop {
-            match handle_message(&our, &mut file, &files_dir, &mut size) {
-                Ok(exit) => {
-                    if exit {
-                        println!(
-                            "file_transfer worker done: exiting, took {:?}",
-                            start.elapsed()
-                        );
-                        break;
-                    }
+    loop {
+        match handle_message(&our, &mut file, &files_dir, &mut size) {
+            Ok(exit) => {
+                if exit {
+                    println!(
+                        "file_transfer worker done: exiting, took {:?}",
+                        start.elapsed()
+                    );
+                    break;
                 }
-                Err(e) => {
-                    println!("file_transfer: worker error: {:?}", e);
-                }
-            };
-        }
+            }
+            Err(e) => {
+                println!("file_transfer: worker error: {:?}", e);
+            }
+        };
     }
 }
 ```
@@ -1005,7 +985,7 @@ And the main process:
 
 ```rust
 use kinode_process_lib::{
-    await_message, our_capabilities, println, spawn,
+    await_message, call_init, our_capabilities, println, spawn,
     vfs::{create_drive, metadata, open_dir, Directory, FileType},
     Address, Message, OnExit, Request, Response,
 };
@@ -1015,9 +995,6 @@ use std::str::FromStr;
 wit_bindgen::generate!({
     path: "wit",
     world: "process",
-    exports: {
-        world: Component,
-    },
 });
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -1160,24 +1137,22 @@ fn handle_message(our: &Address, file_dir: &Directory) -> anyhow::Result<()> {
     Ok(())
 }
 
-struct Component;
-impl Guest for Component {
-    fn init(our: String) {
-        println!("file_transfer: begin");
+call_init!(init);
+fn init(our: Address) {
+    println!("file_transfer: begin");
 
-        let our = Address::from_str(&our).unwrap();
+    let our = Address::from_str(&our).unwrap();
 
-        let drive_path = create_drive(our.package_id(), "files").unwrap();
-        let files_dir = open_dir(&drive_path, false).unwrap();
+    let drive_path = create_drive(our.package_id(), "files").unwrap();
+    let files_dir = open_dir(&drive_path, false).unwrap();
 
-        loop {
-            match handle_message(&our, &files_dir) {
-                Ok(()) => {}
-                Err(e) => {
-                    println!("file_transfer: error: {:?}", e);
-                }
-            };
-        }
+    loop {
+        match handle_message(&our, &files_dir) {
+            Ok(()) => {}
+            Err(e) => {
+                println!("file_transfer: error: {:?}", e);
+            }
+        };
     }
 }
 ```
