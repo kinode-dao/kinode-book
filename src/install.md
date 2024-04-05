@@ -12,17 +12,23 @@ The recommended method for Linux users is to use a prebuilt Docker image. Other 
 
 ### Installing Docker
 
-First, install the Docker Engine. Instructions will be different depending on your distribution, but it is recommended to follow [the method outlined in the official Docker website.](https://docs.docker.com/engine/install/)
+First, install the Docker Engine.
+Instructions will be different depending on your distribution, but it is recommended to follow [the method outlined in the official Docker website.](https://docs.docker.com/engine/install/)
 
 Make sure to perform any post-install necessary afterwards, such as adding your user to the `docker` group.
 
 ### Docker Image
 
-The image expects a volume mounted at `/kinode`. This volume may be empty or may contain another Kinode's data. It will be used as the home directory of your Kinode.
+The image expects a volume mounted at `/kinode`.
+This volume may be empty or may contain another Kinode's data.
+It will be used as the home directory of your Kinode.
 
-The image includes EXPOSE directives for TCP port `8080` and TCP port `9000`. Port `8080` is used for serving the Kinode web dashboard over HTTP, and it may be mapped to a different port on the host. Port `9000` is optional and is only required for a direct node.
+The image includes EXPOSE directives for TCP port `8080` and TCP port `9000`.
+Port `8080` is used for serving the Kinode web dashboard over HTTP, and it may be mapped to a different port on the host. 
+Port `9000` is optional and is only required for a direct node.
 
-If you are running a direct node, you must map port `9000` to the same port on the host and on your router. Otherwise, your Kinode will not be able to connect to the rest of the network as connection info is written to the chain, and this information is based on the view from inside the Docker container.
+If you are running a direct node, you must map port `9000` to the same port on the host and on your router.
+Otherwise, your Kinode will not be able to connect to the rest of the network as connection info is written to the chain, and this information is based on the view from inside the Docker container.
 
 Run the following command to create a volume:
 ```bash
