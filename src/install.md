@@ -17,7 +17,7 @@ First, install Docker.
 Instructions will be different depending on your OS, but it is recommended to follow [the method outlined in the official Docker website.](https://docs.docker.com/get-docker/)
 
 If you are using Linux, make sure to perform any post-install necessary afterwards.
-[The official Docker website has optional post-install instructions.]https://docs.docker.com/engine/install/linux-postinstall/)
+[The official Docker website has optional post-install instructions.](https://docs.docker.com/engine/install/linux-postinstall/)
 
 ### Docker Image
 
