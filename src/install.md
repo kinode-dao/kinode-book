@@ -19,7 +19,7 @@ Make sure to perform any post-install necessary afterwards, such as adding your 
 
 ### Docker Image
 
-The image expects a volume mounted at `/kinode`.
+The image expects a volume mounted at `/kinode-home`.
 This volume may be empty or may contain another Kinode's data.
 It will be used as the home directory of your Kinode.
 
