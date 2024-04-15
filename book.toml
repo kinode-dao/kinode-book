@@ -1,5 +1,5 @@
 [book]
-authors = ["dr-frmr", "jtneev", "hosted-fornet", "bitful-pannul", "willbach", "0x70b1a5", "habsul-rignyr", "commercium-sys", "tadad"]
+authors = ["dr-frmr", "jtneev", "nick1udwig", "bitful-pannul", "willbach", "0x70b1a5", "habsul-rignyr", "commercium-sys", "tadad"]
 language = "en"
 multilingual = false
 src = "src"
@@ -11,3 +11,5 @@ edit-url-template = "https://github.com/kinode-dao/kinode-book/edit/main/{path}"
 [output.html.fold]
 enable = true
 level = 1
+
+[output.linkcheck]

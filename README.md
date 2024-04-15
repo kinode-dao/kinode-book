@@ -6,6 +6,7 @@
 
 ```sh
 cargo install mdbook
+cargo install mdbook-linkcheck
 
 mdbook serve
 ```
