@@ -29,7 +29,7 @@ Alter the process to serve this use case, or add another process that can be spa
 There are also three extensions to this tutorial which dive into specific use cases which make the most of Kinode OS:
 
 - [Chat](./chat.md)
-- [Payment Integration (using ETH)](./payment.md) [coming soon]
-- [LLM Integration (play chess against the AI!)](./llm.md) [coming soon]
+- Payment Integration (using ETH) [coming soon]
+- LLM Integration (play chess against the AI!) [coming soon]
 
 The full code is available [here](https://github.com/kinode-dao/kinode/tree/main/modules/chess).
