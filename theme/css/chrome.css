@@ -5,11 +5,32 @@
 html {
     scrollbar-color: var(--scrollbar) var(--bg);
 }
+
 #searchresults a,
 .content a:link,
 a:visited,
-a > .hljs {
+a>.hljs {
     color: var(--links);
+}
+
+/* Special Max theme overrides */
+.max .page {
+    background-color: transparent;
+    background-image: url('./../assets/background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.max #menu-bar {
+    background-image: url('./../assets/background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.max .sidebar {
+    background-image: url('./../assets/background.jpg');
+    background-size: cover;
+    background-position: center;
 }
 
 /*
@@ -33,6 +54,7 @@ a > .hljs {
     margin: 0 calc(0px - var(--page-padding));
     padding: 8px;
 }
+
 #menu-bar {
     position: relative;
     display: flex;
@@ -40,23 +62,27 @@ a > .hljs {
     background-color: var(--bg-bg);
     place-items: center;
 }
+
 #menu-bar.sticky,
-.js #menu-bar-hover-placeholder:hover + #menu-bar,
+.js #menu-bar-hover-placeholder:hover+#menu-bar,
 .js #menu-bar:hover,
 .js.sidebar-visible #menu-bar {
     position: -webkit-sticky;
     position: sticky;
     top: 0 !important;
 }
+
 #menu-bar-hover-placeholder {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
     height: var(--menu-bar-height);
 }
+
 #menu-bar.bordered {
     border-block-end-color: var(--table-border-color);
 }
+
 #menu-bar i {
     position: relative;
     padding: 0 8px;
@@ -65,15 +91,18 @@ a > .hljs {
     cursor: pointer;
     transition: color 0.5s;
 }
+
 #menu-bar .icon-button {
     font-size: 14px;
 }
+
 .icon-button {
     border: none;
     background: none;
     padding: 0;
     color: inherit;
 }
+
 .icon-button i {
     margin: 0;
 }
@@ -84,6 +113,7 @@ a > .hljs {
     place-content: center;
     place-items: center;
 }
+
 .right-buttons a {
     text-decoration: none;
 }
@@ -92,6 +122,7 @@ a > .hljs {
     display: flex;
     margin: 0 5px 0 16px;
 }
+
 .no-js .left-buttons button {
     display: none;
 }
@@ -106,11 +137,12 @@ a > .hljs {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    
+
     font-family: "Futura", sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.3em;
 }
+
 .js .menu-title {
     cursor: pointer;
 }
@@ -179,11 +211,12 @@ a > .hljs {
 }
 
 /* Only Firefox supports flow-relative values */
-.previous { 
-    float: left; 
+.previous {
+    float: left;
 }
+
 [dir=rtl] .previous {
-    float: right; 
+    float: right;
 }
 
 /* Only Firefox supports flow-relative values */
@@ -191,6 +224,7 @@ a > .hljs {
     float: right;
     right: 0;
 }
+
 [dir=rtl] .next {
     float: left;
     right: unset;
@@ -198,45 +232,54 @@ a > .hljs {
 }
 
 /* Use the correct buttons for RTL layouts*/
-[dir=rtl] .previous i.fa-angle-left:before {content:"\f105";}
-[dir=rtl] .next i.fa-angle-right:before { content:"\f104"; }
+[dir=rtl] .previous i.fa-angle-left:before {
+    content: "\f105";
+}
+
+[dir=rtl] .next i.fa-angle-right:before {
+    content: "\f104";
+}
 
 @media only screen and (max-width: 1080px) {
-    .nav-wide-wrapper { display: none; }
-    .nav-wrapper { display: block; }
+    .nav-wide-wrapper {
+        display: none;
+    }
+
+    .nav-wrapper {
+        display: block;
+    }
 }
 
 /* sidebar-visible */
 @media only screen and (max-width: 1380px) {
-    #sidebar-toggle-anchor:checked ~ .page-wrapper .nav-wide-wrapper { display: none; }
-    #sidebar-toggle-anchor:checked ~ .page-wrapper .nav-wrapper { display: block; }
+    #sidebar-toggle-anchor:checked~.page-wrapper .nav-wide-wrapper {
+        display: none;
+    }
+
+    #sidebar-toggle-anchor:checked~.page-wrapper .nav-wrapper {
+        display: block;
+    }
 }
 
 /* Inline code */
 
-:not(pre) > .hljs {
+:not(pre)>.hljs {
     display: inline;
     padding: 0.1em 0.3em;
     border-radius: 3px;
-}
-.light :not(pre) > .hljs {
+    background-color: var(--inline-code-bg);
     color: var(--inline-code-color);
-    background-color: var(--k-white);
-}
-.dark :not(pre) > .hljs {
-    color: var(--inline-code-color);
-    background-color: var(--k-darkgray);
 }
 
-
-a:hover > .hljs {
+a:hover>.hljs {
     text-decoration: underline;
 }
 
 pre {
     position: relative;
 }
-pre > .buttons {
+
+pre>.buttons {
     position: absolute;
     z-index: 100;
     right: 0px;
@@ -250,19 +293,23 @@ pre > .buttons {
     opacity: 0;
     transition: visibility 0.1s linear, opacity 0.1s linear;
 }
-pre:hover > .buttons {
+
+pre:hover>.buttons {
     visibility: visible;
     opacity: 1
 }
-pre > .buttons :hover {
+
+pre>.buttons :hover {
     color: var(--icons-hover);
     border-color: var(--icons-hover);
     background-color: var(--theme-hover);
 }
-pre > .buttons i {
+
+pre>.buttons i {
     margin-inline-start: 8px;
 }
-pre > .buttons button {
+
+pre>.buttons button {
     cursor: inherit;
     margin: 0px 5px;
     padding: 3px 5px;
@@ -274,11 +321,12 @@ pre > .buttons button {
     border-color: var(--icons);
     background-color: var(--theme-popup-bg);
     transition: 100ms;
-    transition-property: color,border-color,background-color;
+    transition-property: color, border-color, background-color;
     color: var(--icons);
 }
+
 @media (pointer: coarse) {
-    pre > .buttons button {
+    pre>.buttons button {
         /* On mobile, make it easier to tap buttons. */
         padding: 0.3rem 1rem;
     }
@@ -288,28 +336,20 @@ pre > .buttons button {
         display: none;
     }
 }
-pre > code {
+
+pre>code {
     display: block;
     padding: 1rem;
     border-radius: 4px;
 }
-.dark pre > code.hljs,
-.gnucci pre > code.hljs,
-.classic-dark pre > code.hljs,
-.wynn pre > code.hljs {
-    color: var(--k-white);
-    background-color: var(--k-darkgray);
+
+pre>code.hljs {
+    color: var(--code-box-color);
+    background-color: var(--code-box-bg);
 }
-.dark pre > code span[class^="hljs-"],
-.gnucci pre > code span[class^="hljs-"],
-.classic-dark pre > code span[class^="hljs-"],
-.wynn pre > code span[class^="hljs-"] {
-    filter: brightness(1.5) saturate(0.5);
-}
-.light pre > code.hljs,
-.meadow pre > code.hljs {
-    color: var(--k-darkgray);
-    background-color: var(--k-white);
+
+pre>code span[class^="hljs-"] {
+    filter: brightness(1.5);
 }
 
 /* FIXME: ACE editors overlap their buttons because ACE does absolute
@@ -318,10 +358,10 @@ pre > code {
    wrapper), but that would require fixing a whole bunch of CSS rules.
 */
 .hljs.ace_editor {
-  padding: 0rem 0rem;
+    padding: 0rem 0rem;
 }
 
-pre > .result {
+pre>.result {
     margin-block-start: 10px;
 }
 
@@ -347,7 +387,7 @@ mark {
 }
 
 mark.fade-out {
-    background-color: rgba(0,0,0,0) !important;
+    background-color: rgba(0, 0, 0, 0) !important;
     cursor: auto;
 }
 
@@ -370,6 +410,7 @@ mark.fade-out {
     background-color: var(--searchbar-bg);
     color: var(--searchbar-fg);
 }
+
 #searchbar:focus,
 #searchbar.active {
     box-shadow: 0 0 3px var(--searchbar-shadow-color);
@@ -396,14 +437,17 @@ ul#searchresults {
     list-style: none;
     padding-inline-start: 20px;
 }
+
 ul#searchresults li {
     margin: 10px 0px;
     padding: 2px;
     border-radius: 2px;
 }
+
 ul#searchresults li.focus {
     background-color: var(--searchresults-li-bg);
 }
+
 ul#searchresults span.teaser {
     display: block;
     clear: both;
@@ -413,6 +457,7 @@ ul#searchresults span.teaser {
     margin-inline-end: 0;
     font-size: 0.8em;
 }
+
 ul#searchresults span.teaser em {
     font-weight: bold;
     font-style: normal;
@@ -435,19 +480,27 @@ ul#searchresults span.teaser em {
     border-radius: 2em;
     font-family: "OpenSans", sans-serif;
 }
-[dir=rtl] .sidebar { left: unset; right: 0; }
+
+[dir=rtl] .sidebar {
+    left: unset;
+    right: 0;
+}
+
 .sidebar-resizing {
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
 }
+
 .no-js .sidebar,
 .js:not(.sidebar-resizing) .sidebar {
-    transition: transform 0.3s; /* Animation: slide away */
+    transition: transform 0.3s;
+    /* Animation: slide away */
 }
+
 .sidebar img.logo {
-    height: 40px; 
+    height: 40px;
     width: auto;
     display: block;
     left: 12.5vw;
@@ -456,11 +509,13 @@ ul#searchresults span.teaser em {
     color: var(--sidebar-fg);
     fill: var(--sidebar-fg);
     stroke: var(--sidebar-fg);
-    
+
 }
+
 .sidebar code {
     line-height: 2em;
 }
+
 .sidebar .sidebar-scrollbox {
     overflow-y: auto;
     position: absolute;
@@ -470,6 +525,7 @@ ul#searchresults span.teaser em {
     right: 0;
     padding: 0.5em 2em;
 }
+
 .sidebar .sidebar-resize-handle {
     position: absolute;
     cursor: col-resize;
@@ -492,38 +548,46 @@ ul#searchresults span.teaser em {
     left: calc(var(--sidebar-resize-indicator-width) * -1);
     right: unset;
 }
+
 .js .sidebar .sidebar-resize-handle {
     cursor: col-resize;
     width: calc(var(--sidebar-resize-indicator-width) - var(--sidebar-resize-indicator-space));
 }
+
 /* sidebar-hidden */
-#sidebar-toggle-anchor:not(:checked) ~ .sidebar {
+#sidebar-toggle-anchor:not(:checked)~.sidebar {
     transform: translateX(calc(0px - var(--sidebar-width) - var(--sidebar-resize-indicator-width)));
     z-index: -1;
 }
-[dir=rtl] #sidebar-toggle-anchor:not(:checked) ~ .sidebar {
+
+[dir=rtl] #sidebar-toggle-anchor:not(:checked)~.sidebar {
     transform: translateX(calc(var(--sidebar-width) + var(--sidebar-resize-indicator-width)));
 }
+
 .sidebar::-webkit-scrollbar {
     background: var(--sidebar-bg);
 }
+
 .sidebar::-webkit-scrollbar-thumb {
     background: var(--scrollbar);
 }
 
 /* sidebar-visible */
-#sidebar-toggle-anchor:checked ~ .page-wrapper {
+#sidebar-toggle-anchor:checked~.page-wrapper {
     transform: translateX(calc(var(--sidebar-width) + var(--sidebar-resize-indicator-width)));
 }
-[dir=rtl] #sidebar-toggle-anchor:checked ~ .page-wrapper {
+
+[dir=rtl] #sidebar-toggle-anchor:checked~.page-wrapper {
     transform: translateX(calc(0px - var(--sidebar-width) - var(--sidebar-resize-indicator-width)));
 }
+
 @media only screen and (min-width: 620px) {
-    #sidebar-toggle-anchor:checked ~ .page-wrapper {
+    #sidebar-toggle-anchor:checked~.page-wrapper {
         transform: none;
         margin-inline-start: calc(var(--sidebar-width) + var(--sidebar-resize-indicator-width));
     }
-    [dir=rtl] #sidebar-toggle-anchor:checked ~ .page-wrapper {
+
+    [dir=rtl] #sidebar-toggle-anchor:checked~.page-wrapper {
         transform: none;
     }
 }
@@ -542,6 +606,7 @@ ul#searchresults span.teaser em {
     display: flex;
     color: var(--sidebar-non-existant);
 }
+
 .chapter li a {
     display: block;
     padding: 0;
@@ -560,7 +625,7 @@ ul#searchresults span.teaser em {
     opacity: 1;
 }
 
-.chapter li > a.toggle {
+.chapter li>a.toggle {
     cursor: pointer;
     padding: 0 10px;
     user-select: none;
@@ -571,12 +636,12 @@ ul#searchresults span.teaser em {
     font-size: small;
 }
 
-.chapter li > a.toggle div {
+.chapter li>a.toggle div {
     transition: all 0.5s;
 }
 
 /* collapse the section */
-.chapter li:not(.expanded) + li > ol {
+.chapter li:not(.expanded)+li>ol {
     display: none;
 }
 
@@ -586,7 +651,7 @@ ul#searchresults span.teaser em {
     position: relative;
 }
 
-.chapter li.expanded > a.toggle div {
+.chapter li.expanded>a.toggle div {
     transform: rotate(90deg);
     /* color: var(--links); */
 }
@@ -596,13 +661,18 @@ ul#searchresults span.teaser em {
     height: 3px;
     margin: 5px 0px;
 }
+
 .chapter .spacer {
     background-color: var(--sidebar-spacer);
 }
 
-@media (-moz-touch-enabled: 1), (pointer: coarse) {
+@media (-moz-touch-enabled: 1),
+(pointer: coarse) {
+
     /* .chapter li a { padding: 5px 0; } */
-    .spacer { margin: 10px 0; }
+    .spacer {
+        margin: 10px 0;
+    }
 }
 
 .section {
@@ -630,10 +700,16 @@ ul#searchresults span.teaser em {
     /* Don't let the children's background extend past the rounded corners. */
     overflow: hidden;
 }
-[dir=rtl] .theme-popup { left: unset;  right: 10px; }
+
+[dir=rtl] .theme-popup {
+    left: unset;
+    right: 10px;
+}
+
 .theme-popup .default {
     color: var(--icons);
 }
+
 .theme-popup .theme {
     width: 100%;
     border: 0;
@@ -647,6 +723,7 @@ ul#searchresults span.teaser em {
     background: inherit;
     font-size: inherit;
 }
+
 .theme-popup .theme:hover {
     background-color: var(--theme-hover);
 }
@@ -662,11 +739,11 @@ ul#searchresults span.teaser em {
     .secondary-title {
         display: none;
     }
-    
+
     #menu-bar i {
         padding: 0 8px;
     }
-    
+
     .menu-title {
         font-size: 0.75em;
         margin-right: 8px;

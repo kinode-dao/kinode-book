@@ -20,6 +20,8 @@
 .page {
     background-color: transparent;
     height: 100%;
+    margin: 0;
+    padding: 64px;
 }
 
 code {
@@ -46,6 +48,8 @@ h5,
 h6 {
     page-break-inside: avoid;
     page-break-after: avoid;
+    padding-top: 1em;
+    margin-top: 0;
 }
 
 pre,
