@@ -2,7 +2,7 @@
 
 See also: [docs.rs for HTTP Server part of `process_lib`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/index.html).
 
-**Note: Most processes will not use this API directly. Instead, they will use the [`process_lib`](./process_stdlib/overview.md) library, which papers over this API and provides a set of types and functions which are much easier to natively use. This is mostly useful for re-implementing this module in a different client or performing niche actions unsupported by the library.**
+**Note: Most processes will not use this API directly. Instead, they will use the [`process_lib`](../process_stdlib/overview.md) library, which papers over this API and provides a set of types and functions which are much easier to natively use. This is mostly useful for re-implementing this module in a different client or performing niche actions unsupported by the library.**
 
 The HTTP server is used by sending and receiving requests and responses.
 From a process, you may send an `HttpServerAction` to the `http_server:distro:sys` process.

@@ -48,6 +48,6 @@ m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.os", "messa
 ## Next steps
 
 The first chapter of the [My First Kinode Application](./my_first_app/chapter_1.md) tutorial is a more detailed version of this Quick Start.
-Alternatively, you can learn more about `kit` in the [`kit` documentation](./kit/kit.md).
+Alternatively, you can learn more about `kit` in the [`kit` documentation](./kit-dev-toolkit.md).
 
 If instead, you want to learn more about high-level concepts, start with the [Introduction](./intro.md) and work your way through the book in-order.

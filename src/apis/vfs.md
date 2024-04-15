@@ -13,7 +13,7 @@ A drive is just a directory within your VFS, consisting of 2 parts: `package_id/
 
 For example: `your_package:publisher.os/pkg/`.
 This directory is usually filled with files put into the `pkg/` directory when installing with `app_store`.
-[Capabilities](../process/process-capabilities.md) are checked on the drive part of the path.
+[Capabilities](../process/capabilities.md) are checked on the drive part of the path.
 When calling `create_drive()` you'll be given "read" and "write" caps that you can share with other processes.
 
 Other processes within your package will have access by default.

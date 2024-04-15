@@ -52,7 +52,7 @@ pub struct OutgoingHttpRequest {
 
 All requests to the HTTP client will receive a response of `Result<HttpClientResponse, HttpClientError>` serialized to JSON.
 The process can await or ignore this response, although the desired information will be in the `HttpClientResponse` if the request was successful.
-An HTTP request will have an `HttpResponse` defined in the [`http_server`](./apis/http_server.md) module.
+An HTTP request will have an `HttpResponse` defined in the [`http_server`](./http_server.md) module.
 A websocket request (open, push, close) will simply respond with a `HttpClientResponse::WebSocketAck`.
 
 ```rust

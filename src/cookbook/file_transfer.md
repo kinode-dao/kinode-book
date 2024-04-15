@@ -3,7 +3,7 @@
 This entry will teach you to build a simple file transfer app, allowing nodes to download files from a public directory.
 It will use the [VFS](../apis/vfs.md) to read and write files, and will spin up worker processes for the transfer.
 
-This guide assumes a basic understanding of Kinode process building, some familiarity with [`kit`](../kit/kit.md), requests and responses, and some knowledge of rust syntax.
+This guide assumes a basic understanding of Kinode process building, some familiarity with [`kit`](../kit-dev-toolkit.md), requests and responses, and some knowledge of rust syntax.
 
 ## Contents
 

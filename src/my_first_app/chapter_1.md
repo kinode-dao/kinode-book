@@ -19,7 +19,7 @@ cargo install --git https://github.com/kinode-dao/kit
 
 ## Creating a New Kinode Package Template
 
-The `kit` toolkit has a [variety of features](../kit/kit.md).
+The `kit` toolkit has a [variety of features](../kit-dev-toolkit.md).
 One of those tools is `new`, which creates a template for a Kinode package.
 The `new` tool takes two arguments: a path to create the template directory and a name for the package:
 

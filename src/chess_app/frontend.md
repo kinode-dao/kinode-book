@@ -14,7 +14,7 @@ When files found in the `ui/` directory, if a `package.json` file is found with 
 The `build:copy` in that file builds the UI and then places the resulting files into the `pkg/ui/` directory where they will be installed by `kit start-package`.
 This allows your process to fetch them from the virtual filesystem, as all files in `pkg/` are mounted.
 See the [VFS API overview](../apis/vfs.md) to see how to use files mounted in `pkg/`.
-Additional UI dev info can be found [here](./apis/frontend_development.md).
+Additional UI dev info can be found [here](../apis/frontend_development.md).
 
 Get the chess UI files and place them in the proper place (next to `pkg/`):
 ```bash

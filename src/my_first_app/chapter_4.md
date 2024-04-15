@@ -346,7 +346,7 @@ Create a new file in `ui/index.html` with the following contents.
 ```
 
 This is a super barebones `index.html` that provides a form to make requests to the `/api` endpoint.
-Additional UI dev info can be found [here](./apis/frontend_development.md).
+Additional UI dev info can be found [here](../apis/frontend_development.md).
 
 Finally, add one more entry to `manifest.json`: messaging capabilities to the VFS which is required to store and access the UI `index.html`:
 ```json

@@ -15,7 +15,7 @@ To see exactly how to use WIT to write Kinode processes, see the [My First App](
 
 To see `kinode.wit` for itself, see the [file in the GitHub repo](https://github.com/kinode-dao/kinode-wit/blob/master/kinode.wit).
 Since this interface applies to all processes, it's one of the places in the OS where breaking changes are most likely to make an impact.
-To that end, the version of the WIT file that a process uses must be compatible with the version of Kinode OS on which it runs. 
+To that end, the version of the WIT file that a process uses must be compatible with the version of Kinode OS on which it runs.
 We intend to achieve perfect backwards compatibility upon first major release (1.0.0) of the OS and the WIT file.
 After that point, since processes signal the version of the WIT file they use, subsequent updates can be made without breaking existing processes or needing to change the version they use.
 
@@ -40,7 +40,7 @@ This category is also responsible for functions that give processes the ability 
 
 Capabilities management functions relate to the capabilities-based security system imposed by the kernel on processes.
 Processes must acquire and manage capabilities in order to perform tasks external to themselves, such as messaging another process or writing to a file.
-See the [capabilities overview](../process/process-capabilities.md) for more details.
+See the [capabilities overview](../process/capabilities.md) for more details.
 
 Lastly, message I/O functions are used to send and receive messages between processes.
 Message-passing is the primary means by which processes communicate not only with themselves, but also with runtime modules which expose all kinds of I/O abilities.

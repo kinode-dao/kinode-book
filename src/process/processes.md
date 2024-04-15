@@ -47,7 +47,8 @@ Instead, processes elect to persist data, and what data to persist, when desired
 Data might be persisted after every message ingested, after every X minutes, after a certain specific event, or never.
 When data is persisted, the kernel saves it to our abstracted filesystem, which not only persists data on disk, but also across arbitrarily many encrypted remote backups as configured at the user-system-level.
 
-This design allows for ephemeral state that lives in-memory, or truly permanent state, encrypted across many remote backups, synchronized and safe. [Read more about filesystem persistence here](./files.md).
+This design allows for ephemeral state that lives in-memory, or truly permanent state, encrypted across many remote backups, synchronized and safe.
+[Read more about filesystem persistence here](../files.md).
 
 ### Requests and Responses
 
@@ -100,7 +101,7 @@ In contrast, if a file-transfer process can transfer more than one file at a tim
 The constraint on awaiting is a primary reason why it is desirable to [spawn child processes](#spawning-child-processes).
 Continuing the file-transfer example, by spawning one child "worker" process per file to be transferred, each worker can use the await mechanic to simplify the code, while not limiting performance.
 
-There is more discussion of child processes [here](cookbook/manage_child_processes.md), and an example of them in action in the [`file_transfer` cookbook](cookbook/file_transfer.md).
+There is more discussion of child processes [here](../cookbook/manage_child_processes.md), and an example of them in action in the [`file_transfer` cookbook](../cookbook/file_transfer.md).
 
 #### Message Structure
 
@@ -155,7 +156,7 @@ The kernel gives out capabilities that allow a process to message another *local
 It also gives a capability allowing processes to send and receive messages over the network.
 A process can optionally mark itself as `public`, meaning that it can be messaged by any *local* process regardless of capabilities.
 
-[See the capabilities chapter for more details.](./process/process-capabilities.md)
+[See the capabilities chapter for more details.](./capabilities.md)
 
 ### Spawning child processes
 
@@ -168,7 +169,7 @@ Child processes can be used to:
 3. Run IO-heavy code without blocking the parent
 4. Break out code that is more easily written with awaits to avoid blocking the parent
 
-There is more discussion of child processes [here](cookbook/manage_child_processes.md), and an example of them in action in the [`file_transfer` cookbook](cookbook/file_transfer.md).
+There is more discussion of child processes [here](../cookbook/manage_child_processes.md), and an example of them in action in the [`file_transfer` cookbook](../cookbook/file_transfer.md).
 
 ### Conclusion
 

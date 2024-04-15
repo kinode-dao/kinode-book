@@ -1,7 +1,7 @@
 ### KV API
 
 Useful helper functions can be found in the [`kinode_process_lib`](../process_stdlib/overview.md).
-More discussion of databases in Kinode can be found [here](./databases).
+More discussion of databases in Kinode can be found [here](../databases.md).
 
 #### Creating/Opening a database
 
