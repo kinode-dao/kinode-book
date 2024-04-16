@@ -122,6 +122,20 @@ h6 {
 h1 {
     font-size: 5em;
     margin-top: 0.25em;
+    position: relative;
+}
+
+h1::before {
+    content: '' !important;
+    width: 1em !important;
+    height: 1em !important;
+    position: absolute !important;
+    left: -1.25em !important;
+    top: 1.25em !important;
+    background-image: url('./../assets/kinode.svg') !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    visibility: hidden !important;
 }
 
 /* This is broken on Safari as of version 14, but is fixed

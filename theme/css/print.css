@@ -13,14 +13,14 @@
 
 #content {
     max-width: none;
-    margin: 0;
-    padding: 0;
+    margin: 64px;
+    padding: 64px;
+    overflow: visible;
 }
 
 .page {
     height: 100%;
     margin: 0;
-    padding: 64px;
     border-radius: 0;
 }
 
@@ -53,6 +53,11 @@ p {
     page-break-after: avoid;
     padding-top: 1em;
     margin-top: 0;
+}
+
+h1::before {
+    display: block;
+    visibility: visible !important;
 }
 
 pre,
