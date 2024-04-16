@@ -18,11 +18,21 @@
 }
 
 .page {
-    background-color: transparent;
     height: 100%;
     margin: 0;
     padding: 64px;
+    border-radius: 0;
 }
+
+/* Special Max theme overrides */
+.max .page {
+    background-color: transparent;
+    background-image: url('./../assets/background.jpg');
+    background-size: auto 297mm;
+    background-position: top center;
+    background-repeat: repeat-y;
+}
+
 
 code {
     direction: ltr !important;
@@ -32,20 +42,13 @@ pre>.buttons {
     z-index: 2;
 }
 
-a,
-a:visited,
-a:active,
-a:hover {
-    color: #4183c4;
-    text-decoration: none;
-}
-
 h1,
 h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+p {
     page-break-inside: avoid;
     page-break-after: avoid;
     padding-top: 1em;
