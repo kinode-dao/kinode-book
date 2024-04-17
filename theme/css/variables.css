@@ -34,7 +34,7 @@
     --sidebar-active: var(--k-orange);
     --sidebar-spacer: var(--k-beige);
 
-    --scrollbar: var(--page-bg);
+    --scrollbar: var(--bg);
 
     --icons: var(--k-darkgray);
     --icons-hover: var(--k-black);
@@ -84,7 +84,7 @@
     --sidebar-active: var(--k-orange);
     --sidebar-spacer: var(--k-beige);
 
-    --scrollbar: var(--page-bg);
+    --scrollbar: var(--bg);
 
     --icons: var(--k-beige);
     --icons-hover: var(--k-white);
@@ -134,7 +134,7 @@
     --sidebar-active: var(--k-orange);
     --sidebar-spacer: var(--k-beige);
 
-    --scrollbar: var(--page-bg);
+    --scrollbar: var(--bg);
 
     --icons: var(--k-beige);
     --icons-hover: var(--k-white);

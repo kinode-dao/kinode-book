@@ -2,10 +2,6 @@
 
 @import 'variables.css';
 
-html {
-    scrollbar-color: var(--scrollbar) var(--bg);
-}
-
 #searchresults a,
 .content a:link,
 a:visited,
@@ -523,6 +519,8 @@ ul#searchresults span.teaser em {
     left: 0;
     right: 0;
     padding: 0.5em 2em;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar) transparent;
 }
 
 .sidebar .sidebar-resize-handle {
@@ -564,11 +562,11 @@ ul#searchresults span.teaser em {
 }
 
 .sidebar::-webkit-scrollbar {
-    background: var(--sidebar-bg);
+    scrollbar-width: thin;
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-    background: var(--scrollbar);
+    scrollbar-width: thin;
 }
 
 /* sidebar-visible */

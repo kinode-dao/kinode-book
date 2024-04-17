@@ -157,6 +157,8 @@ h1::before {
     margin: 7px;
     height: calc(100vh - var(--page-padding));
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar) transparent;
 }
 
 .page-wrapper {
@@ -210,6 +212,8 @@ h1::before {
 .content img,
 .content video {
     max-width: 100%;
+    border-radius: 0.5em;
+    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.1);
 }
 
 .content .header:link,
@@ -220,6 +224,20 @@ h1::before {
 .content .header:link,
 .content .header:visited:hover {
     text-decoration: none;
+}
+
+.get-help {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    font-size: 1.25em;
+}
+
+.get-help a {
+    color: var(--fg) !important;
+    text-decoration: none !important;
+    display: flex;
 }
 
 table {

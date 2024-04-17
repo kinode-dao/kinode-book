@@ -24,6 +24,10 @@
     border-radius: 0;
 }
 
+.get-help {
+    display: none;
+}
+
 /* Special Max theme overrides */
 .max .page {
     background-color: transparent;
