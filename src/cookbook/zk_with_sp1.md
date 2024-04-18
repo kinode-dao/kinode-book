@@ -126,9 +126,6 @@ const FIB_ELF: &[u8] = include_bytes!("../../pkg/riscv32im-succinct-zkvm-elf");
 wit_bindgen::generate!({
     path: "wit",
     world: "process",
-    exports: {
-        world: Component,
-    },
 });
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -208,7 +205,6 @@ fn handle_message(our: &Address) -> anyhow::Result<()> {
 }
 
 call_init!(init);
-
 fn init(our: Address) {
     println!("fibonacci: begin");
 

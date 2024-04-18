@@ -23,15 +23,36 @@ Different implementations of the networking protocol may reject actions dependin
 This is, for example, where a router would choose whether or not to perform routing for a specific node<>node connection.
 
 ```rust
-enum NetActions {
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub enum NetAction {
     /// Received from a router of ours when they have a new pending passthrough for us.
     /// We should respond (if we desire) by using them to initialize a routed connection
-    /// with the NodeId in the string given.
-    ConnectionRequest(String),
+    /// with the NodeId given.
+    ConnectionRequest(NodeId),
     /// can only receive from trusted source, for now just ourselves locally,
     /// in the future could get from remote provider
     KnsUpdate(KnsUpdate),
     KnsBatchUpdate(Vec<KnsUpdate>),
+    /// get a list of peers we are connected to
+    GetPeers,
+    /// get the [`Identity`] struct for a single peer
+    GetPeer(String),
+    /// get the [`NodeId`] associated with a given namehash, if any
+    GetName(String),
+    /// get a user-readable diagnostics string containing networking inforamtion
+    GetDiagnostics,
+    /// sign the attached blob payload, sign with our node's networking key.
+    /// **only accepted from our own node**
+    /// **the source [`Address`] will always be prepended to the payload**
+    Sign,
+    /// given a message in blob payload, verify the message is signed by
+    /// the given source. if the signer is not in our representation of
+    /// the PKI, will not verify.
+    /// **the `from` [`Address`] will always be prepended to the payload**
+    Verify {
+        from: Address,
+        signature: Vec<u8>,
+    }
 }
 
 struct KnsUpdate {
@@ -52,14 +73,41 @@ This is responded to with either an `Accepted` or `Rejected` variant of `NetResp
 `KnsUpdate` and `KnsBatchUpdate` both are used as entry point by which the `net` module becomes aware of the Kinode PKI, or KNS.
 In the current distro these are only accepted from the local node, and specifically the `kns_indexer` distro package.
 
+`GetPeers` is used to request a list of peers that the `net` module is connected to. It can only be received from the local node.
+
+`GetPeer` is used to request the `Identity` struct for a single peer. It can only be received from the local node.
+
+`GetName` is used to request the `NodeId` associated with a given namehash. It can only be received from the local node.
+
+`GetDiagnostics` is used to request a user-readable diagnostics string containing networking information. It can only be received from the local node.
+
+`Sign` is used to request that the attached blob payload be signed with our node's networking key. It can only be received from the local node.
+
+`Verify` is used to request that the attached blob payload be verified as being signed by the given source. It can only be received from the local node.
+
 
 Finally, let's look at the type parsed from a `Response`.
 
 ```rust
-/// For now, only sent in response to a ConnectionRequest.
-enum NetResponses {
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub enum NetResponse {
     Accepted(NodeId),
     Rejected(NodeId),
+    /// response to [`NetAction::GetPeers`]
+    Peers(Vec<Identity>),
+    /// response to [`NetAction::GetPeer`]
+    Peer(Option<Identity>),
+    /// response to [`NetAction::GetName`]
+    Name(Option<String>),
+    /// response to [`NetAction::GetDiagnostics`]. a user-readable string.
+    Diagnostics(String),
+    /// response to [`NetAction::Sign`]. contains the signature in blob
+    Signed,
+    /// response to [`NetAction::Verify`]. boolean indicates whether
+    /// the signature was valid or not. note that if the signer node
+    /// cannot be found in our representation of PKI, this will return false,
+    /// because we cannot find the networking public key to verify with.
+    Verified(bool),
 }
 ```
 

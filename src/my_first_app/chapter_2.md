@@ -17,9 +17,6 @@ In order to compile properly to the Kinode environment, every process must gener
 wit_bindgen::generate!({
     path: "wit",
     world: "process",
-    exports: {
-        world: Component,
-    },
 });
 ```
 
@@ -35,13 +32,9 @@ use kinode_process_lib::{call_init, Address};
 wit_bindgen::generate!({
     path: "wit",
     world: "process",
-    exports: {
-        world: Component,
-    },
 });
 
 call_init!(my_init_fn);
-
 fn my_init_fn(our: Address) {
     println!("{our}: started");
 }
@@ -60,13 +53,9 @@ use kinode_process_lib::{await_message, call_init, println, Address};
 wit_bindgen::generate!({
     path: "wit",
     world: "process",
-    exports: {
-        world: Component,
-    },
 });
 
 call_init!(my_init_fn);
-
 fn my_init_fn(our: Address) {
     println!("{our}: started");
 
@@ -124,13 +113,9 @@ use kinode_process_lib::{await_message, call_init, println, Address, Request};
 wit_bindgen::generate!({
     path: "wit",
     world: "process",
-    exports: {
-        world: Component,
-    },
 });
 
 call_init!(my_init_fn);
-
 fn my_init_fn(our: Address) {
     println!("{our}: started");
 
@@ -214,13 +199,9 @@ use kinode_process_lib::{await_message, call_init, println, Address, Request, Re
 wit_bindgen::generate!({
     path: "wit",
     world: "process",
-    exports: {
-        world: Component,
-    },
 });
 
 call_init!(my_init_fn);
-
 fn my_init_fn(our: Address) {
     println!("{our}: started");
 

@@ -134,13 +134,9 @@ impl MyBody {
 wit_bindgen::generate!({
     path: "wit",
     world: "process",
-    exports: {
-        world: Component,
-    },
 });
 
 call_init!(my_init_fn);
-
 fn my_init_fn(our: Address) {
     println!("{our}: started");
 
