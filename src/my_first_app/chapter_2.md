@@ -27,7 +27,7 @@ The definition of the `Component` struct can be done manually, but it's easier t
 Note that running the process below [can lead to an infinite loop](#aside-on_exit):
 
 ```rust
-use kinode_process_lib::{call_init, Address};
+use kinode_process_lib::{call_init, println, Address};
 
 wit_bindgen::generate!({
     path: "wit",
