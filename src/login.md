@@ -2,19 +2,9 @@
 
 Let's get onto the live network!
 
-These directions are particular to the Kinode OS alpha release.
-Joining the network will become significantly easier on subsequent releases.
+These directions are particular to the Kinode OS beta release.
 
-Kinode has two live networks: mainnet on Optimism and a testnet on Ethereum Sepolia.
-Identities created on one are unrelated to identities on the other, and nodes cannot communicate across networks.
-This document discusses how to get on to either.
-
-## Creating an Alchemy Account
-
-Alchemy is used as an [Ethereum RPC endpoint](#acquiring-an-rpc-api-key) and, for the testnet, as a [faucet for Sepolia testnet ETH](#aside-acquiring-sepolia-testnet-eth).
-An Ethereum RPC endpoint and either Optimism or Sepolia ETH are required to send and receive Ethereum transactions that support the Kinode identity system.
-If you do not already have an Alchemy account, [register one](https://www.alchemy.com/).
-The account is free and requires only an email address for registration.
+Kinode is in active development on Optimism.
 
 ## Starting the Kinode
 
@@ -25,31 +15,30 @@ Locating the binary on your system, print out the arguments expected by the bina
 $ ./kinode --help
 A General Purpose Sovereign Cloud Computing Platform
 
-Usage: kinode [OPTIONS] --rpc <WS_URL> <home>
+Usage: kinode [OPTIONS] <home>
 
 Arguments:
   <home>  Path to home directory
 
 Options:
-      --port <PORT>   Port to bind [default: first unbound at or above 8080]
-      --testnet       If set, use Sepolia testnet
-      --rpc <WS_URL>  Ethereum RPC endpoint (must be wss://)
-  -h, --help          Print help
-  -V, --version       Print version
+      --port <PORT>            Port to bind [default: first unbound at or above 8080]
+      --ws-port <PORT>         Kinode internal WebSockets protocol port [default: first unbound at or above 9000]
+      --verbosity <VERBOSITY>  Verbosity level: higher is more verbose [default: 0]
+      --reveal-ip              If set to false, as an indirect node, always use routers to connect to other nodes.
+      --rpc <RPC>              Add a WebSockets RPC URL at boot
+  -h, --help                   Print help
+  -V, --version                Print version
 ```
 
 A home directory must be supplied — where the node will store its files.
-The binary also takes a required `--rpc` flag.
-The `--rpc` flag is a `wss://` WebSocket link to an Ethereum RPC, allowing the Kinode to send and receive Ethereum transactions — used in the [identity system](./identity_system.md) as mentioned [above](#creating-an-alchemy-account).
-If the `--port` flag is supplied, Kinode will attempt to bind that port and will exit if that port is already taken.
+The `--rpc` flag is an optional `wss://` WebSocket link to an Ethereum RPC, allowing the Kinode to send and receive Ethereum transactions — used in the [identity system](./identity_system.md) as mentioned [above](#creating-an-alchemy-account).
+If this is not supplied, the node will use a set of default RPC providers served by other nodes on the network.
+If the `--port` flag is supplied, Kinode will attempt to bind that port for serving HTTP and will exit if that port is already taken.
 If no `--port` flag is supplied, Kinode will bind to `8080` if it is available, or the first port above `8080` if not.
 
-By default, the binary will connect to the Optimism mainnet.
-To connect to the Sepolia testnet instead, supply the `--testnet` flag.
+### Acquiring an RPC API Key [OPTIONAL]
 
-### Acquiring an RPC API Key
-
-Create a new "app" on [Alchemy](https://dashboard.alchemy.com/apps) for either Optimism Mainnet or Ethereum Sepolia.
+Create a new "app" on [Alchemy](https://dashboard.alchemy.com/apps) for Optimism Mainnet.
 
 ![Alchemy Create App](./assets/alchemy-create-app.png)
 
@@ -57,13 +46,13 @@ Copy the WebSocket API key from the API Key button:
 
 ![Alchemy API Key](./assets/alchemy-api-key.png)
 
-### Alternative to Alchemy
+#### Alternative to Alchemy
 
 As an alternative to using Alchemy's RPC API key, [Infura's](https://app.infura.io) endpoints may be used. Upon creating an Infura account, the first key is already created and titled 'My First Key'. Click on the title to edit the key.
 
 ![Infura My First Key](./assets/my_first_key_infura.png)
 
-Next, check the box next to Ethereum "SEPOLIA" or Optimism "MAINNET" according to whichever is needed. After one is chosen, click "SAVE CHANGES". Then, at the top, click "Active Endpoints".
+Next, check the box next to Optimism "MAINNET". After one is chosen, click "SAVE CHANGES". Then, at the top, click "Active Endpoints".
 
 ![Create Endpoint Infura](./assets/create_endpoint_infura.png)
 
@@ -73,20 +62,12 @@ On the "Active Endpoints" tab, there are tabs for "HTTPS" and "WebSockets". Sele
 
 ### Running the Binary
 
-Replace the `--rpc` field below with the WebSocket API key link copied from [the previous step](#acquiring-an-rpc-api-key), and start the node with:
-
+In a terminal window, run:
 ```bash
-# For Optimism mainnet
-./kinode home --rpc wss://opt-mainnet.g.alchemy.com/v2/<your-api-key>
-
-# For Sepolia testnet
-./kinode home --rpc wss://eth-sepolia.g.alchemy.com/v2/<your-api-key> --testnet
+./kinode home
 ```
 
-(See runtime README for more information)
-
-A new browser tab should open, but if not, look in the terminal for a line like
-
+A new browser tab should open, but if not, look in the terminal for this line:
 ```
 login or register at http://localhost:8080
 ```
@@ -124,11 +105,6 @@ After registering a username, click through until you reach `Connect Wallet` and
 
 Bridge ETH to Optimism using the [official bridge](https://app.optimism.io/bridge).
 Many exchanges also allow sending ETH directly to Optimism wallets.
-
-### Aside: Acquiring Sepolia Testnet ETH
-
-Using the Alchemy account [registered above](#creating-an-alchemy-account), use the [Sepolia faucet](https://sepoliafaucet.com/) to acquire Sepolia ETH if you do not already have some in your wallet.
-Then, return to the Kinode.
 
 ### Setting Up Networking (Direct vs. Routed Nodes)
 
