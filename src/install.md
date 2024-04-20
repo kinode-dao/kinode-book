@@ -6,6 +6,27 @@ However, if you are just interested in starting development as fast as possible,
 
 If you want to make edits to the Kinode core software, see [Build From Source](#build-from-source).
 
+## Download Binary
+
+If you do not have Docker, you can download a precompiled binary instead.
+
+First, get the software itself by downloading a [precompiled release binary](https://github.com/kinode-dao/kinode/releases).
+Choose the correct binary for your particular computer architecture and OS.
+There is no need to download the `simulation-mode` binary — it is used behind the scenes.
+Extract the `.zip` file and the binary is inside.
+
+Note that some operating systems, particularly Apple, may flag the download as suspicious.
+While the binary has not been tested exhaustively on all Linux distributions, it should *just work*.
+
+### Apple
+
+First, attempt to run the binary, which Apple will block.
+Then, go to `System Settings > Privacy and Security` and click to `Allow Anyway` for the `kinode` binary:
+
+![Apple unknown developer](./assets/apple-unknown-developer.png)
+
+---------------
+
 ## Docker
 
 The recommended method for Linux and MacOS users is to use a prebuilt Docker image.
@@ -56,24 +77,7 @@ To remove the container, run `docker remove my-kinode`.
 As long as the volume is not deleted, your data remains intact upon removal or stop.
 If you need further help with Docker, [access the official Docker documentation here](https://docs.docker.com/manuals/).
 
-## Download Binary
-
-If you do not have Docker, you can download a precompiled binary instead.
-
-First, get the software itself by downloading a [precompiled release binary](https://github.com/kinode-dao/kinode/releases).
-Choose the correct binary for your particular computer architecture and OS.
-There is no need to download the `simulation-mode` binary — it is used behind the scenes.
-Extract the `.zip` file and the binary is inside.
-
-Note that some operating systems, particularly Apple, may flag the download as suspicious.
-While the binary has not been tested exhaustively on all Linux distributions, it should *just work*.
-
-### Apple
-
-First, attempt to run the binary, which Apple will block.
-Then, go to `System Settings > Privacy and Security` and click to `Allow Anyway` for the `kinode` binary:
-
-![Apple unknown developer](./assets/apple-unknown-developer.png)
+-----------------
 
 ## Build From Source
 
