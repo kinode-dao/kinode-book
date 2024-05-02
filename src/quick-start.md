@@ -3,7 +3,7 @@
 Kinode OS is a decentralized operating system, peer-to-peer app framework, and node network designed to simplify the development and deployment of decentralized applications.
 
 This Quick Start page is targeted at developers: if you want to get your hands dirty, continue [below](#run-two-fake-kinodes-and-chat-between-them).
-A more detailed version of this Quick Start leads off the [My First Kinode Application](./my_first_app/chapter_1.md) section.
+A more detailed version of this Quick Start leads off the [My First Kinode Application](./build-and-deploy-an-app.md) section.
 
 Otherwise:
 * To learn about high-level concepts, start with the [Introduction](./intro.md), and work through the book in-order.
@@ -47,7 +47,7 @@ m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.os", "messa
 
 ## Next steps
 
-The first chapter of the [My First Kinode Application](./my_first_app/chapter_1.md) tutorial is a more detailed version of this Quick Start.
+The first chapter of the [My First Kinode Application](./build-and-deploy-an-app.md) tutorial is a more detailed version of this Quick Start.
 Alternatively, you can learn more about `kit` in the [`kit` documentation](./kit-dev-toolkit.md).
 
 If instead, you want to learn more about high-level concepts, start with the [Introduction](./intro.md) and work your way through the book in-order.

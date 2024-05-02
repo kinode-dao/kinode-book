@@ -1,4 +1,4 @@
-# Tutorial: Build and Deploy an App
+# My First Kinode Application
 
 Welcome!
 In these tutorials, you'll setup your development environment and learn about the `kit` tools.
