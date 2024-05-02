@@ -1,4 +1,4 @@
-# Identity System
+# Identity System 
 
 One of the most important features of a peer-to-peer network is the ability to maintain a unique and persistent identity.
 This identity must be self-sovereign, unforgeable, and easy to discover by peers.
