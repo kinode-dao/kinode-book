@@ -7,7 +7,7 @@ A more detailed version of this Quick Start leads off the [My First Kinode Appli
 
 Otherwise:
 * To learn about high-level concepts, start with the [Introduction](./intro.md), and work through the book in-order.
-* To learn about how the system functions, start reading about [System Components](./process/processes.md).
+* To learn about how the system functions, start reading about [System Components](./system-components.md).
 
 ## Run two fake Kinodes and chat between them
 
