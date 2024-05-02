@@ -49,6 +49,7 @@
   - [Intro to Web UI with File Transfer](./cookbook/file_transfer_ui.md)
   - [Writing and Running Scripts](./cookbook/writing_scripts.md)
   - [Reading Data from ETH](./cookbook/reading_data_from_eth.md)
+  - [Writing Data to ETH](./cookbook/writing_data_to_eth.md)
   - [Use ZK proofs with SP1](./cookbook/zk_with_sp1.md)
 - [API Reference](./api_reference.md)
   - [ETH Provider API](./apis/eth_provider.md)
