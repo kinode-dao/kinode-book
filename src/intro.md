@@ -21,7 +21,7 @@ The focus of this book is how to build and deploy applications on Kinode OS.
 
 Applications are composed of processes, which hold state and pass messages.
 Kinode's kernel handles the startup and teardown of processes, as well as message-passing between processes, both locally and across the network.
-Processes are programs compiled to Wasm, which export a single `init()` function.
+Processes are programs compiled to Wasm, which expose a single `init()` function.
 They can be started once and complete immediately, or they can run "forever".
 
 Peers in Kinode OS are identified by their onchain username in the "KNS": Kinode Name System, which is modeled after ENS.
