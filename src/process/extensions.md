@@ -9,7 +9,7 @@ The cost of extensions is that they are not as nicely bundled within the Kinode 
 
 Extensions are WebSocket clients that connect to a paired Kinode process to extend library, language, or hardware support.
 
-Kinode processes are Wasm components, which leads to advantages and disadvantages.
+Kinode processes are [Wasm components](https://component-model.bytecodealliance.org/design/why-component-model.html), which leads to advantages and disadvantages.
 The rest of the book (and in particular the [processes chapter](./processes.md)) discusses the advantages (e.g., integration with the Kinode Request/Response system and the capabilities security model).
 Two of the main disadvantages are:
 1. Only certain libraries and languages can be used.
