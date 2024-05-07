@@ -1,6 +1,6 @@
 # Public Key Infrastructure
 
-The following is a high level overview of Kinode's public key infrastructure, the Kinode Identity System, or KNS.
+The following is a high level overview of Kinode's [public key infrastructure](https://en.wikipedia.org/wiki/Public_key_infrastructure), the Kinode Identity System, or KNS.
 You can find a more general discussion of the Kinode [identity system](./identity_system.md) here.
 
 ## Identity Registration
