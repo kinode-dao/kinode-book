@@ -6,30 +6,32 @@ On Kinode OS, processes are the building blocks for peer-to-peer applications.
 The Kinode runtime handles message-passing between processes, plus the startup and teardown of said processes.
 This section describes the message design as it relates to processes.
 
-Processes have a globally unique identifier, or "address", composed of four elements.
-First, the publisher's node.
-Second, the package name.
-Third, the process identifier.
-Processes spawn with their own identifier: either a developer-selected string or a randomly-generated number as string.
-And finally, the node the process is running on (your node).
+Each process instance has a globally unique identifier, or `Address`, composed of four elements.
+- the publisher's node
+- the package name (not to be confused with `PackageID`)
+- the process name (not to be confused with `ProcessID`). Processes spawn with their own identifier (`process_name`): either a developer-selected string or a randomly-generated number as string.
+- the node the process is running on (your node).
+
+The way these elements compose is the following:
 
 [Package IDs](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/struct.PackageId.html) look like:
-
 ```
-my_cool_software:my_username.os
+[package_name]:[publisher_node]
+my_cool_software:publisher_node.os
 ```
 
 [Process IDs](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.ProcessId.html) look like:
-
 ```
-process_one:my_cool_software:my_username.os
-8513024814:my_cool_software:my_username.os
+[process_name]:[package_name]:[publisher_node]
+process_one:my_cool_software:publisher_node.os
+8513024814:my_cool_software:publisher_node.os
 ```
 
 [Addresses](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) look like:
 
 ```
-some_user.os@process_one:my_cool_software:my_username.os
+[node]:[process_name]:[package_name]:[publisher_node]
+some_user.os@process_one:my_cool_software:publisher_node.os
 ```
 
 Processes are compiled to Wasm.
