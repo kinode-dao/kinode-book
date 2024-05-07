@@ -1,7 +1,7 @@
 # Read+Write to Chain
 
 Kinode OS comes with a built-in provider layer for Ethereum and other EVM chains/rollups.
-This runtime module lives in `eth:distro:sys` and is usable by any package which acquires the messaging capability for it.
+This runtime module lives in [`eth:distro:sys`](https://github.com/kinode-dao/kinode/tree/main/kinode/src/eth) and is usable by any package which acquires the messaging capability for it.
 In addition to allowing connections directly to WebSocket RPC endpoints, the provider can also connect via the Kinode networking protocol to other Kinodes and use their provider as a relay.
 The node must be configured to allow relay connections, which can be done with a public/private flag or explicit allow/deny list.
 
