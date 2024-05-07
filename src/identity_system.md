@@ -6,9 +6,11 @@ Kinode OS uses a domain system similar to [ENS](https://ens.domains/) to achieve
 It should be noted that, in our system, the concepts of `domain`, `identity`, and `username` are identical and interchangeable.
 
 Like ENS, Kinode domains (managed by our KNS) are registered by a wallet and owned in the form of an NFT.
-However, unlike ENS, Kinode domains never expire. Additionally, they contain metadata necessary to both:
-- demonstrate the provenance of a given identity.
-- route messages to the identity on the Kinode network.
+However, unlike ENS, Kinode domains never expire. Additionally, they contain metadata necessary to cover both:
+- **Domain provenance** - to demonstrate that the NFT owner has provenance of a given Kinode identity.
+- **Domain resolution** - to be able to route messages to a given identity on the Kinode network.
+
+## Domain Provenance
 
 KNS provides both sensible defaults and flexibility.
 The cheapest option is also the default: minting a new NFT, a `.os` TLD.
@@ -17,9 +19,11 @@ Instead, it is designed to easily extend and wrap existing NFTs, enabling users 
 
 What does this look like in practice?
 
-It's easy enough to check for provenance of a given identity.
+It's easy enough to check for provenance of a given Kinode identity.
 If you have a Kinode domain, you can prove ownership by signing a message with the wallet that owns the domain.
 However, to essentially use your Kinode identity as a domain name for your personal server, KNS domains have routing information, similar to a DNS record, that points to an IP address.
+
+## Domain Resolution
 
 A KNS domain can either be `direct` or `indirect`.
 When users first boot a node, they may decide between these two domain types as they create their initial identity.
@@ -33,9 +37,11 @@ These routers are other *direct* nodes that have agreed to forward messages to i
 When a node wants to send a message to an indirect node, it first finds the node onchain, and then sends the message to one of the routers listed in the node's metadata.
 The router is responsible for forwarding the message to the indirect node and similarly forwarding messages from that node back to the network at large.
 
+## Conclusion
+
 For more information about the architectural specifics of the networking protocol, see [Networking Protocol](./networking_protocol.md).
 The main takeaway for the identity system is that *domain provenance* and *domain resolution* are unified by KNS.
 
 Like .eth for ENS, the KNS domain space is fixed inside the `.os` top-level domain.
-However, we reserve the ability to expand domain availability in the future, and governance of the Kinode protocol will include the ability to manage domain names.
+However, we reserve the ability to expand domain availability in the future to domains other than `.os`, and governance of the Kinode protocol will include the ability to manage domain names.
 Eventually, we hope to link various TLDs to existing NFT communities and other identity systems.
