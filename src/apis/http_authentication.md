@@ -20,7 +20,7 @@ Now, any HTTP requests to your node at `/main:my_package:myname.os/messages` wil
 The other two parameters to `bind_http_path` are `authenticated: bool` and `local_only: bool`.
 `authenticated` means that `http_server` will check for an auth cookie (set at login/registration), and `local_only` means that `http_server` will only allow requests that come from `localhost`.
 
-Incoming HTTP requests will come via `http_server` and have both an `body` and a `lazy_load_blob`.
+Incoming HTTP requests will come via `http_server` and have both a `body` and a `lazy_load_blob`.
 The `lazy_load_blob` is the HTTP request body, and the `body` is an `IncomingHttpRequest`:
 
 ```rs

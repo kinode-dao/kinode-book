@@ -1,7 +1,7 @@
 # Defining Your Protocol
 
-In the last chapter, you created a simple request-response pattern that uses strings as an `body` field type.
-This is fine for certain limited cases, but in practice, most Kinode processes written in Rust use an `body` type that is serialized and deserialized to bytes using [Serde](https://serde.rs/).
+In the last chapter, you created a simple request-response pattern that uses strings as a `body` field type.
+This is fine for certain limited cases, but in practice, most Kinode processes written in Rust use a `body` type that is serialized and deserialized to bytes using [Serde](https://serde.rs/).
 There are a multitude of libraries that implement Serde's `Serialize` and `Deserialize` traits, and the process developer is responsible for selecting a strategy that is appropriate for their use case.
 
 Some popular options are `bincode` and `serde_json`.
