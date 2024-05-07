@@ -21,7 +21,7 @@ While the binary has not been tested exhaustively on all Linux distributions, it
 ### Apple
 
 First, attempt to run the binary, which Apple will block.
-Then, go to `System Settings > Privacy and Security` and click to `Allow Anyway` for the `kinode` binary:
+Then, go to `System Settings > Privacy and Security` and click to `Open Anyway` for the `kinode` binary:
 
 ![Apple unknown developer](./assets/apple-unknown-developer.png)
 
