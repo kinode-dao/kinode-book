@@ -111,7 +111,7 @@ Messages, both requests and responses, can contain arbitrary data, which must be
 The structure of a message contains hints about how best to do this:
 
 First, messages contain a field labeled `body`, which holds the actual contents of the message.
-In order to cross the Wasm boundary and be language-agnostic, the `body` field is simply a byte vector.
+In order to cross the [Wasm boundary](https://component-model.bytecodealliance.org/design/why-component-model.html) and be language-agnostic, the `body` field is simply a byte vector.
 To achieve composability between processes, a process should be very clear, in code and documentation, about what it expects in the `body` field and how it gets parsed, usually into a language-level struct or object.
 
 A message also contains a `lazy_load_blob`, another byte vector, used for opaque, arbitrary, or large data.
@@ -178,7 +178,17 @@ There is more discussion of child processes [here](../cookbook/manage_child_proc
 This is a high-level overview of process semantics.
 In practice, processes are combined and shared in **packages**, which are generally synonymous with **apps**.
 
+#### Wasm and Kinode
 It's briefly discussed here that processes are compiled to Wasm.
-The details of this are not covered in the Kinode Book, but can be found in the documentation for the [Kinode runtime](https://github.com/kinode-dao/kinode), which uses [Wasmtime](https://wasmtime.dev/), a WebAssembly runtime, to load, execute, and provide an interface for the subset of Wasm processes that are valid Kinode processes.
+The details of this are not covered in the Kinode Book, but can be found in the documentation for the [Kinode runtime](https://github.com/kinode-dao/kinode), which uses [Wasmtime](https://wasmtime.dev/), a WebAssembly runtime, to load, execute, and provide an interface for the subset of Wasm components that are valid Kinode processes.
+
+Wasm runs modules by default, or components, as described [here](https://component-model.bytecodealliance.org/design/why-component-model.html): components are just modules that follow some specific format.
+Kinode processes are a further thing on top of components: they are components that follow a specific format in order to be run by Kinode OS.
 Pragmatically, processes can be compiled using the [`kit` tools](https://github.com/kinode-dao/kit).
-The long term goal of the Kinode runtime is to use [WASI](https://wasi.dev/) to provide a secure, sandboxed environment for processes to not only make use of the kernel features described in this document, but also to make full use of the entire WebAssembly ecosystem, including the ability to use sandboxed system calls provided by the host via WASI.
+
+Kinode can, using [WASI](https://wasi.dev/), provide a secure, sandboxed environment for Wasm components to make use of the kernel features described in this document. 
+Further, Kinode has a Virtual File System ([VFS](../files.md)) which processes can interact with, and therefore WASI could also expose access to filesystem for Wasm components directly.
+
+
+
+
