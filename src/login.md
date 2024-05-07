@@ -97,7 +97,7 @@ Install Metamask [here](https://metamask.io/download/).
 
 ### Connecting the Wallet
 
-After registering a username, click through until you reach `Connect Wallet` and follow the wallet prompts:
+After clicking 'Register Kinode Name', click `Connect Wallet` and follow the wallet prompts:
 
 ![Register connect wallet](./assets/register-connect-wallet.png)
 
