@@ -34,7 +34,7 @@ The following table describes the matrix of ["Exists/Has UI-enabled version"](#e
 
 Language     | `chat`  | `echo` | `fibonacci` | `file_transfer`
 ------------ | ------- | ------ | ----------- | ---------------
-`rust`       | yes/yes | yes/no | yes/no      | yes/no
+`rust`       | yes/yes | yes/no | yes/no      | yes/yes
 `python`     | yes/no  | yes/no | yes/no      | no/no
 `javascript` | yes/no  | yes/no | yes/no      | no/no
 
