@@ -22,7 +22,7 @@ This includes adding and removing providers and adjusting the permissions for ot
 However, most configuration is done in an optional file named `.eth-providers` inside the home folder of a node.
 If this file is not present, a node will boot using the default providers hardcoded for testnet or mainnet, depending on where the node lives.
 If it is present, the node will load in those providers and use them.
-The file is a JSON object: a list of providers with the following shape (example data):
+The file is a JSON object: a list of providers, with the following shape (example data):
 
 ```json
 [
