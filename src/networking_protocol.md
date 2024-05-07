@@ -17,7 +17,7 @@ The former allows for completely direct peer-to-peer connections, and the latter
 The networking protocol can and will be implemented in multiple underlying protocols.
 Since the protocol is encrypted, a secure underlying connection with TLS or HTTPS is never necessary.
 WebSockets are prioritized since we expect to quickly build Kinodes that run purely in-browser.
-The other transmission protocols with slots in the onchain identity data structure are: TCP, UDP, and WebTransport.
+The other transport protocols with slots in the onchain identity data structure are: TCP, UDP, and WebTransport.
 
 ### 2. Onchain Networking Information
 
@@ -47,7 +47,7 @@ In the future, the `net:distro:sys` runtime module will be responsible for imple
 The runtime will also be responsible for choosing the optimal way to serve a given message based on the recipient's onchain networking information.
 Each protocol may have different precise semantics depending on the underlying transport protocol: the following is a general description of the WebSockets protocol.
 
-This protocol does not make use of any WebSocket frames other than Binary, Ping, and Pong.
+This protocol does not make use of any [WebSocket frames](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#exchanging_data_frames) other than Binary, Ping, and Pong.
 Pings should be responded to with a Pong.
 These are only used to keep the connection alive.
 All content is sent as Binary frames.
@@ -55,35 +55,7 @@ Binary frames in the current protocol version (1) are limited to 10MB. This incl
 
 All data structures are serialized and deserialized using [MessagePack](https://msgpack.org/index.html).
 
-#### 3.1. Data Structures
-
-```rust
-struct HandshakePayload {
-    pub protocol_version: u8,
-    pub name: String,
-    pub signature: Vec<u8>,
-    pub proxy_request: bool,
-}
-
-struct RoutingRequest {
-    pub protocol_version: u8,
-    pub source: String,
-    pub signature: Vec<u8>,
-    pub target: String,
-}
-
-/// Note: indicate where to find Address, Rsvp, Message, and LazyLoadBlob type definitions
-struct KernelMessage {
-    pub id: u64,
-    pub source: Address,
-    pub target: Address,
-    pub rsvp: Rsvp,
-    pub message: Message,
-    pub lazy_load_blob: Option<LazyLoadBlob>,
-}
-```
-
-#### 3.2. Establishing a Connection
+#### 3.1. Establishing a Connection
 
 The WebSockets protocol uses the [Noise Protocol Framework](http://www.noiseprotocol.org/noise.html) to encrypt all messages end-to-end.
 The parameters used are `Noise_XX_25519_ChaChaPoly_BLAKE2s`.
@@ -148,6 +120,18 @@ After this pattern is complete, the connection switches to transport mode and ca
 #### 3.2. Sending Messages
 
 Every message sent over the connection is a `KernelMessage`, serialized with MessagePack, then encrypted using the keys exchanged in the Noise protocol XX pattern, sent in a single Binary WebSockets message.
+
+```rust
+/// Note: indicate where to find Address, Rsvp, Message, and LazyLoadBlob type definitions
+struct KernelMessage {
+    pub id: u64,
+    pub source: Address,
+    pub target: Address,
+    pub rsvp: Rsvp,
+    pub message: Message,
+    pub lazy_load_blob: Option<LazyLoadBlob>,
+}
+```
 
 #### 3.3. Receiving Messages
 
