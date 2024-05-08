@@ -179,16 +179,14 @@ This is a high-level overview of process semantics.
 In practice, processes are combined and shared in **packages**, which are generally synonymous with **apps**.
 
 #### Wasm and Kinode
+
 It's briefly discussed here that processes are compiled to Wasm.
 The details of this are not covered in the Kinode Book, but can be found in the documentation for the [Kinode runtime](https://github.com/kinode-dao/kinode), which uses [Wasmtime](https://wasmtime.dev/), a WebAssembly runtime, to load, execute, and provide an interface for the subset of Wasm components that are valid Kinode processes.
 
 Wasm runs modules by default, or components, as described [here](https://component-model.bytecodealliance.org/design/why-component-model.html): components are just modules that follow some specific format.
-Kinode processes are a further thing on top of components: they are components that follow a specific format in order to be run by Kinode OS.
+Kinode processes are Wasm components that have certain imports and exports so they can be run by Kinode OS.
 Pragmatically, processes can be compiled using the [`kit` tools](https://github.com/kinode-dao/kit).
 
-Kinode can, using [WASI](https://wasi.dev/), provide a secure, sandboxed environment for Wasm components to make use of the kernel features described in this document. 
-Further, Kinode has a Virtual File System ([VFS](../files.md)) which processes can interact with, and therefore WASI could also expose access to filesystem for Wasm components directly.
 
-
-
-
+The long term goal of Kinode is, using [WASI](https://wasi.dev/), to provide a secure, sandboxed environment for Wasm components to make use of the kernel features described in this document. 
+Further, Kinode has a Virtual File System ([VFS](../files.md)) which processes can interact with to access files on a user's machine, and in the future WASI could also expose access to the filesystem for Wasm components directly.
