@@ -41,7 +41,7 @@ Check out the [examples below](#examples) to see some working extensions.
 The process [binds a WebSocket](#bind-an-extension-websocket), so Kinode acts as the WebSocket server.
 The extension acts as a client, connecting to the WebSocket served by the Kinode process.
 
-The process sends [`HttpServerAction::WebSocketExtPushOutgoing`](https://github.com/kinode-dao/kinode/blob/main/lib/src/http/server_types.rs#L123-L142) Requests to the `http_server`(look [here](https://book.kinode.org/http_server_and_client.html
+The process sends `HttpServerAction::WebSocketExtPushOutgoing` Requests to the `http_server`(look [here](https://book.kinode.org/http_server_and_client.html
 ) and [here](https://book.kinode.org/apis/http_server.html)) to communicate with the extension (see the `enum` defined at the bottom of this section).
 
 Table 1: `HttpServerAction::WebSocketExtPushOutgoing` Inputs
@@ -53,7 +53,7 @@ Field Name           | Description
 
 The [`lazy_load_blob`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.LazyLoadBlob.html) is the payload for the WebSocket message.
 
-The `http_server` converts the Request into a [`HttpServerAction::WebSocketExtPushData`](https://github.com/kinode-dao/process_lib/blob/main/src/http.rs#L129-L148), [MessagePack](https://msgpack.org)s it, and sends it to the extension.
+The `http_server` converts the Request into a `HttpServerAction::WebSocketExtPushData`, [MessagePack](https://msgpack.org)s it, and sends it to the extension.
 Specifically, it attaches the Message's `id`, copies the `desired_reply_type` to the `kinode_message_type` field, and copies the `lazy_load_blob` to the `blob` field.
 
 The extension replies with a [MessagePack](https://msgpack.org)ed `HttpServerAction::WebSocketExtPushData`.
