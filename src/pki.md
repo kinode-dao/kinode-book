@@ -14,9 +14,9 @@ So at a high level, the PKI needs to maintain two elements: nodes' public keys a
 ### Public Keys
 
 The networking public key is used to encrypt and decrypt communications with other nodes.
-
+In addition, the key serves as an identity that other nodes can verify.
 When nodes first connect, they engage in an [initial handshake ceremony](./networking_protocol.md#32-establishing-a-connection) to create an encryption channel using both of their public keys.
-Through this established encrypted WebSocket connection the nodes have verified each other's identities, fully peer-to-peer.
+The resulting connection is encrypted end-to-end.
 
 ### Networking Information
 
