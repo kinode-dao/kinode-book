@@ -45,11 +45,12 @@ The process sends `HttpServerAction::WebSocketExtPushOutgoing` Requests to the `
 ) and [here](https://book.kinode.org/apis/http_server.html)) to communicate with the extension (see the `enum` defined at the bottom of this section).
 
 Table 1: `HttpServerAction::WebSocketExtPushOutgoing` Inputs
+
 Field Name           | Description
 -------------------- | -----------
 `channel_id`         | Given in a WebSocket message after a client connects.
 `message_type`       | The WebSocketMessage type — recommended to be [`WsMessageType::Binary`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/enum.WsMessageType.html).
-`desired_reply_type` | The Kinode [`Message`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/enum.Message.html) type that the extension should return — `Request` or `Response`.
+`desired_reply_type` | The Kinode `MessageType` type that the extension should return — `Request` or `Response`.
 
 The [`lazy_load_blob`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.LazyLoadBlob.html) is the payload for the WebSocket message.
 
@@ -69,7 +70,7 @@ pub enum HttpServerAction {
     WebSocketExtPushOutgoing {
         channel_id: u32,
         message_type: WsMessageType,
-        desired_reply_type: Message,
+        desired_reply_type: MessageType,
     },
     /// For communicating with the ext.
     /// Kinode's http_server sends this to the ext after receiving `WebSocketExtPushOutgoing`.
@@ -80,7 +81,7 @@ pub enum HttpServerAction {
     /// * blob as given.
     WebSocketExtPushData {
         id: u64,
-        kinode_message_type: Message,
+        kinode_message_type: MessageType,
         blob: Vec<u8>,
     },
     //...
@@ -89,7 +90,8 @@ pub enum HttpServerAction {
 
 ### The Package
 
-The package is, minimally, a single process that serves as interface between Kinode and the extension. Each extension must come with a corresponding Kinode package. 
+The package is, minimally, a single process that serves as interface between Kinode and the extension.
+Each extension must come with a corresponding Kinode package. 
 
 Specifically, the interface process must:
 1. Bind an extension WebSocket: this will be used to communicate with the extension.
@@ -126,9 +128,9 @@ It is recommended to use the following protocol:
    [MessagePack](https://msgpack.org) is space-efficient and well supported by a variety of languages.
    Structs, dictionaries, arrays, etc. can be (de)serialized in this way.
    The extension must support MessagePack anyways, since the `HttpServerAction::WebSocketExtPushData` is (de)serialized using it.
-2. Set `desired_reply_type` to [`Message::Response`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/enum.Message.html#variant.Response) type.
+2. Set `desired_reply_type` to `MessageType::Response` type.
    Then the extension can indicate its reply is a Response, which will allow your Kinode process to properly route it back to the original requestor.
-3. 'If possible, the original requestor should serialize the `lazy_load_blob`, and the type of `lazy_load_blob` should be defined accordingly.'
+3. If possible, the original requestor should serialize the `lazy_load_blob`, and the type of `lazy_load_blob` should be defined accordingly.
    Then, all the interface process needs to do is `inherit` the `lazy_load_blob` in its `http_server` Request.
    This increases efficiency since it avoids bringing those bytes across the Wasm boundry between the process and the runtime (see more discussion [here](./processes.md#message-structure)).
 
@@ -137,6 +139,7 @@ It is recommended to use the following protocol:
 At a minimum, the interface process must handle:
 
 Table 2: [`HttpServerRequest`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/enum.HttpServerRequest.html) Variants
+
 `HttpServerRequest` variant | Description
 --------------------------- | -----------
 `WebSocketOpen`             | Sent when an extension connects. Provides the `channel_id` of the WebSocket connection, needed to message the extension: store this!
