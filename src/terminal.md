@@ -2,7 +2,7 @@
 
 ## Commands
 
-All commands in the terminal are calling scripts - a special kind of process.
+All commands in the [terminal](https://github.com/kinode-dao/kinode/tree/main/kinode/packages/terminal) are calling scripts - a special kind of process.
 Kinode OS comes pre-loaded with a number of scripts useful for debugging and everyday use.
 These scripts are fully named `<SCRIPT>:terminal:sys` e.g `hi:terminal:sys`, but the distro [aliases](#alias---alias-a-script-name) these to short names, in this case just `hi`, for convenience.
 
