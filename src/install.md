@@ -2,7 +2,7 @@
 
 This section will teach you how to get the Kinode OS core software, required to run a live node.
 After acquiring the software, you can learn how to run it and [Join the Network](./login.md).
-However, if you are just interested in starting development as fast as possible, start with [My First Kinode Application](./my_first_app/chapter_1.md).
+However, if you are just interested in starting development as fast as possible, start with [My First Kinode Application](./build-and-deploy-an-app.md).
 
 If you want to make edits to the Kinode core software, see [Build From Source](#build-from-source).
 

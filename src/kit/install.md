@@ -36,7 +36,7 @@ or for any of the subcommands, e.g.:
 kit new --help
 ```
 
-The first chapter of the [Build and Deploy an App tutorial](../my_first_app/chapter_1.md) shows the `kit` tools in action.
+The first chapter of the [My First Kinode App tutorial](../my_first_app/chapter_1.md) shows the `kit` tools in action.
 
 ## Getting kit
 
