@@ -19,7 +19,8 @@ If the process does not have the capability to make such a request, it will be d
 
 To give a concrete example: the filesystem can read/write, and it has the capabilities for doing so.
 The FS may issue capabilities to processes to read/write to certain drives.
-A process can request to read/write somewhere, and then the FS checks if that process has the required capability. If it does, the FS does the read/write; if not, the request will be denied.
+A process can request to read/write somewhere, and then the FS checks if that process has the required capability.
+If it does, the FS does the read/write; if not, the request will be denied.
 
 [System level capabilities](#startup-capabilities-with-manifestjson) like the above can only be given when a process is first installed.
 
