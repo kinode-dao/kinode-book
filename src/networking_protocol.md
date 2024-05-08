@@ -122,14 +122,13 @@ After this pattern is complete, the connection switches to transport mode and ca
 Every message sent over the connection is a `KernelMessage`, serialized with MessagePack, then encrypted using the keys exchanged in the Noise protocol XX pattern, sent in a single Binary WebSockets message.
 
 ```rust
-/// Note: indicate where to find Address, Rsvp, Message, and LazyLoadBlob type definitions
 struct KernelMessage {
     pub id: u64,
-    pub source: Address,
-    pub target: Address,
+    pub source: [Address](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html),
+    pub target: [Address](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html),
     pub rsvp: Rsvp,
-    pub message: Message,
-    pub lazy_load_blob: Option<LazyLoadBlob>,
+    pub message: [Message](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/enum.Message.html),
+    pub lazy_load_blob: Option<[LazyLoadBlob](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.LazyLoadBlob.html)>,
 }
 ```
 
