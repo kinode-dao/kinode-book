@@ -27,4 +27,4 @@ If a given functionality is public, the Kinode serves HTTP openly to the world; 
 Since direct nodes are expected to be accessible over IP, their HTTP server is likely to work if the bound port is accessible.
 Note that direct nodes will need to do their own IP/DNS configuration, as Kinode doesn't provide any DNS management.
 
-However, Kinode provides indirect nodes for users who don't want to do this config, as indirect nodes are not expected to be accessible over IP.
+However, Kinode provides indirect nodes for users who don't want to do this config, as indirect nodes are not expected to be accessible over IP. For more, see [Domain Resolution](https://book.kinode.org/identity_system.html#domain-resolution).
