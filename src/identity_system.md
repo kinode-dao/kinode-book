@@ -43,5 +43,5 @@ For more information about the architectural specifics of the networking protoco
 The main takeaway for the identity system is that *domain provenance* and *domain resolution* are unified by KNS.
 
 Like .eth for ENS, the KNS domain space is fixed inside the `.os` top-level domain.
-However, we reserve the ability to expand domain availability in the future to domains other than `.os`, and governance of the Kinode protocol will include the ability to manage domain names.
+However, Kinode DAO has the right to manage domains, including domains other than `.os`, so domain availability is likely to expand in the future (subject to governance decisions).
 Eventually, we hope to link various TLDs to existing NFT communities and other identity systems.
