@@ -83,16 +83,16 @@ For your scripts to be usable by the terminal, you must include a `pkg/scripts.j
 The JSON object in `scripts.json` describes the configuration for each script in your package.
 Each top-level key represents the path of the WASM module in your package, usually just `"myscript.wasm"`, `"echo.wasm"`, etc.
 
-The value for each module is an object that specifies the configuration for that particular module.
+Within this JSON object, for each key (WASM module) the value is an object that specifies the configuration for that particular module.
 The object can contain the following fields:
 
 - `root` (Boolean): Indicates whether the script has "root" privileges - meaning whether it gets *every* capability that the terminal has (not necessarily every capability in existence on your machine)
 - `public` (Boolean): Determines if the script is publicly accessible by other processes
 - `requestNetworking` (Boolean): Specifies whether the script will get networking capabilities
 - `requestCapabilities` (Array): An array that lists the capabilities requested by the script. Each element in the array can be either a string or an object. The string represents a `ProcessId` that this script will be able to message. When an object is used, it specifies a different kind of capability from `issuer` with `params` as an arbitrary json object.
-- `grantCapabilities` (Array): An array `ProcessId`s as strings which represent which processes will be able to message this script back
+- `grantCapabilities` (Array): An array of `ProcessId`s as strings which represent which processes will be able to message this script back
 
-Modules may not necessarily use all these fields. For instance, "m.wasm" only uses root, public, and requestNetworking, omitting requestCapabilities and grantCapabilities.
+WASM modules may not necessarily use all these fields. For instance, "m.wasm" only uses root, public, and requestNetworking, omitting requestCapabilities and grantCapabilities.
 
 ### Example
 This is a `scripts.json` that publishes a single script, `hi`, which doesn't receive `root` capabilities, is not `public`, can send messages over the network, will receive the capability to message `net:distro:sys`, and gives `net:distro:sys` the ability to message it back:
