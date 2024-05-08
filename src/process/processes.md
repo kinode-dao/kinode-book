@@ -6,30 +6,32 @@ On Kinode OS, processes are the building blocks for peer-to-peer applications.
 The Kinode runtime handles message-passing between processes, plus the startup and teardown of said processes.
 This section describes the message design as it relates to processes.
 
-Processes have a globally unique identifier, or "address", composed of four elements.
-First, the publisher's node.
-Second, the package name.
-Third, the process identifier.
-Processes spawn with their own identifier: either a developer-selected string or a randomly-generated number as string.
-And finally, the node the process is running on (your node).
+Each process instance has a globally unique identifier, or `Address`, composed of four elements.
+- the publisher's node
+- the package name (not to be confused with `PackageID`)
+- the process name (not to be confused with `ProcessID`). Processes spawn with their own identifier (`process_name`): either a developer-selected string or a randomly-generated number as string.
+- the node the process is running on (your node).
+
+The way these elements compose is the following:
 
 [Package IDs](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/struct.PackageId.html) look like:
-
 ```
-my_cool_software:my_username.os
+[package_name]:[publisher_node]
+my_cool_software:publisher_node.os
 ```
 
 [Process IDs](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.ProcessId.html) look like:
-
 ```
-process_one:my_cool_software:my_username.os
-8513024814:my_cool_software:my_username.os
+[process_name]:[package_name]:[publisher_node]
+process_one:my_cool_software:publisher_node.os
+8513024814:my_cool_software:publisher_node.os
 ```
 
 [Addresses](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) look like:
 
 ```
-some_user.os@process_one:my_cool_software:my_username.os
+[node]:[process_name]:[package_name]:[publisher_node]
+some_user.os@process_one:my_cool_software:publisher_node.os
 ```
 
 Processes are compiled to Wasm.
@@ -109,7 +111,7 @@ Messages, both requests and responses, can contain arbitrary data, which must be
 The structure of a message contains hints about how best to do this:
 
 First, messages contain a field labeled `body`, which holds the actual contents of the message.
-In order to cross the Wasm boundary and be language-agnostic, the `body` field is simply a byte vector.
+In order to cross the [Wasm boundary](https://component-model.bytecodealliance.org/design/why-component-model.html) and be language-agnostic, the `body` field is simply a byte vector.
 To achieve composability between processes, a process should be very clear, in code and documentation, about what it expects in the `body` field and how it gets parsed, usually into a language-level struct or object.
 
 A message also contains a `lazy_load_blob`, another byte vector, used for opaque, arbitrary, or large data.
@@ -176,7 +178,15 @@ There is more discussion of child processes [here](../cookbook/manage_child_proc
 This is a high-level overview of process semantics.
 In practice, processes are combined and shared in **packages**, which are generally synonymous with **apps**.
 
+#### Wasm and Kinode
+
 It's briefly discussed here that processes are compiled to Wasm.
-The details of this are not covered in the Kinode Book, but can be found in the documentation for the [Kinode runtime](https://github.com/kinode-dao/kinode), which uses [Wasmtime](https://wasmtime.dev/), a WebAssembly runtime, to load, execute, and provide an interface for the subset of Wasm processes that are valid Kinode processes.
+The details of this are not covered in the Kinode Book, but can be found in the documentation for the [Kinode runtime](https://github.com/kinode-dao/kinode), which uses [Wasmtime](https://wasmtime.dev/), a WebAssembly runtime, to load, execute, and provide an interface for the subset of Wasm components that are valid Kinode processes.
+
+Wasm runs modules by default, or components, as described [here](https://component-model.bytecodealliance.org/design/why-component-model.html): components are just modules that follow some specific format.
+Kinode processes are Wasm components that have certain imports and exports so they can be run by Kinode OS.
 Pragmatically, processes can be compiled using the [`kit` tools](https://github.com/kinode-dao/kit).
-The long term goal of the Kinode runtime is to use [WASI](https://wasi.dev/) to provide a secure, sandboxed environment for processes to not only make use of the kernel features described in this document, but also to make full use of the entire WebAssembly ecosystem, including the ability to use sandboxed system calls provided by the host via WASI.
+
+
+The long term goal of Kinode is, using [WASI](https://wasi.dev/), to provide a secure, sandboxed environment for Wasm components to make use of the kernel features described in this document. 
+Further, Kinode has a Virtual File System ([VFS](../files.md)) which processes can interact with to access files on a user's machine, and in the future WASI could also expose access to the filesystem for Wasm components directly.
