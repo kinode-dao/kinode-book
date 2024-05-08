@@ -7,7 +7,7 @@ The cost of extensions is that they are not as nicely bundled within the Kinode 
 
 ## What is an Extension?
 
-Extensions are WebSocket clients that connect to a paired Kinode process to extend library, language, or hardware support.
+Extensions are [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) clients that connect to a paired Kinode process to extend library, language, or hardware support.
 
 Kinode processes are [Wasm components](https://component-model.bytecodealliance.org/design/why-component-model.html), which leads to advantages and disadvantages.
 The rest of the book (and in particular the [processes chapter](./processes.md)) discusses the advantages (e.g., integration with the Kinode Request/Response system and the capabilities security model).
@@ -41,18 +41,21 @@ Check out the [examples below](#examples) to see some working extensions.
 The process [binds a WebSocket](#bind-an-extension-websocket), so Kinode acts as the WebSocket server.
 The extension acts as a client, connecting to the WebSocket served by the Kinode process.
 
-The process sends `HttpServerAction::WebSocketExtPushOutgoing` Requests to the `http_server` to communicate with the extension (see the `enum` defined at the bottom of this section).
+The process sends `HttpServerAction::WebSocketExtPushOutgoing` Requests to the `http_server`(look [here](https://book.kinode.org/http_server_and_client.html
+) and [here](https://book.kinode.org/apis/http_server.html)) to communicate with the extension (see the `enum` defined at the bottom of this section).
+
+Table 1: `HttpServerAction::WebSocketExtPushOutgoing` Inputs
 
 Field Name           | Description
 -------------------- | -----------
 `channel_id`         | Given in a WebSocket message after a client connects.
-`message_type`       | The WebSocketMessage type — recommended to be `WsMessageType::Binary`.
-`desired_reply_type` | The Kinode Message type that the extension should return — `Request` or `Response`.
+`message_type`       | The WebSocketMessage type — recommended to be [`WsMessageType::Binary`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/enum.WsMessageType.html).
+`desired_reply_type` | The Kinode `MessageType` type that the extension should return — `Request` or `Response`.
 
-The `lazy_load_blob` is the payload for the WebSocket message.
+The [`lazy_load_blob`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.LazyLoadBlob.html) is the payload for the WebSocket message.
 
 The `http_server` converts the Request into a `HttpServerAction::WebSocketExtPushData`, [MessagePack](https://msgpack.org)s it, and sends it to the extension.
-Specifically, it attaches the Messages `id`, copies the `desired_reply_type` to the `kinode_message_type` field, and copies the `lazy_load_blob` to the `blob` field.
+Specifically, it attaches the Message's `id`, copies the `desired_reply_type` to the `kinode_message_type` field, and copies the `lazy_load_blob` to the `blob` field.
 
 The extension replies with a [MessagePack](https://msgpack.org)ed `HttpServerAction::WebSocketExtPushData`.
 It should copy the `id` and `kinode_message_type` of the message it is serving into those same fields of the reply.
@@ -88,10 +91,14 @@ pub enum HttpServerAction {
 ### The Package
 
 The package is, minimally, a single process that serves as interface between Kinode and the extension.
+Each extension must come with a corresponding Kinode package. 
+
 Specifically, the interface process must:
 1. Bind an extension WebSocket: this will be used to communicate with the extension.
 2. Handle Kinode messages: e.g., Requests to be passed to the extension for processing.
 3. Handle WebSocket messages: these will come from the extension.
+
+'Interface process' will be used interchangeably with 'package' throughout this page.
 
 #### Bind an Extension WebSocket
 
@@ -117,13 +124,13 @@ The [WebSocket protocol section](#the-websocket-protocol) above discusses how to
 Briefly, a `HttpServerAction::WebSocketExtPushOutgoing` Request is sent to the `http_server`, with the payload in the `lazy_load_blob`.
 
 It is recommended to use the following protocol:
-1. Use the `WsMessageType::Binary` WebSocket message type and use MessagePack to (de)serialize your messages.
+1. Use the [`WsMessageType::Binary`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/enum.WsMessageType.html) WebSocket message type and use MessagePack to (de)serialize your messages.
    [MessagePack](https://msgpack.org) is space-efficient and well supported by a variety of languages.
    Structs, dictionaries, arrays, etc. can be (de)serialized in this way.
    The extension must support MessagePack anyways, since the `HttpServerAction::WebSocketExtPushData` is (de)serialized using it.
-2. Set `desired_reply_type` to `MessageType::Response`.
+2. Set `desired_reply_type` to `MessageType::Response` type.
    Then the extension can indicate its reply is a Response, which will allow your Kinode process to properly route it back to the original requestor.
-3. If possible, choose and set your `lazy_load_blob` types such that the original requestor has already serialized it.
+3. If possible, the original requestor should serialize the `lazy_load_blob`, and the type of `lazy_load_blob` should be defined accordingly.
    Then, all the interface process needs to do is `inherit` the `lazy_load_blob` in its `http_server` Request.
    This increases efficiency since it avoids bringing those bytes across the Wasm boundry between the process and the runtime (see more discussion [here](./processes.md#message-structure)).
 
@@ -131,14 +138,16 @@ It is recommended to use the following protocol:
 
 At a minimum, the interface process must handle:
 
+Table 2: [`HttpServerRequest`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/enum.HttpServerRequest.html) Variants
+
 `HttpServerRequest` variant | Description
 --------------------------- | -----------
 `WebSocketOpen`             | Sent when an extension connects. Provides the `channel_id` of the WebSocket connection, needed to message the extension: store this!
 `WebSocketClose`            | Sent when the WebSocket closes. A good time to clean up the old `channel_id`, since it will no longer be used.
-`WebSocketPush`             | The payloads between interface and extension.
+`WebSocketPush`             | Used for sending payloads between interface and extension.
 
 Although the extension will send a `HttpServerAction::WebSocketExtPushData`, the `http_server` converts that into a `HttpServerRequest::WebSocketPush`.
-The payload is then found in the `lazy_load_blob`, which can either be processed in the interface or `inherit`ed and passed back to the original requestor.
+The `lazy_load_blob` then contains the payload from the extension, which can either be processed in the interface or `inherit`ed and passed back to the original requestor process.
 
 ### The Extension
 
