@@ -203,6 +203,5 @@ which should be sent as a Response after the test has completed successfully, an
 
 which should be sent as a Response if the test fails.
 
-In the Rust language, there is a helper macro for failutres in `tester_types.rs`.
-That file can be found in the core `modules/tester/tester_types.rs`.
-The macro is `fail!()`: it automatically sends the Response, filing out the fields, and exits.
+In the Rust language, a helper macro for failures can be found in [`tester_types.rs`](https://github.com/kinode-dao/kinode/blob/main/kinode/packages/tester/tester_types.rs).
+The macro is `fail!()`: it automatically sends the Response as specified above, filing out the fields, and exits.
