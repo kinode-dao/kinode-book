@@ -124,13 +124,15 @@ Every message sent over the connection is a `KernelMessage`, serialized with Mes
 ```rust
 struct KernelMessage {
     pub id: u64,
-    pub source: [Address](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html),
-    pub target: [Address](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html),
+    pub source: Address,
+    pub target: Address,
     pub rsvp: Rsvp,
-    pub message: [Message](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/enum.Message.html),
-    pub lazy_load_blob: Option<[LazyLoadBlob](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.LazyLoadBlob.html)>,
+    pub message: Message,
+    pub lazy_load_blob: Option<LazyLoadBlob>
 }
 ```
+
+See [`Address`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html), [`Rsvp`](https://github.com/kinode-dao/kinode/blob/5504f2a6c1b28eb5102aee9a56d2a278f1e5a2dd/lib/src/core.rs#L891-L894), [`Message`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/enum.Message.html),and [`LazyLoadBlob`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.LazyLoadBlob.html) data types.
 
 #### 3.3. Receiving Messages
 
