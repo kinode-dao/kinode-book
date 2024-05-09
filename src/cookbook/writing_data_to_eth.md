@@ -1,6 +1,6 @@
 # Writing Data to ETH
 
-For this cookbook entry, we will create and deploy a simple `Counter` contract onto a fake local chain, and write a kinode app to interact with it.
+For this cookbook entry, let's create and deploy a simple `Counter` contract onto a fake local chain, and write a kinode app to interact with it.
 
 Using `kit`, create a new project with the `echo` template:
 
@@ -8,7 +8,7 @@ Using `kit`, create a new project with the `echo` template:
 kit new counter --template echo
 ```
 
-We can now create a `contracts` directory within our counter, using `forge init contracts`. If foundry is not installed, it can be installed with:
+Now let's create a `contracts` directory within our counter, using `forge init contracts`. If foundry is not installed, it can be installed with:
 
 ```
 curl -L https://foundry.paradigm.xyz | bash
@@ -33,7 +33,7 @@ contract Counter {
 }
 ```
 
-We can write a simple script to deploy it at a predictable address, create the file `scripts/Deploy.s.sol`:
+You can write a simple script to deploy it at a predictable address, create the file `scripts/Deploy.s.sol`:
 
 ```solidity
 // SPDX-License-Identifier: UNLICENSED
@@ -58,9 +58,15 @@ contract DeployScript is Script {
 }
 ```
 
-Now we boot a fakechain, either with `kit f` which boots one at port 8545 in the background, or manually with `anvil --load-state kinostate.json`.
+Now let's boot a fakechain, either with `kit f` which boots one at port 8545 in the background, or with `kit c`.
 
-Then we can run `forge script --rpc-url http://localhost:8545 script/Deploy.s.sol --broadcast` we'll see a printout that looks something like this:
+Then you can run:
+
+```
+forge script --rpc-url http://localhost:8545 script/Deploy.s.sol --broadcast
+``` 
+
+you'll see a printout that looks something like this:
 
 ```
 == Logs ==
@@ -69,7 +75,7 @@ Then we can run `forge script --rpc-url http://localhost:8545 script/Deploy.s.so
 
 Great! Now let's write the kinode app to interact with it!
 
-We're going to use some functions from the `eth` library in `kinode_process_lib`:
+You're going to use some functions from the `eth` library in `kinode_process_lib`:
 
 ```rust
 use kinode_process_lib::eth;
@@ -107,13 +113,13 @@ sol! {
 }
 ```
 
-Pretty cool huh? We can now do things like define a setNumber() call just like this:
+Pretty cool, you can now do things like define a setNumber() call just like this:
 
 ```rust
 let contract_call = setNumberCall { newNumber: U256::from(58)};
 ```
 
-We'll start with a simple setup to read the current count, and print it out!
+Start with a simple setup to read the current count, and print it out!
 
 ```rust
 use kinode_process_lib::{await_message, call_init, eth::{Address as EthAddress, Provider, TransactionInput, TransactionRequest, U256}, println, Address, Response};
@@ -182,7 +188,8 @@ fn init(our: Address) {
 }
 ```
 
-Now, we'll add the 2 writes that are possible: increment() and setNumber(newNumber). To do this, we'll need to define a wallet, and import a few new crates:
+Now, let's add the 2 writes that are possible: increment() and setNumber(newNumber).
+To do this, you'll need to define a wallet, and import a few new crates:
 
 ```
 alloy-primitives = "0.7.0"
@@ -193,7 +200,7 @@ alloy-network = { git = "https://github.com/alloy-rs/alloy", rev = "cad7935" }
 alloy-rpc-types = { git = "https://github.com/alloy-rs/alloy", rev = "cad7935" }
 ```
 
-We'll also define a simple enum so we can call the program with each of the 3 actions:
+You'll also define a simple enum so you can call the program with each of the 3 actions:
 
 ```rust
 #[derive(Debug, Deserialize, Serialize)]
@@ -204,7 +211,7 @@ pub enum CounterAction {
 }
 ```
 
-When creating a wallet, we can use one of the funded addresses on the anvil fakechain, like so:
+When creating a wallet, you can use one of the funded addresses on the anvil fakechain, like so:
 
 ```rust
 use alloy_consensus::{SignableTransaction, TxEnvelope, TxLegacy};
@@ -255,7 +262,7 @@ First, branching on the enum type `Increment`, let's call the increment() functi
     }
 ```
 
-Note how we do provider.get_transaction_count() to get our current nonce!
+Note how you can do provider.get_transaction_count() to get the current nonce of the account!
 
 Next, let's do the same for setNumber!
 
@@ -291,7 +298,7 @@ Next, let's do the same for setNumber!
     }
 ```
 
-Nice! Putting it all together, we can build and start the package on a fake node (`kit f` if you don't have one running), `kit bs`.
+Nice! Putting it all together, you can build and start the package on a fake node (`kit f` if you don't have one running), `kit bs`.
 
 ```
 fake.dev > m our@counter:counter:template.os '{"SetNumber": 55}'
