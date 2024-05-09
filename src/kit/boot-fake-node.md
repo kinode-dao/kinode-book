@@ -19,7 +19,7 @@ For example, to start two fake nodes, `fake.os` and `fake2.os`:
 kit boot-fake-node
 
 # In a new terminal
-kit boot-fake-node -h /tmp/kinode-fake-node-2 -p 8081 -f fake2.os
+kit boot-fake-node --home /tmp/kinode-fake-node-2 -p 8081 --fake-node-name fake2.os
 
 # Send a message from fake2.os to fake.os
 # In the terminal of fake2.os:
@@ -34,6 +34,7 @@ Fake nodes make development easier.
 A fake node is not connected to the network, but otherwise behaves the same as a live node.
 Fake nodes are connected to each other on your local machine through a network router that passes messages between them.
 Fake nodes also clean up after themselves, so you don't have to worry about state from a previous iterations messing up the current one.
+If you wish to persist a state of a fake node between boots, you can do so with `--persist`.
 Thus, fake nodes are an excellent testing ground during development for fast iteration.
 
 There are some cases where fake nodes are not appropriate.
@@ -43,7 +44,7 @@ Though this lack of connectivity makes them easy to spin up and throw away, the 
 ## Arguments
 
 ```
-$ kit f --help
+$ kit boot-fake-node --help
 Boot a fake node for development
 
 Usage: kit boot-fake-node [OPTIONS]
@@ -79,7 +80,9 @@ Options:
 
 ### `--runtime-path`
 
-Pass to run a local binary or build a local Kinode core repo and use the resulting binary, e.g.
+short: `-r`
+
+Pass to boot a fake node from a local binary or build a local Kinode core repo and use the resulting binary, e.g.
 
 ```
 kit boot-fake-node --runtime-path ~/git/kinode
@@ -91,18 +94,26 @@ Overrides `--version`.
 
 ### `--version`
 
+short: `-v`
+
 Fetch and run a specific version of the binary; defaults to most recent version (here, `0.5.0`).
 Overridden by `--runtime-path`.
 
 ### `--port`
 
+short: `-p`
+
 Run the fake node on this port; defaults to `8080`.
 
 ### `--home`
 
+short: `-h`
+
 Path to place fake node home directory at; defaults to `/tmp/kinode-fake-node`.
 
 ### `--fake-node-name`
+
+short: `-f`
 
 The name of the fake node; defaults to `fake.os`.
 
@@ -129,7 +140,7 @@ The password of the fake node; defaults to `secret`.
 
 ### `--release`
 
-If `--runtime-path` is given, build the runtime for release; default is debug.
+If `--runtime-path` is given, build the runtime for release; default is debug. The tradeoffs between the release and default version are described [here](https://doc.rust-lang.org/book/ch01-03-hello-cargo.html?highlight=release#building-for-release).
 
 ### `--verbosity`
 
