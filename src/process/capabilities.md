@@ -13,10 +13,16 @@ pub struct Capability {
 The kernel abstracts away the process of ensuring that a capability is not forged.
 As a process developer, if a capability comes in on a message or is granted to you by the kernel, you can guarantee that it is legitimate.
 
-Runtime processes, including the kernel itself, the filesystem, and the HTTP client, use capabilities to ensure that only the processes that should be able to access them can do so.
-For example, the filesystem has read/write capabilities that determine whether you can perform those operations on a drive.
+Runtime processes, including the kernel itself, the filesystem, and the HTTP client, issue capabilities to processes. 
+Then, when a request is made by a process, the responder verifies the process's capability. 
+If the process does not have the capability to make such a request, it will be denied.
 
-[System level capabilities](#startup-capabilities-with-manifestjson) like the above can only be given when a process is installed.
+To give a concrete example: the filesystem can read/write, and it has the capabilities for doing so.
+The FS may issue capabilities to processes to read/write to certain drives.
+A process can request to read/write somewhere, and then the FS checks if that process has the required capability.
+If it does, the FS does the read/write; if not, the request will be denied.
+
+[System level capabilities](#startup-capabilities-with-manifestjson) like the above can only be given when a process is first installed.
 
 
 ## Startup Capabilities with `manifest.json`
