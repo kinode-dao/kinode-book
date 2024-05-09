@@ -23,15 +23,16 @@ Currently, `rs`, `py`, and `js` are supported, corresponding to processes writte
 Note that a package may have more than one process and those processes need not be written in the same language.
 
 After compiling each process, it places the output `.wasm` binaries within the `pkg/` directory at the top-level of the given package directory.
-The `pkg/` directory is the one that is zipped and injected into the node by [`kit start-package`](./start-package.md).
-Thus, after `build`ing, the package is ready for `start-package`.
+The `pkg/` directory should then be zipped and injected into the node with [`kit start-package`](./start-package.md).
 
-`kit build` also builds the UI if found in `ui/`.
-There must exist a `ui/package.json` file with `scripts` defined like:
-```
-"build": "tsc && vite build",
-"copy": "mkdir -p ../pkg/ui && rm -rf ../pkg/ui/* && cp -r dist/* ../pkg/ui/",
-"build:copy": "npm run build && npm run copy",
+`kit build` also builds the UI if it is found in `pkg/ui/`.
+There must exist a `ui/package.json` file with a `scripts` object containing the following arguments:
+```json
+"scripts": {
+  "build": "tsc && vite build",
+  "copy": "mkdir -p ../pkg/ui && rm -rf ../pkg/ui/* && cp -r dist/* ../pkg/ui/",
+  "build:copy": "npm run build && npm run copy",
+}
 ```
 
 Additional UI dev info can be found [here](../apis/frontend_development.md).
@@ -40,7 +41,7 @@ To both `build` and `start-package` in one command, use `kit build-start-package
 ## Arguments
 
 ```
-$ kit b --help
+$ kit build --help
 Build a Kinode package
 
 Usage: kit build [OPTIONS] [DIR]
