@@ -12,7 +12,7 @@ or
 kit build
 ```
 
-`kit build` builds each process in the package and places the `.wasm` binaries into the `pkg/` directory for installation.
+`kit build` builds each process in the package and places the `.wasm` binaries into the `pkg/` directory for installation with [`kit start-package`](./start-package.md).
 It automatically detects what language each process is, and builds it appropriately (from amongst the supported `rust`, `python`, and `javascript`).
 
 ## Discussion
