@@ -24,8 +24,10 @@ Since the current major version of both is 0, breaking changes can occur at any 
 Once the major version reaches 1, breaking changes will only occur between major versions.
 As is, developers may have to update their version of process_lib as they update Kinode OS.
 
-Since Kinode apps use the [WebAssembly Component Model](https://component-model.bytecodealliance.org/), they are built on top of a [WIT](https://component-model.bytecodealliance.org/design/wit.html) (Wasm Interface Type) package.
-This interface contains the core types and functions that are available to all Kinode apps, and these are automatically generated in Rust when building a Wasm app.
+Since Kinode apps use the [WebAssembly Component Model](https://component-model.bytecodealliance.org/), they are built on top of a [WIT](https://component-model.bytecodealliance.org/design/wit.html) (Wasm Interface Type) [package](https://github.com/kinode-dao/kinode-wit/blob/master/kinode.wit).
+[`wit-bindgen`](https://github.com/bytecodealliance/wit-bindgen) is used to generate Rust code from a WIT file. 
+The generated code then contains the core types and functions that are available to all Kinode apps.
+
 However, the types themselves are unwieldy to use directly, and runtime modules present APIs that can be drastically simplified by using helper functions and types in the process standard library.
 
 Almost all code examples in this book make use of the process lib. For specific examples of its usage, check out the [docs](https://docs.rs/kinode_process_lib) or just follow the tutorials later in this book.
