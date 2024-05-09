@@ -1,6 +1,6 @@
 # `kit remove-package`
 
-`kit remove-package` removes an installed package from a given node (defaults to `localhost:8080`).
+`kit remove-package` removes an installed package from the given node (defaults to `localhost:8080`).
 
 For example,
 ```

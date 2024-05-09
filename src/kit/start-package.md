@@ -1,6 +1,6 @@
 # `kit start-package`
 
-`kit start-package` installs and starts the indicated package directory (or current working directory) on a given Kinode (at `localhost:8080` by default), e.g.,
+`kit start-package` installs and starts the indicated package directory (or current working directory) on the given Kinode (at `localhost:8080` by default), e.g.,
 
 ```
 kit start-package foo
