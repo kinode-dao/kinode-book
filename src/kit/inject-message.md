@@ -22,7 +22,7 @@ To instead "fire and forget" a message and exit immediately, use the [`--non-blo
 ## Arguments
 
 ```
-$ kit i --help
+$ kit inject-message --help
 Inject a message to a running Kinode
 
 Usage: kit inject-message [OPTIONS] <PROCESS> <BODY_JSON>
@@ -68,7 +68,8 @@ E.g.
 kit inject-message foo:foo:template.os '{"Send": {"target": "fake.os", "message": "wow, it works!"}}' --node fake2.os
 ```
 
-sent to the port running `fake.os` will forward the message from `fake.os`s HTTP server to `fake2@foo:foo:template.os`.
+sent to the port running `fake.os`.
+It will forward the message from `fake.os`s HTTP server to `fake2@foo:foo:template.os`.
 
 ### `--blob`
 
