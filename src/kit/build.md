@@ -23,7 +23,25 @@ Currently, `rs`, `py`, and `js` are supported, corresponding to processes writte
 Note that a package may have more than one process and those processes need not be written in the same language.
 
 After compiling each process, it places the output `.wasm` binaries within the `pkg/` directory at the top-level of the given package directory.
-The `pkg/` directory should then be zipped and injected into the node with [`kit start-package`](./start-package.md).
+Here is an example of what a folder structure can look like after using `kit build`:
+
+```
+rustchat
+├── Cargo.lock
+├── Cargo.toml
+├── metadata.json
+├── pkg
+│   ├── manifest.json
+│   ├── rustchat.wasm
+│   ├── scripts.json
+│   └── send.wasm
+├── rustchat
+│   └── ...
+└── send
+    └── ...
+```
+
+The `pkg/` directory can then be zipped and injected into the node with [`kit start-package`](./start-package.md).
 
 `kit build` also builds the UI if it is found in `pkg/ui/`.
 There must exist a `ui/package.json` file with a `scripts` object containing the following arguments:
