@@ -43,8 +43,3 @@ let test_file = create_file(&format("{}/test.txt", &drive_path))?;
 let text = b"hello world!"
 file.write(&text)?;
 ```
-
-## References
-
-- [VFS API](./apis/vfs.md)
-- [std::fs API](https://doc.rust-lang.org/std/fs/index.html)
