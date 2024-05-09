@@ -140,7 +140,8 @@ The password of the fake node; defaults to `secret`.
 
 ### `--release`
 
-If `--runtime-path` is given, build the runtime for release; default is debug. The tradeoffs between the release and default version are described [here](https://doc.rust-lang.org/book/ch01-03-hello-cargo.html?highlight=release#building-for-release).
+If `--runtime-path` is given, build the runtime for release; default is debug.
+The tradeoffs between the release and default version are described [here](https://doc.rust-lang.org/book/ch01-03-hello-cargo.html?highlight=release#building-for-release).
 
 ### `--verbosity`
 

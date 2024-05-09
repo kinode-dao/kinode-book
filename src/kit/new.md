@@ -18,19 +18,19 @@ kit new my_rust_chat
 kit new my_rust_chat_with_ui --ui
 
 # Create fibonacci in python
-kit new my_py_fib -l python -t fibonacci
+kit new my_py_fib --language python --template fibonacci
 ```
 
 ## Discussion
 
 You can create a variety of templates using `kit new`.
 Currently, three languages are supported: `rust` (the default), `python`, and `javascript`.
-Two templates are currently supported: `chat`, a simple chat application, and `fibonacci`, which computes Fibonacci numbers.
+Two templates are currently supported: `chat`, a simple chat application; and `fibonacci`, which computes Fibonacci numbers.
 In addition, some subset of these templates also have a UI-enabled version.
 
-The following table describes the matrix of ["Exists/Has UI-enabled version"](#existshas-ui-enabled-vesion) for each template/language combination:
-
 ### Exists/Has UI-enabled vesion
+
+The following table describes specifies whether a template "Exists/Has UI-enabled version" for each language/template combination:
 
 Language     | `chat`  | `echo` | `fibonacci` | `file_transfer`
 ------------ | ------- | ------ | ----------- | ---------------
@@ -41,7 +41,7 @@ Language     | `chat`  | `echo` | `fibonacci` | `file_transfer`
 ## Arguments
 
 ```
-$ kit n --help
+$ kit new --help
 Create a Kinode template package
 
 Usage: kit new [OPTIONS] <DIR>
@@ -60,8 +60,8 @@ Options:
 
 ### Positional arg: `DIR`
 
-Where to create the template package.
-The package name is set to this by default if not supplied by `--package`.
+Directory where to create the template package.
+By default the package name is set to the name specified here, if not supplied by `--package`.
 
 ### `--package`
 
@@ -76,12 +76,12 @@ Must be URL-safe.
 ### `--language`
 
 Template language; defaults to `rust`.
-Currently support `rust`, `python`, and `javascript`.
+Currently supports `rust`, `python`, and `javascript`.
 
 ### `--template`
 
 Which template to create; defaults to `chat`.
-Currently have `chat`, a simple chat application, `echo`, an application that prints and responds with the received message, and `fibonacci`, a naive fibonacci-number-computer.
+Currently have `chat`, a simple chat application; `echo`, an application that prints and responds with the received message; and `fibonacci`, a naive fibonacci-number-computer.
 
 ### `--ui`
 
