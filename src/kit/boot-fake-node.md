@@ -1,6 +1,6 @@
 # `kit boot-fake-node`
 
-`kit boot-fake-node` starts a "fake" (i.e. not connected to the live network) node, e.g.,
+`kit boot-fake-node` starts a "fake" node connected to a "fake" chain (i.e. not connected to the live network) , e.g.,
 
 ```
 kit boot-fake-node
@@ -9,21 +9,23 @@ kit boot-fake-node
 By default, `boot-fake-node` fetches a prebuilt binary and launches the node using it.
 Alternatively, `boot-fake-node` can use a local binary or build a local Kinode core repo and use the resulting binary.
 
+It also boots a fake chain with anvil in the background (see [kit chain](../kit/chain.md)). This comes preseeded with KNS & app_store contracts, that fake nodes use to index each others networking info.
+
 ## Example Usage
 
 You can start a network of fake nodes that can communicate with each other (but not the live network).
 You'll need to start a new terminal for each fake node.
-For example, to start two fake nodes, `fake.os` and `fake2.os`:
+For example, to start two fake nodes, `fakedev` and `fake2.dev`:
 
 ```
 kit boot-fake-node
 
 # In a new terminal
-kit boot-fake-node -h /tmp/kinode-fake-node-2 -p 8081 -f fake2.os
+kit boot-fake-node -f fake2.dev -p 8081 -h /tmp/kinode-fake-node-2
 
-# Send a message from fake2.os to fake.os
-# In the terminal of fake2.os:
-hi fake.os hello!
+# Send a message from fake2.dev to fake.dev
+# In the terminal of fake2.dev:
+hi fake.dev hello!
 
 # You should see "hello!" in the first node's terminal
 ```
@@ -59,8 +61,8 @@ Options:
           Where to place the home directory for the fake node [default: /tmp/kinode-fake-node]
   -f, --fake-node-name <NODE_NAME>
           Name for fake node [default: fake.os]
-      --network-router-port <NETWORK_ROUTER_PORT>
-          The port to run the network router on (or to connect to) [default: 9001]
+  -c, --fakechain-port <FAKECHAIN_PORT>
+          The port to run the fakechain on (or to connect to) [default: 8545]
       --rpc <RPC_ENDPOINT>
           Ethereum RPC endpoint (wss://)
       --testnet
@@ -106,10 +108,10 @@ Path to place fake node home directory at; defaults to `/tmp/kinode-fake-node`.
 
 The name of the fake node; defaults to `fake.os`.
 
-### `--network-router-port`
+### `--fakechain-port`
 
-Run the fake node network router on this port; defaults to `9001`.
-Additional fake nodes must point to the same port to connect to the fake node network.
+Run the anvil chain on this port; defaults to `8545`.
+Additional fake nodes must point to the same port to connect to the chain.
 
 ### `--rpc`
 
