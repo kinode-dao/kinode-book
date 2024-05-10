@@ -78,7 +78,7 @@ It is exhaustively defined [here](https://doc.rust-lang.org/cargo/reference/mani
 The `src/` directory is where the code for the process lives.
 
 Also within the package directory is a `pkg/` directory.
-The `pkg/` directory contains two files, `manifest.json` and `metadata.json`, that specify information the Kinode needs to run the package, which will be enumerated below.
+The `pkg/` dirctory contains two files, `manifest.json`, which specifes information the Kinode needs to run the package, and `scripts.json`.
 The `pkg/` directory is also where `.wasm` binaries will be deposited by [`kit build`](#building-the-package).
 The files in the `pkg/` directory are injected into the Kinode with [`kit start-package`](#starting-the-package).
 
@@ -126,8 +126,8 @@ Key                      | Value Type                                           
 `"process_wasm_path"`    | String                                                                                         | The path to the process
 `"on_exit"`              | String (`"None"` or `"Restart"`) or Object (covered [elsewhere](./chapter_2.md#aside-on_exit)) | What to do in case the process exits
 `"request_networking"`   | Boolean                                                                                        | Whether to ask for networking capabilities from kernel
-`"request_capabilities"` | Array of Strings or Objects                                                                    | Strings are process IDs to request messaging capabilties from; Objects have a `"process"` field (process ID to request from) and a `"params"` field (capability to request)
-`"grant_capabilities"`   | Array of Strings or Objects                                                                    | Strings are process IDs to grant messaging capabilties to; Objects have a `"process"` field (process ID to grant to) and a `"params"` field (capability to grant)
+`"request_capabilities"` | Array of Strings or Objects                                                                    | Strings are `processID`s to request messaging capabilties from; Objects have a `"process"` field (`processID` to request from) and a `"params"` field (capability to request)
+`"grant_capabilities"`   | Array of Strings or Objects                                                                    | Strings are `processIDs` to grant messaging capabilties to; Objects have a `"process"` field (`processID` to grant to) and a `"params"` field (capability to grant)
 `"public"`               | Boolean                                                                                        | Whether to allow any process to message us
 
 ### `metadata.json`
@@ -156,21 +156,21 @@ $ cat my_chat_app/metadata.json
     "animation_url": ""
 }
 ```
-Here, the `publisher` is some default value, but for a real package, this field should contain the KNS id of the publishing node.
+Here, the `publisher` is some default value, but for a real package, this field should contain the KNS ID of the publishing node.
 The `publisher` can also be set with a `kit new --publisher` flag.
-The rest of these fields are not required for development, but become important when publishing a package with the `app_store`.
+The rest of these fields are not required for development, but become important when publishing a package with the [`app_store`](https://github.com/kinode-dao/kinode/tree/main/kinode/packages/app_store).
 
-As an aside: each process has a unique process ID, used to address messages to that process, that looks like
+As an aside: each process has a unique `processID`, used to address messages to that process, that looks like
 
 ```
 <process_name>:<package_name>:<publisher>
 ```
 
-You can read more about process IDs [here](../process/processes.md#overview).
+You can read more about `processID`s [here](../process/processes.md#overview).
 
 ## Building the Package
 
-To build the package, use the `kit build` tool.
+To build the package, use the [`kit build`](../kit/build.md#) tool.
 
 This tool accepts an optional directory path as the first argument, or, if none is provided, attempts to build the current working directory.
 As such, either of the following will work:
@@ -190,7 +190,7 @@ kit build
 
 Often, it is optimal to develop on a fake node.
 Fake nodes are simple to set up, easy to restart if broken, and mocked networking makes development testing very straightforward.
-To boot a fake Kinode for development purposes, use the `kit boot-fake-node` tool.
+To boot a fake Kinode for development purposes, use the [`kit boot-fake-node` tool](../kit/boot-fake-node.md).
 
 `kit boot-fake-node` downloads the OS- and architecture-appropriate Kinode core binary and runs it without connecting to the live network.
 Instead, it connects to a mocked local network, allowing different fake nodes on the same machine to communicate with each other.
@@ -221,9 +221,11 @@ kit boot-fake-node --runtime-path ~/path/to/kinode
 
 where `~/path/to/kinode` must be replaced with a path to the Kinode core repo.
 
+Note that your node will be named `fake.dev`, as opposed to `fake.os`. The `.dev` suffix is used for development nodes.
+
 ## Optional: Starting a Real Kinode
 
-Alternatively, development sometimes calls for a real node, which has access to the actual Kinode network and its providers, such as integrated LLMs.
+Alternatively, development sometimes calls for a real node, which has access to the actual Kinode network and its providers.
 
 To develop on a real Kinode, connect to the network and follow the instructions to [setup a Kinode](../install.md).
 
@@ -252,7 +254,7 @@ or, if you are already in the correct package directory:
 kit start-package -p 8080
 ```
 
-where here the port provided following `-p` must match the port bound by the node or fake node (see discussion [above](#booting-a-fake-kinode-node)).
+where here the port provided following `-p` must match the port bound by the node or fake node (see discussion [above](#booting-a-fake-kinode)).
 
 The node's terminal should display something like
 
@@ -267,7 +269,7 @@ Congratulations: you've now built and installed your first application on Kinode
 To test out the functionality of `my_chat_app`, spin up another fake node to chat with in a new terminal:
 
 ```bash
-kit boot-fake-node -h /tmp/kinode-fake-node-2 -p 8081 -f fake2.os
+kit boot-fake-node -h /tmp/kinode-fake-node-2 -p 8081 -f fake2
 ```
 
 The fake nodes communicate over a mocked local network.
@@ -287,20 +289,20 @@ kit start-package -p 8081
 To send a chat message from the first node, run the following in its terminal:
 
 ```
-m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.os", "message": "hello world"}}'
+m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.dev", "message": "hello world"}}'
 ```
 
 and replying, from the other terminal:
 
 ```
-m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.os", "message": "wow, it works!"}}'
+m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.dev", "message": "wow, it works!"}}'
 ```
 
 Messages can also be injected from the outside.
 From a bash terminal, use `kit inject-message`, like so:
 
 ```bash
-kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.os", "message": "hello from the outside world"}}'
-kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.os", "message": "replying from fake2.os using first method..."}}' --node fake2.os
-kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.os", "message": "and second!"}}' -p 8081
+kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.dev", "message": "hello from the outside world"}}'
+kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.dev", "message": "replying from fake2.dev using first method..."}}' --node fake2.dev
+kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.dev", "message": "and second!"}}' -p 8081
 ```
