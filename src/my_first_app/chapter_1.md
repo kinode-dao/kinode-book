@@ -53,19 +53,21 @@ Kinode packages are sets of one or more Kinode [processes](../process/processes.
 A Kinode package is represented in Unix as a directory that has a `pkg/` directory within.
 Each process within the package is its own directory.
 By default, the `kit new` command creates a simple, one-process package, a chat app.
-Other templates, including a Python template and a UI-enabled template can be used by passing different flags to `kit new` (see `kit new --help`).
+Other templates, including a Python template and a UI-enabled template can be used by passing [different flags to `kit new`](../kit/new.html#discussion).
 The default template looks like:
 
 ```bash
 $ tree my_chat_app
 my_chat_app
-├── metadata.json
-├── my_chat_app
-│   ├── Cargo.toml
-│   └── src
-│       └── lib.rs
-└── pkg
-    └──  manifest.json
+    ├── Cargo.toml
+    ├── metadata.json
+    ├── my_chat_app
+    │   ├── Cargo.toml
+    │   └── src
+    │       └── lib.rs
+    └── pkg
+        ├── manifest.json
+        └── scripts.json
 ```
 
 The `my_chat_app/` package here contains one process, also named `my_chat_app/`.
