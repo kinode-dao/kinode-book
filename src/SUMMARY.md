@@ -25,6 +25,7 @@
   - [`new`](./kit/new.md)
   - [`build`](./kit/build.md)
   - [`start-package`](./kit/start-package.md)
+  - [`build-start-package`](./kit/build-start-package.md)
   - [`remove-package`](./kit/remove-package.md)
   - [`dev-ui`](./kit/dev-ui.md)
   - [`inject-message`](./kit/inject-message.md)
