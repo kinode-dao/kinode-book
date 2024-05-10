@@ -49,7 +49,7 @@ Path to [`.toml`](https://toml.io/en/) file specifying tests to run; defaults to
 ## `tests.toml`
 
 The testing protocol is specified by a `.toml` file.
-We will be referring to [`tests.toml`](https://github.com/kinode-dao/core_tests/blob/master/tests.toml) as an example, from [core tests](https://github.com/kinode-dao/core_tests).
+[`tests.toml`](https://github.com/kinode-dao/core_tests/blob/master/tests.toml), from [core tests](https://github.com/kinode-dao/core_tests), will be used as an example.
 
 The top-level of `tests.toml` consists of three fields:
 
@@ -142,7 +142,6 @@ Key                 | Value Type     | Value Description
 `fake_node_name`    | String         | Name of fake node
 `password`          | String or Null | Password of fake node (default: `"secret"`)
 `rpc`               | String or Null | [`wss://` URI of Ethereum RPC](../login.md#starting-the-kinode-node)
-`is_testnet`        | Boolean        | Whether to connect to Optimism on Sepolia (`false` -> Optimism mainnet)
 `runtime_verbosity` | Integer >= 0   | The verbosity level to start the runtime with; higher is more verbose (default: `0`)
 
 For example:
@@ -152,14 +151,12 @@ For example:
 port = 8080
 home = "home/first"
 fake_node_name = "first.os"
-is_testnet = true
 runtime_verbosity = 0
 
 [[tests.nodes]]
 port = 8081
 home = "home/second"
 fake_node_name = "second.os"
-is_testnet = true
 runtime_verbosity = 0
 ```
 

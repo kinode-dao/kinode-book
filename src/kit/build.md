@@ -23,7 +23,7 @@ Currently, `rs`, `py`, and `js` are supported, corresponding to processes writte
 Note that a package may have more than one process and those processes need not be written in the same language.
 
 After compiling each process, it places the output `.wasm` binaries within the `pkg/` directory at the top-level of the given package directory.
-Here is an example of what a folder structure can look like after using `kit build`:
+Here is an example of what a package directory will look like after using `kit build`:
 
 ```
 rustchat

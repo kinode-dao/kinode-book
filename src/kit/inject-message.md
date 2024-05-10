@@ -62,14 +62,12 @@ Can be either localhost or remote.
 ### `--node`
 
 Node to target (i.e. the node portion of the address).
-E.g.
 
-```bash
+E.g., the following, sent to the port running `fake.os`, will be forwarded from `fake.os`'s HTTP server to `fake2@foo:foo:template.os`:
+
+``` bash
 kit inject-message foo:foo:template.os '{"Send": {"target": "fake.os", "message": "wow, it works!"}}' --node fake2.os
 ```
-
-sent to the port running `fake.os`.
-It will forward the message from `fake.os`s HTTP server to `fake2@foo:foo:template.os`.
 
 ### `--blob`
 

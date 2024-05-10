@@ -2,7 +2,7 @@
 
 
 These documents describe some ways you can use these tools, but do not attempt to be completely exhaustive.
-You are encouraged to make use of the `--help` flag, which can be used for top-level `kit` commands:
+You are encouraged to make use of the `--help` flag, which can be used for the top-level `kit` command:
 
 ```
 $ kit --help

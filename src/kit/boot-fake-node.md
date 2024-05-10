@@ -34,7 +34,7 @@ Fake nodes make development easier.
 A fake node is not connected to the network, but otherwise behaves the same as a live node.
 Fake nodes are connected to each other on your local machine through a network router that passes messages between them.
 Fake nodes also clean up after themselves, so you don't have to worry about state from a previous iterations messing up the current one.
-If you wish to persist a state of a fake node between boots, you can do so with `--persist`.
+If you wish to persist the state of a fake node between boots, you can do so with `--persist`.
 Thus, fake nodes are an excellent testing ground during development for fast iteration.
 
 There are some cases where fake nodes are not appropriate.

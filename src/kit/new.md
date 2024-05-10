@@ -25,12 +25,12 @@ kit new my_py_fib --language python --template fibonacci
 
 You can create a variety of templates using `kit new`.
 Currently, three languages are supported: `rust` (the default), `python`, and `javascript`.
-Two templates are currently supported: `chat`, a simple chat application; and `fibonacci`, which computes Fibonacci numbers.
+Four templates are currently supported, as described in the [following section](./new.html#existshas-ui-enabled-version).
 In addition, some subset of these templates also have a UI-enabled version.
 
-### Exists/Has UI-enabled vesion
+### Exists/Has UI-enabled version
 
-The following table describes specifies whether a template "Exists/Has UI-enabled version" for each language/template combination:
+The following table specifies whether a template "Exists/Has UI-enabled version" for each language/template combination:
 
 Language     | `chat`  | `echo` | `fibonacci` | `file_transfer`
 ------------ | ------- | ------ | ----------- | ---------------
@@ -60,7 +60,7 @@ Options:
 
 ### Positional arg: `DIR`
 
-Directory where to create the template package.
+Create the template package in this directory.
 By default the package name is set to the name specified here, if not supplied by `--package`.
 
 ### `--package`
@@ -81,7 +81,7 @@ Currently supports `rust`, `python`, and `javascript`.
 ### `--template`
 
 Which template to create; defaults to `chat`.
-Currently have `chat`, a simple chat application; `echo`, an application that prints and responds with the received message; and `fibonacci`, a naive fibonacci-number-computer.
+Options are outlined in [Exists/Has UI-enabled version](./new.html#existshas-ui-enabled-version).
 
 ### `--ui`
 
