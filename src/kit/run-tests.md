@@ -49,7 +49,7 @@ Path to [`.toml`](https://toml.io/en/) file specifying tests to run; defaults to
 ## `tests.toml`
 
 The testing protocol is specified by a `.toml` file.
-We will be referring to `tests.toml` as an example, from [core tests]().
+We will be referring to [`tests.toml`](https://github.com/kinode-dao/core_tests/blob/master/tests.toml) as an example, from [core tests](https://github.com/kinode-dao/core_tests).
 
 The top-level of `tests.toml` consists of three fields:
 
