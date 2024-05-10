@@ -21,7 +21,7 @@ cargo install --git https://github.com/kinode-dao/kit
 kit boot-fake-node
 
 ## Second new terminal:
-kit boot-fake-node --home /tmp/kinode-fake-node-2 --port 8081 --fake-node-name fake2.os
+kit boot-fake-node --home /tmp/kinode-fake-node-2 --port 8081 --fake-node-name fake2
 
 # Back in the original terminal that is not running a fake node:
 ## Create and build a chat app from a template:
@@ -33,16 +33,16 @@ kit start-package my_chat_app
 kit start-package my_chat_app --port 8081
 
 ## Chat between the nodes:
-kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.os", "message": "hello from the outside world"}}'
-kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.os", "message": "replying from fake2.os using first method..."}}' --node fake2.os
-kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.os", "message": "and second!"}}' -p 8081
+kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.dev", "message": "hello from the outside world"}}'
+kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.dev", "message": "replying from fake2.dev using first method..."}}' --node fake2.dev
+kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.dev", "message": "and second!"}}' -p 8081
 
 # Or, from the terminal running one of the fake nodes:
 ## First fake node terminal:
-m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.os", "message": "hello world"}}'
+m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.dev", "message": "hello world"}}'
 
 ## Second fake node terminal:
-m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.os", "message": "wow, it works!"}}'
+m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.dev", "message": "wow, it works!"}}'
 ```
 
 ## Next steps
