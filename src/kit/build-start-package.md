@@ -14,7 +14,7 @@ kit build-start-package
 
 ## Discussion
 
-`kit build-start-package` runs `kit build` followed by `kit start-package`.
+`kit build-start-package` runs [`kit build`](./build.md) followed by [`kit start-package`](./start-package.md).
 
 ## Arguments
 
@@ -73,3 +73,5 @@ short: `-s`
 Don't check for dependencies.
 
 ### `--features`
+
+Build the package with the given [cargo features](https://doc.rust-lang.org/cargo/reference/features.html).
