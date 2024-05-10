@@ -1,5 +1,7 @@
 # Terminal
 
+The [terminal syntax](https://github.com/kinode-dao/kinode?tab=readme-ov-file#terminal-syntax) is specified in the main Kinode repository.
+
 ## Commands
 
 All commands in the [terminal](https://github.com/kinode-dao/kinode/tree/main/kinode/packages/terminal) are calling scripts - a special kind of process.
