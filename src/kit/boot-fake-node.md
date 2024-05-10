@@ -38,8 +38,8 @@ If you wish to persist a state of a fake node between boots, you can do so with 
 Thus, fake nodes are an excellent testing ground during development for fast iteration.
 
 There are some cases where fake nodes are not appropriate.
-The weakness of fake nodes is also their strength: they are not connected to the live network.
-Though this lack of connectivity makes them easy to spin up and throw away, the downside is no access to services on the network, like remote LLMs.
+The weakness of fake nodes is also their strength: they are not connected to the live Kinode network.
+Though this lack of connectivity makes them easy to spin up and throw away, the downside is no access to services on the network which live Kinodes may provide.
 
 ## Arguments
 
@@ -64,8 +64,6 @@ Options:
           The port to run the network router on (or to connect to) [default: 9001]
       --rpc <RPC_ENDPOINT>
           Ethereum RPC endpoint (wss://)
-      --testnet
-          If set, use Sepolia testnet
       --persist
           If set, do not delete node home after exit
       --password <PASSWORD>
@@ -96,7 +94,7 @@ Overrides `--version`.
 
 short: `-v`
 
-Fetch and run a specific version of the binary; defaults to most recent version (here, `0.5.0`).
+Fetch and run a specific version of the binary; defaults to most recent version.
 Overridden by `--runtime-path`.
 
 ### `--port`
@@ -126,17 +124,25 @@ Additional fake nodes must point to the same port to connect to the fake node ne
 
 The Ethereum RPC endpoint to use, if desired.
 
-### `--testnet`
-
-Connect to the Sepolia testnet rather than the Optimism mainnet.
-
 ### `--persist`
 
 Persist the node home directory after exit, rather than cleaning it up.
 
+Example usage:
+
+``` bash
+kit boot-fake-node --persist --home ./my-fake-node
+```
+
+After shutting down the node, to run it again:
+
+```bash
+kit boot-fake-node --home ./my-fake-node
+```
+
 ### `--password`
 
-The password of the fake node; defaults to `secret`.
+The password of the fake node; defaults to "`secret`".
 
 ### `--release`
 
@@ -145,4 +151,4 @@ The tradeoffs between the release and default version are described [here](https
 
 ### `--verbosity`
 
-Set the verbosity of the node; higher is more verbose; default is `0`.
+Set the verbosity of the node; higher is more verbose; default is `0`, max is `3`.
