@@ -13,6 +13,8 @@ The last chapter explained packages, the package manifest, and metadata.
 Every package contains one or more processes, which are the actual Wasm programs that will run on a node.
 In order to compile properly to the Kinode environment, every process must generate the WIT bindings for the `process` "world".
 
+From `/my_chat_app/src/lib.rs` in our `my_chat_app` package:
+
 ```rust
 wit_bindgen::generate!({
     path: "wit",
@@ -41,7 +43,7 @@ fn my_init_fn(our: Address) {
 ```
 
 Every Kinode process written in Rust will need code that does the same thing as the above.
-The [`Address` parameter](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) tells our process what its globally-unique name is.
+The globally-unique name of each process is found in the [`Address` parameter](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html).
 
 Let's fill out the init function with code that will stop it from exiting immediately.
 Here's an infinite loop that will wait for a message and then print it out.
