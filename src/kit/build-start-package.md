@@ -45,25 +45,33 @@ The package directory to build, install and start on the node; defaults to the c
 
 ### `--port`
 
+short: `-p`
+
 For nodes running on localhost, the port of the node; defaults to `8080`.
 `--port` is overridden by `--url` if both are supplied.
 
 ### `--url`
 
+short: `-u`
+
 The URL the node is hosted at.
 Can be either localhost or remote.
 `--url` overrides `--port` if both are supplied.
 
+### `--no-ui`
+
+Do not build the web UI for the process.
+Does nothing if passed with `--ui-only`.
 
 ### `--ui-only`
 
 Build ONLY the UI for a package with a UI.
 Otherwise, for a package with a UI, both the package and the UI will be built.
 
-### `--quiet`
-
-Don't print the build stdout/stderr.
-
 ### `--skip-deps-check`
 
+short: `-s`
+
 Don't check for dependencies.
+
+### `--features`
