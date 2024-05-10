@@ -57,7 +57,8 @@ You can find the source for `kit` at [https://github.com/kinode-dao/kit](https:/
 ## Logging
 
 Logs are printed to the terminal and stored, by default, at `/tmp/kinode-kit-cache/logs/log.log`.
-The default logging level is `info`. Other logging levels are: `debug`, `warning` and `error`.
+The default logging level is `info`.
+Other logging levels are: `debug`, `warning` and `error`.
 
 These defaults can be changed by setting environment variables:
 
