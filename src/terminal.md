@@ -94,10 +94,10 @@ The object can contain the following fields:
 - `request_networking` (Boolean): Specifies whether the script will get networking capabilities
 - `request_capabilities` (Array): An array that lists the capabilities requested by the script. Each element in the array can be either a string or an object.
 The string represents a `ProcessId` that this script will be able to message. When an object is used, it specifies a different kind of capability from `issuer` with `params` as an arbitrary json object.
-- `grant_capabilities` (Array): An array of `ProcessId`s as strings which represent which processes will be able to message this script back
+- `grant_capabilities` (Array of strings): An array of `ProcessId`s which represents which processes will be able to send a `Response` back to this script. If this script is public, `grant_capabilities` can stay empty.
 
 Processes may not necessarily use all these fields.
-For instance, "m.wasm" only uses root, public, and requestNetworking, omitting requestCapabilities and grantCapabilities.
+For instance, "m.wasm" only uses root, public, and `request_networking`, omitting `request_capabilities` and `grant_capabilities`.
 
 ### Example
 This is a `scripts.json` that publishes a single script, `hi`, which doesn't receive `root` capabilities, is not `public`, can send messages over the network, will receive the capability to message `net:distro:sys`, and gives `net:distro:sys` the ability to message it back:
