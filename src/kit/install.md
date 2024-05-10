@@ -14,7 +14,7 @@ Commands:
   boot-fake-node       Boot a fake node for development [aliases: f]
   build                Build a Kinode package [aliases: b]
   build-start-package  Build and start a Kinode package [aliases: bs]
-  dev-ui               Start the web UI development server with hot reloading (same as `cd ui && npm i && npm run dev` [aliases: d]
+  dev-ui               Start the web UI development server with hot reloading (same as `cd ui && npm i && npm run dev`) [aliases: d]
   inject-message       Inject a message to a running Kinode [aliases: i]
   new                  Create a Kinode template package [aliases: n]
   remove-package       Remove a running package from a node [aliases: r]
@@ -56,8 +56,8 @@ You can find the source for `kit` at [https://github.com/kinode-dao/kit](https:/
 
 ## Logging
 
-Logs are printed to the screen and stored, by default, at `/tmp/kinode-kit-cache/logs/log.log`.
-The default logging level is `info`.
+Logs are printed to the terminal and stored, by default, at `/tmp/kinode-kit-cache/logs/log.log`.
+The default logging level is `info`. Other logging levels are: `debug`, `warning` and `error`.
 
 These defaults can be changed by setting environment variables:
 
@@ -65,3 +65,9 @@ Environment Variable | Description
 -------------------- | -----------
 `KIT_LOG_PATH`       | Set log path (default `/tmp/kinode-kit-cache/logs/log.log`).
 `RUST_LOG`           | Set log level (default `info`).
+
+For example, in Bash:
+
+```bash
+export RUST_LOG=info
+```
