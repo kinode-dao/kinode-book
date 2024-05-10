@@ -3,7 +3,7 @@
 ## Virtual File System (VFS)
 
 The primary way to access files within your node is through the [VFS API](./apis/vfs.md).
-The VFS API follows [std::fs](https://doc.rust-lang.org/std/fs/index.html) closely, adding some capabilities checks on paths and some combinatory actions.
+The VFS API follows [std::fs](https://doc.rust-lang.org/std/fs/index.html) closely, while also adding some capabilities checks on paths.
 
 VFS files exist in the "/vfs" folder within your home node, and files are grouped by [`package_id`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/struct.PackageId.html).
 For example, part of the VFS might look like:
