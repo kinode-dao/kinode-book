@@ -50,16 +50,22 @@ The message body.
 
 ### `--port`
 
+short: `-p`
+
 For nodes running on localhost, the port of the node; defaults to `8080`.
 `--port` is overridden by `--url` if both are supplied.
 
 ### `--url`
+
+short: `-u`
 
 The URL the node is hosted at.
 Can be either localhost or remote.
 `--url` overrides `--port` if both are supplied.
 
 ### `--node`
+
+short: `-n`
 
 Node to target (i.e. the node portion of the address).
 
@@ -71,9 +77,13 @@ kit inject-message foo:foo:template.os '{"Send": {"target": "fake.os", "message"
 
 ### `--blob`
 
+short: `-b`
+
 Path to file to include as `lazy_load_blob`.
 
 ### `--non-block`
+
+short: `-l`
 
 Don't block waiting for a Response from target process.
 Instead, inject the message and immediately return.

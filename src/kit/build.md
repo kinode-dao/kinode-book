@@ -91,8 +91,12 @@ Otherwise, for a package with a UI, both the package and the UI will be built.
 
 ### `--quiet`
 
+short: `-q`
+
 Don't print the build stdout/stderr.
 
 ### `--skip-deps-check`
+
+short: `-s`
 
 Don't check for dependencies.

@@ -65,20 +65,28 @@ By default the package name is set to the name specified here, if not supplied b
 
 ### `--package`
 
+short: `-a`
+
 Name of the package; defaults to `DIR`.
 Must be URL-safe.
 
 ### `--publisher`
+
+short: `-u`
 
 Name of the publisher; defaults to `template.os`.
 Must be URL-safe.
 
 ### `--language`
 
+short: `-l`
+
 Template language; defaults to `rust`.
 Currently supports `rust`, `python`, and `javascript`.
 
 ### `--template`
+
+short: `-t`
 
 Which template to create; defaults to `chat`.
 Options are outlined in [Exists/Has UI-enabled version](./new.html#existshas-ui-enabled-version).
