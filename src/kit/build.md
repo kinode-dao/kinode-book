@@ -68,6 +68,7 @@ Arguments:
   [DIR]  The package directory to build [default: /home/nick/git/kit]
 
 Options:
+      --no-ui            If set, do NOT build the web UI for the process; no-op if passed with UI_ONLY
       --ui-only          If set, build ONLY the web UI for the process
   -q, --quiet            If set, do not print build stdout/stderr
   -s, --skip-deps-check  If set, do not check for dependencies
@@ -77,6 +78,11 @@ Options:
 ### Optional positional arg: `DIR`
 
 The package directory to build; defaults to the current working directory.
+
+### `--no-ui`
+
+Do not build the web UI for the process.
+Does nothing if passed with `--ui-only`.
 
 ### `--ui-only`
 
