@@ -74,7 +74,8 @@ you'll see a printout that looks something like this:
   Counter deployed at address:  0x610178dA211FEF7D417bC0e6FeD39F05609AD788
 ```
 
-Great! Now you'll write the kinode app to interact with it.
+Great! 
+Now you'll write the kinode app to interact with it.
 
 You're going to use some functions from the `eth` library in `kinode_process_lib`:
 
@@ -84,7 +85,9 @@ use kinode_process_lib::eth;
 
 Also youll'll need to request the capability to message `eth:distro:sys`, so you can add it to the `request_capabilities` field in `pkg/manifest.json`.
 
-Next, you'll need some sort of ABI in order to interact with the contracts. The crate `alloy-sol-types` gives us a solidity macro to either define contracts from JSON, or directly in the rust code. you'll add it to `counter/Cargo.toml`:
+Next, you'll need some sort of ABI in order to interact with the contracts.
+The crate `alloy-sol-types` gives us a solidity macro to either define contracts from JSON, or directly in the rust code.
+You'll add it to `counter/Cargo.toml`:
 
 ```
 alloy-sol-types = "0.7.0"
