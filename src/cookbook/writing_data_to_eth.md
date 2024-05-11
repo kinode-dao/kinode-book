@@ -1,14 +1,15 @@
 # Writing Data to ETH
 
-For this cookbook entry, let's create and deploy a simple `Counter` contract onto a fake local chain, and write a kinode app to interact with it.
+For this cookbook entry, you'll create and deploy a simple `Counter` contract onto a fake local chain, and write a kinode app to interact with it.
 
 Using `kit`, create a new project with the `echo` template:
 
 ```
 kit new counter --template echo
+cd counter
 ```
 
-Now let's create a `contracts` directory within our counter, using `forge init contracts`. If foundry is not installed, it can be installed with:
+Now you can create a `contracts` directory within `counter` using `forge init contracts`. If foundry is not installed, it can be installed with:
 
 ```
 curl -L https://foundry.paradigm.xyz | bash
@@ -58,7 +59,7 @@ contract DeployScript is Script {
 }
 ```
 
-Now let's boot a fakechain, either with `kit f` which boots one at port 8545 in the background, or with `kit c`.
+Now boot a fakechain, either with `kit f` which boots one at port 8545 in the background, or with `kit c`.
 
 Then you can run:
 
@@ -73,7 +74,7 @@ you'll see a printout that looks something like this:
   Counter deployed at address:  0x610178dA211FEF7D417bC0e6FeD39F05609AD788
 ```
 
-Great! Now let's write the kinode app to interact with it!
+Great! Now you'll write the kinode app to interact with it.
 
 You're going to use some functions from the `eth` library in `kinode_process_lib`:
 
@@ -81,9 +82,9 @@ You're going to use some functions from the `eth` library in `kinode_process_lib
 use kinode_process_lib::eth;
 ```
 
-Also we'll need to request the capability to message `eth:distro:sys`, so we can add it to the `request_capabilities` field in `pkg/manifest.json`.
+Also youll'll need to request the capability to message `eth:distro:sys`, so you can add it to the `request_capabilities` field in `pkg/manifest.json`.
 
-Next, we'll need some sort of ABI in order to interact with the contracts. The crate `alloy-sol-types` gives us a solidity macro to either define contracts from JSON, or directly in the rust code. We'll add it to `counter/Cargo.toml`:
+Next, you'll need some sort of ABI in order to interact with the contracts. The crate `alloy-sol-types` gives us a solidity macro to either define contracts from JSON, or directly in the rust code. you'll add it to `counter/Cargo.toml`:
 
 ```
 alloy-sol-types = "0.7.0"
@@ -95,7 +96,7 @@ Now, importing the following types from the crate:
 use alloy_sol_types::{sol, SolCall, SolValue};
 ```
 
-We can do the following:
+You can do the following:
 
 ```rust
 sol! {
@@ -188,7 +189,7 @@ fn init(our: Address) {
 }
 ```
 
-Now, let's add the 2 writes that are possible: increment() and setNumber(newNumber).
+Now add the 2 writes that are possible: increment() and setNumber(newNumber).
 To do this, you'll need to define a wallet, and import a few new crates:
 
 ```
@@ -232,7 +233,7 @@ let wallet =
         .unwrap();
 ```
 
-First, branching on the enum type `Increment`, let's call the increment() function with no arguments:
+First, branching on the enum type `Increment`, call the increment() function with no arguments:
 
 ```rust
     CounterAction::Increment => {
