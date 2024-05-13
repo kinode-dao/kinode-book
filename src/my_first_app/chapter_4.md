@@ -97,6 +97,8 @@ fn handle_hello_message(message: &Message) -> bool {
 }
 ```
 
+### Handling an HTTP Message
+
 Finally, let's define `handle_http_message`.
 ```rust
 fn handle_http_message(our: &Address, message: &Message) {
@@ -151,6 +153,8 @@ Request::to(our).body(body.bytes).send().unwrap();
 
 Putting it all together, you get a process which you can build and start, then use cURL to send Hello and Goodbye requests via HTTP PUTs!
 
+### Requesting Capabilities
+
 Also, remember to request the capability to message `http_server` in `manifest.json`:
 ```json
 ...
@@ -160,7 +164,8 @@ Also, remember to request the capability to message `http_server` in `manifest.j
 ...
 ```
 
-Here's the full code:
+### The Full Code
+
 ```rust
 use serde::{Deserialize, Serialize};
 use kinode_process_lib::{
