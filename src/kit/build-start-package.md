@@ -73,8 +73,7 @@ short: `-s`
 Don't check for dependencies.
 
 ### `--features`
-FEATURES WIP
 Build the package with the given [cargo features](https://doc.rust-lang.org/cargo/reference/features.html).
 
-Features can be used like [so](https://doc.rust-lang.org/cargo/reference/features.html#command-line-feature-options).
-Currently the only system-wide supported feature is `simulation-mode`.
+Features can be used like shown [here](https://doc.rust-lang.org/cargo/reference/features.html#command-line-feature-options).
+Currently the only feature supported system-wide is `simulation-mode`.
