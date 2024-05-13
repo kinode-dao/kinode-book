@@ -70,8 +70,8 @@ Arguments:
 Options:
       --no-ui            If set, do NOT build the web UI for the process; no-op if passed with UI_ONLY
       --ui-only          If set, build ONLY the web UI for the process
-  -q, --quiet            If set, do not print build stdout/stderr
   -s, --skip-deps-check  If set, do not check for dependencies
+      --features <FEATURES>  Pass these comma-delimited feature flags to Rust cargo builds
   -h, --help             Print help
 ```
 
@@ -89,14 +89,15 @@ Does nothing if passed with `--ui-only`.
 Build ONLY the UI for a package with a UI.
 Otherwise, for a package with a UI, both the package and the UI will be built.
 
-### `--quiet`
-
-short: `-q`
-
-Don't print the build stdout/stderr.
-
 ### `--skip-deps-check`
 
 short: `-s`
 
 Don't check for dependencies.
+
+### `--features`
+
+Build the package with the given [cargo features](https://doc.rust-lang.org/cargo/reference/features.html).
+
+Features can be used like shown [here](https://doc.rust-lang.org/cargo/reference/features.html#command-line-feature-options).
+Currently the only feature supported system-wide is `simulation-mode`.
