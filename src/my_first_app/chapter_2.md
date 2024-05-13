@@ -81,8 +81,7 @@ to see this code in the node you set up in the last chapter.
 
 ## Sending a Message
 
-Let's send a message to another process.
-The `Request` type in [process_lib](../process_stdlib/overview.md) will provide all the necessary functionality.
+To send a message to another process, `use` the [`Request`] (https://docs.rs/kinode_process_lib/latest/kinode_process_lib/struct.Request.html) type from the [process_lib](../process_stdlib/overview.md), which will provide all the necessary functionality.
 ```rust
 use kinode_process_lib::{await_message, call_init, println, Address, Request};
 ```
