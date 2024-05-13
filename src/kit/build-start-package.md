@@ -73,6 +73,7 @@ short: `-s`
 Don't check for dependencies.
 
 ### `--features`
+
 Build the package with the given [cargo features](https://doc.rust-lang.org/cargo/reference/features.html).
 
 Features can be used like shown [here](https://doc.rust-lang.org/cargo/reference/features.html#command-line-feature-options).
