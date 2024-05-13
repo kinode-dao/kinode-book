@@ -11,11 +11,11 @@ This section assumes you've completed the steps outlined in [Environment Setup](
 You should also be actively running a Kinode ([live](../login.md) or [fake](./chapter_1.md#booting-a-fake-kinode-node)) such that you can quickly compile and test your code!
 Tight feedback loops when building: very important.
 
-
 ## Starting from Scratch
 
-If you want to hit the ground running, you can take the template code or the [chess tutorial](../chess_app/chess_engine.md) and start hacking away.
+If you want to hit the ground running by yourself, you can take the template code or the [chess tutorial](../chess_app/chess_engine.md) and start hacking away.
 Here, you'll start from scratch and learn about every line of boilerplate.
+Open `src/lib.rs`, clear its contents so it's empty, and code along!
 
 The last section explained packages, the package manifest, and metadata.
 Every package contains one or more processes, which are the actual Wasm programs that will run on a node.
@@ -32,7 +32,7 @@ After generating the bindings, every process must define a `Component` struct an
 This is the entry point for the process, and the `init()` function is the first function called by the Kinode runtime when the process is started.
 
 The definition of the `Component` struct can be done manually, but it's easier to import the [`kinode_process_lib`](../process_stdlib/overview.md) crate (a sort of standard library for Kinode processes written in Rust) and use the `call_init!` macro.
-Note that running the process below [can lead to an infinite loop](#aside-on_exit):
+Note that the process below can be made to perpetually restart and [lead to an infinite loop](#aside-on_exit):
 
 ```rust
 use kinode_process_lib::{call_init, println, Address};
@@ -49,7 +49,7 @@ fn my_init_fn(our: Address) {
 ```
 
 Every Kinode process written in Rust will need code that does the same thing as the above.
-The globally-unique name of each process is found in the [`Address` parameter](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html).
+The [`Address` parameter](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) tells the process what its globally-unique name is.
 
 Let's fill out the init function with code that will stop it from exiting immediately.
 Here's an infinite loop that will wait for a message and then print it out.
@@ -79,15 +79,15 @@ These imports are the necessary "system calls" for talking to other processes an
 
 Run
 ```bash
-kit build your_pkg_name
-kit start-package your_pkg_name -p 8080
+kit build your_pkg_directory
+kit start-package your_pkg_directory -p 8080
 ```
 
 to see this code in the node you set up in the last section.
 
 ## Sending a Message
 
-To send a message to another process, `use` the [`Request`] (https://docs.rs/kinode_process_lib/latest/kinode_process_lib/struct.Request.html) type from the [process_lib](../process_stdlib/overview.md), which will provide all the necessary functionality.
+To send a message to another process, `use` the [`Request`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/struct.Request.html) type from the [process_lib](../process_stdlib/overview.md), which will provide all the necessary functionality.
 ```rust
 use kinode_process_lib::{await_message, call_init, println, Address, Request};
 ```
@@ -145,10 +145,12 @@ However, you'll see the "hello world" message as a byte vector.
 Let's modify our request to expect a response, and our message-handling to send one back, as well as parse the received request into a string.
 
 ```rust
-Request::to(&our)
+Request::new()
+    .target(&our)
     .body(b"hello world")
     .expects_response(5)
     .send()
+    .unwrap();
 ```
 
 The `expects_response` method takes a timeout in seconds.
