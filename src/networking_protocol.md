@@ -145,6 +145,9 @@ Successfully decrypted and deserialized messages should have their `source` fiel
 
 #### 3.4. Closing a Connection
 
+A connection can be intentionally closed by any party, at any time.
+Other causes of connection closure are discussed in this section.
+
 All connection errors must result in closing a connection.
 
 Failure to send a message must be treated as a connection error.
@@ -166,7 +169,7 @@ Messages do not have to expect a response.
 If no response is expected, a networking-level offline or timeout error may still be thrown.
 Local messages will only receive timeout errors if they expect a response.
 
-If a peer is direct, i.e. they have networking information published onchain, determining their offline status is simple: try to create a connection and send a message; it will throw an offline error if this message fails.
+If a peer is direct, i.e. they have networking information published onchain, determining their offline status is simple: try to create a connection and send a message; if the underlying transport protocol experiences any errors while doing so, throw an 'offline' error.
 If a message is not responded to before the timeout counter expires, it will throw a timeout.
 
 If a peer is indirect, i.e. they have routers, multiple attempts must be made before either an offline error is thrown.
