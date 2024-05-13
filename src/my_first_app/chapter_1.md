@@ -1,6 +1,6 @@
 # Environment Setup
 
-In this chapter, you'll walk through setting up a Kinode development environment.
+In this section, you'll walk through setting up a Kinode development environment.
 By the end, you will have created a Kinode application, or package, composed of one or more processes that run on a live Kinode.
 The application will be a simple chat interface: `my_chat_app`.
 

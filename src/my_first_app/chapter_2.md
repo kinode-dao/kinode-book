@@ -1,19 +1,25 @@
 # Sending Some Messages, Using Some Tools
 
-This chapter assumes you've completed the steps outlined in [Chapter 1](./chapter_1.md) to construct your dev environment or otherwise have a basic Kinode app open in your code editor of choice.
+In this section you will learn how to use different parts of a process, how request-response handling works, and other implementation details with regards to messaging.
+The process you will build is simple — it messages itself and responds to itself, printing whenever it gets messages.
+
+Note — the app you will build in Sections 2. through 5. is *not* `my_chat_app`; it is simply a series of examples designed to demonstrate how to use the system's features.
+
+## Requirements
+
+This section assumes you've completed the steps outlined in [Environment Setup](./chapter_1.md) to construct your development environment or otherwise have a basic Kinode app open in your code editor of choice.
 You should also be actively running a Kinode ([live](../login.md) or [fake](./chapter_1.md#booting-a-fake-kinode-node)) such that you can quickly compile and test your code!
 Tight feedback loops when building: very important.
+
 
 ## Starting from Scratch
 
 If you want to hit the ground running, you can take the template code or the [chess tutorial](../chess_app/chess_engine.md) and start hacking away.
 Here, you'll start from scratch and learn about every line of boilerplate.
 
-The last chapter explained packages, the package manifest, and metadata.
+The last section explained packages, the package manifest, and metadata.
 Every package contains one or more processes, which are the actual Wasm programs that will run on a node.
 In order to compile properly to the Kinode environment, every process must generate the WIT bindings for the `process` "world".
-
-From `/my_chat_app/src/lib.rs` in our `my_chat_app` package:
 
 ```rust
 wit_bindgen::generate!({
@@ -77,7 +83,7 @@ kit build your_pkg_name
 kit start-package your_pkg_name -p 8080
 ```
 
-to see this code in the node you set up in the last chapter.
+to see this code in the node you set up in the last section.
 
 ## Sending a Message
 
@@ -95,7 +101,7 @@ Request::new()
     .send();
 ```
 
-Because this process might not have capabilities to message any other (local or remote) processes, just send the message to itself.
+Because this process might not have capabilities to message any other (local or remote) processes, for the purposes of this tutorial, just send the message to itself.
 
 ```rust
 Request::new()
@@ -243,11 +249,11 @@ fn my_init_fn(our: Address) {
 This basic structure can be found in the majority of Kinode processes.
 The other common structure is a thread-like process, that sends and handles a fixed series of messages and then exits.
 
-In the next chapter, we will cover how to turn this very basic request-response pattern into something that can be extensible and composable.
+In the next section, we will cover how to turn this very basic request-response pattern into something that can be extensible and composable.
 
 ## Aside: `on_exit`
 
-As mentioned in the [previous chapter](./chapter_1.md#pkgmanifestjson), one of the fields in the `manifest.json` is `on_exit`.
+As mentioned in the [previous section](./chapter_1.md#pkgmanifestjson), one of the fields in the `manifest.json` is `on_exit`.
 When the process exits, it does one of:
 
 `on_exit` Setting | Behavior When Process Exits
