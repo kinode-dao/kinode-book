@@ -32,7 +32,7 @@
   - [`reset-cache`](./kit/reset-cache.md)
 - [My First Kinode Application](./build-and-deploy-an-app.md)
   - [Environment Setup](./my_first_app/chapter_1.md)
-  - [Sending Some Messages, Using Some Tools](./my_first_app/chapter_2.md)
+  - [Sending and Responding to a Message](./my_first_app/chapter_2.md)
   - [Defining Your Protocol](./my_first_app/chapter_3.md)
   - [Frontend Time](./my_first_app/chapter_4.md)
   - [Sharing with the World](./my_first_app/chapter_5.md)

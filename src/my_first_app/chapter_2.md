@@ -1,4 +1,4 @@
-# Sending Some Messages, Using Some Tools
+# Sending and Responding to a Message
 
 In this section you will learn how to use different parts of a process, how request-response handling works, and other implementation details with regards to messaging.
 The process you will build is simple — it messages itself and responds to itself, printing whenever it gets messages.
@@ -32,7 +32,6 @@ After generating the bindings, every process must define a `Component` struct an
 This is the entry point for the process, and the `init()` function is the first function called by the Kinode runtime when the process is started.
 
 The definition of the `Component` struct can be done manually, but it's easier to import the [`kinode_process_lib`](../process_stdlib/overview.md) crate (a sort of standard library for Kinode processes written in Rust) and use the `call_init!` macro.
-Note that the process below can be made to perpetually restart and [lead to an infinite loop](#aside-on_exit):
 
 ```rust
 use kinode_process_lib::{call_init, println, Address};
@@ -157,6 +156,8 @@ The `expects_response` method takes a timeout in seconds.
 If the timeout is reached, the request will be returned to the process that sent it as an error.
 If you add that to the code above, you'll see the error after 5 seconds in your node's terminal.
 
+## Responding to a Message
+
 Now, let's add some code to handle the request. The `await_message()` function returns a type that looks like this:
 ```rust
 Result<Message, SendError>
@@ -252,21 +253,3 @@ This basic structure can be found in the majority of Kinode processes.
 The other common structure is a thread-like process, that sends and handles a fixed series of messages and then exits.
 
 In the next section, we will cover how to turn this very basic request-response pattern into something that can be extensible and composable.
-
-## Aside: `on_exit`
-
-As mentioned in the [previous section](./chapter_1.md#pkgmanifestjson), one of the fields in the `manifest.json` is `on_exit`.
-When the process exits, it does one of:
-
-`on_exit` Setting | Behavior When Process Exits
------------------ | ---------------------------
-`"None"`          | Do nothing
-`"Restart"`       | Restart the process
-JSON object       | Send the requests described by the JSON object
-
-A process intended to do something once and exit should have `"None"` or a JSON object `on_exit`.
-If it has `"Restart"`, it will repeat in an infinite loop, as referenced [above](#starting-from-scratch).
-
-A process intended to run over a period of time and serve requests and responses will often have `"Restart"` `on_exit` so that, in case of crash, it will start again.
-Alternatively, a JSON object `on_exit` can be used to inform another process of its untimely demise.
-In this way, Kinode processes become quite similar to Erlang processes in that crashing can be [designed into your process to increase reliability](https://ferd.ca/the-zen-of-erlang.html).

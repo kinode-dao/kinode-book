@@ -1,15 +1,22 @@
-# Defining Your Protocol
+# Messaging with Larger Data Types
 
-In the last chapter, you created a simple request-response pattern that uses strings as a `body` field type.
+In this section, you will upgrade your app so that it can handle messages with more elaborate data typs such as `enum`s and `struct`s. Additionally, you will learn why and how to exit out of a process.
+
+## (De)Serialization With Serde
+
+In the last section, you created a simple request-response pattern that uses strings as a `body` field type.
 This is fine for certain limited cases, but in practice, most Kinode processes written in Rust use a `body` type that is serialized and deserialized to bytes using [Serde](https://serde.rs/).
 There are a multitude of libraries that implement Serde's `Serialize` and `Deserialize` traits, and the process developer is responsible for selecting a strategy that is appropriate for their use case.
 
 Some popular options are `bincode` and `serde_json`.
-In this chapter, you will use `serde_json` to serialize your Rust structs to a byte vector of JSON.
+In this section, you will use `serde_json` to serialize your Rust structs to a byte vector of JSON.
+
+### Defining the `body` Type
 
 Our old request looked like this:
 ```rust
-Request::to(&our)
+Request::new()
+    .targer(&our)
     .body(b"hello world")
     .expects_response(5)
     .send();
@@ -44,7 +51,7 @@ impl MyBody {
 }
 ```
 
-Now, when you form requests and response, instead of sticking a string in the `body` field, you can use the new `body` type.
+Now, when you form requests and responses, instead of sticking a string in the `body` field, you can use the new `MyBody` type.
 This comes with a number of benefits:
 
 - You can now use the `body` field to send arbitrary data, not just strings.
@@ -56,6 +63,8 @@ Defining `body` types is just one step towards writing interoperable code.
 It's also critical to document the overall structure of the program along with message `blob`s and `metadata` used, if any.
 Writing interoperable code is necessary for enabling permissionless composability, and Kinode OS aims to make this the default kind of program, unlike the centralized web.
 
+### Handling Messages
+
 First, create a request that uses the new `body` type (and stop expecting a response):
 ```rust
 Request::new()
@@ -66,7 +75,7 @@ Request::new()
 
 Next, edit the way you handle a message in your process to use your new `body` type.
 The process should attempt to parse every message into the `MyBody` enum, handle the two cases, and handle any message that doesn't comport to the type.
-This code goes into the `Ok(message)` case of the `match` statement on `await_message()`:
+This part of code goes into the `Ok(message)` case of the `match` statement on `await_message()`:
 ```rust
 let Ok(body) = MyBody::parse(message.body()) else {
     println!("{our}: received a message with weird `body`!");
@@ -95,6 +104,8 @@ if message.is_request() {
 }
 ```
 
+### Granting Capabilities
+
 Finally, edit your `pkg/manifest.json` to grant the terminal process permission to send messages to this process.
 That way, you can use the terminal to send Hello and Goodbye messages.
 Go into the manifest, and under the process name, edit (or add) the `grant_capabilities` field like so:
@@ -105,6 +116,8 @@ Go into the manifest, and under the process name, edit (or add) the `grant_capab
 ],
 ...
 ```
+
+### Build and Run the Code!
 
 After all this, your code should look like:
 ```rust
@@ -185,7 +198,7 @@ You should be able to build and start your package, then see that initial Hello 
 At this point, you can use the terminal to test your message types!
 
 First, try a hello. Get the address of your process by looking at the "started" printout that came from it in the terminal.
-As a reminder, these values are set in the `metadata.json` and `manifest.json` package files.
+As a reminder, these values (`<your_process>`, `<your_package>`, `<your_publisher>`) can be found in the `metadata.json` and `manifest.json` package files.
 ```bash
 m our@<your_process>:<your_package>:<your_publisher> '{"Hello": "hey there"}'
 ```
@@ -196,8 +209,24 @@ This will cause the process to exit.
 m our@<your_process>:<your_package>:<your_publisher> '"Goodbye"'
 ```
 
-If you try to send another Hello now, nothing will happen, because the process has exited [(assuming you have set `on_exit: "None"`; with `on_exit: "Restart"` it will immediately start up again)](./chapter_2.md#aside-on_exit).
+If you try to send another 'Hello' now, nothing will happen, because the process has exited [(assuming you have set `on_exit: "None"`; with `on_exit: "Restart"` it will immediately start up again)](#aside-on_exit).
 Nice!
 You can use `kit start-package` to try again.
 
-In the next chapter, you'll add some basic HTTP logic to serve a frontend from your simple process.
+## Aside: `on_exit`
+
+As mentioned in the [previous section](./chapter_1.md#pkgmanifestjson), one of the fields in the `manifest.json` is `on_exit`.
+When the process exits, it does one of:
+
+`on_exit` Setting | Behavior When Process Exits
+----------------- | ---------------------------
+`"None"`          | Do nothing
+`"Restart"`       | Restart the process
+JSON object       | Send the requests described by the JSON object
+
+A process intended to do something once and exit should have `"None"` or a JSON object `on_exit`.
+If it has `"Restart"`, it will repeat in an infinite loop.
+
+A process intended to run over a period of time and serve requests and responses will often have `"Restart"` `on_exit` so that, in case of crash, it will start again.
+Alternatively, a JSON object `on_exit` can be used to inform another process of its untimely demise.
+In this way, Kinode processes become quite similar to Erlang processes in that crashing can be [designed into your process to increase reliability](https://ferd.ca/the-zen-of-erlang.html).
