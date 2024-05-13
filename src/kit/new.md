@@ -28,7 +28,7 @@ Currently, three languages are supported: `rust` (the default), `python`, and `j
 Four templates are currently supported, as described in the [following section](./new.html#existshas-ui-enabled-version).
 In addition, some subset of these templates also have a UI-enabled version.
 
-### Exists/Has UI-enabled version
+### Exists/Has UI-enabled Version
 
 The following table specifies whether a template "Exists/Has UI-enabled version" for each language/template combination:
 
@@ -37,6 +37,13 @@ Language     | `chat`  | `echo` | `fibonacci` | `file_transfer`
 `rust`       | yes/yes | yes/no | yes/no      | yes/no
 `python`     | yes/no  | yes/no | yes/no      | no/no
 `javascript` | yes/no  | yes/no | yes/no      | no/no
+
+Brief description of each template:
+
+- `chat`: A simple chat app.
+- `echo`: Echos back any message it receives.
+- `fibonacci`: Computes the n-th Fibonacci number.
+- `file_transfer`: Allows for file transfers between nodes.
 
 ## Arguments
 
