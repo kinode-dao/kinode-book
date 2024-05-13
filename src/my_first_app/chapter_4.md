@@ -1,9 +1,9 @@
 # Frontend Time
 
-After the last chapter, you should have a simple process that responds to two commands from the terminal.
-In this chapter, you'll add some basic HTTP logic to serve a frontend and accept an HTTP PUT request that contains a command.
+After the last section, you should have a simple process that responds to two commands from the terminal.
+In this section, you'll add some basic HTTP logic to serve a frontend and accept an HTTP PUT request that contains a command.
 
-If you're the type of person that prefers to learn by looking at a complete example, check out the [chess frontend chapter](../chess_app/frontend.md) for a fleshed-out example and a link to some frontend code.
+If you're the type of person that prefers to learn by looking at a complete example, check out the [chess frontend section](../chess_app/frontend.md) for a fleshed-out example and a link to some frontend code.
 
 ## Adding HTTP request handling
 
@@ -62,7 +62,7 @@ loop {
 Note that different apps will want to discriminate between incoming messages differently.
 This code doesn't check the `source.node` at all, for example.
 
-The `handle_hello_message` will look just like what was in chapter 3.
+The `handle_hello_message` will look just like what was in [Section 5.3.](./chapter_3.md)
 However, since this logic is no longer inside the main loop, return a boolean to indicate whether or not to exit out of the loop.
 Request handling can be separated out into as many functions is needed to keep the code clean.
 ```rust
@@ -359,4 +359,4 @@ Note that you can now set `authenticated` to `true` in the `/api` binding and th
 This frontend is now fully packaged with the process — there are no more steps!
 Of course, this can be made arbitrarily complex with various frontend frameworks that produce a static build.
 
-In the next and final chapter, learn about the package metadata and how to share this app across the Kinode network.
+In the next and final section, learn about the package metadata and how to share this app across the Kinode network.
