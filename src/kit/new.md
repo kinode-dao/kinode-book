@@ -18,19 +18,19 @@ kit new my_rust_chat
 kit new my_rust_chat_with_ui --ui
 
 # Create fibonacci in python
-kit new my_py_fib -l python -t fibonacci
+kit new my_py_fib --language python --template fibonacci
 ```
 
 ## Discussion
 
 You can create a variety of templates using `kit new`.
 Currently, three languages are supported: `rust` (the default), `python`, and `javascript`.
-Two templates are currently supported: `chat`, a simple chat application, and `fibonacci`, which computes Fibonacci numbers.
+Four templates are currently supported, as described in the [following section](./new.html#existshas-ui-enabled-version).
 In addition, some subset of these templates also have a UI-enabled version.
 
-The following table describes the matrix of ["Exists/Has UI-enabled version"](#existshas-ui-enabled-vesion) for each template/language combination:
+### Exists/Has UI-enabled Version
 
-### Exists/Has UI-enabled vesion
+The following table specifies whether a template "Exists/Has UI-enabled version" for each language/template combination:
 
 Language     | `chat`  | `echo` | `fibonacci` | `file_transfer`
 ------------ | ------- | ------ | ----------- | ---------------
@@ -38,10 +38,17 @@ Language     | `chat`  | `echo` | `fibonacci` | `file_transfer`
 `python`     | yes/no  | yes/no | yes/no      | no/no
 `javascript` | yes/no  | yes/no | yes/no      | no/no
 
+Brief description of each template:
+
+- `chat`: A simple chat app.
+- `echo`: Echos back any message it receives.
+- `fibonacci`: Computes the n-th Fibonacci number.
+- `file_transfer`: Allows for file transfers between nodes.
+
 ## Arguments
 
 ```
-$ kit n --help
+$ kit new --help
 Create a Kinode template package
 
 Usage: kit new [OPTIONS] <DIR>
@@ -60,28 +67,36 @@ Options:
 
 ### Positional arg: `DIR`
 
-Where to create the template package.
-The package name is set to this by default if not supplied by `--package`.
+Create the template package in this directory.
+By default the package name is set to the name specified here, if not supplied by `--package`.
 
 ### `--package`
+
+short: `-a`
 
 Name of the package; defaults to `DIR`.
 Must be URL-safe.
 
 ### `--publisher`
 
+short: `-u`
+
 Name of the publisher; defaults to `template.os`.
 Must be URL-safe.
 
 ### `--language`
 
+short: `-l`
+
 Template language; defaults to `rust`.
-Currently support `rust`, `python`, and `javascript`.
+Currently supports `rust`, `python`, and `javascript`.
 
 ### `--template`
 
+short: `-t`
+
 Which template to create; defaults to `chat`.
-Currently have `chat`, a simple chat application, `echo`, an application that prints and responds with the received message, and `fibonacci`, a naive fibonacci-number-computer.
+Options are outlined in [Exists/Has UI-enabled version](./new.html#existshas-ui-enabled-version).
 
 ### `--ui`
 

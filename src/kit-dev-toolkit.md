@@ -1,6 +1,6 @@
 # kit
 
-`kit` is a tool**kit** to make development on Kinode OS ergonomic.
+[`kit`](https://github.com/kinode-dao/kit) is a CLI tool**kit** to make development on Kinode OS ergonomic.
 
 ## Table of Contents
 
