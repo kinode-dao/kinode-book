@@ -68,11 +68,11 @@ Arguments:
   [DIR]  The package directory to build [default: /home/nick/git/kit]
 
 Options:
-      --no-ui            If set, do NOT build the web UI for the process; no-op if passed with UI_ONLY
-      --ui-only          If set, build ONLY the web UI for the process
-  -s, --skip-deps-check  If set, do not check for dependencies
+      --no-ui                If set, do NOT build the web UI for the process; no-op if passed with UI_ONLY
+      --ui-only              If set, build ONLY the web UI for the process
+  -s, --skip-deps-check      If set, do not check for dependencies
       --features <FEATURES>  Pass these comma-delimited feature flags to Rust cargo builds
-  -h, --help             Print help
+  -h, --help                 Print help
 ```
 
 ### Optional positional arg: `DIR`
