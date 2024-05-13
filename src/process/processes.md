@@ -1,4 +1,4 @@
-# Processes
+# Process Semantics
 
 ### Overview
 
@@ -30,7 +30,7 @@ process_one:my_cool_software:publisher_node.os
 [Addresses](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) look like:
 
 ```
-[node]:[process_name]:[package_name]:[publisher_node]
+[node]@[process_name]:[package_name]:[publisher_node]
 some_user.os@process_one:my_cool_software:publisher_node.os
 ```
 
@@ -188,5 +188,5 @@ Kinode processes are Wasm components that have certain imports and exports so th
 Pragmatically, processes can be compiled using the [`kit` tools](https://github.com/kinode-dao/kit).
 
 
-The long term goal of Kinode is, using [WASI](https://wasi.dev/), to provide a secure, sandboxed environment for Wasm components to make use of the kernel features described in this document. 
+The long term goal of Kinode is, using [WASI](https://wasi.dev/), to provide a secure, sandboxed environment for Wasm components to make use of the kernel features described in this document.
 Further, Kinode has a Virtual File System ([VFS](../files.md)) which processes can interact with to access files on a user's machine, and in the future WASI could also expose access to the filesystem for Wasm components directly.
