@@ -16,10 +16,11 @@ In this section, you will use `serde_json` to serialize your Rust structs to a b
 Our old request looked like this:
 ```rust
 Request::new()
-    .targer(&our)
+    .target(&our)
     .body(b"hello world")
     .expects_response(5)
-    .send();
+    .send()
+    .unwrap();
 ```
 
 What if you want to have two kinds of messages, which your process can handle differently?
@@ -159,7 +160,8 @@ fn my_init_fn(our: Address) {
     Request::new()
         .target(&our)
         .body(MyBody::hello("hello world"))
-        .send();
+        .send()
+        .unwrap();
 
     loop {
         match await_message() {
