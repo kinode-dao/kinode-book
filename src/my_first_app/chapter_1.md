@@ -101,11 +101,7 @@ For an example, look at the result of:
 kit new my_chat_app_with_ui --ui
 tree my_chat_app_with_ui
 ```
-Note that not all templates have a UI-enabled version.
-As of 240118, only the Rust chat template has a UI-enabled version.
-
-[link](../kit/new.html#existshas-ui-enabled-vesion)
-
+Note that not all templates have a UI-enabled version. More details about templates can be found [here](../kit/new.html#existshas-ui-enabled-version).
 
 ### `pkg/manifest.json`
 
