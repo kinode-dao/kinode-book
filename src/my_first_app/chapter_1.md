@@ -65,22 +65,35 @@ my_chat_app
     │   ├── Cargo.toml
     │   └── src
     │       └── lib.rs
-    └── pkg
-        ├── manifest.json
-        └── scripts.json
+    ├── pkg
+    │   ├── manifest.json
+    │   └── scripts.json
+    └── send
+        ├── Cargo.toml
+        └── src
+            └── lib.rs
 ```
 
-The `my_chat_app/` package here contains one process, also named `my_chat_app/`.
-The process directory contains source files and other metadata for compiling that process.
+The `my_chat_app/` package here contains two processes:
+- `my_chat_app/` — containing the main application code, and
+- `send/` — containing a [script](../cookbook/writing_scripts.html).
 
-In Rust processes, the standard Rust `Cargo.toml` file is included: it specifies dependencies.
+Each process directory contains:
+- `src/` - source files where the code for the process lives, and
+- `Cargo.toml` - other metadata for compiling that process.
+
+The standard Rust `Cargo.toml` file which specifies dependencies is also included in `my_chat_app/` root.
 It is exhaustively defined [here](https://doc.rust-lang.org/cargo/reference/manifest.html).
-The `src/` directory is where the code for the process lives.
 
 Also within the package directory is a `pkg/` directory.
-The `pkg/` dirctory contains two files, `manifest.json`, which specifes information the Kinode needs to run the package, and `scripts.json`.
+The `pkg/` dirctory contains two files:
+- `manifest.json` - specifes information the Kinode needs to run the package, and
+- `scripts.json` - specifies details needed to run [scripts](../cookbook/writing_scripts.html).
+
 The `pkg/` directory is also where `.wasm` binaries will be deposited by [`kit build`](#building-the-package).
 The files in the `pkg/` directory are injected into the Kinode with [`kit start-package`](#starting-the-package).
+
+Lastly, `metadata.json` contains app metadata which is used in the Kinode [App Store](./chapter_5.html)
 
 Though not included in this template, packages with a frontend have a `ui/` directory as well.
 For an example, look at the result of:
@@ -90,6 +103,9 @@ tree my_chat_app_with_ui
 ```
 Note that not all templates have a UI-enabled version.
 As of 240118, only the Rust chat template has a UI-enabled version.
+
+[link](../kit/new.html#existshas-ui-enabled-vesion)
+
 
 ### `pkg/manifest.json`
 
