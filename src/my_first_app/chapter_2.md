@@ -19,7 +19,29 @@ Open `src/lib.rs`, clear its contents so it's empty, and code along!
 
 The last section explained packages, the package manifest, and metadata.
 Every package contains one or more processes, which are the actual Wasm programs that will run on a node.
-In order to compile properly to the Kinode environment, every process must generate the WIT bindings for the `process` "world".
+
+The [Generating WIT Bindings](#generating-wit-bindings) and [`init()` Function](#init-function) subsections explain the boilerplate code in detail, so if you just want to run some code, you can skip to [Running First Bits of Code](#running-first-bits-of-code).
+
+### Generating WIT Bindings
+
+For the purposes of this tutorial, crucial information from this [WASM documentation](https://component-model.bytecodealliance.org/design/why-component-model.html) has been abridged in this small subsection.
+
+A [Wasm component](https://component-model.bytecodealliance.org/design/components.html) is a wrapper around a core module that specifies its imports and exports.
+E.g. a Go component can communicate directly and safely with a C or Rust component.
+It need not even know which language another component was written in - it needs only the component interface, expressed in WIT.
+
+The external interface of a component - its imports and exports - is described by a [`world`](https://component-model.bytecodealliance.org/design/wit.html#worlds).
+Exports are provided by the component, and define what consumers of the component may call; imports are things the component may call.
+The component, however, internally defines how that `world` is implemented.
+This interface is defined via [WIT](https://component-model.bytecodealliance.org/design/wit.html).
+
+WIT bindings are the glue code which is necessary for the interaction between WASM modules and their host environment.
+They may be written in any WASM-compatible language — for Kinode they are written in Rust.
+The `world`, types, imports, and exports are all declared in a [WIT file](https://github.com/kinode-dao/kinode-wit/blob/master/kinode.wit), and using that file, [`wit_bindgen`](https://github.com/bytecodealliance/wit-bindgen) generates the code for the bindings.
+
+So, to bring it all together...
+
+In order to compile properly to the Kinode environment, based on the WIT file, every process must generate the WIT bindings for the `process` `world`, which is an interface for the Kinode kernel.
 
 ```rust
 wit_bindgen::generate!({
@@ -28,7 +50,10 @@ wit_bindgen::generate!({
 });
 ```
 
-After generating the bindings, every process must define a `Component` struct and implement the `Guest` trait for it defining a single function, `init()`.
+### `init()` Function
+
+After generating the bindings, every process must define a `Component` struct which implements the `Guest` trait (i.e. a wrapper around the process which defines the export interface, as discussed [above](#generating-wit-bindings)).
+The `Guest` trait should define a single function — `init()`.
 This is the entry point for the process, and the `init()` function is the first function called by the Kinode runtime when the process is started.
 
 The definition of the `Component` struct can be done manually, but it's easier to import the [`kinode_process_lib`](../process_stdlib/overview.md) crate (a sort of standard library for Kinode processes written in Rust) and use the `call_init!` macro.
@@ -47,7 +72,10 @@ fn my_init_fn(our: Address) {
 }
 ```
 
-Every Kinode process written in Rust will need code that does the same thing as the above.
+### Running First Bits of Code
+
+Every Kinode process written in Rust will need code that does the same thing as the code above (i.e. to use the `wit_bindgen` and `call_init!` macros).
+
 The [`Address` parameter](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) tells the process what its globally-unique name is.
 
 Let's fill out the init function with code that will stop it from exiting immediately.
