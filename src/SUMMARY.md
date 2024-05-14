@@ -35,7 +35,7 @@
 - [My First Kinode Application](./build-and-deploy-an-app.md)
   - [Environment Setup](./my_first_app/chapter_1.md)
   - [Sending and Responding to a Message](./my_first_app/chapter_2.md)
-  - [Defining Your Protocol](./my_first_app/chapter_3.md)
+  - [Messaging with Larger Data Types](./my_first_app/chapter_3.md)
   - [Frontend Time](./my_first_app/chapter_4.md)
   - [Sharing with the World](./my_first_app/chapter_5.md)
 - [In-Depth Guide: Chess App](./chess_app.md)
