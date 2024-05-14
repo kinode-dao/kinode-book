@@ -22,7 +22,7 @@ To instead "fire and forget" a message and exit immediately, use the [`--non-blo
 ## Arguments
 
 ```
-$ kit i --help
+$ kit inject-message --help
 Inject a message to a running Kinode
 
 Usage: kit inject-message [OPTIONS] <PROCESS> <BODY_JSON>
@@ -50,10 +50,14 @@ The message body.
 
 ### `--port`
 
+short: `-p`
+
 For nodes running on localhost, the port of the node; defaults to `8080`.
 `--port` is overridden by `--url` if both are supplied.
 
 ### `--url`
+
+short: `-u`
 
 The URL the node is hosted at.
 Can be either localhost or remote.
@@ -61,20 +65,25 @@ Can be either localhost or remote.
 
 ### `--node`
 
-Node to target (i.e. the node portion of the address).
-E.g.
+short: `-n`
 
-```bash
+Node to target (i.e. the node portion of the address).
+
+E.g., the following, sent to the port running `fake.os`, will be forwarded from `fake.os`'s HTTP server to `fake2@foo:foo:template.os`:
+
+``` bash
 kit inject-message foo:foo:template.os '{"Send": {"target": "fake.os", "message": "wow, it works!"}}' --node fake2.os
 ```
 
-sent to the port running `fake.os` will forward the message from `fake.os`s HTTP server to `fake2@foo:foo:template.os`.
-
 ### `--blob`
+
+short: `-b`
 
 Path to file to include as `lazy_load_blob`.
 
 ### `--non-block`
+
+short: `-l`
 
 Don't block waiting for a Response from target process.
 Instead, inject the message and immediately return.

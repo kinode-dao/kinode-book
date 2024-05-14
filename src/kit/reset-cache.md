@@ -1,6 +1,6 @@
 # `kit reset-cache`
 
-`kit reset-cache` resets the cache `kit` writes Kinode core binaries, logs, etc. to.
+The `kit reset-cache` command clears the cache where `kit` stores Kinode core binaries, logs, etc.
 
 ## Discussion
 

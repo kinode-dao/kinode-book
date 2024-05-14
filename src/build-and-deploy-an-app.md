@@ -1,6 +1,5 @@
 # My First Kinode Application
 
-Welcome!
 In these tutorials, you'll setup your development environment and learn about the `kit` tools.
 You'll learn about templates and also walk through writing an application from the ground up, backend and frontend.
 And finally, you'll learn how to deploy applications through the Kinode app store.

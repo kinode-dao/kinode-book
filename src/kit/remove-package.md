@@ -1,9 +1,6 @@
 # `kit remove-package`
 
-`kit remove-package` removes an installed package from the given node.
-If passed an optional positional argument `DIR`, the path to a package directory, the `metadata.json` therein is parsed and that package is removed from the node.
-If no arguments are provided, the same process happens for the current working directory.
-Alternatively, a `--package` and `--publisher` can be provided as arguments, and that package will be removed.
+`kit remove-package` removes an installed package from the given node (defaults to `localhost:8080`).
 
 For example,
 ```
@@ -18,15 +15,14 @@ kit remove-package -package foo --publisher template.os
 
 ## Discussion
 
-`kit start-package` injects a built package into the given node and starts it.
-`start-package` is designed to be used after a package has been built with [`kit build`](./build.md).
-Specifically, it first zips and injects the `pkg/` directory within the given package directory, which contains metadata about the package for the node as well as the `.wasm` binaries for each process.
-Then it injects a message to the node to start the package.
+If passed an optional positional argument `DIR` (the path to a package directory), the `metadata.json` therein is parsed to get the `package_id` and that package is removed from the node.
+If no arguments are provided, the same process happens for the current working directory.
+Alternatively, a `--package` and `--publisher` can be provided as arguments, and that package will be removed.
 
 ## Arguments
 
 ```
-$ kit r --help
+$ kit remove-package --help
 Remove a running package from a node
 
 Usage: kit remove-package [OPTIONS] [DIR]
@@ -44,22 +40,28 @@ Options:
 
 ### Optional positional arg: `DIR`
 
-The package directory to install and start on the node; defaults to current working directory.
+The package directory to be removed from the node; defaults to current working directory.
 
 ### `--package`
 
-The package name of the package to be removed; default is derived from `DIR`.
+short: `-a`
+
+The package name of the package to be removed; default is derived from `metadata.json` in `DIR`.
 
 ### `--publisher`
 
-The publisher of the package to be removed; default is derived from `DIR`.
+The publisher of the package to be removed; default is derived from `metadata.json` in `DIR`.
 
 ### `--port`
+
+short: `-p`
 
 For nodes running on localhost, the port of the node; defaults to `8080`.
 `--port` is overridden by `--url` if both are supplied.
 
 ### `--url`
+
+short: `-u`
 
 The URL the node is hosted at.
 Can be either localhost or remote.

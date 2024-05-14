@@ -1,6 +1,6 @@
 # `kit start-package`
 
-`kit start-package` installs and starts the indicated package directory (or current working directory) on the given Kinode, e.g.,
+`kit start-package` installs and starts the indicated package directory (or current working directory) on the given Kinode (at `localhost:8080` by default), e.g.,
 
 ```
 kit start-package foo
@@ -16,15 +16,15 @@ kit start-package
 
 `kit start-package` injects a built package into the given node and starts it.
 `start-package` is designed to be used after a package has been built with [`kit build`](./build.md).
-Specifically, it first zips and injects the `pkg/` directory within the given package directory, which contains metadata about the package for the node as well as the `.wasm` binaries for each process.
-Then it injects a message to the node to start the package.
+The `pkg/` directory contains metadata about the package for the node as well as the `.wasm` binaries for each process.
+So `kit start-package` first zips the `pkg/` directory (located in the package directory given in the argument), and then it injects a message to the node to start the package.
 
 To both `build` and `start-package` in one command, use `kit build-start-package`.
 
 ## Arguments
 
 ```
-$ kit s --help
+$ kit start-package --help
 Start a built Kinode process
 
 Usage: kit start-package [OPTIONS] [DIR]
@@ -44,10 +44,14 @@ The package directory to install and start on the node; defaults to current work
 
 ### `--port`
 
+short: `-p`
+
 For nodes running on localhost, the port of the node; defaults to `8080`.
 `--port` is overridden by `--url` if both are supplied.
 
 ### `--url`
+
+short: `-u`
 
 The URL the node is hosted at.
 Can be either localhost or remote.
