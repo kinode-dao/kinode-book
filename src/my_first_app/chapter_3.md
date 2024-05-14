@@ -65,12 +65,15 @@ Writing interoperable code is necessary for enabling permissionless composabilit
 
 ### Handling Messages
 
-First, create a request that uses the new `body` type (and stop expecting a response):
+In this example, you will learn how to handle a Request.
+So, create a request that uses the new `body` type (you won't need to send a Response back, so we can remove `.expect_response()`):
+
 ```rust
 Request::new()
     .target(&our)
     .body(MyBody::hello("hello world"))
-    .send();
+    .send()
+    .unwrap();
 ```
 
 Next, edit the way you handle a message in your process to use your new `body` type.
@@ -197,14 +200,16 @@ fn my_init_fn(our: Address) {
 You should be able to build and start your package, then see that initial Hello message.
 At this point, you can use the terminal to test your message types!
 
-First, try a hello. Get the address of your process by looking at the "started" printout that came from it in the terminal.
+First, try sending a hello using the [`m` terminal script](../terminal.md#m---message-a-process). Get the address of your process by looking at the "started" printout that came from it in the terminal.
 As a reminder, these values (`<your_process>`, `<your_package>`, `<your_publisher>`) can be found in the `metadata.json` and `manifest.json` package files.
+
 ```bash
 m our@<your_process>:<your_package>:<your_publisher> '{"Hello": "hey there"}'
 ```
 
 You should see the message text printed. Next, try a goodbye.
 This will cause the process to exit.
+
 ```bash
 m our@<your_process>:<your_package>:<your_publisher> '"Goodbye"'
 ```
