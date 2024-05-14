@@ -9,7 +9,8 @@ kit new counter --template echo
 cd counter
 ```
 
-Now you can create a `contracts` directory within `counter` using `forge init contracts`. If foundry is not installed, it can be installed with:
+Now you can create a `contracts` directory within `counter` using `forge init contracts`.
+If foundry is not installed, it can be installed with:
 
 ```
 curl -L https://foundry.paradigm.xyz | bash
@@ -67,7 +68,7 @@ Then you can run:
 forge script --rpc-url http://localhost:8545 script/Deploy.s.sol --broadcast
 ``` 
 
-you'll see a printout that looks something like this:
+You'll see a printout that looks something like this:
 
 ```
 == Logs ==
@@ -83,7 +84,7 @@ You're going to use some functions from the `eth` library in `kinode_process_lib
 use kinode_process_lib::eth;
 ```
 
-Also youll'll need to request the capability to message `eth:distro:sys`, so you can add it to the `request_capabilities` field in `pkg/manifest.json`.
+Also you'll need to request the capability to message `eth:distro:sys`, so you can add it to the `request_capabilities` field in `pkg/manifest.json`.
 
 Next, you'll need some sort of ABI in order to interact with the contracts.
 The crate `alloy-sol-types` gives us a solidity macro to either define contracts from JSON, or directly in the rust code.
@@ -266,9 +267,9 @@ First, branching on the enum type `Increment`, call the increment() function wit
     }
 ```
 
-Note how you can do provider.get_transaction_count() to get the current nonce of the account!
+Note how you can do `provider.get_transaction_count()` to get the current nonce of the account!
 
-Next, let's do the same for setNumber!
+Next, do the same for `setNumber`!
 
 ```rust
     CounterAction::SetNumber(n) => {
@@ -302,7 +303,8 @@ Next, let's do the same for setNumber!
     }
 ```
 
-Nice! Putting it all together, you can build and start the package on a fake node (`kit f` if you don't have one running), `kit bs`.
+Nice!
+Putting it all together, you can build and start the package on a fake node (`kit f` if you don't have one running), `kit bs`.
 
 ```
 fake.dev > m our@counter:counter:template.os '{"SetNumber": 55}'
