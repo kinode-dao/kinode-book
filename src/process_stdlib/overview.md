@@ -1,6 +1,6 @@
 # `process_lib` Overview
 
-This page serves as an introduction to the [process standard library](https://github.com/kinode-dao/process_lib), which is the easiest way to write Rust apps on Kinode OS.
+This page serves as an introduction to the [process standard library](https://github.com/kinode-dao/process_lib), which makes writing Rust apps on Kinode OS easy.
 The full documentation can be found [here](https://docs.rs/kinode_process_lib), and the crate lives [here](https://crates.io/crates/kinode_process_lib).
 
 Note that the process lib is under heavy ongoing development.
