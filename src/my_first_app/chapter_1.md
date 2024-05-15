@@ -78,12 +78,11 @@ The `my_chat_app/` package here contains two processes:
 - `my_chat_app/` — containing the main application code, and
 - `send/` — containing a [script](../cookbook/writing_scripts.html).
 
-Each process directory contains:
+Rust process directories, like the ones here, contain:
 - `src/` - source files where the code for the process lives, and
-- `Cargo.toml` - other metadata for compiling that process.
+- `Cargo.toml` - the standard Rust file specifying dependencies, etc., for that process.
 
-The standard Rust `Cargo.toml` file which specifies dependencies is also included in `my_chat_app/` root.
-It is exhaustively defined [here](https://doc.rust-lang.org/cargo/reference/manifest.html).
+Another standard Rust `Cargo.toml` file, a [virtual manifest](https://doc.rust-lang.org/cargo/reference/workspaces.html#virtual-workspace) is also included in `my_chat_app/` root.
 
 Also within the package directory is a `pkg/` directory.
 The `pkg/` dirctory contains two files:
@@ -101,7 +100,8 @@ For an example, look at the result of:
 kit new my_chat_app_with_ui --ui
 tree my_chat_app_with_ui
 ```
-Note that not all templates have a UI-enabled version. More details about templates can be found [here](../kit/new.html#existshas-ui-enabled-version).
+Note that not all templates have a UI-enabled version.
+More details about templates can be found [here](../kit/new.html#existshas-ui-enabled-version).
 
 ### `pkg/manifest.json`
 
@@ -138,8 +138,8 @@ Key                      | Value Type                                           
 `"process_wasm_path"`    | String                                                                                         | The path to the process
 `"on_exit"`              | String (`"None"` or `"Restart"`) or Object (covered [elsewhere](./chapter_2.md#aside-on_exit)) | What to do in case the process exits
 `"request_networking"`   | Boolean                                                                                        | Whether to ask for networking capabilities from kernel
-`"request_capabilities"` | Array of Strings or Objects                                                                    | Strings are `processID`s to request messaging capabilties from; Objects have a `"process"` field (`processID` to request from) and a `"params"` field (capability to request)
-`"grant_capabilities"`   | Array of Strings or Objects                                                                    | Strings are `processIDs` to grant messaging capabilties to; Objects have a `"process"` field (`processID` to grant to) and a `"params"` field (capability to grant)
+`"request_capabilities"` | Array of Strings or Objects                                                                    | Strings are `ProcessID`s to request messaging capabilties from; Objects have a `"process"` field (`ProcessID` to request from) and a `"params"` field (capability to request)
+`"grant_capabilities"`   | Array of Strings or Objects                                                                    | Strings are `ProcessIDs` to grant messaging capabilties to; Objects have a `"process"` field (`ProcessID` to grant to) and a `"params"` field (capability to grant)
 `"public"`               | Boolean                                                                                        | Whether to allow any process to message us
 
 ### `metadata.json`
@@ -233,7 +233,8 @@ kit boot-fake-node --runtime-path ~/path/to/kinode
 
 where `~/path/to/kinode` must be replaced with a path to the Kinode core repo.
 
-Note that your node will be named `fake.dev`, as opposed to `fake.os`. The `.dev` suffix is used for development nodes.
+Note that your node will be named `fake.dev`, as opposed to `fake.os`.
+The `.dev` suffix is used for development nodes.
 
 ## Optional: Starting a Real Kinode
 
@@ -281,7 +282,7 @@ Congratulations: you've now built and installed your first application on Kinode
 To test out the functionality of `my_chat_app`, spin up another fake node to chat with in a new terminal:
 
 ```bash
-kit boot-fake-node -h /tmp/kinode-fake-node-2 -p 8081 -f fake2
+kit boot-fake-node -h /tmp/kinode-fake-node-2 -p 8081 -f fake2.dev
 ```
 
 The fake nodes communicate over a mocked local network.

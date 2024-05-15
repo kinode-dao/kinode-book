@@ -3,7 +3,7 @@
 In this section you will learn how to use different parts of a process, how request-response handling works, and other implementation details with regards to messaging.
 The process you will build is simple — it messages itself and responds to itself, printing whenever it gets messages.
 
-Note — the app you will build in Sections 2. through 5. is *not* `my_chat_app`; it is simply a series of examples designed to demonstrate how to use the system's features.
+Note — the app you will build in Sections 2 through 5 is *not* `my_chat_app`; it is simply a series of examples designed to demonstrate how to use the system's features.
 
 ## Requirements
 
@@ -28,15 +28,15 @@ For the purposes of this tutorial, crucial information from this [WASM documenta
 
 A [Wasm component](https://component-model.bytecodealliance.org/design/components.html) is a wrapper around a core module that specifies its imports and exports.
 E.g. a Go component can communicate directly and safely with a C or Rust component.
-It need not even know which language another component was written in - it needs only the component interface, expressed in WIT.
+It need not even know which language another component was written in — it needs only the component interface, expressed in WIT.
 
 The external interface of a component - its imports and exports - is described by a [`world`](https://component-model.bytecodealliance.org/design/wit.html#worlds).
 Exports are provided by the component, and define what consumers of the component may call; imports are things the component may call.
 The component, however, internally defines how that `world` is implemented.
 This interface is defined via [WIT](https://component-model.bytecodealliance.org/design/wit.html).
 
-WIT bindings are the glue code which is necessary for the interaction between WASM modules and their host environment.
-They may be written in any WASM-compatible language — for Kinode they are written in Rust.
+WIT bindings are the glue code that is necessary for the interaction between WASM modules and their host environment.
+They may be written in any WASM-compatible language — Kinode offers the most support for Rust with [`kit`](../kit/new.md) and [`process_lib`](../process_stdlib/overview.md).
 The `world`, types, imports, and exports are all declared in a [WIT file](https://github.com/kinode-dao/kinode-wit/blob/master/kinode.wit), and using that file, [`wit_bindgen`](https://github.com/bytecodealliance/wit-bindgen) generates the code for the bindings.
 
 So, to bring it all together...
@@ -74,7 +74,7 @@ fn my_init_fn(our: Address) {
 
 ### Running First Bits of Code
 
-Every Kinode process written in Rust will need code that does the same thing as the code above (i.e. to use the `wit_bindgen` and `call_init!` macros).
+Every Kinode process written in Rust will need code that does the same thing as the code above (i.e. use the `wit_bindgen` and `call_init!` macros).
 
 The [`Address` parameter](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) tells the process what its globally-unique name is.
 

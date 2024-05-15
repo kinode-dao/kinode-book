@@ -35,7 +35,7 @@ fn my_init_fn(our: Address) {
 // ...
 ```
 
-`http::binf_http_path("/", false, false)` arguments mean the following:
+`http::bind_http_path("/", false, false)` arguments mean the following:
 - The first argument is the path to bind. 
 Note that requests will be namespaced under the process name, so this will be accessible at e.g. `/my_process_name/`.
 - The second argument marks whether to serve the path only to authenticated clients
@@ -157,7 +157,7 @@ http::send_response(http::StatusCode::OK, None, vec![]);
 Request::new().target(our).body(body.bytes).send().unwrap();
 ```
 
-Putting it all together, you get a process which you can build and start, then use cURL to send 'Hello' and 'Goodbye' requests via HTTP PUTs!
+Putting it all together, you get a process which you can build and start, then use cURL to send `Hello` and `Goodbye` requests via HTTP PUTs!
 
 ### Requesting Capabilities
 
@@ -286,7 +286,7 @@ fn handle_hello_message(message: &Message) -> bool {
 }
 ```
 
-A cURL command to send a Hello request looks like this.
+A cURL command to send a `Hello` request looks like this.
 Make sure to replace the URL with your node's local port and the correct process name.
 Note: if you had not set `authenticated` to false in the bind command, you would need to add an `Authorization` header to this request with the [JWT](https://jwt.io/) cookie of your node.
 This is saved in your browser automatically on login.
