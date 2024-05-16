@@ -154,7 +154,7 @@ let Some(body) = get_blob() else {
     return;
 };
 http::send_response(http::StatusCode::OK, None, vec![]);
-Request::new().target(our).body(body.bytes).send().unwrap();
+Request::to(our).body(body.bytes).send().unwrap();
 ```
 
 Putting it all together, you get a process which you can build and start, then use cURL to send `Hello` and `Goodbye` requests via HTTP PUTs!
@@ -209,8 +209,7 @@ fn my_init_fn(our: Address) {
 
     http::bind_http_path("/", false, false).unwrap();
 
-    Request::new()
-        .target(&our)
+    Request::to(&our)
         .body(MyBody::hello("hello world"))
         .send()
         .unwrap();
@@ -252,7 +251,7 @@ fn handle_http_message(our: &Address, message: &Message) {
         return;
     };
     http::send_response(http::StatusCode::OK, None, vec![]);
-    Request::new().target(our).body(body.bytes).send().unwrap();
+    Request::to(our).body(body.bytes).send().unwrap();
 }
 
 /// Returns true if the process should exit.

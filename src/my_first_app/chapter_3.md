@@ -16,8 +16,7 @@ In this section, you will use `serde_json` to serialize your Rust structs to a b
 
 Our old request looked like this:
 ```rust
-Request::new()
-    .target(&our)
+Request::to(&our)
     .body(b"hello world")
     .expects_response(5)
     .send()
@@ -71,8 +70,7 @@ In this example, you will learn how to handle a Request.
 So, create a request that uses the new `body` type (you won't need to send a Response back, so we can remove `.expect_response()`):
 
 ```rust
-Request::new()
-    .target(&our)
+Request::to(&our)
     .body(MyBody::hello("hello world"))
     .send()
     .unwrap();
@@ -158,8 +156,7 @@ call_init!(my_init_fn);
 fn my_init_fn(our: Address) {
     println!("{our}: started");
 
-    Request::new()
-        .target(&our)
+    Request::to(&our)
         .body(MyBody::hello("hello world"))
         .send()
         .unwrap();

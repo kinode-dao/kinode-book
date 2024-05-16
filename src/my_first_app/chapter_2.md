@@ -36,7 +36,7 @@ The component, however, internally defines how that `world` is implemented.
 This interface is defined via [WIT](https://component-model.bytecodealliance.org/design/wit.html).
 
 WIT bindings are the glue code that is necessary for the interaction between WASM modules and their host environment.
-They may be written in any WASM-compatible language — Kinode offers the most support for Rust with [`kit`](../kit/new.md) and [`process_lib`](../process_stdlib/overview.md).
+They may be written in any WASM-compatible language — Kinode offers the most support for Rust with [`kit`](../kit-dev-toolkit.md) and [`process_lib`](../process_stdlib/overview.md).
 The `world`, types, imports, and exports are all declared in a [WIT file](https://github.com/kinode-dao/kinode-wit/blob/master/kinode.wit), and using that file, [`wit_bindgen`](https://github.com/bytecodealliance/wit-bindgen) generates the code for the bindings.
 
 So, to bring it all together...
@@ -169,11 +169,11 @@ fn my_init_fn(our: Address) {
 Using `kit build` and `kit start-package` like before, you should be able to see in your node's terminal the message being received in the loop.
 However, you'll see the "hello world" message as a byte vector.
 
-Let's modify our request to expect a response, and our message-handling to send one back, as well as parse the received request into a string.
+Change `Request::new().target()` to `Request::to()`, as using the `to()` method is recommended.
+Modify your request to expect a response, and your message-handling to send one back, as well as parse the received request into a string.
 
 ```rust
-Request::new()
-    .target(&our)
+Request::to(&our)
     .body(b"hello world")
     .expects_response(5)
     .send()
@@ -243,8 +243,7 @@ call_init!(my_init_fn);
 fn my_init_fn(our: Address) {
     println!("{our}: started");
 
-    Request::new()
-        .target(&our)
+    Request::to(&our)
         .body(b"hello world")
         .expects_response(5)
         .send()
