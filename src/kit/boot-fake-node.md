@@ -9,13 +9,14 @@ kit boot-fake-node
 By default, `boot-fake-node` fetches a prebuilt binary and launches the node using it.
 Alternatively, `boot-fake-node` can use a local binary or build a local Kinode core repo and use the resulting binary.
 
-It also boots a fake chain with anvil in the background (see [kit chain](../kit/chain.md)). This comes preseeded with KNS & app_store contracts, that fake nodes use to index each others networking info.
+It also boots a fake chain with [anvil](https://book.getfoundry.sh/anvil/) in the background (see [kit chain](../kit/chain.md)).
+The fake chain comes preseeded with two contracts: KNS, which nodes use to index networking info of other nodes; and app_store, which nodes use to index published packages.
 
 ## Example Usage
 
 You can start a network of fake nodes that can communicate with each other (but not the live network).
 You'll need to start a new terminal for each fake node.
-For example, to start two fake nodes, `fakedev` and `fake2.dev`:
+For example, to start two fake nodes, `fake.dev` and `fake2.dev`:
 
 ```
 kit boot-fake-node

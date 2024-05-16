@@ -6,27 +6,16 @@
 kit chain
 ```
 
-```
-                             _   _
-                            (_) | |
-      __ _   _ __   __   __  _  | |
-     / _` | | '_ \  \ \ / / | | | |
-    | (_| | | | | |  \ V /  | | | |
-     \__,_| |_| |_|   \_/   |_| |_|
-
-    0.2.0 (b51c057 2024-01-18T00:23:54.430340000Z)
-    https://github.com/foundry-rs/foundry
-```
-
 The default port is `8545` and the chain ID is `31337`.
 
 ## Discussion
 
-`kit chain` starts an anvil node with the arguments `--load-state kinostate.json`. This json file includes the [KNS](https://github.com/kinode-dao/KNS) & app_store contracts, and is included in the kit binary. 
+`kit chain` starts an anvil node with the arguments `--load-state kinostate.json`.
+This json file includes the [KNS](https://github.com/kinode-dao/KNS) & app_store contracts, and is included in the `kit` binary.
 
-The [kinostate.json](https://github.com/kinode-dao/kit/blob/master/src/chain/kinostate.json) file can be found written into /tmp/kinode-kit-cache/kinostate-{hash}.json upon running the command. 
+The [kinostate.json](https://github.com/kinode-dao/kit/blob/master/src/chain/kinostate.json) file can be found written into /tmp/kinode-kit-cache/kinostate-{hash}.json upon running the command.
 
-Note that while the kns_indexer and app_store apps in fake nodes use this chain to index events, any events loaded from a json statefile, aren't replayed upon restarting anvil. This is a future `foundry` feature request. 
+Note that while the kns_indexer and app_store apps in fake nodes use this chain to index events, any events loaded from a json statefile, aren't replayed upon restarting anvil.
 
 ## Arguments
 
@@ -43,4 +32,5 @@ Options:
 
 ### `--port`
 
-Port to run anvil fakechain on. Defaults to `8545`.
+Port to run anvil fakechain on.
+Defaults to `8545`.
