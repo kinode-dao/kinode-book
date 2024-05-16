@@ -1,6 +1,6 @@
 # kit
 
-`kit` is a tool**kit** to make development on Kinode OS ergonomic.
+[`kit`](https://github.com/kinode-dao/kit) is a CLI tool**kit** to make development on Kinode OS ergonomic.
 
 ## Table of Contents
 
@@ -9,7 +9,8 @@
 * [`kit new`](./kit/new.md)
 * [`kit build`](./kit/build.md)
 * [`kit start-package`](./kit/start-package.md)
-* [`kit remove-package`](./kit/start-package.md)
+* [`kit build-start-package`](./kit/build-start-package.md)
+* [`kit remove-package`](./kit/remove-package.md)
 * [`kit dev-ui`](./kit/dev-ui.md)
 * [`kit inject-message`](./kit/inject-message.md)
 * [`kit run-tests`](./kit/run-tests.md)

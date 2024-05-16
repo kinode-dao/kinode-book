@@ -1,4 +1,4 @@
-# Processes
+# Process Semantics
 
 ### Overview
 
@@ -8,8 +8,8 @@ This section describes the message design as it relates to processes.
 
 Each process instance has a globally unique identifier, or `Address`, composed of four elements.
 - the publisher's node
-- the package name (not to be confused with `PackageID`)
-- the process name (not to be confused with `ProcessID`). Processes spawn with their own identifier (`process_name`): either a developer-selected string or a randomly-generated number as string.
+- the package name (not to be confused with `PackageId`)
+- the process name (not to be confused with `ProcessId`). Processes spawn with their own identifier (`process_name`): either a developer-selected string or a randomly-generated number as string.
 - the node the process is running on (your node).
 
 The way these elements compose is the following:
@@ -30,7 +30,7 @@ process_one:my_cool_software:publisher_node.os
 [Addresses](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) look like:
 
 ```
-[node]:[process_name]:[package_name]:[publisher_node]
+[node]@[process_name]:[package_name]:[publisher_node]
 some_user.os@process_one:my_cool_software:publisher_node.os
 ```
 
@@ -188,5 +188,5 @@ Kinode processes are Wasm components that have certain imports and exports so th
 Pragmatically, processes can be compiled using the [`kit` tools](https://github.com/kinode-dao/kit).
 
 
-The long term goal of Kinode is, using [WASI](https://wasi.dev/), to provide a secure, sandboxed environment for Wasm components to make use of the kernel features described in this document. 
+The long term goal of Kinode is, using [WASI](https://wasi.dev/), to provide a secure, sandboxed environment for Wasm components to make use of the kernel features described in this document.
 Further, Kinode has a Virtual File System ([VFS](../files.md)) which processes can interact with to access files on a user's machine, and in the future WASI could also expose access to the filesystem for Wasm components directly.

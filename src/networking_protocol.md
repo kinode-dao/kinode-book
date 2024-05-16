@@ -17,7 +17,7 @@ The former allows for completely direct peer-to-peer connections, and the latter
 The networking protocol can and will be implemented in multiple underlying protocols.
 Since the protocol is encrypted, a secure underlying connection with TLS or HTTPS is never necessary.
 WebSockets are prioritized since we expect to quickly build Kinodes that run purely in-browser.
-The other transmission protocols with slots in the onchain identity data structure are: TCP, UDP, and WebTransport.
+The other transport protocols with slots in the onchain identity data structure are: TCP, UDP, and WebTransport.
 
 ### 2. Onchain Networking Information
 
@@ -47,7 +47,7 @@ In the future, the `net:distro:sys` runtime module will be responsible for imple
 The runtime will also be responsible for choosing the optimal way to serve a given message based on the recipient's onchain networking information.
 Each protocol may have different precise semantics depending on the underlying transport protocol: the following is a general description of the WebSockets protocol.
 
-This protocol does not make use of any WebSocket frames other than Binary, Ping, and Pong.
+This protocol does not make use of any [WebSocket frames](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#exchanging_data_frames) other than Binary, Ping, and Pong.
 Pings should be responded to with a Pong.
 These are only used to keep the connection alive.
 All content is sent as Binary frames.
@@ -55,35 +55,7 @@ Binary frames in the current protocol version (1) are limited to 10MB. This incl
 
 All data structures are serialized and deserialized using [MessagePack](https://msgpack.org/index.html).
 
-#### 3.1. Data Structures
-
-```rust
-struct HandshakePayload {
-    pub protocol_version: u8,
-    pub name: String,
-    pub signature: Vec<u8>,
-    pub proxy_request: bool,
-}
-
-struct RoutingRequest {
-    pub protocol_version: u8,
-    pub source: String,
-    pub signature: Vec<u8>,
-    pub target: String,
-}
-
-/// Note: indicate where to find Address, Rsvp, Message, and LazyLoadBlob type definitions
-struct KernelMessage {
-    pub id: u64,
-    pub source: Address,
-    pub target: Address,
-    pub rsvp: Rsvp,
-    pub message: Message,
-    pub lazy_load_blob: Option<LazyLoadBlob>,
-}
-```
-
-#### 3.2. Establishing a Connection
+#### 3.1. Establishing a Connection
 
 The WebSockets protocol uses the [Noise Protocol Framework](http://www.noiseprotocol.org/noise.html) to encrypt all messages end-to-end.
 The parameters used are `Noise_XX_25519_ChaChaPoly_BLAKE2s`.
@@ -149,6 +121,19 @@ After this pattern is complete, the connection switches to transport mode and ca
 
 Every message sent over the connection is a `KernelMessage`, serialized with MessagePack, then encrypted using the keys exchanged in the Noise protocol XX pattern, sent in a single Binary WebSockets message.
 
+```rust
+struct KernelMessage {
+    pub id: u64,
+    pub source: Address,
+    pub target: Address,
+    pub rsvp: Rsvp,
+    pub message: Message,
+    pub lazy_load_blob: Option<LazyLoadBlob>
+}
+```
+
+See [`Address`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html), [`Rsvp`](https://github.com/kinode-dao/kinode/blob/5504f2a6c1b28eb5102aee9a56d2a278f1e5a2dd/lib/src/core.rs#L891-L894), [`Message`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/enum.Message.html),and [`LazyLoadBlob`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.LazyLoadBlob.html) data types.
+
 #### 3.3. Receiving Messages
 
 When listening for messages, the protocol may ignore messages other than Binary, but should also respond to Ping messages with Pongs.
@@ -159,6 +144,9 @@ If this fails, the message should be ignored and the connection must be closed.
 Successfully decrypted and deserialized messages should have their `source` field checked for the correct node ID and then passed to the kernel.
 
 #### 3.4. Closing a Connection
+
+A connection can be intentionally closed by any party, at any time.
+Other causes of connection closure are discussed in this section.
 
 All connection errors must result in closing a connection.
 
@@ -181,7 +169,7 @@ Messages do not have to expect a response.
 If no response is expected, a networking-level offline or timeout error may still be thrown.
 Local messages will only receive timeout errors if they expect a response.
 
-If a peer is direct, i.e. they have networking information published onchain, determining their offline status is simple: try to create a connection and send a message; it will throw an offline error if this message fails.
+If a peer is direct, i.e. they have networking information published onchain, determining their offline status is simple: try to create a connection and send a message; if the underlying transport protocol experiences any errors while doing so, throw an 'offline' error.
 If a message is not responded to before the timeout counter expires, it will throw a timeout.
 
 If a peer is indirect, i.e. they have routers, multiple attempts must be made before either an offline error is thrown.

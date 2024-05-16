@@ -1,8 +1,7 @@
 # Install `kit`
 
-
 These documents describe some ways you can use these tools, but do not attempt to be completely exhaustive.
-You are encouraged to make use of the `--help` flag, which can be used for the top-level `kit`:
+You are encouraged to make use of the `--help` flag, which can be used for the top-level `kit` command:
 
 ```
 $ kit --help
@@ -57,8 +56,9 @@ You can find the source for `kit` at [https://github.com/kinode-dao/kit](https:/
 
 ## Logging
 
-Logs are printed to the screen and stored, by default, at `/tmp/kinode-kit-cache/logs/log.log`.
+Logs are printed to the terminal and stored, by default, at `/tmp/kinode-kit-cache/logs/log.log`.
 The default logging level is `info`.
+Other logging levels are: `debug`, `warning` and `error`.
 
 These defaults can be changed by setting environment variables:
 
@@ -66,3 +66,9 @@ Environment Variable | Description
 -------------------- | -----------
 `KIT_LOG_PATH`       | Set log path (default `/tmp/kinode-kit-cache/logs/log.log`).
 `RUST_LOG`           | Set log level (default `info`).
+
+For example, in Bash:
+
+```bash
+export RUST_LOG=info
+```
