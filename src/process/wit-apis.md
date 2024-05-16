@@ -8,9 +8,10 @@ Two key advantages of WebAssembly components are
 See discussion [here](https://component-model.bytecodealliance.org/design/why-component-model.html).
 
 Kinode processes make use of these two advantages.
-A package — a group of processes, also referred to as an app — may define an API in WIT format.
+Processes within a package — a group of processes, also referred to as an app — may define an API in WIT format.
+Each process defines a [WIT interface](https://component-model.bytecodealliance.org/design/wit.html#interfaces); the package defines a [WIT world](https://component-model.bytecodealliance.org/design/wit.html#interfaces).
 The API is published alongside the package.
-Other packages may then import and depend upon that API, and thus communicate with that package.
+Other packages may then import and depend upon that API, and thus communicate with the processes in that package.
 The publication of the API also allows for easy inspection by developers or by machines, e.g., LLM agents.
 
 More than types can be published.
