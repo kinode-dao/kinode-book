@@ -1,7 +1,7 @@
 # Messaging with Larger Data Types
 
 In this section, you will upgrade your app so that it can handle messages with more elaborate data types such as `enum`s and `struct`s.
-Additionally, you will learn how to handle processes returning or crashing.
+Additionally, you will learn how to handle processes completing or crashing.
 
 ## (De)Serialization With Serde
 

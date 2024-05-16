@@ -138,8 +138,8 @@ Key                      | Value Type                                           
 `"process_wasm_path"`    | String                                                                                         | The path to the process
 `"on_exit"`              | String (`"None"` or `"Restart"`) or Object (covered [elsewhere](./chapter_2.md#aside-on_exit)) | What to do in case the process exits
 `"request_networking"`   | Boolean                                                                                        | Whether to ask for networking capabilities from kernel
-`"request_capabilities"` | Array of Strings or Objects                                                                    | Strings are `ProcessID`s to request messaging capabilties from; Objects have a `"process"` field (`ProcessID` to request from) and a `"params"` field (capability to request)
-`"grant_capabilities"`   | Array of Strings or Objects                                                                    | Strings are `ProcessIDs` to grant messaging capabilties to; Objects have a `"process"` field (`ProcessID` to grant to) and a `"params"` field (capability to grant)
+`"request_capabilities"` | Array of Strings or Objects                                                                    | Strings are `ProcessId`s to request messaging capabilties from; Objects have a `"process"` field (`ProcessId` to request from) and a `"params"` field (capability to request)
+`"grant_capabilities"`   | Array of Strings or Objects                                                                    | Strings are `ProcessId`s to grant messaging capabilties to; Objects have a `"process"` field (`ProcessId` to grant to) and a `"params"` field (capability to grant)
 `"public"`               | Boolean                                                                                        | Whether to allow any process to message us
 
 ### `metadata.json`
