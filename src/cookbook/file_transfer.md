@@ -254,7 +254,7 @@ Now try this out by [booting two nodes](../kit/boot-fake-node.md#example-usage),
 kit f
 
 # In another terminal
-kit f --home /tmp/kinode-fake-node-2 -p 8081 -f fake2.os
+kit f --home /tmp/kinode-fake-node-2 -p 8081 -f fake2.dev
 ```
 
 and [starting the package](../kit/start-package.md) on both nodes,
@@ -268,13 +268,13 @@ kit s -p 8081
 and then placing files in the `/vfs/file_transfer:file_transfer/files/` directory of the second (the `--home` dir path is specified as an argument to `boot-fake-node`), and sending a request from the first:
 
 ```
-m fake2.os@file_transfer:file_transfer:template.os "ListFiles"
+m fake2.dev@file_transfer:file_transfer:template.os "ListFiles"
 ```
 
 You should see a printed response.
 
 ```md
-Thu 1/11 13:14 response from fake2.os@file_transfer:file_transfer:template.os: {"ListFiles":[{"name":"file_transfer:template.os/files/barry-lyndon.mp4","size":8760244}, {"name":"file_transfer:template.os/files/blue-danube.mp3","size":9668359}]}
+Thu 1/11 13:14 response from fake2.dev@file_transfer:file_transfer:template.os: {"ListFiles":[{"name":"file_transfer:template.dev/files/barry-lyndon.mp4","size":8760244}, {"name":"file_transfer:template.dev/files/blue-danube.mp3","size":9668359}]}
 ```
 
 ### Transfer
@@ -1164,7 +1164,7 @@ There you have it!
 Try and run it, you can download a file with the command
 
 ```
-m our@file_transfer:file_transfer:template.os '{"Download": {"name": "dawg.jpeg", "target": "fake2.os@file_transfer:file_transfer:template.os"}}'
+m our@file_transfer:file_transfer:template.dev '{"Download": {"name": "dawg.jpeg", "target": "fake2.dev@file_transfer:file_transfer:template.os"}}'
 ```
 
 replacing node name and file name!

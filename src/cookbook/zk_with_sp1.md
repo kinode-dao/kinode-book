@@ -7,12 +7,14 @@ There are a number of other ZK proving systems both in production and under deve
 ### Start
 
 In a terminal window, start a fake node to use for development of this app.
+
 ```bash
 kit boot-fake-node
 ```
 
 In another terminal, create a new app using [kit](../kit-dev-toolkit.md).
 Use the fibonacci template, which can then be modified to calculate fibonacci numbers in a *provably correct* way.
+
 ```bash
 kit new my_zk_app -t fibonacci
 cd my_zk_app
@@ -22,12 +24,15 @@ kit bs
 Take note of the basic fibonacci program in the template.
 The program presents a request/response pattern where a requester asks for the nth fibonacci number, and the process calculates and returns it.
 This can be seen in action by running the following command in the fake node's terminal:
+
 ```bash
 m our@my_zk_app:my_zk_app:template.os -a 5 '{"Number": 10}'
 ```
+
 (Change the package name to whatever you named your app + the publisher node as assigned in `metadata.json`.)
 
 You should see a print from the process that looks like this, and a returned JSON response that the terminal prints:
+
 ```
 my_zk_app: fibonacci(10) = 55; 375ns
 {"Number":55}
@@ -38,15 +43,17 @@ my_zk_app: fibonacci(10) = 55; 375ns
 From the template, you have a program that can be used across the Kinode network to perform a certain computation.
 If the template app here has the correct capabilities, other nodes will be able to message it and receive a response.
 This can be seen in action by booting another fake node (while keeping the first one open) and sending the fibonacci program a message:
+
 ```
 # need to set a custom name and port so as not to overlap with first node
-kit boot-fake-node -p 8081 --fake-node-name fake2.os
+kit boot-fake-node -p 8081 --fake-node-name fake2.dev
 # wait for the node to boot
-m fake.os@my_zk_app:my_zk_app:template.os -a 5 '{"Number": 10}'
+m fake.dev@my_zk_app:my_zk_app:template.dev -a 5 '{"Number": 10}'
 ```
-(Replace the target node ID with the first fake node, which by default is `fake.os`)
 
-You should see `{"Number":55}` in the terminal of `fake2.os`!
+(Replace the target node ID with the first fake node, which by default is `fake.dev`)
+
+You should see `{"Number":55}` in the terminal of `fake2.dev`!
 This reveals a fascinating possibility: with Kinode, one can build p2p services accessible to any node on the network.
 However, the current implementation of the fibonacci program is not provably correct.
 The node running the program could make up a number -- without doing the work locally, there's no way to verify the result.
@@ -57,6 +64,7 @@ ZK proofs can solve this problem.
 To add ZK proofs to this simple fibonacci program, you can use the [SP1](https://github.com/succinctlabs/sp1) library to write a program in Rust, then produce proofs against it.
 
 First, add the SP1 dependency to the `Cargo.toml` file for `my_zk_app`:
+
 ```toml
 [dependencies]
 ...
@@ -66,13 +74,16 @@ sp1-core = { git = "https://github.com/succinctlabs/sp1.git" }
 
 Now follow the [SP1 install steps](https://succinctlabs.github.io/sp1/getting-started/install.html) to get the tooling for constructing a provable program.
 After installing you should be able to run
+
 ```
 cargo prove new fibonacci
 ```
+
 and navigate to a project, which conveniently contains a fibonacci function example.
 Modify it slightly to match what our fibonacci program does.
 You can more or less copy-and-paste the fibonacci function from your Kinode app to the `program/src/main.rs` file in the SP1 project.
 It'll look like this:
+
 ```rust
 #![no_main]
 sp1_zkvm::entrypoint!(main);
@@ -97,12 +108,14 @@ pub fn main() {
 
 Now, use SP1's `prove` tool to build the ELF that will actually be executed when the process get a fibonacci request.
 Run this inside the `program` dir of the SP1 project you created:
+
 ```bash
 cargo prove build
 ```
 
 Next, take the generated ELF file from `program/elf/riscv32im-succinct-zkvm-elf` and copy it into the `pkg` dir of your *Kinode* app.
 Go back to your Kinode app code and include this file as bytes so the process can execute it in the SP1 zkVM:
+
 ```rust
 const FIB_ELF: &[u8] = include_bytes!("../../pkg/riscv32im-succinct-zkvm-elf");
 ```
@@ -223,9 +236,11 @@ fn init(our: Address) {
 
 Install this app on two nodes -- they can be the fake `kit` nodes from before, or real ones on the network.
 Next, send a message from one to the other, asking it to generate a fibonacci proof!
+
 ```
-m our@my_zk_app:my_zk_app:template.os -a 30 '{"ProveIt": {"target": "fake.os", "n": 10}}'
+m our@my_zk_app:my_zk_app:template.os -a 30 '{"ProveIt": {"target": "fake.dev", "n": 10}}'
 ```
+
 As usual, set the process ID to what you used, and set the `target` JSON value to the other node's name.
 Try a few different numbers -- see if you can generate a timeout (it's set at 30 seconds now, both in the terminal command and inside the app code).
 If so, the power of this proof system is demonstrated: a user with little compute can ask a peer to do some work for them and quickly verify it!

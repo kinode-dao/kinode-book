@@ -7,6 +7,7 @@ The Kinode runtime handles message-passing between processes, plus the startup a
 This section describes the message design as it relates to processes.
 
 Each process instance has a globally unique identifier, or `Address`, composed of four elements.
+
 - the publisher's node
 - the package name (not to be confused with `PackageId`)
 - the process name (not to be confused with `ProcessId`). Processes spawn with their own identifier (`process_name`): either a developer-selected string or a randomly-generated number as string.
@@ -15,12 +16,14 @@ Each process instance has a globally unique identifier, or `Address`, composed o
 The way these elements compose is the following:
 
 [Package IDs](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/struct.PackageId.html) look like:
+
 ```
 [package_name]:[publisher_node]
 my_cool_software:publisher_node.os
 ```
 
 [Process IDs](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.ProcessId.html) look like:
+
 ```
 [process_name]:[package_name]:[publisher_node]
 process_one:my_cool_software:publisher_node.os
@@ -31,7 +34,7 @@ process_one:my_cool_software:publisher_node.os
 
 ```
 [node]@[process_name]:[package_name]:[publisher_node]
-some_user.os@process_one:my_cool_software:publisher_node.os
+some_user.dev@process_one:my_cool_software:publisher_node.os
 ```
 
 Processes are compiled to Wasm.
@@ -91,8 +94,9 @@ There is one other use of inheritance, discussed below: [passing data in request
 
 When sending a request, a process can await a response to that specific request, queueing other messages in the meantime.
 Awaiting a response leads to easier-to-read code:
-* The response is handled in the next line of code, rather than in a separate iteration of the message-handling loop
-* Therefore, the `context` need not be set.
+
+- The response is handled in the next line of code, rather than in a separate iteration of the message-handling loop
+- Therefore, the `context` need not be set.
 
 The downside of awaiting a response is that all other messages to a process will be queued until that response is received and handled.
 As such, certain applications lend themselves to blocking with an await, and others don't.
@@ -132,6 +136,7 @@ If process B does not attach a new `lazy_load_blob` to that inheriting message, 
 For example, consider again the file-transfer process discussed [above](#awaiting-a-response).
 Say one node, `send.os`, is transferring a file to another node, `recv.os`.
 The process of sending a file chunk will look something like:
+
 1. `recv.os` sends a request for chunk N
 2. `send.os` receives the request and itself makes a request to the filesystem for the piece of the file
 3. `send.os` receives a response from the filesystem with the piece of the file in the `lazy_load_blob`;
@@ -166,6 +171,7 @@ A process can spawn "child" processes — in which case the spawner is known as 
 As discussed [above](#awaiting-a-response), one of the primary reasons to write an application with multiple processes is to enable both simple code and high performance.
 
 Child processes can be used to:
+
 1. Run code that may crash without risking crashing the parent
 2. Run compute-heavy code without blocking the parent
 3. Run IO-heavy code without blocking the parent
@@ -186,7 +192,6 @@ The details of this are not covered in the Kinode Book, but can be found in the 
 Wasm runs modules by default, or components, as described [here](https://component-model.bytecodealliance.org/design/why-component-model.html): components are just modules that follow some specific format.
 Kinode processes are Wasm components that have certain imports and exports so they can be run by Kinode OS.
 Pragmatically, processes can be compiled using the [`kit` tools](https://github.com/kinode-dao/kit).
-
 
 The long term goal of Kinode is, using [WASI](https://wasi.dev/), to provide a secure, sandboxed environment for Wasm components to make use of the kernel features described in this document.
 Further, Kinode has a Virtual File System ([VFS](../files.md)) which processes can interact with to access files on a user's machine, and in the future WASI could also expose access to the filesystem for Wasm components directly.

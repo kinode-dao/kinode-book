@@ -1,6 +1,7 @@
 # Chess Engine
 
 Chess is a good example for a Kinode application walk-through because:
+
 1. The basic game logic is already readily available.
    There are thousands of high-quality chess libraries across many languages that can be imported into a Wasm app that runs on Kinode.
    We'll be using [pleco](https://github.com/pleco-rs/Pleco)
@@ -44,6 +45,7 @@ We want to play chess with other people.
 Let's start by creating a persisted state for the chess app and a `body` format for sending messages to other nodes.
 
 In `my_chess/src/lib.rs` add the following simple Request/Response interface and persistable game state:
+
 ```rust
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
@@ -110,11 +112,13 @@ To keep things clean, leverage the request/response pattern and the `context` fi
 
 Below, you'll find the full code for the CLI version of the app.
 You can build it and install it on a node using `kit`.
-You can interact with it in the terminal, primitively, like so (assuming your first node is `fake.os` and second is `fake2.os`):
+You can interact with it in the terminal, primitively, like so (assuming your first node is `fake.dev` and second is `fake2.dev`):
+
 ```
-m our@my_chess:my_chess:template.os '{"NewGame": {"white": "fake.os", "black": "fake2.os"}}'
-m our@my_chess:my_chess:template.os '{"Move": {"game_id": "fake2.os", "move_str": "e2e4"}}'
+m our@my_chess:my_chess:template.dev '{"NewGame": {"white": "fake.dev", "black": "fake2.dev"}}'
+m our@my_chess:my_chess:template.dev '{"Move": {"game_id": "fake2.dev", "move_str": "e2e4"}}'
 ```
+
 (If you want to make a more ergonomic CLI app, consider parsing `body` as a string...)
 
 As you read through the code, you might notice a problem with this app: there's no way to see your games!
@@ -122,6 +126,7 @@ A fun project would be to add a CLI command that shows you, in-terminal, the boa
 But in the [next chapter](./frontend.md), we'll add a frontend to this app so you can see your games in a browser.
 
 `my_chess/Cargo.toml`:
+
 ```toml
 [package]
 name = "my_chess"
@@ -152,6 +157,7 @@ package = "kinode:process"
 ```
 
 `my_chess/src/lib.rs`:
+
 ```rust
 #![feature(let_chains)]
 use pleco::Board;

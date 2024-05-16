@@ -22,7 +22,7 @@ For example, to start two fake nodes, `fake.dev` and `fake2.dev`:
 kit boot-fake-node
 
 # In a new terminal
-kit boot-fake-node -f fake2.dev -p 8081 -h /tmp/kinode-fake-node-2
+kit boot-fake-node --home /tmp/kinode-fake-node-2 -p 8081 --fake-node-name fake2.dev
 
 # Send a message from fake2.dev to fake.dev
 # In the terminal of fake2.dev:
@@ -62,7 +62,7 @@ Options:
   -h, --home <HOME>
           Where to place the home directory for the fake node [default: /tmp/kinode-fake-node]
   -f, --fake-node-name <NODE_NAME>
-          Name for fake node [default: fake.os]
+          Name for fake node [default: fake.dev]
   -c, --fakechain-port <FAKECHAIN_PORT>
           The port to run the fakechain on (or to connect to) [default: 8545]
       --rpc <RPC_ENDPOINT>
@@ -116,7 +116,7 @@ Path to place fake node home directory at; defaults to `/tmp/kinode-fake-node`.
 
 short: `-f`
 
-The name of the fake node; defaults to `fake.os`.
+The name of the fake node; defaults to `fake.dev`.
 
 ### `--fakechain-port`
 

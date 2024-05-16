@@ -82,10 +82,12 @@ The files in the `pkg/` directory are injected into the Kinode with [`kit start-
 
 Though not included in this template, packages with a frontend have a `ui/` directory as well.
 For an example, look at the result of:
+
 ```bash
 kit new my_chat_app_with_ui --ui
 tree my_chat_app_with_ui
 ```
+
 Note that not all templates have a UI-enabled version.
 As of 240118, only the Rust chat template has a UI-enabled version.
 
@@ -134,8 +136,9 @@ The `metadata.json` file contains ERC721 compatible metadata about the package.
 The only required fields are `package_name`, `current_version`, and `publisher`, which are filled in with default values:
 
 ```bash
-$ cat my_chat_app/metadata.json
+cat my_chat_app/metadata.json
 ```
+
 ```json
 {
     "name": "my_chat_app",
@@ -154,6 +157,7 @@ $ cat my_chat_app/metadata.json
     "animation_url": ""
 }
 ```
+
 Here, the `publisher` is some default value, but for a real package, this field should contain the KNS id of the publishing node.
 The `publisher` can also be set with a `kit new --publisher` flag.
 The rest of these fields are not required for development, but become important when publishing a package with the `app_store`.
@@ -265,7 +269,7 @@ Congratulations: you've now built and installed your first application on Kinode
 To test out the functionality of `my_chat_app`, spin up another fake node to chat with in a new terminal:
 
 ```bash
-kit boot-fake-node -h /tmp/kinode-fake-node-2 -p 8081 -f fake2.os
+kit boot-fake-node -h /tmp/kinode-fake-node-2 -p 8081 -f fake2.dev
 ```
 
 The fake nodes communicate over a mocked local network.
@@ -285,20 +289,20 @@ kit start-package -p 8081
 To send a chat message from the first node, run the following in its terminal:
 
 ```
-m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.os", "message": "hello world"}}'
+m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.dev", "message": "hello world"}}'
 ```
 
 and replying, from the other terminal:
 
 ```
-m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.os", "message": "wow, it works!"}}'
+m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.dev", "message": "wow, it works!"}}'
 ```
 
 Messages can also be injected from the outside.
 From a bash terminal, use `kit inject-message`, like so:
 
 ```bash
-kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.os", "message": "hello from the outside world"}}'
-kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.os", "message": "replying from fake2.os using first method..."}}' --node fake2.os
-kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.os", "message": "and second!"}}' -p 8081
+kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.dev", "message": "hello from the outside world"}}'
+kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.dev", "message": "replying from fake2.devs using first method..."}}' --node fake2.dev
+kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.dev", "message": "and second!"}}' -p 8081
 ```

@@ -3,13 +3,14 @@
 `kit inject-message` injects the given message to the node running at given port/URL, e.g.,
 
 ```
-kit inject-message foo:foo:template.os '{"Send": {"target": "fake2.os", "message": "hello world"}}'
+kit inject-message foo:foo:template.os '{"Send": {"target": "fake2.dev", "message": "hello world"}}'
 ```
 
 ## Discussion
 
 `kit inject-message` injects the given message into the given node.
 It is useful for:
+
 1. Testing processes from the outside world during development
 2. Injecting data into the node
 3. Combining the above with `bash` or other scripting.
@@ -69,10 +70,10 @@ short: `-n`
 
 Node to target (i.e. the node portion of the address).
 
-E.g., the following, sent to the port running `fake.os`, will be forwarded from `fake.os`'s HTTP server to `fake2@foo:foo:template.os`:
+E.g., the following, sent to the port running `fake.dev`, will be forwarded from `fake.dev`'s HTTP server to `fake2.dev@foo:foo:template.os`:
 
 ``` bash
-kit inject-message foo:foo:template.os '{"Send": {"target": "fake.os", "message": "wow, it works!"}}' --node fake2.os
+kit inject-message foo:foo:template.dev '{"Send": {"target": "fake.dev", "message": "wow, it works!"}}' --node fake2.dev
 ```
 
 ### `--blob`

@@ -79,7 +79,6 @@ For example:
 runtime = { FetchVersion = "latest" }
 ```
 
-
 ### `runtime_build_release`
 
 If given `runtime = RepoPath`, `runtime_build_release` decides whether to build the runtime as `--release` or not.
@@ -89,7 +88,6 @@ For example:
 ```toml
 runtime_build_release = true
 ```
-
 
 ### `tests`
 
@@ -108,6 +106,7 @@ Key                     | Value Type      | Value Description
 Each test package is [a single-process package that accepts and responds with certain messages](#test-package-format).
 
 For example:
+
 ```toml
 [[tests]]
 setup_package_paths = ["chat"]
@@ -126,7 +125,6 @@ network_router = { port = 9001, defects = "None" }
 [[tests.nodes]]
 ...
 ```
-
 
 #### `nodes`
 
@@ -150,16 +148,15 @@ For example:
 [[tests.nodes]]
 port = 8080
 home = "home/first"
-fake_node_name = "first.os"
+fake_node_name = "first.dev"
 runtime_verbosity = 0
 
 [[tests.nodes]]
 port = 8081
 home = "home/second"
-fake_node_name = "second.os"
+fake_node_name = "second.dev"
 runtime_verbosity = 0
 ```
-
 
 ## Test Package Interface
 

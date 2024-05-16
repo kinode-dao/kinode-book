@@ -1,4 +1,5 @@
 # Terminal API
+
 It is extremely rare for an app to have direct access to the terminal api.
 Normally, the terminal will be used to call scripts, which will have access to the process in question.
 For documentation on using, writing, publishing, and composing scripts, see the [terminal use documentation](../terminal.md), or for a quick start, the [script cookbook](../cookbook/writing_scripts.md).
@@ -16,15 +17,16 @@ For this reason, users are unlikely to grant direct terminal access to most apps
 If one does have the capability to send `Request`s to the terminal, they can execute commands like so:
 `script_name:package_name:publisher_name <ARGS>`
 
-For example, the `hi` script, which pings another node's terminal with a message, can be called like so: `hi:terminal:sys default-router-1.os what's up?`.
-In this case, the arguments are both `default-router-1.os` and the message `what's up?`.
+For example, the `hi` script, which pings another node's terminal with a message, can be called like so: `hi:terminal:sys default-router-1.dev what's up?`.
+In this case, the arguments are both `default-router-1.dev` and the message `what's up?`.
 
 Some commonly used scripts have shorthand aliases because they are invoked so frequently.
-For example, `hi:terminal:sys` can be shortened to just `hi` as in: `hi default-router-1.os what's up?`.
+For example, `hi:terminal:sys` can be shortened to just `hi` as in: `hi default-router-1.dev what's up?`.
 
 The other most commonly used script is `m:terminal:sys`, or just `m` - which stands for `Message`. `m` let's you send a request to any node or application like so:
+
 ```bash
-m john.os@proc:pkg:pub '{"foo":"bar"}'
+m john.dev@proc:pkg:pub '{"foo":"bar"}'
 ```
 
 Note that if your process has the ability to message the `terminal` app, then that process can call any script - of which there may be many on a machine, so we cannot possibly write all of them down in this document.
