@@ -12,6 +12,7 @@
     - [Capability-Based Security](./process/capabilities.md)
     - [Startup, Spindown, and Crashes](./process/startup.md)
     - [Extensions](./process/extensions.md)
+    - [WIT APIs](./process/wit-apis.md)
   - [Networking Protocol](./networking_protocol.md)
   - [Public Key Infrastructure](./pki.md)
   - [HTTP Server & Client](./http_server_and_client.md)
