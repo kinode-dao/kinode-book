@@ -1,6 +1,5 @@
 # Install `kit`
 
-
 These documents describe some ways you can use these tools, but do not attempt to be completely exhaustive.
 You are encouraged to make use of the `--help` flag, which can be used for the top-level `kit` command:
 
@@ -14,7 +13,8 @@ Commands:
   boot-fake-node       Boot a fake node for development [aliases: f]
   build                Build a Kinode package [aliases: b]
   build-start-package  Build and start a Kinode package [aliases: bs]
-  dev-ui               Start the web UI development server with hot reloading (same as `cd ui && npm i && npm run dev`) [aliases: d]
+  chain                Start a local chain for development [aliases: c]
+  dev-ui               Start the web UI development server with hot reloading (same as `cd ui && npm i && npm run dev` [aliases: d]
   inject-message       Inject a message to a running Kinode [aliases: i]
   new                  Create a Kinode template package [aliases: n]
   remove-package       Remove a running package from a node [aliases: r]

@@ -28,6 +28,7 @@
   - [`start-package`](./kit/start-package.md)
   - [`build-start-package`](./kit/build-start-package.md)
   - [`remove-package`](./kit/remove-package.md)
+  - [`chain`](./kit/chain.md)
   - [`dev-ui`](./kit/dev-ui.md)
   - [`inject-message`](./kit/inject-message.md)
   - [`run-tests`](./kit/run-tests.md)
