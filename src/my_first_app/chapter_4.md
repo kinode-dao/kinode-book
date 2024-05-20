@@ -1,9 +1,9 @@
 # Frontend Time
 
-After the last chapter, you should have a simple process that responds to two commands from the terminal.
-In this chapter, you'll add some basic HTTP logic to serve a frontend and accept an HTTP PUT request that contains a command.
+After the last section, you should have a simple process that responds to two commands from the terminal.
+In this section, you'll add some basic HTTP logic to serve a frontend and accept an HTTP PUT request that contains a command.
 
-If you're the type of person that prefers to learn by looking at a complete example, check out the [chess frontend chapter](../chess_app/frontend.md) for a fleshed-out example and a link to some frontend code.
+If you're the type of person that prefers to learn by looking at a complete example, check out the [chess frontend section](../chess_app/frontend.md) for a fleshed-out example and a link to some frontend code.
 
 ## Adding HTTP request handling
 
@@ -11,32 +11,36 @@ Using the built-in HTTP server will require handling a new type of request in ou
 The [process_lib](../process_stdlib/overview.md) contains types and functions for doing so.
 
 At the top of your process, import `http`, `get_blob`, and `Message` from [`kinode_process_lib`](../process_stdlib/overview.md) along with the rest of the imports.
-You'll use `get_blob()` to grab the body bytes of an incoming HTTP request.
+You'll use `get_blob()` to grab the `body` bytes of an incoming HTTP request.
 ```rust
 use kinode_process_lib::{
     await_message, call_init, get_blob, http, println, Address, Message, Request, Response,
 };
 ```
 
-Keep the custom `body` type the same, and keep using that for terminal input.
+Keep the custom `body` type (i.e. `MyBody`) the same, and keep using that for terminal input.
 
-At the beginning of the init function, in order to receive HTTP requests, you must use the `kinode_process_lib::http` library to bind a new path. Binding a path will cause the process to receive all HTTP requests that match that path.
+At the beginning of the init function (here `my_init_fn()`), in order to receive HTTP requests, you must use the [`kinode_process_lib::http`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/index.html) library to bind a new path.
+Binding a path will cause the process to receive all HTTP requests that match that path.
 You can also bind static content to a path using another function in the library.
+
 ```rust
 // ...
 fn my_init_fn(our: Address) {
     println!("{our}: started");
-    // the first argument is the path to bind. Note that requests will be namespaced
-    // under the process name, so this will be accessible at /my_process/
 
-    // the second argument marks whether to serve the path only to authenticated clients,
-    // and the third argument marks whether to only serve the path locally.
-    // in order to skip authentication, set the second argument to false here.
     http::bind_http_path("/", false, false).unwrap();
     // ...
 }
 // ...
 ```
+
+`http::bind_http_path("/", false, false)` arguments mean the following:
+- The first argument is the path to bind. 
+Note that requests will be namespaced under the process name, so this will be accessible at e.g. `/my_process_name/`.
+- The second argument marks whether to serve the path only to authenticated clients
+In order to skip authentication, set the second argument to false here.
+- The third argument marks whether to only serve the path locally.
 
 Now that you're handling multiple kinds of requests, let's refactor the loop to be more concise and move the request-specific logic to dedicated functions.
 Put this right under the bind command:
@@ -60,9 +64,9 @@ loop {
 ```
 
 Note that different apps will want to discriminate between incoming messages differently.
-This code doesn't check the `source.node` at all, for example.
+This code doesn't check the [`source`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/enum.Message.html#method.source)[`.node`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html#method.node) at all, for example.
 
-The `handle_hello_message` will look just like what was in chapter 3.
+The `handle_hello_message` will look just like what was in [Section 5.3.](./chapter_3.md)
 However, since this logic is no longer inside the main loop, return a boolean to indicate whether or not to exit out of the loop.
 Request handling can be separated out into as many functions is needed to keep the code clean.
 ```rust
@@ -97,6 +101,8 @@ fn handle_hello_message(message: &Message) -> bool {
 }
 ```
 
+### Handling an HTTP Message
+
 Finally, let's define `handle_http_message`.
 ```rust
 fn handle_http_message(our: &Address, message: &Message) {
@@ -104,7 +110,8 @@ fn handle_http_message(our: &Address, message: &Message) {
 }
 ```
 
-Instead of parsing our `body` type from the message, parse the type that the `http_server` process gives us. This type is defined in the `kinode_process_lib::http` module for us:
+Instead of directly parsing the `body` type from the message, parse the type that the `http_server` process gives us. 
+This type is defined in the `kinode_process_lib::http` module for us:
 ```rust
 // ...
 let Ok(server_request) = http::HttpServerRequest::from_bytes(message.body()) else {
@@ -114,9 +121,10 @@ let Ok(server_request) = http::HttpServerRequest::from_bytes(message.body()) els
 // ...
 ```
 
-Next, you must parse out the HTTP request from the general type.
+Next, you must parse out the HTTP request from the `HttpServerRequest`.
 This is necessary because the `HttpServerRequest` enum contains both HTTP protocol requests and requests related to WebSockets.
-Note that it's quite possible to streamline this series of request refinements if you're only interested in one type of request — this example is overly thorough for demonstration purposes.
+If your application only needs to handle one type of request (e.g., only HTTP requests), you could simplify the code by directly handling that type without having to check for a specific request type from the `HttpServerRequest` enum each time.
+This example is overly thorough for demonstration purposes.
 
 ```rust
 // ...
@@ -137,7 +145,7 @@ if http_request.method().unwrap() != http::Method::PUT {
 // ...
 ```
 
-Finally, grab the `blob` from the request, send a 200 OK response to the client, and handle the `blob`, by sending a Request to ourselves with the `blob` as the `body`.
+Finally, grab the `blob` from the request, send a `200 OK` response to the client, and handle the `blob` by sending a `Request` to ourselves with the `blob` as the `body`.
 This could be done in a different way, but this simple pattern is useful for letting HTTP requests masquerade as in-Kinode requests.
 ```rust
 // ...
@@ -145,11 +153,13 @@ let Some(body) = get_blob() else {
     println!("received a PUT HTTP request with no body, skipping");
     return;
 };
-http::send_response(http::StatusCode::OK, None, vec![]).unwrap();
+http::send_response(http::StatusCode::OK, None, vec![]);
 Request::to(our).body(body.bytes).send().unwrap();
 ```
 
-Putting it all together, you get a process which you can build and start, then use cURL to send Hello and Goodbye requests via HTTP PUTs!
+Putting it all together, you get a process which you can build and start, then use cURL to send `Hello` and `Goodbye` requests via HTTP PUTs!
+
+### Requesting Capabilities
 
 Also, remember to request the capability to message `http_server` in `manifest.json`:
 ```json
@@ -160,7 +170,8 @@ Also, remember to request the capability to message `http_server` in `manifest.j
 ...
 ```
 
-Here's the full code:
+### The Full Code
+
 ```rust
 use serde::{Deserialize, Serialize};
 use kinode_process_lib::{
@@ -198,8 +209,7 @@ fn my_init_fn(our: Address) {
 
     http::bind_http_path("/", false, false).unwrap();
 
-    Request::new()
-        .target(&our)
+    Request::to(&our)
         .body(MyBody::hello("hello world"))
         .send()
         .unwrap();
@@ -240,7 +250,7 @@ fn handle_http_message(our: &Address, message: &Message) {
         println!("received a PUT HTTP request with no body, skipping");
         return;
     };
-    http::send_response(http::StatusCode::OK, None, vec![]).unwrap();
+    http::send_response(http::StatusCode::OK, None, vec![]);
     Request::to(our).body(body.bytes).send().unwrap();
 }
 
@@ -275,12 +285,13 @@ fn handle_hello_message(message: &Message) -> bool {
 }
 ```
 
-A cURL command to send a Hello request looks like this.
+A cURL command to send a `Hello` request looks like this.
 Make sure to replace the URL with your node's local port and the correct process name.
-Note: if you had not set `authenticated` to false in the bind command, you would need to add an `Authorization` header to this request with the JWT cookie of your node.
+Note: if you had not set `authenticated` to false in the bind command, you would need to add an `Authorization` header to this request with the [JWT](https://jwt.io/) cookie of your node.
 This is saved in your browser automatically on login.
+
 ```bash
-curl -X PUT -H "Content-Type: application/json" -d '{"Hello": "greetings"}' "http://localhost:8080/tutorial:tutorial:template.os"
+curl -X PUT -H "Content-Type: application/json" -d '{"Hello": "greetings"}' "http://localhost:8080/my_process:my_package:template.os"
 ```
 
 ## Serving a static frontend
@@ -288,18 +299,23 @@ curl -X PUT -H "Content-Type: application/json" -d '{"Hello": "greetings"}' "htt
 If you just want to serve an API, you've seen enough now to handle PUTs and GETs to your heart's content.
 But the classic personal node app also serves a webpage that provides a user interface for your program.
 
-You *could* add handling to our `/` path to dynamically serve some HTML on every GET.
-But for maximum ease and efficiency, use the static bind command on `/` and move our PUT handling to `/api`.
+You *could* add handling to root `/` path to dynamically serve some HTML on every GET.
+But for maximum ease and efficiency, use the static bind command on `/` and move the PUT handling to `/api`. 
 To do this, edit the bind commands in `my_init_fn` to look like this:
+
 ```rust
 http::bind_http_path("/api", true, false).unwrap();
-http::serve_index_html(&our, "ui").unwrap();
+http::serve_index_html(&our, "ui", true, false, vec!["/"]).unwrap();
 ```
+
+Note that you are setting `authenticated` to `true` in the `serve_index_html` and `bind_http_path` calls. 
+The result of this is that the webpage will be able to get served by the browser, but not by the raw cURL request.
 
 Now you can add a static `index.html` file to the package.
 UI files are stored in the `ui/` directory and built into the application by `kit build` automatically.
-Create a new file in `ui/index.html` with the following contents.
+Create a `ui/` directory in the package root, and then a new file in `ui/index.html` with the following contents.
 **Make sure to replace the fetch URL with your process ID!**
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -318,7 +334,7 @@ Create a new file in `ui/index.html` with the following contents.
     </main>
 	<script>
         async function say_hello(text) {
-          const result = await fetch("/tutorial:tutorial:template.os/api", {
+          const result = await fetch("/my_process:my_package:template.os/api", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ "Hello": text }),
@@ -344,19 +360,22 @@ Create a new file in `ui/index.html` with the following contents.
 This is a super barebones `index.html` that provides a form to make requests to the `/api` endpoint.
 Additional UI dev info can be found [here](../apis/frontend_development.md).
 
-Finally, add one more entry to `manifest.json`: messaging capabilities to the VFS which is required to store and access the UI `index.html`:
+Finally, add one more entry to `manifest.json`: messaging capabilities to the [VFS](../files.md) which is required to store and access the UI `index.html`:
 ```json
 ...
 "request_capabilities": [
-    "vfs:distro:sys"
+    "vfs:distro:sys",
+    ...
 ],
 ...
 ```
 
-After saving this file to `ui/index.html`, rebuilding the program, and starting the package again, you should be able to navigate to you `http://localhost:8080/<process_id>` and see the form page.
-Note that you can now set `authenticated` to `true` in the `/api` binding and the webpage will still work, but cURL will not.
+After saving `ui/index.html`, rebuilding the program, and starting the package again, you should be able to navigate to your `http://localhost:8080/my_process:my_package:template.os` and see the form page.
+Because you now set `authenticated` to `true` in the `/api` binding, the webpage will still work, but cURL will not.
+
+The user will navigate to `/` to see the webpage, and when they make a PUT request, it will automatically happen on `/api` to send a message to the process.
 
 This frontend is now fully packaged with the process — there are no more steps!
 Of course, this can be made arbitrarily complex with various frontend frameworks that produce a static build.
 
-In the next and final chapter, learn about the package metadata and how to share this app across the Kinode network.
+In the next and final section, learn about the package metadata and how to share this app across the Kinode network.
