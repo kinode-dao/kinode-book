@@ -98,6 +98,9 @@ cargo install cargo-wasi
 
 For more information, or debugging, see the [Rust lang install page](https://www.rust-lang.org/tools/install).
 
+Kinode uses the **nightly** build of Rust.
+You will want to run the command `rustup update` on a regular basis to keep your version of the language current, especially if you run into issues compiling the runtime down the line.
+
 ### Acquire Kinode OS core
 
 Clone and set up the repository:
