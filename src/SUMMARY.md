@@ -69,3 +69,4 @@
   - [Timer API](./apis/timer.md)
   - [VFS API](./apis/vfs.md)
   - [WebSocket API](./apis/websocket_authentication.md)
+- [Hosted Nodes User Guide](./hosted-nodes.md)
