@@ -8,7 +8,7 @@ More discussion of databases in Kinode can be found [here](../databases.md).
 ```rust
 use kinode_process_lib::sqlite;
 
-let db = sqlite::open(our.package_id(), "users")?;
+let db = sqlite::open(our.package_id(), "users", None).unwrap();
 // You can now pass this SQLite struct as a reference to other functions
 ```
 
@@ -22,14 +22,14 @@ serde_json::Value::String("Charlie".to_string()),
 serde_json::Value::String("Dave".to_string()),
 ];
 
-sqlite.write(statement, params, None)?;
+db.write(statement, params, None);
 ```
 
 #### Read
 
 ```rust
 let query = "SELECT FROM users;".to_string();
-let rows = sqlite.read(query, vec![])?;
+let rows = db.read(query, vec![]).unwrap();
 // rows: Vec<HashMap<String, serde_json::Value>>
 println!("rows: {}", rows.len());
 for row in rows {
@@ -40,16 +40,16 @@ for row in rows {
 #### Transactions
 
 ```rust
-let tx_id = sqlite.begin_tx()?;
+let tx_id = db.begin_tx();
 
 let statement = "INSERT INTO users (name) VALUES (?);".to_string();
 let params = vec![serde_json::Value::String("Eve".to_string())];
 let params2 = vec![serde_json::Value::String("Steve".to_string())];
 
-sqlite.write(statement, params, Some(tx_id))?;
-sqlite.write(statement, params2, Some(tx_id))?;
+db.write(statement, params, Some(tx_id));
+db.write(statement, params2, Some(tx_id));
 
-sqlite.commit_tx(tx_id)?;
+db.commit_tx(tx_id);
 ```
 
 ### API
