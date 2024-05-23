@@ -35,7 +35,7 @@ let create_table_statement =
 
 db.write(create_table_statement, vec![], None);
 
-let insert_statement = "INSERT INTO users (name) VALUES (?) (?) (?);".to_string();
+let insert_statement = "INSERT INTO users (name) VALUES (?), (?), (?);".to_string();
 let params = vec![
     serde_json::Value::String("Bob".to_string()),
     serde_json::Value::String("Charlie".to_string()),
