@@ -172,13 +172,13 @@ Here, the `publisher` is some default value, but for a real package, this field 
 The `publisher` can also be set with a `kit new --publisher` flag.
 The rest of these fields are not required for development, but become important when publishing a package with the [`app_store`](https://github.com/kinode-dao/kinode/tree/main/kinode/packages/app_store).
 
-As an aside: each process has a unique `processId`, used to address messages to that process, that looks like
+As an aside: each process has a unique `ProcessId`, used to address messages to that process, that looks like
 
 ```
 <process_name>:<package_name>:<publisher>
 ```
 
-You can read more about `processId`s [here](../process/processes.md#overview).
+You can read more about `ProcessId`s [here](../process/processes.md#overview).
 
 ## Building the Package
 
