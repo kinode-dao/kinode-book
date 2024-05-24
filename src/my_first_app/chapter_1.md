@@ -14,7 +14,7 @@ Install Rust and the Kinode Development Tools, or `kit`:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-cargo install --git https://github.com/kinode-dao/kit
+cargo install --git https://github.com/kinode-dao/kit --locked
 ```
 
 ## Creating a New Kinode Package Template

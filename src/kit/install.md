@@ -43,7 +43,7 @@ The first chapter of the [My First Kinode App tutorial](../my_first_app/chapter_
 To get `kit`, run
 
 ```
-cargo install --git https://github.com/kinode-dao/kit
+cargo install --git https://github.com/kinode-dao/kit --locked
 ```
 
 To update, run that same command or
