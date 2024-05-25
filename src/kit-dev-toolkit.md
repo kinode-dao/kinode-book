@@ -11,6 +11,7 @@
 * [`kit start-package`](./kit/start-package.md)
 * [`kit build-start-package`](./kit/build-start-package.md)
 * [`kit remove-package`](./kit/remove-package.md)
+* [`kit chain`](./kit/chain.md)
 * [`kit dev-ui`](./kit/dev-ui.md)
 * [`kit inject-message`](./kit/inject-message.md)
 * [`kit run-tests`](./kit/run-tests.md)

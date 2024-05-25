@@ -56,13 +56,13 @@ Options:
   -r, --runtime-path <PATH>
           Path to Kinode core repo or runtime binary (overrides --version)
   -v, --version <VERSION>
-          Version of Kinode binary to use (overridden by --runtime-path) [default: latest] [possible values: latest, v0.5.3-alpha, v0.5.2-alpha, v0.5.1-alpha]
+          Version of Kinode binary to use (overridden by --runtime-path) [default: latest] [possible values: latest, v0.7.4, v0.7.3, v0.7.2]
   -p, --port <NODE_PORT>
           The port to run the fake node on [default: 8080]
-  -h, --home <HOME>
+  -o, --home <HOME>
           Where to place the home directory for the fake node [default: /tmp/kinode-fake-node]
   -f, --fake-node-name <NODE_NAME>
-          Name for fake node [default: fake.os]
+          Name for fake node [default: fake.dev]
   -c, --fakechain-port <FAKECHAIN_PORT>
           The port to run the fakechain on (or to connect to) [default: 8545]
       --rpc <RPC_ENDPOINT>
@@ -75,7 +75,7 @@ Options:
           If set and given --runtime-path, compile release build [default: debug build]
       --verbosity <VERBOSITY>
           Verbosity of node: higher is more verbose [default: 0]
-      --help
+  -h, --help
           Print help
 ```
 
@@ -108,7 +108,7 @@ Run the fake node on this port; defaults to `8080`.
 
 ### `--home`
 
-short: `-h`
+short: `-o`
 
 Path to place fake node home directory at; defaults to `/tmp/kinode-fake-node`.
 

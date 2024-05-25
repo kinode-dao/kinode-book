@@ -34,7 +34,8 @@ Options:
       --ui-only              If set, build ONLY the web UI for the process
   -s, --skip-deps-check      If set, do not check for dependencies
       --features <FEATURES>  Pass these comma-delimited feature flags to Rust cargo builds
-  -h, --help                 Print help```
+  -v, --verbose              If set, output stdout and stderr
+  -h, --help                 Print help
 ```
 
 ### Optional positional arg: `DIR`
@@ -78,3 +79,9 @@ Build the package with the given [cargo features](https://doc.rust-lang.org/carg
 
 Features can be used like shown [here](https://doc.rust-lang.org/cargo/reference/features.html#command-line-feature-options).
 Currently the only feature supported system-wide is `simulation-mode`.
+
+### `--verbose`
+
+short: `-v`
+
+Always output stdout and stderr if set.

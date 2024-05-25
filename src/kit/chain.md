@@ -27,6 +27,7 @@ Usage: kit chain [OPTIONS]
 
 Options:
   -p, --port <PORT>  Port to run the chain on [default: 8545]
+  -v, --verbose      If set, output stdout and stderr
   -h, --help         Print help
 ```
 
@@ -34,3 +35,9 @@ Options:
 
 Port to run anvil fakechain on.
 Defaults to `8545`.
+
+### `--verbose`
+
+short: `-v`
+
+Always output stdout and stderr if set.
