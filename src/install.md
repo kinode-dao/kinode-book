@@ -83,6 +83,22 @@ If you need further help with Docker, [access the official Docker documentation 
 
 You can compile the binary from source using the following instructions.
 
+### Acquire Dependencies
+
+If your system doesn't already have `cmake` and OpenSSL, download them:
+
+#### Linux
+
+```sh
+sudo apt-get install cmake libssl-dev
+```
+
+#### Mac
+
+```sh
+brew install cmake openssl
+```
+
 ### Acquire Rust and various tools
 
 Install Rust and some `cargo` tools, by running the following in your terminal:
