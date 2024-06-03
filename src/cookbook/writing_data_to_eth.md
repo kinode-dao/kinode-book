@@ -157,7 +157,7 @@ fn read(provider: &Provider) -> anyhow::Result<U256> {
     let count = Counter::numberCall {}.abi_encode();
 
     let tx = TransactionRequest::default()
-        .to(counter_address)
+        .to(Some(counter_address))
         .input(TransactionInput::new(count.into()));
     let x = provider.call(tx, None);
 
