@@ -15,4 +15,5 @@
 * [`kit dev-ui`](./kit/dev-ui.md)
 * [`kit inject-message`](./kit/inject-message.md)
 * [`kit run-tests`](./kit/run-tests.md)
+* [`kit connect`](./kit/connect.md)
 * [`kit reset-cache`](./kit/reset-cache.md)

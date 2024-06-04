@@ -72,6 +72,8 @@ The local limit is a security measure, since the HTTP RPC allows injection of ar
 To use `kit` with a hosted node, you need to create a SSH tunnel, which maps a port on your local machine to a port on the Kinode's remote host.
 HTTP requests routed to that local port will then appear to the remote host as originating from its localhost.
 
+You can use [`kit connect`](./kit/connect.md) to create and destroy a SSH tunnel, or follow the instructions below to do it yourself.
+
 Create a SSH tunnel like so (again, replacing [assumed values with those in your `advanced details`](#accessing-your-kinodes-terminal)):
 ```bash
 ssh -L 9090:localhost:8099 kexampleuser@template.hosting.kinode.net -f -N
