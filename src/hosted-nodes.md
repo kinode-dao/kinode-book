@@ -74,15 +74,17 @@ HTTP requests routed to that local port will then appear to the remote host as o
 
 Create a SSH tunnel like so (again, replacing [assumed values with those in your `advanced details`](#accessing-your-kinodes-terminal)):
 ```bash
-ssh -L 9090:localhost:8099 kexampleuser@template.hosting.kinode.net -f -N
+ssh -L 9090:localhost:8099 kexampleuser@template.hosting.kinode.net
 ```
 or, if you've added your host to your [`~/.ssh/config`](#ssh-config),
 ```bash
-ssh -L 9090:localhost:8099 template -f -N
+ssh -L 9090:localhost:8099 template
 ```
-
-Now, `kit` requests sent to `9090` will be routed to the remote Kinode, e.g.,
+You should see a `ssh` session open.
+While this session is open, `kit` requests sent to `9090` will be routed to the remote Kinode, e.g.,
 ```
 kit s foo -p 9090
 ```
 will function the same as for a locally-hosted Kinode.
+
+Closing the `ssh` connections with `Ctrl+D` or typing `exit` will close the tunnel.
