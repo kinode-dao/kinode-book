@@ -1,6 +1,7 @@
 # Summary
 
-- [Getting Started](./quick-start.md)
+- [Getting Started](./getting-started.md)
+  - [Quick Start](./quick-start.md)
   - [Introduction](./intro.md)
   - [Identity System](./identity_system.md)
   - [Design Philosophy](./design_philosophy.md)

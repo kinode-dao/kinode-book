@@ -1,14 +1,5 @@
 # Quick Start
 
-Kinode OS is a decentralized operating system, peer-to-peer app framework, and node network designed to simplify the development and deployment of decentralized applications.
-
-This Quick Start page is targeted at developers: if you want to get your hands dirty, continue [below](#run-two-fake-kinodes-and-chat-between-them).
-A more detailed version of this Quick Start leads off the [My First Kinode Application](./build-and-deploy-an-app.md) section.
-
-Otherwise:
-* To learn about high-level concepts, start with the [Introduction](./intro.md), and work through the book in-order.
-* To learn about how the system functions, start reading about [System Components](./system-components.md).
-
 ## Run two fake Kinodes and chat between them
 
 ```sh
