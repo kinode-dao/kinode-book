@@ -251,8 +251,8 @@ First, branching on the enum type `Increment`, call the increment() function wit
             chain_id: Some(31337),
             nonce: nonce,
             to: TxKind::Call(EthAddress::from_str(COUNTER_ADDRESS).unwrap()),
-            gas_limit: 100000,
-            gas_price: 100000000,
+            gas_limit: 1000000,
+            gas_price: 1000000000,
             input: increment.into(),
             ..Default::default()
         };
