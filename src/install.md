@@ -30,7 +30,7 @@ Then, go to `System Settings > Privacy and Security` and click to `Open Anyway` 
 ## Docker
 
 The recommended method for Linux and MacOS users is to use a prebuilt Docker image.
-Windows may work but is not yet officially supported: use the binary instead.
+Windows may work but is not officially supported.
 
 ### Installing Docker
 
