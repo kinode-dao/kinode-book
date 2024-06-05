@@ -1,16 +1,16 @@
 # `kit boot-fake-node`
 
-`kit boot-fake-node` starts a "fake" node connected to a "fake" chain (i.e. not connected to the live network) , e.g.,
+`kit boot-fake-node` starts a "fake" node connected to a "fake" chain (i.e. not connected to the live network), e.g.,
 
 ```
 kit boot-fake-node
 ```
 
 By default, `boot-fake-node` fetches a prebuilt binary and launches the node using it.
-Alternatively, `boot-fake-node` can use a local binary or build a local Kinode core repo and use the resulting binary.
+Alternatively, `boot-fake-node` can build a local Kinode core repo and use the resulting binary.
 
-It also boots a fake chain with [anvil](https://book.getfoundry.sh/anvil/) in the background (see [kit chain](../kit/chain.md)).
-The fake chain comes preseeded with two contracts: KNS, which nodes use to index networking info of other nodes; and app_store, which nodes use to index published packages.
+It also boots a fake chain with [`anvil`](https://book.getfoundry.sh/anvil/) in the background (see [`kit chain`](../kit/chain.md)).
+The fake chain comes preseeded with two contracts: KNS, which nodes use to index networking info of other nodes; and `app_store`, which nodes use to index published packages.
 
 ## Example Usage
 
@@ -54,13 +54,13 @@ Usage: kit boot-fake-node [OPTIONS]
 
 Options:
   -r, --runtime-path <PATH>
-          Path to Kinode core repo or runtime binary (overrides --version)
+          Path to Kinode core repo (overrides --version)
   -v, --version <VERSION>
           Version of Kinode binary to use (overridden by --runtime-path) [default: latest] [possible values: latest, v0.7.4, v0.7.3, v0.7.2]
   -p, --port <NODE_PORT>
           The port to run the fake node on [default: 8080]
   -o, --home <HOME>
-          Where to place the home directory for the fake node [default: /tmp/kinode-fake-node]
+          Path to home directory for fake node [default: /tmp/kinode-fake-node]
   -f, --fake-node-name <NODE_NAME>
           Name for fake node [default: fake.dev]
   -c, --fakechain-port <FAKECHAIN_PORT>
@@ -83,7 +83,7 @@ Options:
 
 short: `-r`
 
-Pass to boot a fake node from a local binary or build a local Kinode core repo and use the resulting binary, e.g.
+Pass to build a local Kinode core repo and use the resulting binary to boot a fake node, e.g.
 
 ```
 kit boot-fake-node --runtime-path ~/git/kinode
@@ -110,7 +110,7 @@ Run the fake node on this port; defaults to `8080`.
 
 short: `-o`
 
-Path to place fake node home directory at; defaults to `/tmp/kinode-fake-node`.
+Path to home directory for fake node; defaults to `/tmp/kinode-fake-node`.
 
 ### `--fake-node-name`
 
