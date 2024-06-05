@@ -16,3 +16,4 @@
 * [`kit inject-message`](./kit/inject-message.md)
 * [`kit run-tests`](./kit/run-tests.md)
 * [`kit reset-cache`](./kit/reset-cache.md)
+* [`kit boot-real-node`](./kit/boot-real-node.md)
