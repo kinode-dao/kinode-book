@@ -33,6 +33,7 @@
   - [`inject-message`](./kit/inject-message.md)
   - [`run-tests`](./kit/run-tests.md)
   - [`reset-cache`](./kit/reset-cache.md)
+  - [`boot-real-node`](./kit/boot-real-node.md)
 - [My First Kinode Application](./build-and-deploy-an-app.md)
   - [Environment Setup](./my_first_app/chapter_1.md)
   - [Sending and Responding to a Message](./my_first_app/chapter_2.md)
