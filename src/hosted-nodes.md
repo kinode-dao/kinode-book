@@ -66,13 +66,13 @@ Rather than typing in a password to create a SSH connection, you can use a keypa
 ## Using `kit` With Your Hosted Node
 
 `kit` interacts with a Kinode through the Kinode's HTTP RPC.
-However, Kinode limits HTTP RPC access to localhost: remote requests are rejected.
+However, Kinode limits HTTP RPC access to localhost — remote requests are rejected.
 The local limit is a security measure, since the HTTP RPC allows injection of arbitrary messages with "root" capabilities.
 
 To use `kit` with a hosted node, you need to create a SSH tunnel, which maps a port on your local machine to a port on the Kinode's remote host.
 HTTP requests routed to that local port will then appear to the remote host as originating from its localhost.
 
-You can use [`kit connect`](./kit/connect.md) to create and destroy a SSH tunnel, or follow the instructions below to do it yourself.
+It is recommended to use [`kit connect`](./kit/connect.md) to create and destroy a SSH tunnel. Otherwise, you can also follow the instructions below to do it yourself.
 
 Create a SSH tunnel like so (again, replacing [assumed values with those in your `advanced details`](#accessing-your-kinodes-terminal)):
 ```bash
