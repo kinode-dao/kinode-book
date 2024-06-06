@@ -26,19 +26,12 @@ As discussed in [Managing Your Kinode](#managing-your-kinode), navigate to:
 4. `Show advanced details`
 
 In the advanced details, note the `SSH Address` and `SSH Password`.
-Here and below, the following SSH details will be assumed (you'll need to replace them with yours from `advanced details`):
-
-Field           | Value
---------------- | -----
-SSH Address     | kexampleuser@template.hosting.kinode.net
-SSH Password    | 123456789
-Local HTTP Port | 8099
 
 To access your Kinode remote instance, open a terminal and
 ```bash
-ssh kexampleuser@template.hosting.kinode.net
+ssh <SSH Address>
 ```
-where `kexampleuser@template.hosting.kinode.net` should be the `user@kinode_name.hosting.kinode.net` in your `SSH Address`.
+where `<SSH Address>` should be replaced with the one from your Valet advanced details.
 You will be prompted for a password: copy-paste the `SSH Password`.
 
 You should now have a different terminal prompt, indicating you have `ssh`d into the remote instance hosting your Kinode.
@@ -72,7 +65,8 @@ The local limit is a security measure, since the HTTP RPC allows injection of ar
 To use `kit` with a hosted node, you need to create a SSH tunnel, which maps a port on your local machine to a port on the Kinode's remote host.
 HTTP requests routed to that local port will then appear to the remote host as originating from its localhost.
 
-It is recommended to use [`kit connect`](./kit/connect.md) to create and destroy a SSH tunnel. Otherwise, you can also follow the instructions below to do it yourself.
+It is recommended to use [`kit connect`](./kit/connect.md) to create and destroy a SSH tunnel.
+Otherwise, you can also follow the instructions below to do it yourself.
 
 Create a SSH tunnel like so (again, replacing [assumed values with those in your `advanced details`](#accessing-your-kinodes-terminal)):
 ```bash
