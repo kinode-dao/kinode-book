@@ -32,6 +32,7 @@
   - [`dev-ui`](./kit/dev-ui.md)
   - [`inject-message`](./kit/inject-message.md)
   - [`run-tests`](./kit/run-tests.md)
+  - [`connect`](./kit/connect.md)
   - [`reset-cache`](./kit/reset-cache.md)
   - [`boot-real-node`](./kit/boot-real-node.md)
 - [My First Kinode Application](./build-and-deploy-an-app.md)
