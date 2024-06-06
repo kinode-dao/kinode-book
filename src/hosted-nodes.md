@@ -76,11 +76,16 @@ It is recommended to use [`kit connect`](./kit/connect.md) to create and destroy
 
 Create a SSH tunnel like so (again, replacing [assumed values with those in your `advanced details`](#accessing-your-kinodes-terminal)):
 ```bash
+ssh -L 9090:localhost:<HTTP port> <SSH address>
+```
+e.g.,
+``` bash
 ssh -L 9090:localhost:8099 kexampleuser@template.hosting.kinode.net
 ```
+
 or, if you've added your host to your [`~/.ssh/config`](#ssh-config),
 ```bash
-ssh -L 9090:localhost:8099 template
+ssh -L 9090:localhost:<HTTP port> <Host>
 ```
 You should see a `ssh` session open.
 While this session is open, `kit` requests sent to `9090` will be routed to the remote Kinode, e.g.,
