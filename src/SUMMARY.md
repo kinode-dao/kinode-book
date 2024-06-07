@@ -36,6 +36,7 @@
   - [`connect`](./kit/connect.md)
   - [`reset-cache`](./kit/reset-cache.md)
   - [`boot-real-node`](./kit/boot-real-node.md)
+  - [`view-api`](./kit/view-api.md)
 - [My First Kinode Application](./build-and-deploy-an-app.md)
   - [Environment Setup](./my_first_app/chapter_1.md)
   - [Sending and Responding to a Message](./my_first_app/chapter_2.md)
