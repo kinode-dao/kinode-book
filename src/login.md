@@ -12,6 +12,8 @@ Start a Kinode using the binary acquired in the [previous section](./install.md)
 Locating the binary on your system, print out the arguments expected by the binary:
 
 ```
+$ # NOTE: if you built source yourself, the binary will be in the repository
+$ #   at ./kinode/target/debug/kinode (or ./kinode/target/release/kinode).
 $ ./kinode --help
 A General Purpose Sovereign Cloud Computing Platform
 

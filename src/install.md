@@ -30,7 +30,7 @@ Then, go to `System Settings > Privacy and Security` and click to `Open Anyway` 
 ## Docker
 
 The recommended method for Linux and MacOS users is to use a prebuilt Docker image.
-Windows may work but is not yet officially supported: use the binary instead.
+Windows may work but is not officially supported.
 
 ### Installing Docker
 
@@ -83,6 +83,22 @@ If you need further help with Docker, [access the official Docker documentation 
 
 You can compile the binary from source using the following instructions.
 
+### Acquire Dependencies
+
+If your system doesn't already have `cmake` and OpenSSL, download them:
+
+#### Linux
+
+```sh
+sudo apt-get install cmake libssl-dev
+```
+
+#### Mac
+
+```sh
+brew install cmake openssl
+```
+
 ### Acquire Rust and various tools
 
 Install Rust and some `cargo` tools, by running the following in your terminal:
@@ -97,6 +113,9 @@ cargo install cargo-wasi
 ```
 
 For more information, or debugging, see the [Rust lang install page](https://www.rust-lang.org/tools/install).
+
+Kinode uses the **nightly** build of Rust.
+You will want to run the command `rustup update` on a regular basis to keep your version of the language current, especially if you run into issues compiling the runtime down the line.
 
 ### Acquire Kinode OS core
 

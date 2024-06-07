@@ -14,7 +14,7 @@ Otherwise:
 ```sh
 # Get Rust and `kit` Kinode development tools
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-cargo install --git https://github.com/kinode-dao/kit
+cargo install --git https://github.com/kinode-dao/kit --locked
 
 # Start two fake nodes, each in a new terminal on ports 8080 and 8081:
 ## First new terminal:
