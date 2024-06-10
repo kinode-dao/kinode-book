@@ -56,22 +56,40 @@ By default, the `kit new` command creates a simple, one-process package, a chat 
 Other templates, including a Python template and a UI-enabled template can be used by passing [different flags to `kit new`](../kit/new.html#discussion).
 The default template looks like:
 
-```bash
+```
 $ tree my_chat_app
 my_chat_app
-    ├── Cargo.toml
-    ├── metadata.json
-    ├── my_chat_app
-    │   ├── Cargo.toml
-    │   └── src
-    │       └── lib.rs
-    ├── pkg
-    │   ├── manifest.json
-    │   └── scripts.json
-    └── send
-        ├── Cargo.toml
-        └── src
-            └── lib.rs
+├── api
+│   └── my_chat_app:template.os-v0.wit
+├── Cargo.toml
+├── metadata.json
+├── my_chat_app
+│   ├── Cargo.toml
+│   └── src
+│       └── lib.rs
+├── pkg
+│   ├── manifest.json
+│   └── scripts.json
+├── send
+│   ├── Cargo.toml
+│   └── src
+│       └── lib.rs
+└── test
+    ├── my_chat_app_test
+    │   ├── api
+    │   │   ├── my_chat_app:template.os-v0.wit
+    │   │   ├── my_chat_app_test:template.os-v0.wit
+    │   │   └── tester:sys-v0.wit
+    │   ├── Cargo.toml
+    │   ├── metadata.json
+    │   ├── my_chat_app_test
+    │   │   ├── Cargo.toml
+    │   │   └── src
+    │   │       ├── lib.rs
+    │   │       └── tester_lib.rs
+    │   └── pkg
+    │       └── manifest.json
+    └── tests.toml
 ```
 
 The `my_chat_app/` package here contains two processes:
@@ -79,20 +97,27 @@ The `my_chat_app/` package here contains two processes:
 - `send/` — containing a [script](../cookbook/writing_scripts.html).
 
 Rust process directories, like the ones here, contain:
-- `src/` - source files where the code for the process lives, and
-- `Cargo.toml` - the standard Rust file specifying dependencies, etc., for that process.
+- `src/` — source files where the code for the process lives, and
+- `Cargo.toml` — the standard Rust file specifying dependencies, etc., for that process.
 
 Another standard Rust `Cargo.toml` file, a [virtual manifest](https://doc.rust-lang.org/cargo/reference/workspaces.html#virtual-workspace) is also included in `my_chat_app/` root.
 
 Also within the package directory is a `pkg/` directory.
 The `pkg/` dirctory contains two files:
-- `manifest.json` - specifes information the Kinode needs to run the package, and
-- `scripts.json` - specifies details needed to run [scripts](../cookbook/writing_scripts.html).
+- `manifest.json` — required: specifes information the Kinode needs to run the package, and
+- `scripts.json` — optional: specifies details needed to run [scripts](../cookbook/writing_scripts.html).
 
 The `pkg/` directory is also where `.wasm` binaries will be deposited by [`kit build`](#building-the-package).
 The files in the `pkg/` directory are injected into the Kinode with [`kit start-package`](#starting-the-package).
 
-Lastly, `metadata.json` contains app metadata which is used in the Kinode [App Store](./chapter_5.html)
+The `metadata.json` is a required file that contains app metadata which is used in the Kinode [App Store](./chapter_5.html)
+
+The `api/` directory contains the [WIT API](../process/wit-apis.md) for the `my_chat_app` package, see more discussion [below](#api).
+
+Lastly, the `test/` directory contains tests for the `my_chat_app` package.
+The `tests.toml` file specifies the configuration of the tests.
+The `my_chat_app_test/` direcotry is itself a package: the test for `my_chat_app`.
+For more discussion of tests see [`kit run-tests`](../kit/run-tests.md), or see usage, [below](#testing-the-package).
 
 Though not included in this template, packages with a frontend have a `ui/` directory as well.
 For an example, look at the result of:
@@ -117,7 +142,6 @@ $ cat my_chat_app/pkg/manifest.json
         "request_networking": true,
         "request_capabilities": [
             "http_server:distro:sys",
-            "net:distro:sys"
         ],
         "grant_capabilities": [],
         "public": true
@@ -162,14 +186,20 @@ $ cat my_chat_app/metadata.json
         "mirrors": [],
         "code_hashes": {
             "0.1.0": ""
-        }
+        },
+        "wit_version": 0,
+        "dependencies": []
     },
     "external_url": "",
     "animation_url": ""
 }
 ```
-Here, the `publisher` is some default value, but for a real package, this field should contain the KNS ID of the publishing node.
+Here, the `publisher` is the default value (`"template.os"`), but for a real package, this field should contain the KNS ID of the publishing node.
 The `publisher` can also be set with a `kit new --publisher` flag.
+The `wit_version` is an optional field.
+If elided, the package will use [`kinode.wit` `0.7.0`](https://github.com/kinode-dao/kinode-wit/blob/aa2c8b11c9171b949d1991c32f58591c0e881f85/kinode.wit).
+If included with a value of `0`, it will use [`kinode.wit` `0.8.0`](https://github.com/kinode-dao/kinode-wit/blob/758fac1fb144f89c2a486778c62cbea2fb5840ac/kinode.wit).
+The `dependencies` field is also optional; see discussion in [WIT APIs](../process/wit-apis.md).
 The rest of these fields are not required for development, but become important when publishing a package with the [`app_store`](https://github.com/kinode-dao/kinode/tree/main/kinode/packages/app_store).
 
 As an aside: each process has a unique `ProcessId`, used to address messages to that process, that looks like
@@ -179,6 +209,13 @@ As an aside: each process has a unique `ProcessId`, used to address messages to 
 ```
 
 You can read more about `ProcessId`s [here](../process/processes.md#overview).
+
+### `api/`
+
+The `api/` directory is an optional directory where packages can declare their public API.
+Other packages can then mark a package as a dependency in their `metadata.json` and
+
+For further reading, see discussion in [WIT APIs](../process/wit-apis.md), and [`kit view-api`](../kit/view-api.md).
 
 ## Building the Package
 
@@ -319,3 +356,19 @@ kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fak
 kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.dev", "message": "replying from fake2.dev using first method..."}}' --node fake2.dev
 kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.dev", "message": "and second!"}}' -p 8081
 ```
+
+## Testing the Package
+
+To run the `my_chat_app/` tests, close all fake nodes and then run
+
+```bash
+kit run-tests my_chat_app
+```
+
+or, if already in the `my_chat_app/` package directory:
+
+```bash
+kit run-tests
+```
+
+For more details, see [`kit run-tests`](../kit/run-tests.md).
