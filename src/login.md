@@ -1,19 +1,18 @@
 # Join the Network
 
-Let's get onto the live network!
+This page discusses joining the network with a locally-run Kinode.
+To instead join with a hosted node, see [Valet](https://valet.kinode.org/).
 
 These directions are particular to the Kinode OS beta release.
-
 Kinode is in active development on Optimism.
 
 ## Starting the Kinode
 
 Start a Kinode using the binary acquired in the [previous section](./install.md).
-Locating the binary on your system, print out the arguments expected by the binary:
+Locate the binary on your system (e.g., if you built source yourself, the binary will be in the repository at `./kinode/target/debug/kinode` or `./kinode/target/release/kinode`).
+Print out the arguments expected by the binary:
 
 ```
-$ # NOTE: if you built source yourself, the binary will be in the repository
-$ #   at ./kinode/target/debug/kinode (or ./kinode/target/release/kinode).
 $ ./kinode --help
 A General Purpose Sovereign Cloud Computing Platform
 
@@ -25,9 +24,11 @@ Arguments:
 Options:
       --port <PORT>            Port to bind [default: first unbound at or above 8080]
       --ws-port <PORT>         Kinode internal WebSockets protocol port [default: first unbound at or above 9000]
+      --tcp-port <PORT>        Kinode internal TCP protocol port [default: first unbound at or above 9000]
       --verbosity <VERBOSITY>  Verbosity level: higher is more verbose [default: 0]
       --reveal-ip              If set to false, as an indirect node, always use routers to connect to other nodes.
       --rpc <RPC>              Add a WebSockets RPC URL at boot
+      --password <PASSWORD>    Node password
   -h, --help                   Print help
   -V, --version                Print version
 ```
@@ -38,7 +39,7 @@ If this is not supplied, the node will use a set of default RPC providers served
 If the `--port` flag is supplied, Kinode will attempt to bind that port for serving HTTP and will exit if that port is already taken.
 If no `--port` flag is supplied, Kinode will bind to `8080` if it is available, or the first port above `8080` if not.
 
-### Acquiring an RPC API Key [OPTIONAL]
+<details><summary>OPTIONAL: Acquiring an RPC API Key</summary>
 
 Create a new "app" on [Alchemy](https://dashboard.alchemy.com/apps) for Optimism Mainnet.
 
@@ -61,6 +62,8 @@ Next, check the box next to Optimism "MAINNET". After one is chosen, click "SAVE
 On the "Active Endpoints" tab, there are tabs for "HTTPS" and "WebSockets". Select the WebSockets tab. Copy this endpoint and use it in place of the Alchemy endpoint in the following step, "Running the Binary".
 
 ![Active Endpoints Infura](./assets/active_endpoints_infura.png)
+</details>
+
 
 ### Running the Binary
 
@@ -151,3 +154,6 @@ The networking key is how your node communicates securely with other nodes, and 
 After setting the node password, you will be greeted with the homepage.
 
 ![Homepage](./assets/homepage.png)
+
+Try downloading, installing, and using some apps on the App Store.
+Come ask for recommendations in the [Kinode Discord](https://discord.gg/mYDj74NkfP)!
