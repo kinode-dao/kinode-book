@@ -11,10 +11,12 @@ Usage: kit <COMMAND>
 
 Commands:
   boot-fake-node       Boot a fake node for development [aliases: f]
+  boot-real-node       Boot a real node [aliases: e]
   build                Build a Kinode package [aliases: b]
   build-start-package  Build and start a Kinode package [aliases: bs]
   chain                Start a local chain for development [aliases: c]
-  dev-ui               Start the web UI development server with hot reloading (same as `cd ui && npm i && npm run dev` [aliases: d]
+  connect              Connect (or disconnect) a ssh tunnel to a remote server
+  dev-ui               Start the web UI development server with hot reloading (same as `cd ui && npm i && npm run dev`) [aliases: d]
   inject-message       Inject a message to a running Kinode [aliases: i]
   new                  Create a Kinode template package [aliases: n]
   remove-package       Remove a running package from a node [aliases: r]
@@ -23,6 +25,7 @@ Commands:
   setup                Fetch & setup kit dependencies
   start-package        Start a built Kinode process [aliases: s]
   update               Fetch the most recent version of kit
+  view-api             Fetch the list of APIs or a specific API [aliases: v]
   help                 Print this message or the help of the given subcommand(s)
 
 Options:
