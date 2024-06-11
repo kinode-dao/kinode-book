@@ -13,13 +13,14 @@ lists all the APIs of packages downloaded by the Kinode running at port 8080.
 
 ```
 # Fetch and display the API for the given package
-kit view-api app_store:sys-v0
+kit view-api app_store:sys
 ```
 
 ## Discussion
 
-Currently broken!
-TODO: fix & document
+Packages have the option to [expose their API using a WIT file](../process/wit-apis.md).
+When a package is distributed, its API is posted by the distributor along with the package itself.
+Downloading the package also downloads the API.
 
 ## Arguments
 
