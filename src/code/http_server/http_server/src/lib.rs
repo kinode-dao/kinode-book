@@ -10,6 +10,8 @@
 /// # Send an HTTP request.
 /// curl -X PUT -d '{"Hello": "greetings"}' http://localhost:8080/http_server:http_server:template.os
 /// ```
+use anyhow::{anyhow, Result};
+
 use kinode_process_lib::{await_message, call_init, get_blob, http, println, Address, Message};
 
 wit_bindgen::generate!({
@@ -18,33 +20,32 @@ wit_bindgen::generate!({
 });
 
 /// Handle a message from the HTTP server.
-fn handle_http_message(message: &Message) {
+fn handle_http_message(message: &Message) -> Result<()> {
     let Ok(server_request) = http::HttpServerRequest::from_bytes(message.body()) else {
-        println!("received a message with weird `body`!");
-        return;
+        return Err(anyhow!("received a message with weird `body`!"));
     };
     let Some(http_request) = server_request.request() else {
-        println!("received a WebSocket message, skipping");
-        return;
+        return Err(anyhow!("received a WebSocket message, skipping"));
     };
     if http_request.method().unwrap() != http::Method::PUT {
-        println!("received a non-PUT HTTP request, skipping");
-        return;
+        return Err(anyhow!("received a non-PUT HTTP request, skipping"));
     }
     let Some(body) = get_blob() else {
-        println!("received a PUT HTTP request with no body, skipping");
-        return;
+        return Err(anyhow!(
+            "received a PUT HTTP request with no body, skipping"
+        ));
     };
     http::send_response(http::StatusCode::OK, None, vec![]);
     println!(
         "{:?}",
         serde_json::from_slice::<serde_json::Value>(&body.bytes)
     );
+    Ok(())
 }
 
-call_init!(my_init_fn);
-fn my_init_fn(our: Address) {
-    println!("{our}: started");
+call_init!(init);
+fn init(_our: Address) {
+    println!("begin");
 
     http::bind_http_path("/", false, false).unwrap();
 
@@ -52,7 +53,9 @@ fn my_init_fn(our: Address) {
         match await_message() {
             Ok(message) => {
                 if message.source().process == "http_server:distro:sys" {
-                    handle_http_message(&message);
+                    if let Err(e) = handle_http_message(&message) {
+                        println!("{e}");
+                    }
                 }
             }
             Err(_send_error) => println!("got send error!"),

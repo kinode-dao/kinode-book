@@ -16,9 +16,9 @@ wit_bindgen::generate!({
 
 const URL: &str = "https://raw.githubusercontent.com/kinode-dao/kinode-wit/master/kinode.wit";
 
-call_init!(my_init_fn);
-fn my_init_fn(our: Address) {
-    println!("{our}: started");
+call_init!(init);
+fn init(_our: Address) {
+    println!("begin");
 
     let url = url::Url::parse(URL).expect("failed to parse url");
     let response = http::send_request_await_response(http::Method::GET, url, None, 5, vec![]);
