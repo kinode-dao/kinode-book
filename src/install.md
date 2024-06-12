@@ -2,18 +2,19 @@
 
 This section will teach you how to get the Kinode OS core software, required to run a live node.
 After acquiring the software, you can learn how to run it and [Join the Network](./login.md).
-However, if you are just interested in starting development as fast as possible, start with [My First Kinode Application](./build-and-deploy-an-app.md).
 
-If you want to make edits to the Kinode core software, see [Build From Source](#build-from-source).
+- If you are just interested in starting development as fast as possible, skip to [My First Kinode Application](./build-and-deploy-an-app.md).
+- If you want to run a Kinode without managing it yourself, use the [Valet](https://valet.kinode.org) hosted service.
+- If you want to make edits to the Kinode core software, see [Build From Source](#build-from-source).
 
-## Download Binary
+## Option 1: Download Binary (Recommended)
 
-If you do not have Docker, you can download a precompiled binary instead.
+The Kinode DAO distributes pre-compiled binaries for Ubuntu and MacOS.
 
 First, get the software itself by downloading a [precompiled release binary](https://github.com/kinode-dao/kinode/releases).
 Choose the correct binary for your particular computer architecture and OS.
-There is no need to download the `simulation-mode` binary — it is used behind the scenes.
-Extract the `.zip` file and the binary is inside.
+There is no need to download the `simulation-mode` binary — it is used behind the scenes by [`kit`](./kit/boot-fake-node.md).
+Extract the `.zip` file: the binary is inside.
 
 Note that some operating systems, particularly Apple, may flag the download as suspicious.
 While the binary has not been tested exhaustively on all Linux distributions, it should *just work*.
@@ -25,11 +26,10 @@ Then, go to `System Settings > Privacy and Security` and click to `Open Anyway` 
 
 ![Apple unknown developer](./assets/apple-unknown-developer.png)
 
----------------
+## Option 2: Docker
 
-## Docker
-
-The recommended method for Linux and MacOS users is to use a prebuilt Docker image.
+Kinode can also be run using Docker.
+Linux and MacOS are supported.
 Windows may work but is not officially supported.
 
 ### Installing Docker
@@ -49,7 +49,7 @@ Each volume is unique to each Kinode.
 If you want to run multiple Kinodes, create multiple volumes.
 
 The image includes EXPOSE directives for TCP port `8080` and TCP port `9000`.
-Port `8080` is used for serving the Kinode web dashboard over HTTP, and it may be mapped to a different port on the host. 
+Port `8080` is used for serving the Kinode web dashboard over HTTP, and it may be mapped to a different port on the host.
 Port `9000` is optional and is only required for a direct node.
 
 If you are running a direct node, you **must** map port `9000` to the same port on the host and on your router.
@@ -77,11 +77,12 @@ To remove the container, run `docker remove my-kinode`.
 As long as the volume is not deleted, your data remains intact upon removal or stop.
 If you need further help with Docker, [access the official Docker documentation here](https://docs.docker.com/manuals/).
 
------------------
-
-## Build From Source
+## Option 3: Build From Source
 
 You can compile the binary from source using the following instructions.
+This is only recommended if:
+1. The [pre-compiled binaries](#download-binary) don't work on your system and you can't use [Docker](#docker) for some reason, or
+2. You need to make changes to the Kinode core source.
 
 ### Acquire Dependencies
 
