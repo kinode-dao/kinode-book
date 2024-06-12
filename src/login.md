@@ -24,11 +24,11 @@ Arguments:
 Options:
       --port <PORT>            Port to bind [default: first unbound at or above 8080]
       --ws-port <PORT>         Kinode internal WebSockets protocol port [default: first unbound at or above 9000]
-      --tcp-port <PORT>        Kinode internal TCP protocol port [default: first unbound at or above 9000]
+      --tcp-port <PORT>        Kinode internal TCP protocol port [default: first unbound at or above 10000]
       --verbosity <VERBOSITY>  Verbosity level: higher is more verbose [default: 0]
       --reveal-ip              If set to false, as an indirect node, always use routers to connect to other nodes.
       --rpc <RPC>              Add a WebSockets RPC URL at boot
-      --password <PASSWORD>    Node password
+      --password <PASSWORD>    Node password (in double quotes)
   -h, --help                   Print help
   -V, --version                Print version
 ```
