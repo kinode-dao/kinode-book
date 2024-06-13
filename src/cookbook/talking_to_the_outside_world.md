@@ -29,7 +29,17 @@ This document focuses on simple usage examples of each.
 
 ## WebSockets Client
 
+The Kinode process:
+```rust
+{{#include ../code/ws_client/ws_client/src/lib.rs}}
+```
 
+An example WS server:
+```python
+{{#include ../code/ws_client/ws_server.py}}
+```
+
+[Full example package & client](https://github.com/kinode-dao/kinode-book/tree/main/src/code/ws_client).
 
 ## WebSockets Server
 
