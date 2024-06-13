@@ -370,7 +370,7 @@ Finally, add one more entry to `manifest.json`: messaging capabilities to the [V
 ...
 ```
 
-After saving `ui/index.html`, rebuilding the program, and starting the package again, you should be able to navigate to your `http://localhost:8080/my_process:my_package:template.os` and see the form page.
+After saving `ui/index.html`, rebuilding the program, and starting the package again with `kit bs`, you should be able to navigate to your `http://localhost:8080/my_process:my_package:template.os` and see the form page.
 Because you now set `authenticated` to `true` in the `/api` binding, the webpage will still work, but cURL will not.
 
 The user will navigate to `/` to see the webpage, and when they make a PUT request, it will automatically happen on `/api` to send a message to the process.
