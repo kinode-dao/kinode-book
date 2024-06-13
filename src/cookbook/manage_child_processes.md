@@ -22,7 +22,7 @@ my-package/
 │  ├─ Cargo.toml
 │  ├─ Cargo.lock
 ```
-To initiate a child process, use the `spawn` function from `kinode_process_lib`.
+To start a child process, use the `spawn` function from `kinode_process_lib`.
 The following example demonstrates a basic parent process whose sole function is to spawn a child process and grant it the ability to send messages using `http_client`:
 ```rust
 // imports
@@ -30,8 +30,8 @@ use kinode_process_lib::{call_init, println, spawn, Address, Capability, OnExit}
 
 // boilerplate to generate types
 wit_bindgen::generate!({
-    path: "wit",
-    world: "process",
+    path: "target/wit",
+    world: "process-v0",
 });
 
 // parent app component boilerplate
@@ -44,7 +44,7 @@ fn init(our: Address) {
         // name of the child process
         Some("spawned_child_process".to_string()),
         // path to find the compiled Wasm file for the child process
-        "/child.wasm",
+        &format!("{}/pkg/child.wasm", our.package_id()),
         // what to do when this process crashes/panics/finishes
         OnExit::None,
         // capabilities to pass onto the child
@@ -74,9 +74,8 @@ The child process can be anything, for simplicity's sake let's make it a degener
 use kinode_process_lib::{call_init, println, Address};
 
 wit_bindgen::generate!({
-    // note that the WIT file can be in any directory
-    path: "wit",
-    world: "process",
+    path: "target/wit",
+    world: "process-v0",
 });
 
 call_init!(init);
@@ -93,7 +92,6 @@ The spawn function in Kinode comprises several parameters, each serving a specif
 If set to None, the process is automatically assigned a numerical identifier, resulting in a ProcessId formatted like `123456789:my-package:john.os`.
 
 - `wasm_path: String`: Indicates the location of the compiled WebAssembly (Wasm) bytecode for the process.
-This path should be relative to the `/pkg` directory in your project.
 
 - `on_exit: OnExit`: Determines the behavior of the process upon termination, whether due to completion, a crash, or a panic.
 OnExit is an enum with three potential values:
