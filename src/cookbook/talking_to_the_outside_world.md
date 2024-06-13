@@ -57,5 +57,14 @@ An example WS client:
 
 ## WebSockets Server with Reply Type
 
+The Kinode process:
+```rust
+{{#include ../code/ws_server_with_reply/ws_server_with_reply/src/lib.rs}}
+```
 
+An example WS client:
+```python
+{{#include ../code/ws_server_with_reply/ws_client.py}}
+```
 
+[Full example package & client](https://github.com/kinode-dao/kinode-book/tree/main/src/code/ws_server_with_reply).

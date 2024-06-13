@@ -1,0 +1,10 @@
+[workspace]
+resolver = "2"
+members = [
+    "ws_server_with_reply"
+]
+
+[profile.release]
+panic = "abort"
+opt-level = "s"
+lto = true
