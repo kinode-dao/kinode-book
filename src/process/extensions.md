@@ -34,7 +34,8 @@ Only write an extension if there is no other choice.
 
 An extension is composed of two parts: a Kinode package and the extension itself.
 They communicate with each other over a WebSocket connection that is managed by Kinode.
-Check out the [examples below](#examples) to see some working extensions.
+Look at the [Talking to the Outside World recipe](../cookbook/talking_to_the_outside_world.md#websockets-server-with-reply-type) for an example.
+The [examples below](#examples) show some more working extensions.
 
 ### The WebSocket protocol
 
@@ -91,7 +92,7 @@ pub enum HttpServerAction {
 ### The Package
 
 The package is, minimally, a single process that serves as interface between Kinode and the extension.
-Each extension must come with a corresponding Kinode package. 
+Each extension must come with a corresponding Kinode package.
 
 Specifically, the interface process must:
 1. Bind an extension WebSocket: this will be used to communicate with the extension.

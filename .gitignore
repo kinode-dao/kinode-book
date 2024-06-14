@@ -5,3 +5,7 @@ book/*
 .DS_Store
 */**/.DS_Store
 */**/node_modules
+
+src/code/*/target
+src/code/*/*/target
+src/code/*/*/wasi_snapshot_preview1.wasm
