@@ -2,7 +2,7 @@
 
 Kinode communicates with the Kinode network using the [Kinode Networking Protocol](../networking_protocol.md).
 But nodes must also be able to communicate with the outside world.
-These recipes will walk through these communication methods.
+These recipes will walk through a variety of communication methods.
 Briefly, Kinode can speak both HTTP and WebSockets, and can operate as a client or a server for both.
 You can find the APIs for [HTTP client](../apis/http_client.md) and [server](../apis/http_server.md), as well as for [WebSockets](../apis/websocket.md) elsewhere.
 This document focuses on simple usage examples of each.
@@ -57,6 +57,11 @@ An example WS client:
 
 ## WebSockets Server with Reply Type
 
+One constraint of Kinode's default [WebSockets server Push](#websockets-server) is that it breaks the [Request/Response](../process/processes.md#requests-and-responses) pairing.
+This is because when the server cannot specify is expects a Response back: all Pushes are Requests.
+
+Use the following pattern to allow the WebSocket client to reply with a Response:
+
 The Kinode process:
 ```rust
 {{#include ../code/ws_server_with_reply/ws_server_with_reply/src/lib.rs}}
@@ -68,3 +73,5 @@ An example WS client:
 ```
 
 [Full example package & client](https://github.com/kinode-dao/kinode-book/tree/main/src/code/ws_server_with_reply).
+
+You can find this pattern used in [Kinode Extensions](../process/extensions.md).
