@@ -19,7 +19,7 @@ to run the current working directory's `tests.toml`.
 `kit run-tests` runs a series of tests specified  by [a `.toml` file](#teststoml).
 Each test is run in a fresh environment of one or more fake nodes.
 A test can setup one or more packages before running a series of test packages.
-Each test package is [a single-process package that accepts and responds with certain messages](#test-package-format).
+Each test package is [a single-process package that accepts and responds with certain messages](#test-package-interface).
 
 Tests are orchestrated from the outside of the node by `kit run-tests` and run on the inside of the node by the [`tester`](https://github.com/kinode-dao/kinode/tree/main/kinode/packages/tester) core package.
 For a given test, the `tester` package runs the specified test packages in order.
@@ -105,7 +105,7 @@ Key                     | Value Type      | Value Description
 `network_router`        | Table           | Table containing `port` (of network router server) and `defects` (to simulate network weather/defects; currently only `"None"` accepted)
 [`nodes`](#nodes)       | Array of Tables | Each Table specifies configuration of one node to spin up for test
 
-Each test package is [a single-process package that accepts and responds with certain messages](#test-package-format).
+Each test package is [a single-process package that accepts and responds with certain messages](#test-package-interface).
 
 For example:
 ```toml
@@ -164,41 +164,40 @@ runtime_verbosity = 0
 ## Test Package Interface
 
 A test package is a single-process package that accepts and responds with certain messages.
-Those certain messages are:
+The interface is defined as:
 
-```json
-{
-    "Run": {
-        "input_node_names": [
-            "<master_node_name>",
-            "<second_node_name>",
-            ...
-        ],
-        test_timeout: <number>
+```wit
+interface tester {
+    variant request {
+        run(run-request),
     }
+
+    variant response {
+        run(result<_, fail-response>)
+    }
+
+    record run-request {
+        input-node-names: list<string>,
+        test-names: list<string>,
+        test-timeout: u64,
+    }
+
+    record fail-response {
+        test: string,
+        file: string,
+        line: u32,
+        column: u32,
+    }
+}
+
+world tester-sys-v0 {
+    import tester;
+    include process-v0;
 }
 ```
 
-which starts the test,
-
-```json
-"Pass"
-```
-
-which should be sent as a Response after the test has completed successfully, and
-
-```json
-{
-    "Fail": {
-        "test": "test_where_error_occurred",
-        "file": "file_where_error_occurred",
-        "line": <line_number_where_failure_occurred>,
-        "column": <column_number_where_failure_occurred>
-    }
-}
-```
-
-which should be sent as a Response if the test fails.
+A `run` `request` starts the test.
+A `run` `response` marks the end of a test, and is either an `Ok` Result, indicating success, or a `Err` Result with information as to where the error occurred.
 
 In the Rust language, a helper macro for failures can be found in [`tester_types.rs`](https://github.com/kinode-dao/kinode/blob/main/kinode/packages/tester/tester_types.rs).
 The macro is `fail!()`: it automatically sends the Response as specified above, filing out the fields, and exits.
