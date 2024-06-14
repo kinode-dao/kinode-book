@@ -1,3 +1,15 @@
+/// Simple example of using the WebSockets client.
+/// Usage:
+/// ```
+/// # Start node.
+/// kit f
+///
+/// # Start WS server from a new terminal.
+/// ./ws_client/ws_server.py
+///
+/// # Start package from a new terminal.
+/// kit bs ws_client
+/// ```
 use anyhow::{anyhow, Result};
 
 use kinode_process_lib::{

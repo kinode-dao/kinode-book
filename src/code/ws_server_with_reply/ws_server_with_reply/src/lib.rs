@@ -1,3 +1,15 @@
+/// Simple example of running a WebSockets server, specifying reply type as Response.
+/// Usage:
+/// ```
+/// # Start node.
+/// kit f
+///
+/// # Start package from a new terminal.
+/// kit bs ws_server_with_reply
+///
+/// # Connect from WS client script.
+/// ./ws_server/ws_client.py
+/// ```
 use anyhow::{anyhow, Result};
 
 use kinode_process_lib::kernel_types::MessageType;
