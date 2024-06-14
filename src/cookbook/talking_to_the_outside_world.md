@@ -58,7 +58,7 @@ An example WS client:
 ## WebSockets Server with Reply Type
 
 One constraint of Kinode's default [WebSockets server Push](#websockets-server) is that it breaks the [Request/Response](../process/processes.md#requests-and-responses) pairing.
-This is because when the server cannot specify is expects a Response back: all Pushes are Requests.
+This is because when the server cannot specify it expects a Response back: all Pushes are Requests.
 
 Use the following pattern to allow the WebSocket client to reply with a Response:
 
