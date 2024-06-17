@@ -13,3 +13,4 @@ enable = true
 level = 1
 
 [output.linkcheck]
+optional = true

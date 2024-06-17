@@ -360,11 +360,12 @@ Create a `ui/` directory in the package root, and then a new file in `ui/index.h
 This is a super barebones `index.html` that provides a form to make requests to the `/api` endpoint.
 Additional UI dev info can be found [here](../apis/frontend_development.md).
 
-Finally, add one more entry to `manifest.json`: messaging capabilities to the [VFS](../files.md) which is required to store and access the UI `index.html`:
+Next, add two more entries to `manifest.json`: messaging capabilities to the [VFS](../files.md) which is required to store and access the UI `index.html`, and the `homepage` capability which is required to add our app to the user's homepage (next section):
 ```json
 ...
 "request_capabilities": [
     "vfs:distro:sys",
+    "homepage:homepage:sys",
     ...
 ],
 ...
@@ -379,3 +380,164 @@ This frontend is now fully packaged with the process — there are no more steps
 Of course, this can be made arbitrarily complex with various frontend frameworks that produce a static build.
 
 In the next and final section, learn about the package metadata and how to share this app across the Kinode network.
+
+
+## (Optional) Extra Credit: Homepage Icon and Widget
+
+This section is optional!
+You're free to go.
+However, if you insist upon staying, you will learn how to customize your app icon with a clickable link to your frontend, and how to create a widget to display on the homepage.
+
+### Adding Our App to the Home Page
+
+#### Encoding an Icon
+
+Choosing an emblem is a difficult task.
+Thankfully, we have chosen one for you.
+Let's use this gosling:
+
+![gosling](./assets/gosling.png)
+
+Or, you may elect to use your own.
+No issue.
+
+On the command line, encode your image as base64, and prepend `data:image/png;base64,`:
+
+```sh
+echo "data:image/png;base64," > icon
+base64 < gosling.png >> icon
+```
+
+Then, move `icon` next to `lib.rs` in your app's directory.
+Finally, include the icon data in your `lib.rs` file, early on, just after the imports: 
+
+```rs
+const ICON: &str = include_str!("./icon");
+```
+
+#### Clicking the Button
+
+The Kinode process lib exposes an [`add_to_homepage`](https://docs.rs/kinode_process_lib/0.8.3/kinode_process_lib/homepage/fn.add_to_homepage.html) function that you can use to add your app to the homepage.
+
+In your `my_init_fn`, add the following line:
+
+```rs
+homepage::add_to_homepage(
+    "My App Name", // the name of your app  
+    ICON, // the icon data (base64 encoded, prepended with "data:image/png;base64,")
+    "/", // the path to your app's UI (/my_process:my_package:template.os/ is prepended automatically)
+).unwrap();
+```
+
+Now, you can build and reinstall your package with `kit bs`, reload your node's homepage in the browser, and see your app icon under "All Apps"!
+To dock your app, click the heart icon on it.
+Click the icon itself to go to the UI served by your app.
+
+### Writing a Widget 
+
+A widget is an HTML iframe. 
+Kinode apps can send widgets to the `homepage` process, which will display them on the user's homepage.
+They are quite simple to configure.
+In `add_to_homepage`, add an additional field: 
+
+```rs
+// inside the init function again
+
+// you can embed an external URL
+let widget: String = "<iframe src='https://example.com'></iframe>".to_string();
+// or you can embed your own HTML
+let widget: String = "<iframe><html><body><h1>Hello, Kinode!</h1></body></html></iframe>".to_string();
+
+homepage::add_to_homepage(
+    "My App Name",
+    ICON,
+    "/",
+    widget, // the widget to display on the homepage
+).unwrap();
+```
+
+After another `kit bs`, you should be able to reload your homepage and see your new widget.
+For an example of a more complex widget, you can check out the source code of our app store widget.
+
+#### Widget Case Study: App Store
+
+The app store's [widget](https://github.com/kinode-dao/kinode/blob/3719ab38e19143a7bcd501fd245c7a10b2239ee7/kinode/packages/app_store/app_store/src/http_api.rs#L59C1-L133C2) makes a single request to the node, to determine the apps that are listed in the app store.
+It then creates some HTML to display the apps in a nice little list.
+The Tailwind CSS library is included in the HTML to make the UI look nice, but you don't need to do this, and we are going to remove it eventually because it's data-intensive.
+
+```rs
+fn make_widget() -> String {
+    return r#"<html>
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .app {
+            width: 100%;
+        }
+
+        .app-image {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .app-info {
+            max-width: 67%
+        }
+
+        @media screen and (min-width: 500px) {
+            .app {
+                width: 49%;
+            }
+        }
+    </style>
+</head>
+<body class="text-white overflow-hidden">
+    <div
+        id="latest-apps"
+        class="flex flex-wrap p-2 gap-2 items-center backdrop-brightness-125 rounded-xl shadow-lg h-screen w-screen overflow-y-auto"
+        style="
+            scrollbar-color: transparent transparent;
+            scrollbar-width: none;
+        "
+    >
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/main:app_store:sys/apps/listed', { credentials: 'include' })
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('latest-apps');
+                    data.forEach(app => {
+                        if (app.metadata) {
+                            const a = document.createElement('a');
+                            a.className = 'app p-2 grow flex items-stretch rounded-lg shadow bg-white/10 hover:bg-white/20 font-sans cursor-pointer';
+                            a.href = `/main:app_store:sys/app-details/${app.package}:${app.publisher}`
+                            a.target = '_blank';
+                            a.rel = 'noopener noreferrer';
+                            const iconLetter = app.metadata_hash.replace('0x', '')[0].toUpperCase();
+                            a.innerHTML = `<div
+                                class="app-image rounded mr-2 grow"
+                                style="
+                                    background-image: url('${app.metadata.image || `/icons/${iconLetter}`}');
+                                    height: 92px;
+                                    width: 92px;
+                                    max-width: 33%;
+                                "
+                            ></div>
+                            <div class="app-info flex flex-col grow">
+                                <h2 class="font-bold">${app.metadata.name}</h2>
+                                <p>${app.metadata.description}</p>
+                            </div>`;
+                                container.appendChild(a);
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching apps:', error));
+        });
+    </script>
+</body>
+</html>"#
+        .to_string();
+}
+```
