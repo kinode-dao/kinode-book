@@ -396,7 +396,7 @@ Choosing an emblem is a difficult task.
 Thankfully, we have chosen one for you.
 Let's use this gosling:
 
-![gosling](./assets/gosling.png)
+![gosling](../assets/gosling.png)
 
 Or, you may elect to use your own.
 No issue.
@@ -465,9 +465,8 @@ The app store's [widget](https://github.com/kinode-dao/kinode/blob/3719ab38e1914
 It then creates some HTML to display the apps in a nice little list.
 The Tailwind CSS library is included in the HTML to make the UI look nice, but you don't need to do this, and we are going to remove it eventually because it's data-intensive.
 
-```rs
-fn make_widget() -> String {
-    return r#"<html>
+```html
+<html>
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -537,7 +536,5 @@ fn make_widget() -> String {
         });
     </script>
 </body>
-</html>"#
-        .to_string();
-}
+</html>
 ```
