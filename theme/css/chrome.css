@@ -266,6 +266,10 @@ a>.hljs {
     color: var(--inline-code-color);
 }
 
+a code.hljs {
+    color: var(--links) !important; 
+}
+
 a:hover>.hljs {
     text-decoration: underline;
 }
