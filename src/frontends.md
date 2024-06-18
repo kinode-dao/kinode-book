@@ -1,6 +1,6 @@
 # Frontends
 
-Kinode OS can easily serve any webpage or web app developed with normal libraries and frameworks.
+Kinode can easily serve any webpage or web app developed with normal libraries and frameworks.
 
 There are some specific endpoints, JS libraries, and process lib functions that are helpful for doing frontend development.
 

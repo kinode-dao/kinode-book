@@ -3,7 +3,7 @@
 This page discusses joining the network with a locally-run Kinode.
 To instead join with a hosted node, see [Valet](https://valet.kinode.org/).
 
-These directions are particular to the Kinode OS beta release.
+These directions are particular to the Kinode beta release.
 Kinode is in active development on Optimism.
 
 ## Starting the Kinode
@@ -62,17 +62,19 @@ Next, check the box next to Optimism "MAINNET". After one is chosen, click "SAVE
 On the "Active Endpoints" tab, there are tabs for "HTTPS" and "WebSockets". Select the WebSockets tab. Copy this endpoint and use it in place of the Alchemy endpoint in the following step, "Running the Binary".
 
 ![Active Endpoints Infura](./assets/active_endpoints_infura.png)
-</details>
 
+</details>
 
 ### Running the Binary
 
 In a terminal window, run:
+
 ```bash
 ./kinode home
 ```
 
 A new browser tab should open, but if not, look in the terminal for this line:
+
 ```
 login or register at http://localhost:8080
 ```

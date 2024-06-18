@@ -1,6 +1,6 @@
 # Installation
 
-This section will teach you how to get the Kinode OS core software, required to run a live node.
+This section will teach you how to get the Kinode core software, required to run a live node.
 After acquiring the software, you can learn how to run it and [Join the Network](./login.md).
 
 - If you are just interested in starting development as fast as possible, skip to [My First Kinode Application](./build-and-deploy-an-app.md).
@@ -17,7 +17,7 @@ There is no need to download the `simulation-mode` binary — it is used behind 
 Extract the `.zip` file: the binary is inside.
 
 Note that some operating systems, particularly Apple, may flag the download as suspicious.
-While the binary has not been tested exhaustively on all Linux distributions, it should *just work*.
+While the binary has not been tested exhaustively on all Linux distributions, it should _just work_.
 
 ### Apple
 
@@ -56,6 +56,7 @@ If you are running a direct node, you **must** map port `9000` to the same port 
 Otherwise, your Kinode will not be able to connect to the rest of the network as connection info is written to the chain, and this information is based on the view from inside the Docker container.
 
 Run the following command to create a volume:
+
 ```bash
 docker volume create kinode-volume
 ```
@@ -63,6 +64,7 @@ docker volume create kinode-volume
 Then run the following command to create the container.
 Replace `kinode-volume` with the name of your volume, and `my-kinode` with a unique name.
 To map the port to a different port (for example, `80` or `6969`), change `8080:8080` to `PORT:8080`, where `PORT` is the post on the host machine.
+
 ```bash
 docker run -d -p 127.0.0.1:8080:8080 -it --name my-kinode \
     --mount type=volume,source=kinode-volume,destination=/kinode-home \
@@ -81,6 +83,7 @@ If you need further help with Docker, [access the official Docker documentation 
 
 You can compile the binary from source using the following instructions.
 This is only recommended if:
+
 1. The [pre-compiled binaries](#download-binary) don't work on your system and you can't use [Docker](#docker) for some reason, or
 2. You need to make changes to the Kinode core source.
 
@@ -118,7 +121,7 @@ For more information, or debugging, see the [Rust lang install page](https://www
 Kinode uses the **nightly** build of Rust.
 You will want to run the command `rustup update` on a regular basis to keep your version of the language current, especially if you run into issues compiling the runtime down the line.
 
-### Acquire Kinode OS core
+### Acquire Kinode core
 
 Clone and set up the repository:
 
