@@ -1,0 +1,25 @@
+# runtime = { FetchVersion = "latest" }
+runtime = { RepoPath = "~/git/kinode" }
+persist_home = false
+runtime_build_release = false
+
+
+[[tests]]
+setup_packages = [
+    { path = "..", run = false }
+]
+setup_scripts = [
+    { path = "../ws_server.py", args = "" }
+]
+test_packages = [
+    { path = "ws_client_test", grant_capabilities = ["http_client:distro:sys"] },
+]
+test_scripts = []
+timeout_secs = 5
+fakechain_router = 8545
+
+[[tests.nodes]]
+port = 8080
+home = "home/first"
+fake_node_name = "first.dev"
+runtime_verbosity = 3
