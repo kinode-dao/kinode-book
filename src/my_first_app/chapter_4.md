@@ -463,25 +463,82 @@ For an example of a more complex widget, you can check out the source code of ou
 
 The app store's [widget](https://github.com/kinode-dao/kinode/blob/3719ab38e19143a7bcd501fd245c7a10b2239ee7/kinode/packages/app_store/app_store/src/http_api.rs#L59C1-L133C2) makes a single request to the node, to determine the apps that are listed in the app store.
 It then creates some HTML to display the apps in a nice little list.
-The Tailwind CSS library is included in the HTML to make the UI look nice, but you don't need to do this, and we are going to remove it eventually because it's data-intensive.
 
 ```html
 <html>
 <head>
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        body {
+            color: white;
+            overflow: hidden;
+        }
+
+        #latest-apps {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0.5rem;
+            gap: 0.5rem;
+            align-items: center;
+            backdrop-filter: saturate(1.25);
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            height: 100vh;
+            width: 100vw;
+            overflow-y: auto;
+            scrollbar-color: transparent transparent;
+            scrollbar-width: none;
+        }
+
         .app {
+            padding: 0.5rem;
+            display: flex;
+            flex-grow: 1;
+            align-items: stretch;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            background-color: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            font-family: sans-serif;
             width: 100%;
         }
 
+        .app:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
         .app-image {
-            background-size: cover;
+            border-radius: 0.75rem;
+            margin-right: 0.5rem;
+            flex-grow: 1;
+            background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
+            height: 92px;
+            width: 92px;
+            max-width: 33%;
         }
 
         .app-info {
-            max-width: 67%
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            max-width: 67%;
+        }
+
+        .app-info h2 {
+            font-weight: bold;
+            font-size: medium;
         }
 
         @media screen and (min-width: 500px) {
@@ -492,15 +549,7 @@ The Tailwind CSS library is included in the HTML to make the UI look nice, but y
     </style>
 </head>
 <body class="text-white overflow-hidden">
-    <div
-        id="latest-apps"
-        class="flex flex-wrap p-2 gap-2 items-center backdrop-brightness-125 rounded-xl shadow-lg h-screen w-screen overflow-y-auto"
-        style="
-            scrollbar-color: transparent transparent;
-            scrollbar-width: none;
-        "
-    >
-    </div>
+    <div id="latest-apps"></div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             fetch('/main:app_store:sys/apps/listed', { credentials: 'include' })
@@ -510,22 +559,19 @@ The Tailwind CSS library is included in the HTML to make the UI look nice, but y
                     data.forEach(app => {
                         if (app.metadata) {
                             const a = document.createElement('a');
-                            a.className = 'app p-2 grow flex items-stretch rounded-lg shadow bg-white/10 hover:bg-white/20 font-sans cursor-pointer';
+                            a.className = 'app';
                             a.href = `/main:app_store:sys/app-details/${app.package}:${app.publisher}`
                             a.target = '_blank';
                             a.rel = 'noopener noreferrer';
                             const iconLetter = app.metadata_hash.replace('0x', '')[0].toUpperCase();
                             a.innerHTML = `<div
-                                class="app-image rounded mr-2 grow"
+                                class="app-image"
                                 style="
                                     background-image: url('${app.metadata.image || `/icons/${iconLetter}`}');
-                                    height: 92px;
-                                    width: 92px;
-                                    max-width: 33%;
                                 "
                             ></div>
-                            <div class="app-info flex flex-col grow">
-                                <h2 class="font-bold">${app.metadata.name}</h2>
+                            <div class="app-info">
+                                <h2>${app.metadata.name}</h2>
                                 <p>${app.metadata.description}</p>
                             </div>`;
                                 container.appendChild(a);
