@@ -1,5 +1,7 @@
 # `kit inject-message`
 
+short: `kit i`
+
 `kit inject-message` injects the given message to the node running at given port/URL, e.g.,
 
 ```

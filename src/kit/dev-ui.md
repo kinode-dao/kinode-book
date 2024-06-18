@@ -1,5 +1,7 @@
 # `kit dev-ui`
 
+short: `kit d`
+
 `kit dev-ui` starts a web development server with hot reloading for the indicated UI-enabled package (or the current working directory), e.g.,
 
 ```

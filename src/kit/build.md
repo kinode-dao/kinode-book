@@ -1,5 +1,7 @@
 # `kit build`
 
+short: `kit b`
+
 `kit build` builds the indicated package directory, or the current working directory if none supplied, e.g.,
 
 ```

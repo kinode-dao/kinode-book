@@ -1,5 +1,7 @@
 # kit chain
 
+short: `kit c`
+
 `kit chain` starts a local fakechain with foundry's [anvil](https://github.com/foundry-rs/foundry/tree/master/crates/anvil), e.g.,
 
 ```
