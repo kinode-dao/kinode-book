@@ -1,6 +1,6 @@
 # Processes
 
-Processes are independent pieces of Wasm code running on Kinode OS.
+Processes are independent pieces of Wasm code running on Kinode.
 They can either be persistent, in which case they have in-memory state, or temporary, completing some specific task and returning.
 They have access to long-term storage, like the filesystem or databases.
 They can communicate locally and over the Kinode network.

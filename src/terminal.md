@@ -5,11 +5,11 @@ The [terminal syntax](https://github.com/kinode-dao/kinode?tab=readme-ov-file#te
 ## Commands
 
 All commands in the [terminal](https://github.com/kinode-dao/kinode/tree/main/kinode/packages/terminal) are calling scripts — a special kind of process.
-Kinode OS comes pre-loaded with a number of scripts useful for debugging and everyday use.
+Kinode comes pre-loaded with a number of scripts useful for debugging and everyday use.
 These scripts are fully named `<SCRIPT>:terminal:sys` e.g `hi:terminal:sys`, but the distro [aliases](#alias---alias-a-script-name) these to short names, in this case just `hi`, for convenience.
 
-
 ### `hi` - ping another kinode
+
 ```bash
 Usage: hi <KNS_ID> <MESSAGE>
 Arguments:
@@ -20,6 +20,7 @@ hi other-node.os Hello other-node.os! how are you?
 ```
 
 ### `m` - message a process
+
 ```bash
 Usage: m <ADDRESS> <BODY>
 Arguments:
@@ -35,6 +36,7 @@ Example:
 ```
 
 ### `top` - display information about processes
+
 ```bash
 Usage: top [PROCESS_ID]
 Arguments:
@@ -47,6 +49,7 @@ Example:
 ```
 
 ### `alias` - alias a script name
+
 ```bash
 Usage: alias <NAME> [SCRIPT]
 Arguments:
@@ -60,6 +63,7 @@ Example:
 ```
 
 ### `cat` - print the contents of a file in your vfs
+
 ```bash
 Usage: cat <FILE_PATH>
 Arguments:
@@ -69,7 +73,9 @@ Example:
 ```
 
 ### `echo` - print the argument
+
 `echo` is mostly an example script for developers to look at.
+
 ```bash
 Usage: echo <MESSAGE>
 Arguments:
@@ -81,6 +87,7 @@ Example:
 For more information on writing your own scripts, see the [cookbook](./cookbook/writing_scripts.md).
 
 ## Packaging Scripts with `scripts.json`
+
 For your scripts to be usable by the terminal, you must include a `pkg/scripts.json` file, like [this one](https://github.com/kinode-dao/kinode/blob/main/kinode/packages/terminal/pkg/scripts.json).
 Note that this is a core package and this file should not be edited, but rather you should create one in your own package.
 For more discussion on package folder structure, look [here](https://book.kinode.org/my_first_app/chapter_1.html#exploring-the-package).
@@ -91,31 +98,29 @@ Each top-level key represents the path of a process in your package, usually jus
 Within this JSON object, for each key (i.e., process) the value is an object that specifies the configuration for that particular process.
 The object can contain the following fields:
 
-- `root` (Boolean): Indicates whether the script has "root" privileges - meaning whether it gets *every* capability that the terminal has (not necessarily every capability in existence on your machine)
+- `root` (Boolean): Indicates whether the script has "root" privileges - meaning whether it gets _every_ capability that the terminal has (not necessarily every capability in existence on your machine)
 - `public` (Boolean): Determines if the script is publicly accessible by other processes
 - `request_networking` (Boolean): Specifies whether the script will get networking capabilities
 - `request_capabilities` (Array): An array that lists the capabilities requested by the script. Each element in the array can be either a string or an object.
-The string represents a `ProcessId` that this script will be able to message. When an object is used, it specifies a different kind of capability from `issuer` with `params` as an arbitrary json object.
+  The string represents a `ProcessId` that this script will be able to message. When an object is used, it specifies a different kind of capability from `issuer` with `params` as an arbitrary json object.
 - `grant_capabilities` (Array of strings): An array of `ProcessId`s which represents which processes will be able to send a `Response` back to this script.
-If this script is public, `grant_capabilities` can stay empty.
+  If this script is public, `grant_capabilities` can stay empty.
 
 Processes may not necessarily use all these fields.
 For instance, "m.wasm" only uses root, public, and `request_networking`, omitting `request_capabilities` and `grant_capabilities`.
 
 ### Example
+
 This is a `scripts.json` that publishes a single script, `hi`, which doesn't receive `root` capabilities, is not `public`, can send messages over the network, will receive the capability to message `net:distro:sys`, and gives `net:distro:sys` the ability to message it back:
+
 ```json
 {
-    "hi.wasm": {
-        "root": false,
-        "public": false,
-        "request_networking": true,
-        "request_capabilities": [
-            "net:distro:sys"
-        ],
-        "grant_capabilities": [
-            "net:distro:sys"
-        ]
-    }
+  "hi.wasm": {
+    "root": false,
+    "public": false,
+    "request_networking": true,
+    "request_capabilities": ["net:distro:sys"],
+    "grant_capabilities": ["net:distro:sys"]
+  }
 }
 ```
