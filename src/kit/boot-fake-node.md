@@ -18,7 +18,7 @@ You can start a network of fake nodes that can communicate with each other (but 
 You'll need to start a new terminal for each fake node.
 For example, to start two fake nodes, `fake.dev` and `fake2.dev`:
 
-```
+```bash
 kit boot-fake-node
 
 # In a new terminal

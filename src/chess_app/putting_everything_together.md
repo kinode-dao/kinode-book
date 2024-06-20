@@ -3,10 +3,10 @@
 After adding a frontend in the previous chapter, your chess game is ready to play.
 
 Hopefully, you've been using `kit build <your_chess_app_name>` to test the code as the tutorial has progressed.
-If not, do so now in order to get a compiled package we can install onto a node.
+If not, do so now in order to get a compiled package you can install onto a node.
 
 Next, use `kit start-package <your_chess_app_name> -p <your_test_node_port>` to install the package.
-You should see the printout we added to `init()` in your terminal: `chess by <your_node_name>: start`.
+You should see the printout you added to `init()` in your terminal: `chess by <your_node_name>: start`.
 
 Remember that you determine the process names via the `manifest.json` file inside `/pkg`, and the package & publisher name from `metadata.json` located at the top level of the project.
 Open your chess frontend by navigating to your node's URL (probably something like `http://localhost:8080`), and use the names you chose as the path.

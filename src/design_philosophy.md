@@ -34,7 +34,7 @@ Those features include:
 
 The above properties are achieved by governance.
 Successful protocols launched on Kinode will be ones that decentralize their governance in order to maintain these properties.
-We believe that systems that don't proactively specify their point of control will eventually centralize, even if unintentionally.
+Kinode DAO believes that systems that don't proactively specify their point of control will eventually centralize, even if unintentionally.
 The governance of Kinode itself must be designed to encourage decentralization, playing a role in the publication and distribution of userspace software protocols.
 In practice, this looks like an on-chain permissionless App Store.
 
@@ -50,4 +50,4 @@ Our current architecture relies on the following systems:
 - Wasmtime: a standalone Wasm runtime
 
 In addition, Kinode is inspired by the [Bytecode Alliance](https://bytecodealliance.org/) and their vision for secure, efficient, and modular software.
-We make extensive use of their tools and standards.
+Kinode DAO makes extensive use of their tools and standards.

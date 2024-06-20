@@ -36,7 +36,7 @@ fn my_init_fn(our: Address) {
 ```
 
 `http::bind_http_path("/", false, false)` arguments mean the following:
-- The first argument is the path to bind. 
+- The first argument is the path to bind.
 Note that requests will be namespaced under the process name, so this will be accessible at e.g. `/my_process_name/`.
 - The second argument marks whether to serve the path only to authenticated clients
 In order to skip authentication, set the second argument to false here.
@@ -110,7 +110,7 @@ fn handle_http_message(our: &Address, message: &Message) {
 }
 ```
 
-Instead of directly parsing the `body` type from the message, parse the type that the `http_server` process gives us. 
+Instead of directly parsing the `body` type from the message, parse the type that the `http_server` process gives us.
 This type is defined in the `kinode_process_lib::http` module for us:
 ```rust
 // ...
@@ -300,7 +300,7 @@ If you just want to serve an API, you've seen enough now to handle PUTs and GETs
 But the classic personal node app also serves a webpage that provides a user interface for your program.
 
 You *could* add handling to root `/` path to dynamically serve some HTML on every GET.
-But for maximum ease and efficiency, use the static bind command on `/` and move the PUT handling to `/api`. 
+But for maximum ease and efficiency, use the static bind command on `/` and move the PUT handling to `/api`.
 To do this, edit the bind commands in `my_init_fn` to look like this:
 
 ```rust
@@ -308,7 +308,7 @@ http::bind_http_path("/api", true, false).unwrap();
 http::serve_index_html(&our, "ui", true, false, vec!["/"]).unwrap();
 ```
 
-Note that you are setting `authenticated` to `true` in the `serve_index_html` and `bind_http_path` calls. 
+Note that you are setting `authenticated` to `true` in the `serve_index_html` and `bind_http_path` calls.
 The result of this is that the webpage will be able to get served by the browser, but not by the raw cURL request.
 
 Now you can add a static `index.html` file to the package.
@@ -393,8 +393,7 @@ However, if you insist upon staying, you will learn how to customize your app ic
 #### Encoding an Icon
 
 Choosing an emblem is a difficult task.
-Thankfully, we have chosen one for you.
-Let's use this gosling:
+Here is one you can use:
 
 ![gosling](../assets/gosling.png)
 
@@ -409,7 +408,7 @@ base64 < gosling.png >> icon
 ```
 
 Then, move `icon` next to `lib.rs` in your app's directory.
-Finally, include the icon data in your `lib.rs` file, early on, just after the imports: 
+Finally, include the icon data in your `lib.rs` file, early on, just after the imports:
 
 ```rs
 const ICON: &str = include_str!("./icon");
@@ -417,13 +416,13 @@ const ICON: &str = include_str!("./icon");
 
 #### Clicking the Button
 
-The Kinode process lib exposes an [`add_to_homepage`](https://docs.rs/kinode_process_lib/0.8.3/kinode_process_lib/homepage/fn.add_to_homepage.html) function that you can use to add your app to the homepage.
+The Kinode process lib exposes an [`add_to_homepage`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/homepage/fn.add_to_homepage.html) function that you can use to add your app to the homepage.
 
 In your `my_init_fn`, add the following line:
 
 ```rs
 homepage::add_to_homepage(
-    "My App Name", // the name of your app  
+    "My App Name", // the name of your app
     ICON, // the icon data (base64 encoded, prepended with "data:image/png;base64,")
     "/", // the path to your app's UI (/my_process:my_package:template.os/ is prepended automatically)
 ).unwrap();
@@ -433,12 +432,12 @@ Now, you can build and reinstall your package with `kit bs`, reload your node's 
 To dock your app, click the heart icon on it.
 Click the icon itself to go to the UI served by your app.
 
-### Writing a Widget 
+### Writing a Widget
 
-A widget is an HTML iframe. 
+A widget is an HTML iframe.
 Kinode apps can send widgets to the `homepage` process, which will display them on the user's homepage.
 They are quite simple to configure.
-In `add_to_homepage`, add an additional field: 
+In `add_to_homepage`, add an additional field:
 
 ```rs
 // inside the init function again

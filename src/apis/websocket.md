@@ -8,7 +8,7 @@ The process receives the `channel_id` for pushing data into the WebSocket, and a
 
 To open a WebSocket channel, connect to the main route on the node `/` and send a `WsRegister` message as either text or bytes.
 
-The simplest way to connect from a browser is to use the `@uqbar/client-encryptor-api` like so:
+The simplest way to connect from a browser is to use the `@kinode/client-api` like so:
 
 ```rs
 const api = new KinodeEncryptorApi({
@@ -22,7 +22,7 @@ const api = new KinodeEncryptorApi({
 })
 ```
 
-`@uqbar/client-encryptor-api` is available here: [https://www.npmjs.com/package/@uqbar/client-encryptor-api](https://www.npmjs.com/package/@uqbar/client-encryptor-api)
+`@kinode/client-api` is available here: [https://www.npmjs.com/package/@kinode/client-api](https://www.npmjs.com/package/@kinode/client-api)
 
 Simple JavaScript/JSON example:
 

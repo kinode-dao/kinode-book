@@ -5,7 +5,7 @@ These hosted Kinodes are useful for both end users and developers.
 This guide is largely targeted at developers who want to develop Kinode applications using their hosted Kinode.
 End users may also find the [Managing Your Kinode](#managing-your-kinode) section useful.
 
-Here, we use `ssh` extensively.
+Here, `ssh` is used extensively.
 This guide is specifically tailored to `ssh`s use for the Kinode hosting service.
 A more expansive guide can be found [here](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys).
 

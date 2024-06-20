@@ -11,10 +11,10 @@ pub struct Capability {
 }
 ```
 The kernel abstracts away the process of ensuring that a capability is not forged.
-As a process developer, if a capability comes in on a message or is granted to you by the kernel, you can guarantee that it is legitimate.
+As a process developer, if a capability comes in on a message or is granted to you by the kernel, you are guaranteed that it is legitimate.
 
-Runtime processes, including the kernel itself, the filesystem, and the HTTP client, issue capabilities to processes. 
-Then, when a request is made by a process, the responder verifies the process's capability. 
+Runtime processes, including the kernel itself, the filesystem, and the HTTP client, issue capabilities to processes.
+Then, when a request is made by a process, the responder verifies the process's capability.
 If the process does not have the capability to make such a request, it will be denied.
 
 To give a concrete example: the filesystem can read/write, and it has the capabilities for doing so.

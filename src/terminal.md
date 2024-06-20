@@ -98,16 +98,16 @@ Each top-level key represents the path of a process in your package, usually jus
 Within this JSON object, for each key (i.e., process) the value is an object that specifies the configuration for that particular process.
 The object can contain the following fields:
 
-- `root` (Boolean): Indicates whether the script has "root" privileges - meaning whether it gets _every_ capability that the terminal has (not necessarily every capability in existence on your machine)
-- `public` (Boolean): Determines if the script is publicly accessible by other processes
-- `request_networking` (Boolean): Specifies whether the script will get networking capabilities
-- `request_capabilities` (Array): An array that lists the capabilities requested by the script. Each element in the array can be either a string or an object.
-  The string represents a `ProcessId` that this script will be able to message. When an object is used, it specifies a different kind of capability from `issuer` with `params` as an arbitrary json object.
-- `grant_capabilities` (Array of strings): An array of `ProcessId`s which represents which processes will be able to send a `Response` back to this script.
-  If this script is public, `grant_capabilities` can stay empty.
+Field                    | Type             | Description
+------------------------ | ---------------- | -----------
+`"root"`                 | Boolean          | Indicates whether the script has "root" privileges - meaning whether it gets _every_ capability that the terminal has (not necessarily every capability in existence on your machine)
+`"public"`               | Boolean          | Determines if the script is publicly accessible by other processes
+`"request_networking"`   | Boolean          | Specifies whether the script will get networking capabilities
+`"request_capabilities"` | Array            | An array that lists the capabilities requested by the script. Each element in the array can be either a string or an object. The string represents a `ProcessId` that this script will be able to message. When an object is used, it specifies a different kind of capability from `issuer` with `params` as an arbitrary json object.
+`"grant_capabilities"`   | Array of strings | An array of `ProcessId`s which represents which processes will be able to send a `Response` back to this script. If this script is public, `grant_capabilities` can stay empty.
 
 Processes may not necessarily use all these fields.
-For instance, "m.wasm" only uses root, public, and `request_networking`, omitting `request_capabilities` and `grant_capabilities`.
+For instance, `m.wasm` only uses root, public, and `request_networking`, omitting `request_capabilities` and `grant_capabilities`.
 
 ### Example
 

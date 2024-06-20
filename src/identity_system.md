@@ -45,4 +45,4 @@ The main takeaway for the identity system is that _domain provenance_ and _domai
 
 Like .eth for ENS, the KNS domain space is fixed inside the `.os` top-level domain.
 However, Kinode DAO has the right to manage domains, including domains other than `.os`, so domain availability is likely to expand in the future (subject to governance decisions).
-Eventually, we hope to link various TLDs to existing NFT communities and other identity systems.
+Eventually, Kinode DAO hopes to link various TLDs to existing NFT communities and other identity systems.

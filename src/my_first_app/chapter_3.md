@@ -9,7 +9,7 @@ In the last section, you created a simple request-response pattern that uses str
 This is fine for certain limited cases, but in practice, most Kinode processes written in Rust use a `body` type that is serialized and deserialized to bytes using [Serde](https://serde.rs/).
 There are a multitude of libraries that implement Serde's `Serialize` and `Deserialize` traits, and the process developer is responsible for selecting a strategy that is appropriate for their use case.
 
-Some popular options are `bincode`, [`rmp_serde`](https://docs.rs/rmp-serde/latest/rmp_serde/), and `serde_json`.
+Some popular options are `bincode`, [`rmp_serde`](https://docs.rs/rmp-serde/latest/rmp_serde/) ([MessagePack](https://msgpack.org/index.html)), and `serde_json`.
 In this section, you will use `serde_json` to serialize your Rust structs to a byte vector of JSON.
 
 ### Defining the `body` Type
@@ -67,7 +67,7 @@ Writing interoperable code is necessary for enabling permissionless composabilit
 ### Handling Messages
 
 In this example, you will learn how to handle a Request.
-So, create a request that uses the new `body` type (you won't need to send a Response back, so we can remove `.expect_response()`):
+So, create a request that uses the new `body` type (you won't need to send a Response back, so you can remove `.expect_response()`):
 
 ```rust
 Request::to(&our)

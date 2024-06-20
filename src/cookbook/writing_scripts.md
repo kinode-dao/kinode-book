@@ -30,9 +30,10 @@ fn init(_our: Address) {
 }
 ```
 From writing applications, this should look very familiar - the imports, `wit_bindgen::generate!`, `call_init!`, `init(our: Address)`, etc. are all exactly the same.
-The first unique thing about scripts is that we will have no `loop` where we `await_message`.
-Instead, our initial arguments will come from a single message from the terminal - which we get by calling `await_next_message_body()`.
-Next, all we do is `String`ify the message body, and print it out.
+The first unique thing about scripts is that they have no `loop` over `await_message`.
+Instead, the initial arguments will come from a single message from the terminal.
+`process_lib` provides a convenience function, `await_next_message_body()`, to make it easy to read.
+Next, simply `String`ify the message body, and print it out.
 
 Arbitrary logic can be put below `await_next_message_body` - just like an app, you can fire-off a number of requests, choose to await their responses, handle errors, etc. just like normal.
 

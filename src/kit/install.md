@@ -43,9 +43,14 @@ The first chapter of the [My First Kinode App tutorial](../my_first_app/chapter_
 
 ## Getting kit
 
+`kit` requires Rust.
 To get `kit`, run
 
-```
+```bash
+# Install Rust if you don't have it.
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Install `kit`.
 cargo install --git https://github.com/kinode-dao/kit --locked
 ```
 

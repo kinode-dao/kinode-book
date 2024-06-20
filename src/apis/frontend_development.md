@@ -42,11 +42,17 @@ Your UI should be developed and compiled with the base URL set to the appropriat
 
 #### Vite
 
-In `vite.config.ts` (or `.js`) set `base` to your full process name, i.e. `base: '/my_process:my_package:template.os'`.
+In `vite.config.ts` (or `.js`) set `base` to your full process name, i.e.
+```
+base: '/my_process:my_package:template.os'
+```
 
 #### Create React App
 
-In `package.json` set `homepage` to your full process name, i.e. `homepage: '/my_process:my_package:template.os'`.
+In `package.json` set `homepage` to your full process name, i.e.
+```
+homepage: '/my_process:my_package:template.os'
+```
 
 ### Proxying HTTP Requests
 
@@ -59,7 +65,10 @@ Follow the `server` entry in the [kit template](https://github.com/kinode-dao/ki
 
 #### Create React App
 
-In `package.json` set `proxy` to your Kinode's URL, i.e. `proxy: 'http://localhost:8080'`.
+In `package.json` set `proxy` to your Kinode's URL, i.e.
+```
+proxy: 'http://localhost:8080'
+```
 
 ### Making HTTP Requests
 

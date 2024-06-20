@@ -114,7 +114,7 @@ to see this code in the node you set up in the last section.
 
 ## Sending a Message
 
-To send a message to another process, `use` the [`Request`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/struct.Request.html) type from the [process_lib](../process_stdlib/overview.md), which will provide all the necessary functionality.
+To send a message to another process, `use` the [`Request`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/struct.Request.html) type from the [`process_lib`](../process_stdlib/overview.md), which will provide all the necessary functionality.
 ```rust
 use kinode_process_lib::{await_message, call_init, println, Address, Request};
 ```
@@ -279,4 +279,4 @@ fn my_init_fn(our: Address) {
 This basic structure can be found in the majority of Kinode processes.
 The other common structure is a thread-like process, that sends and handles a fixed series of messages and then exits.
 
-In the next section, we will cover how to turn this very basic request-response pattern into something that can be extensible and composable.
+In the next section, you will learn how to turn this very basic request-response pattern into something that can be extensible and composable.

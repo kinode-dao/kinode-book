@@ -11,11 +11,11 @@ The default port is `8545` and the chain ID is `31337`.
 ## Discussion
 
 `kit chain` starts an anvil node with the arguments `--load-state kinostate.json`.
-This json file includes the [KNS](https://github.com/kinode-dao/KNS) & app_store contracts, and is included in the `kit` binary.
+This json file includes the [KNS](https://github.com/kinode-dao/KNS) & `app_store` contracts, and is included in the `kit` binary.
 
-The [kinostate.json](https://github.com/kinode-dao/kit/blob/master/src/chain/kinostate.json) file can be found written into /tmp/kinode-kit-cache/kinostate-{hash}.json upon running the command.
+The [kinostate.json](https://github.com/kinode-dao/kit/blob/master/src/chain/kinostate.json) file can be found written into `/tmp/kinode-kit-cache/kinostate-{hash}.json` upon running the command.
 
-Note that while the kns_indexer and app_store apps in fake nodes use this chain to index events, any events loaded from a json statefile, aren't replayed upon restarting anvil.
+Note that while the `kns_indexer` and `app_store` apps in fake nodes use this chain to index events, any events loaded from a json statefile, aren't replayed upon restarting anvil.
 
 ## Arguments
 

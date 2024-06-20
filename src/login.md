@@ -70,7 +70,7 @@ On the "Active Endpoints" tab, there are tabs for "HTTPS" and "WebSockets". Sele
 In a terminal window, run:
 
 ```bash
-./kinode home
+./kinode path/to/home
 ```
 
 A new browser tab should open, but if not, look in the terminal for this line:
@@ -155,7 +155,7 @@ The networking key is how your node communicates securely with other nodes, and 
 
 After setting the node password, you will be greeted with the homepage.
 
-![Homepage](./assets/homepage.png)
+![Homepage](./assets/register-homepage.png)
 
 Try downloading, installing, and using some apps on the App Store.
 Come ask for recommendations in the [Kinode Discord](https://discord.gg/mYDj74NkfP)!
