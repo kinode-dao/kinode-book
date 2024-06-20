@@ -466,7 +466,9 @@ E.g.,
 cp -r file_transfer worker
 ```
 
-and change the `worker/Cargo.toml` `name` to `worker`.
+and you need to:
+- change the `worker/Cargo.toml` `name` to `worker`,
+- add `worker` into the `members` array in `Cargo.toml` in package root.
 
 First, its worth noting that because when you spawn `worker` you give it `our_capabilities()` (i.e. it has the same capabilities as the parent process), the worker will have the ability to message both `"net:distro:sys"` and `"vfs:distro:sys"`.
 Since `worker` is in the same package as `file_transfer`, it has the capability to open the `files` directory, see discussion on [VFS drives](../apis/vfs.md) for more details.
