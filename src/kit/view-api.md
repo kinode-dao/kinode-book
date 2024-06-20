@@ -1,5 +1,7 @@
 # `kit view-api`
 
+short: `kit v`
+
 `kit view-api` fetches the list of APIs or a specific API for the given package.
 `view-api` relies on a node to do so, e.g.
 

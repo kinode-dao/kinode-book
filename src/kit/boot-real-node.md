@@ -1,5 +1,7 @@
 # `kit boot-real-node`
 
+short: `kit e`
+
 `kit boot-real-node` starts a Kinode connected to the live network, e.g.,
 
 ```

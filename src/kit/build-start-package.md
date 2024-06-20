@@ -1,5 +1,7 @@
 # `kit build-start-package`
 
+short: `kit bs`
+
 `kit build-start-package` builds, installs and starts the indicated package directory, or the current working directory if none supplied, e.g.,
 
 ```

@@ -1,5 +1,7 @@
 # `kit new`
 
+short: `kit n`
+
 `kit new` creates a Kinode package template at the specified path, e.g.,
 
 ```

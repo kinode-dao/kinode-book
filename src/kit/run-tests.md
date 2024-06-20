@@ -1,5 +1,7 @@
 # `kit run-tests`
 
+short: `kit t`
+
 `kit run-tests` runs the tests specified by the given `.toml` file, or `tests.toml`, e.g.,
 
 ```

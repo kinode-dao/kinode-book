@@ -1,5 +1,7 @@
 # `kit boot-fake-node`
 
+short: `kit f`
+
 `kit boot-fake-node` starts a "fake" node connected to a "fake" chain (i.e. not connected to the live network), e.g.,
 
 ```
