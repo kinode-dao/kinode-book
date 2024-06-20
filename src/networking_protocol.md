@@ -16,7 +16,7 @@ The former allows for completely direct peer-to-peer connections, and the latter
 
 The networking protocol can and will be implemented in multiple underlying protocols.
 Since the protocol is encrypted, a secure underlying connection with TLS or HTTPS is never necessary.
-WebSockets are prioritized since we expect to quickly build Kinodes that run purely in-browser.
+WebSockets are prioritized since to make purely in-browser Kinodes a possibility.
 The other transport protocols with slots in the onchain identity data structure are: TCP, UDP, and WebTransport.
 
 ### 2. Onchain Networking Information
@@ -60,7 +60,7 @@ All data structures are serialized and deserialized using [MessagePack](https://
 The WebSockets protocol uses the [Noise Protocol Framework](http://www.noiseprotocol.org/noise.html) to encrypt all messages end-to-end.
 The parameters used are `Noise_XX_25519_ChaChaPoly_BLAKE2s`.
 
-Using the XX pattern means we follow this interactive pattern:
+Using the XX pattern means following this interactive pattern:
 ```
   -> e
   <- e, ee, s, es

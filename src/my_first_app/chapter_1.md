@@ -173,8 +173,6 @@ The only required fields are `package_name`, `current_version`, and `publisher`,
 
 ```bash
 $ cat my_chat_app/metadata.json
-```
-```json
 {
     "name": "my_chat_app",
     "description": "",

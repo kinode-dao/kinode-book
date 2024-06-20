@@ -7,6 +7,7 @@
 ```sh
 cargo install mdbook
 cargo install mdbook-linkcheck
+cargo install mdbook-webinclude
 
 mdbook serve
 ```

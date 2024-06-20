@@ -235,7 +235,7 @@ A simple demonstration of how to extend the functionality of a given process.
 There are a few key things to keep in mind when doing this, if you want to build stable, maintainable, upgradable applications:
 
 - By adding chat, you changed the format of the "chess protocol" implicitly declared by this program.
-If a user is running the old code, their version won't know how to handle the new `Message` request type we added.
+If a user is running the old code, their version won't know how to handle the new `Message` request type you added.
 **Depending on the serialization/deserialization strategy used, this might even create incompatibilities with the other types of requests.**
 This is a good reason to use a serialization strategy that allows for "unknown" fields, such as JSON.
 If you're using a binary format, you'll need to be more careful about how you add new fields to existing types.

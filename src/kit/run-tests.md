@@ -49,7 +49,10 @@ Path to [`.toml`](https://toml.io/en/) file specifying tests to run; defaults to
 ## `tests.toml`
 
 The testing protocol is specified by a `.toml` file.
-[`tests.toml`](https://github.com/kinode-dao/core_tests/blob/master/tests.toml), from [core tests](https://github.com/kinode-dao/core_tests), will be used as an example.
+[`tests.toml`](https://github.com/kinode-dao/core_tests/blob/master/tests.toml), from [core tests](https://github.com/kinode-dao/core_tests), will be used as an example:
+```toml
+{{#webinclude https://raw.githubusercontent.com/kinode-dao/core_tests/master/tests.toml}}
+```
 
 The top-level of `tests.toml` consists of three fields:
 
@@ -76,7 +79,7 @@ Given a valid path, that repo will be compiled and used.
 For example:
 
 ```toml
-runtime = { FetchVersion = "latest" }
+{{#webinclude https://raw.githubusercontent.com/kinode-dao/core_tests/master/tests.toml 1}}
 ```
 
 
@@ -87,7 +90,7 @@ If given `runtime = RepoPath`, `runtime_build_release` decides whether to build 
 For example:
 
 ```toml
-runtime_build_release = true
+{{#webinclude https://raw.githubusercontent.com/kinode-dao/core_tests/master/tests.toml 3}}
 ```
 
 
@@ -107,23 +110,10 @@ Key                     | Value Type      | Value Description
 
 Each test package is [a single-process package that accepts and responds with certain messages](#test-package-interface).
 
+
 For example:
 ```toml
-[[tests]]
-setup_package_paths = ["chat"]
-test_packages = [
-    { path = "chat_test", grant_capabilities = ["chat:chat:template.os"] },
-    { path = "key_value_test", grant_capabilities = ["kv:distro:sys"] },
-    { path = "sqlite_test", grant_capabilities = ["sqlite:distro:sys"] },
-]
-timeout_secs = 5
-# Plan to include defects = Latency, Dropping, ..., All
-network_router = { port = 9001, defects = "None" }
-
-[[tests.nodes]]
-...
-
-[[tests.nodes]]
+{{#webinclude https://raw.githubusercontent.com/kinode-dao/core_tests/master/tests.toml 6:15}}
 ...
 ```
 
@@ -147,17 +137,7 @@ Key                 | Value Type     | Value Description
 For example:
 
 ```toml
-[[tests.nodes]]
-port = 8080
-home = "home/first"
-fake_node_name = "first.os"
-runtime_verbosity = 0
-
-[[tests.nodes]]
-port = 8081
-home = "home/second"
-fake_node_name = "second.os"
-runtime_verbosity = 0
+{{#webinclude https://raw.githubusercontent.com/kinode-dao/core_tests/master/tests.toml 15:25}}
 ```
 
 
@@ -166,34 +146,9 @@ runtime_verbosity = 0
 A test package is a single-process package that accepts and responds with certain messages.
 The interface is defined as:
 
+
 ```wit
-interface tester {
-    variant request {
-        run(run-request),
-    }
-
-    variant response {
-        run(result<_, fail-response>)
-    }
-
-    record run-request {
-        input-node-names: list<string>,
-        test-names: list<string>,
-        test-timeout: u64,
-    }
-
-    record fail-response {
-        test: string,
-        file: string,
-        line: u32,
-        column: u32,
-    }
-}
-
-world tester-sys-v0 {
-    import tester;
-    include process-v0;
-}
+{{#webinclude https://raw.githubusercontent.com/kinode-dao/kinode/main/kinode/packages/tester/api/tester%3Asys-v0.wit}}
 ```
 
 A `run` `request` starts the test.

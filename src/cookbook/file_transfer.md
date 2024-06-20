@@ -542,7 +542,7 @@ let mut file: Option<File> = None;
 let mut size: Option<u64> = None;
 ```
 
-And then in the main loop we pass it to `handle_message()`:
+And then in the main loop, pass it to `handle_message()`:
 
 ```rust
 struct Component;
@@ -726,7 +726,7 @@ WorkerRequest::Size(incoming_size) => {
 
 One more thing: once you're done sending, you can exit the process; the worker is not needed anymore.
 Change your `handle_message()` function to return a `Result<bool>` instead telling the main loop whether it should exit or not.
-As a bonus, we can add a print when it exits of how long it took to send/receive!
+As a bonus, you can add a print when it exits of how long it took to send/receive!
 
 ```rust
 fn handle_message(

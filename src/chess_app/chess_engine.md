@@ -36,12 +36,12 @@ fn init(our: Address) {
 }
 ```
 
-Now, we have access to a chess board and can manipulate it easily.
+Now, you have access to a chess board and can manipulate it easily.
 
 The [pleco docs](https://github.com/pleco-rs/Pleco#using-pleco-as-a-library) show everything you can do using the pleco library.
 But this isn't very interesting by itself!
-We want to play chess with other people.
-Let's start by creating a persisted state for the chess app and a `body` format for sending messages to other nodes.
+Chess is a multiplayer game.
+To make your app multiplayer, start by creating a persisted state for the chess app and a `body` format for sending messages to other nodes.
 
 In `my_chess/src/lib.rs` add the following simple Request/Response interface and persistable game state:
 ```rust
@@ -90,7 +90,7 @@ The `ChessState` `struct` shown above can also be persisted using the `set_state
 Note that the `Game` `struct` here has `board` as a `String`.
 This is because the `Board` type from pleco doesn't implement `Serialize` or `Deserialize`.
 We'll have to convert it to a string using `fen()` before persisting it.
-Then, we will convert it back to a `Board` with `Board::from_fen()` when we load it from state.
+Then, you will convert it back to a `Board` with `Board::from_fen()` when you load it from state.
 
 The code below will contain a version of the `init()` function that creates an event loop and handles ChessRequests.
 First, however, it's important to note that these types already bake in some assumptions about our "chess protocol".
