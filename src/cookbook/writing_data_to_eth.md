@@ -66,16 +66,16 @@ Then you can run:
 
 ```
 forge script --rpc-url http://localhost:8545 script/Deploy.s.sol --broadcast
-``` 
+```
 
 You'll see a printout that looks something like this:
 
 ```
 == Logs ==
-  Counter deployed at address:  0x610178dA211FEF7D417bC0e6FeD39F05609AD788
+  Counter deployed at address:  0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82
 ```
 
-Great! 
+Great!
 Now you'll write the kinode app to interact with it.
 
 You're going to use some functions from the `eth` library in `kinode_process_lib`:
@@ -91,7 +91,7 @@ The crate `alloy-sol-types` gives us a solidity macro to either define contracts
 You'll add it to `counter/Cargo.toml`:
 
 ```
-alloy-sol-types = "0.7.0"
+alloy-sol-types = "0.7.6"
 ```
 
 Now, importing the following types from the crate:
@@ -132,8 +132,8 @@ use alloy_sol_types::{sol, SolCall, SolValue};
 use std::str::FromStr;
 
 wit_bindgen::generate!({
-    path: "wit",
-    world: "process",
+    path: "target/wit",
+    world: "process-v0",
 });
 
 sol! {
@@ -150,20 +150,21 @@ sol! {
     }
 }
 
-pub const COUNTER_ADDRESS: &str = "0x610178dA211FEF7D417bC0e6FeD39F05609AD788";
+pub const COUNTER_ADDRESS: &str = "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82";
 
 fn read(provider: &Provider) -> anyhow::Result<U256> {
     let counter_address = EthAddress::from_str(COUNTER_ADDRESS).unwrap();
     let count = Counter::numberCall {}.abi_encode();
 
     let tx = TransactionRequest::default()
-        .to(Some(counter_address))
-        .input(TransactionInput::new(count.into()));
+        .to(counter_address)
+        .input(count.into());
+
     let x = provider.call(tx, None);
 
     match x {
         Ok(b) => {
-            let number = U256::abi_decode(&b, false).unwrap();
+            let number = U256::abi_decode(&b, false)?;
             println!("current count: {:?}", number.to::<u64>());
             Ok(number)
         }
@@ -197,13 +198,15 @@ Now add the 2 writes that are possible: increment() and setNumber(newNumber).
 To do this, you'll need to define a wallet, and import a few new crates:
 
 ```
-alloy-primitives = "0.7.0"
-alloy-rlp = "0.3.4"
-alloy-signer-wallet = { git = "https://github.com/alloy-rs/alloy", rev = "cad7935" }
-alloy-consensus = { git = "https://github.com/alloy-rs/alloy", rev = "cad7935" }
-alloy-network = { git = "https://github.com/alloy-rs/alloy", rev = "cad7935" }
-alloy-rpc-types = { git = "https://github.com/alloy-rs/alloy", rev = "cad7935" }
-```
+alloy-primitives = "0.7.6"
+alloy-rlp = "0.3.5"
+alloy = { version = "0.1.2", features = [
+    "network",
+    "signers",
+    "signer-local",
+    "consensus",
+    "rpc-types"
+]}```
 
 You'll also define a simple enum so you can call the program with each of the 3 actions:
 
@@ -219,21 +222,26 @@ pub enum CounterAction {
 When creating a wallet, you can use one of the funded addresses on the anvil fakechain, like so:
 
 ```rust
-use alloy_consensus::{SignableTransaction, TxEnvelope, TxLegacy};
-use alloy_network::TxSignerSync;
-use alloy_primitives::TxKind;
+use alloy::{
+    consensus::{SignableTransaction, TxEip1559, TxEnvelope},
+    network::{eip2718::Encodable2718, TxSignerSync},
+    primitives::TxKind,
+    rpc::types::eth::TransactionRequest,
+    signers::local::PrivateKeySigner,
+};
 use alloy_rlp::Encodable;
-use alloy_rpc_types::TransactionRequest;
-use alloy_signer_wallet::LocalWallet;
 use alloy_sol_types::{sol, SolCall, SolValue};
 use kinode_process_lib::{
     await_message, call_init,
-    eth::{Address as EthAddress, Provider, TransactionInput, U256},
+    eth::{Address as EthAddress, Provider, U256},
     println, Address, Response,
 };
 
+use serde::{Deserialize, Serialize};
+use std::str::FromStr;
+
 let wallet =
-    LocalWallet::from_str("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80")
+    PrivateKeySigner::from_str("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80")
         .unwrap();
 ```
 
@@ -247,23 +255,27 @@ First, branching on the enum type `Increment`, call the increment() function wit
             .unwrap()
             .to::<u64>();
 
-        let mut tx = TxLegacy {
-            chain_id: Some(31337),
+        let mut tx = TxEip1559 {
+            chain_id: 31337,
             nonce: nonce,
             to: TxKind::Call(EthAddress::from_str(COUNTER_ADDRESS).unwrap()),
-            gas_limit: 1000000,
-            gas_price: 1000000000,
+            gas_limit: 15000000,
+            max_fee_per_gas: 10000000000,
+            max_priority_fee_per_gas: 300000000,
             input: increment.into(),
             ..Default::default()
         };
 
         let sig = wallet.sign_transaction_sync(&mut tx)?;
+
         let signed = TxEnvelope::from(tx.into_signed(sig));
+
         let mut buf = vec![];
-        signed.encode(&mut buf);
+        signed.encode_2718(&mut buf);
 
         let tx_hash = provider.send_raw_transaction(buf.into());
         println!("tx_hash: {:?}", tx_hash);
+
     }
 ```
 
@@ -283,18 +295,19 @@ Next, do the same for `setNumber`!
             .unwrap()
             .to::<u64>();
 
-        let mut tx = TxLegacy {
-            chain_id: Some(31337),
+        let mut tx = TxEip1559 {
+            chain_id: 31337,
             nonce: nonce,
             to: TxKind::Call(EthAddress::from_str(COUNTER_ADDRESS).unwrap()),
-            gas_limit: 100000,
-            gas_price: 100000000,
+            gas_limit: 15000000,
+            max_fee_per_gas: 10000000000,
+            max_priority_fee_per_gas: 300000000,
             input: set_number.into(),
             ..Default::default()
         };
-
         let sig = wallet.sign_transaction_sync(&mut tx)?;
         let signed = TxEnvelope::from(tx.into_signed(sig));
+
         let mut buf = vec![];
         signed.encode(&mut buf);
 
