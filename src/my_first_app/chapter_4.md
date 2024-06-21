@@ -403,8 +403,7 @@ No issue.
 On the command line, encode your image as base64, and prepend `data:image/png;base64,`:
 
 ```sh
-echo "data:image/png;base64," > icon
-base64 < gosling.png >> icon
+echo "data:image/png;base64,$(base64 < gosling.png)" | tr -d '\n' > icon3
 ```
 
 Then, move `icon` next to `lib.rs` in your app's directory.
