@@ -9,7 +9,7 @@ setup_packages = [
     { path = "..", run = true }
 ]
 test_packages = [
-    { path = "mfa_message_demo_test", grant_capabilities = ["mfa_message_demo:mfa_message_demo:template.os"] },
+    { path = "mfa_data_demo_test", grant_capabilities = ["mfa_data_demo:mfa_data_demo:template.os"] },
 ]
 setup_scripts = []
 test_scripts = []

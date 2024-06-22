@@ -1,9 +1,9 @@
 {
-    "name": "mfa_message_demo Test",
-    "description": "A test for mfa_message_demo.",
+    "name": "mfa_data_demo Test",
+    "description": "A test for mfa_data_demo.",
     "image": "",
     "properties": {
-        "package_name": "mfa_message_demo_test",
+        "package_name": "mfa_data_demo_test",
         "current_version": "0.1.0",
         "publisher": "template.os",
         "mirrors": [],

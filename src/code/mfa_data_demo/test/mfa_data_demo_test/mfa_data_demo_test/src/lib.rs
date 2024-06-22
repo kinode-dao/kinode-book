@@ -1,3 +1,4 @@
+use crate::kinode::process::mfa_data_demo::{Request as MfaRequest, Response as MfaResponse};
 use crate::kinode::process::tester::{
     FailResponse, Request as TesterRequest, Response as TesterResponse, RunRequest,
 };
@@ -7,16 +8,16 @@ mod tester_lib;
 
 wit_bindgen::generate!({
     path: "target/wit",
-    world: "tester-sys-v0",
+    world: "mfa-data-demo-test-template-dot-os-v0",
     generate_unused_types: true,
-    additional_derives: [PartialEq, serde::Deserialize, serde::Serialize, process_macros::SerdeJsonInto],
+    additional_derives: [serde::Deserialize, serde::Serialize, process_macros::SerdeJsonInto],
 });
 
 fn handle_message(our: &Address) -> anyhow::Result<()> {
     let message = await_message()?;
 
     if !message.is_request() {
-        fail!("mfa_message_demo_test");
+        fail!("mfa_data_demo_test");
     }
     let source = message.source();
     if our.node != source.node {
@@ -30,26 +31,36 @@ fn handle_message(our: &Address) -> anyhow::Result<()> {
         ..
     }) = message.body().try_into()?;
     if node_names.len() != 1 {
-        fail!("mfa_message_demo_test");
+        fail!("mfa_data_demo_test");
     }
 
     let our_demo_address =
-        format!("{}@mfa_message_demo:mfa_message_demo:template.os", our.node).parse()?;
+        format!("{}@mfa_data_demo:mfa_data_demo:template.os", our.node).parse()?;
 
     let response = Request::new()
         .target(&our_demo_address)
-        .body(b"hello from test")
+        .body(MfaRequest::Hello("hello from test".to_string()))
         .send_and_await_response(5)??;
     if response.is_request() {
-        fail!("mfa_message_demo_test");
+        fail!("mfa_data_demo_test");
     };
-    let body = String::from_utf8_lossy(response.body());
-
-    let expected = "hello world to you too!".to_string();
-    if body != expected {
-        println!("{body} != {expected} (expected)");
-        fail!("mfa_message_demo_test");
+    let MfaResponse::Hello(ref text) = response.body().try_into()? else {
+        fail!("mfa_data_demo_test");
+    };
+    if text != "hello to you too!" {
+        fail!("mfa_data_demo_test");
     }
+
+    let response = Request::new()
+        .target(&our_demo_address)
+        .body(MfaRequest::Goodbye)
+        .send_and_await_response(5)??;
+    if response.is_request() {
+        fail!("mfa_data_demo_test");
+    };
+    let MfaResponse::Goodbye = response.body().try_into()? else {
+        fail!("mfa_data_demo_test");
+    };
 
     Response::new().body(TesterResponse::Run(Ok(()))).send()?;
 
@@ -64,8 +75,8 @@ fn init(our: Address) {
         match handle_message(&our) {
             Ok(()) => {}
             Err(e) => {
-                println!("mfa_message_demo_test: error: {e:?}");
-                fail!("mfa_message_demo_test");
+                println!("mfa_data_demo_test: error: {e:?}");
+                fail!("mfa_data_demo_test");
             }
         };
     }

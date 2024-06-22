@@ -2,12 +2,14 @@
     {
         "process_name": "mfa_data_demo",
         "process_wasm_path": "/mfa_data_demo.wasm",
-        "on_exit": "Restart",
-        "request_networking": true,
+        "on_exit": "None",
+        "request_networking": false,
         "request_capabilities": [
             "http_server:distro:sys"
         ],
-        "grant_capabilities": [],
-        "public": true
+        "grant_capabilities": [
+            "terminal:terminal:sys"
+        ],
+        "public": false
     }
 ]
