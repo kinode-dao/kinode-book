@@ -17,7 +17,7 @@ fn init(our: Address) {
 
     loop {
         match await_message() {
-            Err(_send_error) => println!("got send error!"),
+            Err(send_error) => println!("got SendError: {send_error}"),
             Ok(message) => {
                 let body = String::from_utf8_lossy(message.body());
                 if message.is_request() {

@@ -118,7 +118,7 @@ Result<Message, SendError>
 ```
 
 The `SendError` is returned when a request times out or, if the request passes over the network, in case of a networking issue.
-Use a `match` statement to check whether the incoming value is a message or an error, then branch on whether the message is a `Request or a `Response`.
+Use a `match` statement to check whether the incoming value is a message or an error, then branch on whether the message is a `Request` or a `Response`.
 To send a `Response` back, import the `Response` type from `process_lib` and send one from the `Request` branch.
 
 ```rust

@@ -64,7 +64,7 @@ In this example, you will learn how to handle a Request.
 So, create a request that uses the new `body` type:
 
 ```rust
-{{#include ../code/mfa_data_demo/mfa_data_demo/src/lib.rs:40:44}}
+{{#include ../code/mfa_data_demo/mfa_data_demo/src/lib.rs:39:43}}
 ```
 
 Next, change the way you handle a message in your process to use your new `body` type.
