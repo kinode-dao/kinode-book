@@ -5,9 +5,11 @@
         "on_exit": "Restart",
         "request_networking": false,
         "request_capabilities": [
-            "http_client:distro:sys"
+            "http_client:distro:sys",
+            "ws_client:ws_client:template.os"
         ],
         "grant_capabilities": [
+            "http_client:distro:sys",
             "ws_client:ws_client:template.os"
         ],
         "public": true

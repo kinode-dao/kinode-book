@@ -4,7 +4,9 @@
         "process_wasm_path": "/mfa_data_demo_test.wasm",
         "on_exit": "Restart",
         "request_networking": false,
-        "request_capabilities": [],
+        "request_capabilities": [
+            "mfa_data_demo:mfa_data_demo:template.os"
+        ],
         "grant_capabilities": [
             "mfa_data_demo:mfa_data_demo:template.os"
         ],

@@ -11,9 +11,7 @@ setup_packages = [
 setup_scripts = [
     { path = "../ws_server.py", args = "" }
 ]
-test_packages = [
-    { path = "ws_client_test", grant_capabilities = ["http_client:distro:sys"] },
-]
+test_package_paths = ["ws_client_test"]
 test_scripts = []
 timeout_secs = 5
 fakechain_router = 8545
@@ -22,4 +20,4 @@ fakechain_router = 8545
 port = 8080
 home = "home/first"
 fake_node_name = "first.dev"
-runtime_verbosity = 3
+runtime_verbosity = 2
