@@ -1,0 +1,5 @@
+world mfa-data-demo-test-template-dot-os-v0 {
+    import mfa-data-demo;
+    import tester;
+    include process-v0;
+}
