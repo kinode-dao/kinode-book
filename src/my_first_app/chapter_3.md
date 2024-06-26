@@ -16,49 +16,43 @@ In this section, you will use `serde_json` to serialize your Rust structs to a b
 
 Our old request looked like this:
 ```rust
-Request::to(&our)
-    .body(b"hello world")
-    .expects_response(5)
-    .send()
-    .unwrap();
+{{#include ../code/mfa_message_demo/mfa_message_demo/src/lib.rs:12:16}}
 ```
 
 What if you want to have two kinds of messages, which your process can handle differently?
-Let's make a type that implements the `Serialize` and `Deserialize` traits, and use that as your `body` type.
+You need a type that implements the `Serialize` and `Deserialize` traits, and use that as your `body` type.
+You can define your types in Rust, but then:
+1. Processes in other languages will then have to rewrite your types.
+2. Importing types is haphazard and on a per-package basis.
+3. Every package might place the types in a different place.
 
-```rust
-use serde::{Serialize, Deserialize};
+Instead, use the WIT language to define your API, discussed further [here](../process/wit-apis.md).
+Briefly, WIT is a language-independent way to define types and functions for [Wasm components](https://component-model.bytecodealliance.org/design/why-component-model.html) like Kinode processes.
+Kinode packages can define their API using a WIT file.
+That WIT file is used to generate code in the given language during compile-time.
+Kinode also defines a conventional place for these WIT APIs and provides infrastructure for viewing and importing the APIs of other packages.
 
-// ...
-
-#[derive(Serialize, Deserialize)]
-enum MyBody {
-    Hello(String),
-    Goodbye,
-}
-
-impl MyBody {
-    fn hello(text: &str) -> Vec<u8> {
-        serde_json::to_vec(&MyBody::Hello(text.to_string())).unwrap()
-    }
-
-    fn goodbye() -> Vec<u8> {
-        serde_json::to_vec(&MyBody::Goodbye).unwrap()
-    }
-
-    fn parse(bytes: &[u8]) -> Result<MyBody, serde_json::Error> {
-        serde_json::from_slice::<MyBody>(bytes)
-    }
-}
+```wit
+{{#includehidetest ../code/mfa_data_demo/api/mfa_data_demo:template.os-v0.wit}}
 ```
 
-Now, when you form requests and responses, instead of sticking a string in the `body` field, you can use the new `MyBody` type.
+The `wit_bindgen::generate!()` macro changes slightly, since the `world` is now as defined in the API:
+```rust
+{{#include ../code/mfa_data_demo/mfa_data_demo/src/lib.rs:4:9}}
+```
+which generates the types defined in the WIT API:
+```rust
+{{#include ../code/mfa_data_demo/mfa_data_demo/src/lib.rs:1}}
+```
+It further adds the derives for `serde` so that these types can be used smoothly.
+
+Now, when you form Requests and Responses, instead of putting a bytes-string in the `body` field, you can use the `MfaRequest`/`MfaResponse` type.
 This comes with a number of benefits:
 
 - You can now use the `body` field to send arbitrary data, not just strings.
 - Other programmers can look at your code and see what kinds of messages this process might send to their code.
 - Other programmers can see what kinds of messages you expect to receive.
-- By using an `enum`, you can exhaustively handle all possible message types, and handle unexpected messages with a default case or an error.
+- By using an `enum` ([WIT `variant`s become Rust `enum`s](https://component-model.bytecodealliance.org/design/wit.html#variants)), you can exhaustively handle all possible message types, and handle unexpected messages with a default case or an error.
 
 Defining `body` types is just one step towards writing interoperable code.
 It's also critical to document the overall structure of the program along with message `blob`s and `metadata` used, if any.
@@ -67,44 +61,18 @@ Writing interoperable code is necessary for enabling permissionless composabilit
 ### Handling Messages
 
 In this example, you will learn how to handle a Request.
-So, create a request that uses the new `body` type (you won't need to send a Response back, so you can remove `.expect_response()`):
+So, create a request that uses the new `body` type:
 
 ```rust
-Request::to(&our)
-    .body(MyBody::hello("hello world"))
-    .send()
-    .unwrap();
+{{#include ../code/mfa_data_demo/mfa_data_demo/src/lib.rs:39:43}}
 ```
 
-Next, edit the way you handle a message in your process to use your new `body` type.
-The process should attempt to parse every message into the `MyBody` enum, handle the two cases, and handle any message that doesn't comport to the type.
-This piece of code goes into the `Ok(message)` case of the `match` statement on `await_message()`:
+Next, change the way you handle a message in your process to use your new `body` type.
+Break out the logic to handle a message into its own function, `handle_message()`.
+`handle_message()` should branch on whether the message is a Request or Response.
+Then, attempt to parse every message into the `MfaRequest`/`MfaResponse`, `enum` as appropriate, handle the two cases, and handle any message that doesn't comport to the type.
 ```rust
-let Ok(body) = MyBody::parse(message.body()) else {
-    println!("{our}: received a message with weird `body`!");
-    continue;
-};
-if message.is_request() {
-    // Respond to a Hello by printing it, and a Goodbye by exiting
-    // the loop, which will cause the process to exit.
-    match body {
-        MyBody::Hello(text) => {
-            println!("got a Hello: {text}");
-        }
-        MyBody::Goodbye => {
-            println!("goodbye!");
-            break;
-        }
-    }
-} else {
-    // we only expect Hello responses. If we get a Goodbye, ignore it.
-    match body {
-        MyBody::Hello(text) => {
-            println!("got a Hello response: {text}");
-        }
-        MyBody::Goodbye => {}
-    }
-}
+{{#include ../code/mfa_data_demo/mfa_data_demo/src/lib.rs:11:34}}
 ```
 
 ### Granting Capabilities
@@ -112,93 +80,21 @@ if message.is_request() {
 Finally, edit your `pkg/manifest.json` to grant the terminal process permission to send messages to this process.
 That way, you can use the terminal to send `Hello` and `Goodbye` messages.
 Go into the manifest, and under the process name, edit (or add) the `grant_capabilities` field like so:
+
 ```json
-...
-"grant_capabilities": [
-    "terminal:terminal:sys"
-],
-...
+{{#include ../code/mfa_data_demo/pkg/manifest.json:10:12}}
 ```
 
 ### Build and Run the Code!
 
 After all this, your code should look like:
 ```rust
-use serde::{Serialize, Deserialize};
-use kinode_process_lib::{await_message, call_init, println, Address, Request, Response};
-
-#[derive(Serialize, Deserialize)]
-enum MyBody {
-    Hello(String),
-    Goodbye,
-}
-
-impl MyBody {
-    fn hello(text: &str) -> Vec<u8> {
-        serde_json::to_vec(&MyBody::Hello(text.to_string())).unwrap()
-    }
-
-    fn goodbye() -> Vec<u8> {
-        serde_json::to_vec(&MyBody::Goodbye).unwrap()
-    }
-
-    fn parse(bytes: &[u8]) -> Result<MyBody, serde_json::Error> {
-        serde_json::from_slice::<MyBody>(bytes)
-    }
-}
-
-wit_bindgen::generate!({
-    path: "wit",
-    world: "process",
-});
-
-call_init!(my_init_fn);
-fn my_init_fn(our: Address) {
-    println!("{our}: started");
-
-    Request::to(&our)
-        .body(MyBody::hello("hello world"))
-        .send()
-        .unwrap();
-
-    loop {
-        match await_message() {
-            Ok(message) => {
-                let Ok(body) = MyBody::parse(message.body()) else {
-                    println!("{our}: received a message with weird `body`!");
-                    continue;
-                };
-                if message.is_request() {
-                    // Respond to a Hello by printing it, and a Goodbye by exiting
-                    // the loop, which will cause the process to exit.
-                    match body {
-                        MyBody::Hello(text) => {
-                            println!("got a Hello: {text}");
-                        }
-                        MyBody::Goodbye => {
-                            println!("goodbye!");
-                            break;
-                        }
-                    }
-                } else {
-                    // we only expect Hello responses. If we get a Goodbye, ignore it.
-                    match body {
-                        MyBody::Hello(text) => {
-                            println!("got a Hello response: {text}");
-                        }
-                        MyBody::Goodbye => {}
-                    }
-                }
-            }
-            Err(_send_error) => {
-                println!("got send error!");
-            }
-        }
-    }
-}
+{{#include ../code/mfa_data_demo/mfa_data_demo/src/lib.rs}}
 ```
 You should be able to build and start your package, then see that initial `Hello` message.
 At this point, you can use the terminal to test your message types!
+
+You can find the full code [here](https://github.com/kinode-dao/kinode-book/tree/main/src/code/mfa_data_demo).
 
 First, try sending a `Hello` using the [`m` terminal script](../terminal.md#m---message-a-process).
 Get the address of your process by looking at the "started" printout that came from it in the terminal.
@@ -208,7 +104,12 @@ As a reminder, these values (`<your_process>`, `<your_package>`, `<your_publishe
 m our@<your_process>:<your_package>:<your_publisher> '{"Hello": "hey there"}'
 ```
 
-You should see the message text printed. Next, try a goodbye.
+You should see the message text printed.
+To grab and print the Response, append a `-a 5` to the terminal command:
+```bash
+m our@<your_process>:<your_package>:<your_publisher> '{"Hello": "hey there"}' -a 5
+```
+Next, try a goodbye.
 This will cause the process to exit.
 
 ```bash

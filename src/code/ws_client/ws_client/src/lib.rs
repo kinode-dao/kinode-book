@@ -15,6 +15,8 @@ use anyhow::{anyhow, Result};
 use kinode_process_lib::{
     await_message, call_init, get_blob, http, println, Address, LazyLoadBlob, Message,
 };
+#[cfg(feature = "test")]
+use kinode_process_lib::{OnExit, Request};
 
 wit_bindgen::generate!({
     path: "target/wit",
@@ -24,7 +26,7 @@ wit_bindgen::generate!({
 const WS_URL: &str = "ws://localhost:8765";
 const CONNECTION: u32 = 0;
 
-fn handle_http_message(our: &Address, message: &Message, connection: &u32) -> Result<()> {
+fn handle_http_message(message: &Message, connection: &u32) -> Result<()> {
     match serde_json::from_slice::<http::HttpClientRequest>(message.body())? {
         http::HttpClientRequest::WebSocketClose { channel_id } => {
             assert_eq!(*connection, channel_id);
@@ -59,14 +61,14 @@ fn handle_http_message(our: &Address, message: &Message, connection: &u32) -> Re
     Ok(())
 }
 
-fn talk_to_ws(our: &Address) -> Result<()> {
+fn talk_to_ws() -> Result<()> {
     let connection = CONNECTION;
     http::open_ws_connection(WS_URL.to_string(), None, connection)?;
 
     match await_message() {
         Ok(message) => {
             if message.source().process == "http_client:distro:sys" {
-                if let Err(e) = handle_http_message(&our, &message, &connection) {
+                if let Err(e) = handle_http_message(&message, &connection) {
                     println!("{e}");
                 }
             }
@@ -76,11 +78,40 @@ fn talk_to_ws(our: &Address) -> Result<()> {
     Ok(())
 }
 
+#[cfg(feature = "test")]
+fn talk_to_ws_test() -> Result<()> {
+    println!("in test");
+    let message = await_message()?;
+    let parent_address = message.source();
+    println!("got parent {parent_address:?}");
+
+    match talk_to_ws() {
+        Ok(_) => {}
+        Err(e) => println!("error talking to ws: {e}"),
+    }
+
+    Request::to(parent_address)
+        .body(serde_json::to_vec(&Ok::<(), ()>(())).unwrap())
+        .send()
+        .unwrap();
+    OnExit::None.set().unwrap();
+    println!("done");
+
+    Ok(())
+}
+
 call_init!(init);
 fn init(our: Address) {
-    println!("begin");
+    println!("{}: begin", our.process());
 
-    match talk_to_ws(&our) {
+    #[cfg(not(feature = "test"))]
+    match talk_to_ws() {
+        Ok(_) => {}
+        Err(e) => println!("error talking to ws: {e}"),
+    }
+
+    #[cfg(feature = "test")]
+    match talk_to_ws_test() {
         Ok(_) => {}
         Err(e) => println!("error talking to ws: {e}"),
     }

@@ -8,16 +8,21 @@ Every request takes a path and a corresponding action.
 
 ## Drives
 
-VFS paths are normal relative paths within the directory `your_node_home/vfs/`, but to be valid they need to be within a drive.
-A drive is just a directory within your VFS, consisting of 2 parts: `package_id/drive_name/`.
+A drive is a directory within a package's VFS directory, e.g., `app_store:sys/pkg/` or `your_package:publisher.os/my_drive/`.
+Drives are owned by packages.
+Packages can share access to drives they own via [capabilities](../process/capabilities.md).
+Each package is spawned with two drives: [`pkg/`](#pkg-drive) and [`tmp/`](#tmp-drive).
+All processes in a package have caps to those drives.
+Processes can also create additional drives.
 
-For example: `your_package:publisher.os/pkg/`.
-This directory is usually filled with files put into the `pkg/` directory when installing with `app_store`.
-[Capabilities](../process/capabilities.md) are checked on the drive part of the path.
-When calling `create_drive()` you'll be given "read" and "write" caps that you can share with other processes.
+### `pkg/` drive
 
-Other processes within your package will have access by default.
-They can open and modify files and directories within their own package_id.
+The `pkg/` drive contains metadata about the package that Kinode requires to run that package, `.wasm` binaries, and optionally the API of the package and the UI.
+When creating packages, the `pkg/` drive is populated by [`kit build`](../kit/build.md) and loaded into the Kinode using [`kit start-package`](../kit/start-package.md).
+
+### `tmp/` drive
+
+The `tmp/` drive can be written to directly by the owning package using standard filesystem functionality (i.e. `std::fs` in Rust) via WASI in addition to the Kinode VFS.
 
 ### Imports
 

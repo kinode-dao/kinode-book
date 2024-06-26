@@ -39,6 +39,8 @@ jobs:
           cargo install --version ${MDBOOK_VERSION} mdbook
           cargo install mdbook-linkcheck
           cargo install mdbook-webinclude
+          cargo install mdbook-webinclude
+          cargo install --git https://github.com/nick1udwig/mdbook-hide-feature --locked
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4
