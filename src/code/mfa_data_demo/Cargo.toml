@@ -1,0 +1,10 @@
+[workspace]
+resolver = "2"
+members = [
+    "mfa_data_demo",
+]
+
+[profile.release]
+panic = "abort"
+opt-level = "s"
+lto = true

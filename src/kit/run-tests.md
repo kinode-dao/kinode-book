@@ -56,12 +56,13 @@ The testing protocol is specified by a `.toml` file.
 {{#webinclude https://raw.githubusercontent.com/kinode-dao/core_tests/master/tests.toml}}
 ```
 
-The top-level of `tests.toml` consists of three fields:
+The top-level of `tests.toml` consists of four fields:
 
 Key                                               | Value Type
 ------------------------------------------------- | ----------
 [`runtime`](#runtime)                             | `{ FetchVersion = "<version>" }` or `{ RepoPath = "~/path/to/repo" }`
 [`runtime_build_release`](#runtime_build_release) | Boolean
+[`persist_home`](#persist_home)                   | Boolean
 [`tests`](#tests)                                 | [Array of Tables](https://toml.io/en/v1.0.0#array-of-tables)
 
 ### `runtime`
@@ -84,7 +85,6 @@ For example:
 {{#webinclude https://raw.githubusercontent.com/kinode-dao/core_tests/master/tests.toml 1}}
 ```
 
-
 ### `runtime_build_release`
 
 If given `runtime = RepoPath`, `runtime_build_release` decides whether to build the runtime as `--release` or not.
@@ -95,6 +95,10 @@ For example:
 {{#webinclude https://raw.githubusercontent.com/kinode-dao/core_tests/master/tests.toml 3}}
 ```
 
+### `persist_home`
+
+Whether or not to persist the node home directories after tests have been run.
+It is recommended to have this set to `false` except when debugging a test.
 
 ### `tests`
 
@@ -102,13 +106,15 @@ An Array of Tables.
 Each Table specifies one test to run.
 That test consists of:
 
-Key                     | Value Type      | Value Description
------------------------ | --------------- | -----------------
-`setup_package_paths`   | Array of Paths  | Paths to packages to load into all nodes before running test
-`test_packages`         | Array of Tables | Each Table in the Array contains `path` (to test package) and `grant_capabilities` (which will be granted by test package)
-`timeout_secs`          | Integer > 0     | Timeout for this entire series of test packages
-`network_router`        | Table           | Table containing `port` (of network router server) and `defects` (to simulate network weather/defects; currently only `"None"` accepted)
-[`nodes`](#nodes)       | Array of Tables | Each Table specifies configuration of one node to spin up for test
+Key                     | Value Type               | Value Description
+----------------------- | ------------------------ | -----------------
+`setup_packages`        | Array of Tables [(`SetupPackage`s)](https://github.com/kinode-dao/kit/blob/10e2bd5d44cf44690c2360e60523ac5b06d1d5f0/src/run_tests/types.rs#L37-L40) | Each Table in the Array contains `path` (to the package) and `run` (whether or not to run the package or merely load it in)
+`setup_scripts`         | Array of Tables [(`Script`s)](https://github.com/kinode-dao/kit/blob/10e2bd5d44cf44690c2360e60523ac5b06d1d5f0/src/run_tests/types.rs#L43-L46)       | Each Table in the Array contains `path` (to the script) and `args` (to be passed to the script); these scripts will run alongside the test nodes
+`test_package_paths`    | Array of Strings (`PathBuf`s)                                                                                                                       | Paths to test packages to run
+`test_scripts`          | Array of [`Script`s](https://github.com/kinode-dao/kit/blob/10e2bd5d44cf44690c2360e60523ac5b06d1d5f0/src/run_tests/types.rs#L43-L46)                | Each Table in the Array contains `path` (to the script) and `args` (to be passed to the script); these scripts will be run as tests and must return a `0` on success
+`timeout_secs`          | Integer > 0                                                                                                                                         | Timeout for this entire series of test packages
+`network_router`        | Table                                                                                                                                               | Table containing `port` (of network router server) and `defects` (to simulate network weather/defects; currently only `"None"` accepted)
+[`nodes`](#nodes)       | Array of Tables                                                                                                                                     | Each Table specifies configuration of one node to spin up for test
 
 Each test package is [a single-process package that accepts and responds with certain messages](#test-package-interface).
 
@@ -118,7 +124,6 @@ For example:
 {{#webinclude https://raw.githubusercontent.com/kinode-dao/core_tests/master/tests.toml 6:15}}
 ...
 ```
-
 
 #### `nodes`
 
@@ -141,7 +146,6 @@ For example:
 ```toml
 {{#webinclude https://raw.githubusercontent.com/kinode-dao/core_tests/master/tests.toml 15:25}}
 ```
-
 
 ## Test Package Interface
 

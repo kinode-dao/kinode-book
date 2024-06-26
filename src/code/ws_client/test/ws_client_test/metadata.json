@@ -1,0 +1,17 @@
+{
+    "name": "ws_client Test",
+    "description": "A test for ws_client.",
+    "image": "",
+    "properties": {
+        "package_name": "ws_client_test",
+        "current_version": "0.1.0",
+        "publisher": "template.os",
+        "mirrors": [],
+        "code_hashes": {
+            "0.1.0": ""
+        },
+        "wit_version": 0
+    },
+    "external_url": "",
+    "animation_url": ""
+}
