@@ -423,7 +423,7 @@ In your `my_init_fn`, add the following line:
 ```rs
 homepage::add_to_homepage(
     "My App Name", // the name of your app
-    ICON, // the icon data (base64 encoded, prepended with "data:image/png;base64,")
+    Some(ICON), // the icon data (base64 encoded, prepended with "data:image/png;base64,")
     "/", // the path to your app's UI (/my_process:my_package:template.os/ is prepended automatically)
 ).unwrap();
 ```
