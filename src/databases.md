@@ -28,12 +28,12 @@ println!("got a bday: {}", String::from_utf8(bday)?);
 
 ```rust
 // opens or creates sqlite db named users in our package.
-let db = sqlite::open(our.package_id(), "users")?;
+let db = sqlite::open(our.package_id(), "users", None).unwrap();
 
 let create_table_statement =
     "CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT NOT NULL);".to_string();
 
-db.write(create_table_statement, vec![], None)?;
+db.write(create_table_statement, vec![], None);
 
 let insert_statement = "INSERT INTO users (name) VALUES (?), (?), (?);".to_string();
 let params = vec![
@@ -42,12 +42,12 @@ let params = vec![
     serde_json::Value::String("Dave".to_string()),
 ];
 
-sqlite.write(insert_statement, params, None)?;
+db.write(insert_statement, params, None);
 
 let select_statement = "SELECT * FROM users;".to_string();
-let rows = sqlite.read(select_statement, vec![])?;
+let rows = db.read(select_statement, vec![]).unwrap();
 // rows: Vec<HashMap<String, serde_json::Value>>
-println!("rows: {}", rows.len());
+println!("rows: {:#?}", rows);
 ```
 
 ## References
