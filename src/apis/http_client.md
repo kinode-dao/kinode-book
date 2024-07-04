@@ -11,7 +11,7 @@ The action must be serialized to JSON and sent in the `body` of a request.
 `HttpClientAction` is an `enum` type that includes both HTTP and websocket actions.
 
 ```rust
-/// Request type that can be shared over WASM boundary to apps.
+/// Request type that can be shared over Wasm boundary to apps.
 /// This is the one you send to the `http_client:distro:sys` service.
 #[derive(Debug, Serialize, Deserialize)]
 pub enum HttpClientAction {
@@ -37,7 +37,7 @@ Two or more connections can have the same `channel_id` if they are from differen
 `OutgoingHttpRequest` is used to send an HTTP request.
 
 ```rust
-/// HTTP Request type that can be shared over WASM boundary to apps.
+/// HTTP Request type that can be shared over Wasm boundary to apps.
 /// This is the one you send to the `http_client:distro:sys` service.
 #[derive(Debug, Serialize, Deserialize)]
 pub struct OutgoingHttpRequest {
@@ -56,7 +56,7 @@ An HTTP request will have an `HttpResponse` defined in the [`http_server`](./htt
 A websocket request (open, push, close) will simply respond with a `HttpClientResponse::WebSocketAck`.
 
 ```rust
-/// HTTP Client Response type that can be shared over WASM boundary to apps.
+/// HTTP Client Response type that can be shared over Wasm boundary to apps.
 /// This is the one you receive from the `http_client:distro:sys` service.
 #[derive(Debug, Serialize, Deserialize)]
 pub enum HttpClientResponse {
@@ -95,7 +95,7 @@ These incoming websocket messages are processed and sent as `HttpClientRequest` 
 The message itself is accessible with `get_blob()`.
 
 ```rust
-/// WebSocket Client Request type that can be shared over WASM boundary to apps.
+/// WebSocket Client Request type that can be shared over Wasm boundary to apps.
 /// This comes from an open websocket client connection in the `http_client:distro:sys` service.
 #[derive(Debug, Serialize, Deserialize)]
 pub enum HttpClientRequest {

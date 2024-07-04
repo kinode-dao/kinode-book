@@ -24,7 +24,7 @@ The [Generating WIT Bindings](#generating-wit-bindings) and [`init()` Function](
 
 ### Generating WIT Bindings
 
-For the purposes of this tutorial, crucial information from this [WASM documentation](https://component-model.bytecodealliance.org/design/why-component-model.html) has been abridged in this small subsection.
+For the purposes of this tutorial, crucial information from this [Wasm documentation](https://component-model.bytecodealliance.org/design/why-component-model.html) has been abridged in this small subsection.
 
 A [Wasm component](https://component-model.bytecodealliance.org/design/components.html) is a wrapper around a core module that specifies its imports and exports.
 E.g. a Go component can communicate directly and safely with a C or Rust component.
@@ -35,8 +35,8 @@ Exports are provided by the component, and define what consumers of the componen
 The component, however, internally defines how that `world` is implemented.
 This interface is defined via [WIT](https://component-model.bytecodealliance.org/design/wit.html).
 
-WIT bindings are the glue code that is necessary for the interaction between WASM modules and their host environment.
-They may be written in any WASM-compatible language — Kinode offers the most support for Rust with [`kit`](../kit-dev-toolkit.md) and [`process_lib`](../process_stdlib/overview.md).
+WIT bindings are the glue code that is necessary for the interaction between Wasm modules and their host environment.
+They may be written in any Wasm-compatible language — Kinode offers the most support for Rust with [`kit`](../kit-dev-toolkit.md) and [`process_lib`](../process_stdlib/overview.md).
 The `world`, types, imports, and exports are all declared in a [WIT file](https://github.com/kinode-dao/kinode-wit/blob/master/kinode.wit), and using that file, [`wit_bindgen`](https://github.com/bytecodealliance/wit-bindgen) generates the code for the bindings.
 
 So, to bring it all together...

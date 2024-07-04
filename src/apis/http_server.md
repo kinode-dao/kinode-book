@@ -149,7 +149,7 @@ Note that the HTTP server module will persist bindings until the node itself is 
 
 The incoming request, whether the binding is for HTTP or WebSocket, will look like this:
 ```rust
-/// HTTP Request type that can be shared over WASM boundary to apps.
+/// HTTP Request type that can be shared over Wasm boundary to apps.
 /// This is the one you receive from the `http_server:distro:sys` service.
 #[derive(Debug, Serialize, Deserialize)]
 pub enum HttpServerRequest {
@@ -190,7 +190,7 @@ Processes that use the HTTP server should expect to field this request type, ser
 The process must issue a response with this structure in the body, serialized to JSON:
 
 ```rust
-/// HTTP Response type that can be shared over WASM boundary to apps.
+/// HTTP Response type that can be shared over Wasm boundary to apps.
 /// Respond to [`IncomingHttpRequest`] with this type.
 #[derive(Debug, Serialize, Deserialize)]
 pub struct HttpResponse {
