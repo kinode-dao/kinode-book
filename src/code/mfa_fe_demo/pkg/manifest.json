@@ -12,6 +12,7 @@
         "grant_capabilities": [
             "http_server:distro:sys",
             "terminal:terminal:sys",
+            "tester:tester:sys",
             "vfs:distro:sys"
         ],
         "public": false

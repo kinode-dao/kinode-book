@@ -8,7 +8,8 @@
             "http_server:distro:sys"
         ],
         "grant_capabilities": [
-            "terminal:terminal:sys"
+            "terminal:terminal:sys",
+            "tester:tester:sys"
         ],
         "public": false
     }
