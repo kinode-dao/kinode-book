@@ -9,37 +9,57 @@ VFS files exist in the "/vfs" folder within your home node, and files are groupe
 For example, part of the VFS might look like:
 
 ```text
-.
+node-home/vfs
 ├── app_store:sys
-│   ├── metadata.json
-│   └── pkg
-│       ├── app_store.wasm
-│       ├── ft_worker.wasm
-│       └── manifest.json
+│   ├── pkg
+│   │   ├── api
+│   │   │   └── app_store:sys-v0.wit
+│   │   ├── app_store.wasm
+│   │   ├── manifest.json
+│   │   ...
+│   └── tmp
 ├── chess:sys
-│   ├── metadata.json
-│   └── pkg
-│       ├── chess.html
-│       ├── chess.wasm
-│       ├── index.css
-│       ├── index.js
-│       └── manifest.json
+│   ├── pkg
+│   │   ├── api
+│   │   │   └── chess:sys-v0.wit
+│   │   ├── chess.wasm
+│   │   ├── manifest.json
+│   │   └── ui
+│   │       │
+│   │       ...
+│   └── tmp
 ├── homepage:sys
-│   ├── metadata.json
-│   └── pkg
-│       ├── homepage.wasm
-│       └── manifest.json
+│   ├── pkg
+│   │   ├── api
+│   │   │   └── homepage:sys-v0.wit
+│   │   ├── homepage.wasm
+│   │   ├── manifest.json
+│   │   └── ui
+│   │       │
+│   │       ...
+│   └── tmp
+...
 ```
+
+## Drives
+
+A drive is a directory within a package's VFS directory, e.g., `app_store:sys/pkg/` or `your_package:publisher.os/my_drive/`.
+Drives are owned by processes.
+Processes can share access to drives they own via [capabilities](./process/capabilities.md).
+Each package is spawned with two drives: [`pkg/`](#pkg-drive) and [`tmp/`](#tmp-drive).
+All processes in a package have caps to these default drives.
+Processes can also create additional drives.
+These new drives are permissioned at the process-level: other processes will need to be granted capabilities to read or write these drives.
+
+### `pkg/` drive
+
+The `pkg/` drive contains metadata about the package that Kinode requires to run that package, `.wasm` binaries, and optionally the API of the package and the UI.
+When creating packages, the `pkg/` drive is populated by [`kit build`](./kit/build.md) and loaded into the Kinode using [`kit start-package`](./kit/start-package.md).
+
+### `tmp/` drive
+
+The `tmp/` drive can be written to directly by the owning package using standard filesystem functionality (i.e. `std::fs` in Rust) via WASI in addition to the Kinode VFS.
 
 ## Usage
 
-To access files in the VFS, you need to create or open a [drive](./apis/vfs.md#drives), this can be done with the function [`create_drive`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/vfs/file/fn.create_drive.html) from the [standard library](./process_stdlib/overview.md):
-
-```rust
-let drive_path: String = create_drive(our.package_id(), "drive_name")?;
-
-let test_file = create_file(&format("{}/test.txt", &drive_path))?;
-
-let text = b"hello world!"
-file.write(&text)?;
-```
+For usage examples, see the [VFS API](./apis/vfs.md).

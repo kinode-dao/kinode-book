@@ -1,0 +1,16 @@
+interface mfa-data-demo {
+    variant request {
+        hello(string),
+        goodbye,
+    }
+
+    variant response {
+        hello(string),
+        goodbye,
+    }
+}
+
+world mfa-data-demo-template-dot-os-v0 {
+    import mfa-data-demo;
+    include process-v0;
+}

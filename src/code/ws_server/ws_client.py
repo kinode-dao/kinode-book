@@ -3,19 +3,36 @@
 import asyncio
 import websockets
 
+async def connect_websocket(
+    uri="ws://localhost:8080/ws_server:ws_server:template.os",
+    max_retries=5,
+    delay_secs=0.5,
+):
+    attempt = 0
+    while attempt < max_retries:
+        try:
+            return await websockets.connect(uri, ping_interval=None)
+        except (
+            websockets.ConnectionClosedError,
+            websockets.InvalidURI,
+            websockets.InvalidStatusCode,
+        ) as e:
+            attempt += 1
+            await asyncio.sleep(delay_secs)
+
+    raise Exception("Max retries exceeded, unable to connect.")
+
 async def websocket_client():
-    uri = "ws://localhost:8080/ws_server:ws_server:template.os"
+    websocket = await connect_websocket()
 
-    # Connect to the WebSocket server
-    async with websockets.connect(uri, ping_interval=None) as websocket:
-        # Wait for a message from the server
-        message = await websocket.recv()
-        print(f"Received from server: {message}")
+    message = await websocket.recv()
+    print(f"Received from server: {message}")
 
-        # Send a response message back to the server
-        response = "Hello from client"
-        await websocket.send(response)
-        print(f"Sent to server: {response}")
+    response = "Hello from client"
+    await websocket.send(response)
+    print(f"Sent to server: {response}")
+
+    websocket.close()
 
 def main():
     asyncio.run(websocket_client())
