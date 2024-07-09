@@ -11,6 +11,7 @@ cargo install mdbook
 cargo install mdbook-linkcheck
 cargo install mdbook-webinclude
 cargo install --git https://github.com/nick1udwig/mdbook-hide-feature --locked
+```
 
 Build and serve book:
 ```bash
