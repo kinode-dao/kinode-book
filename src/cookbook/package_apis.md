@@ -71,7 +71,7 @@ A normal process: the [`server`](https://github.com/kinode-dao/kinode-book/tree/
 
 #### `metadata.json`
 
-The [`metadata.json`](https://github.com/kinode-dao/kinode-book/tree/main/src/code/remote_file_storage/client/metadata.json) file has a `properties.dependencies` field.
+The [`metadata.json`](https://github.com/kinode-dao/kinode-book/blob/main/src/code/remote_file_storage/client/metadata.json#L14-L16) file has a `properties.dependencies` field.
 When the `dependencies` field is populated, [`kit build`](../kit/build.md) will fetch that dependency from a Kinode hosting it.
 
 #### Fetching Dependencies
