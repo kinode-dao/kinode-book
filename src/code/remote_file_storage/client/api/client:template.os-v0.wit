@@ -1,0 +1,4 @@
+world client-template-dot-os-v0 {
+    import server;
+    include process-v0;
+}

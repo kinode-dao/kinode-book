@@ -1,0 +1,14 @@
+{
+    "client.wasm": {
+        "root": false,
+        "public": false,
+        "request_networking": true,
+        "request_capabilities": [
+            "vfs:distro:sys"
+        ],
+        "grant_capabilities": [
+            "vfs:distro:sys"
+        ],
+        "wit_version": 0
+    }
+}
