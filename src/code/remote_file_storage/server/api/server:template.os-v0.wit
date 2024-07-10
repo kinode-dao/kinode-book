@@ -1,0 +1,33 @@
+interface server {
+    variant client-request {
+        put-file(string),
+        get-file(string),
+        list-files,
+    }
+
+    variant client-response {
+        put-file(result<_, string>),
+        get-file(result<_, string>),
+        list-files(result<list<string>, string>),
+    }
+
+    /// `put-file()`: take a file from local VFS and store on remote `host`.
+    put-file: func(host: string, path: string, name: string) -> result<_, string>;
+
+    /// `get-file()`: retrieve a file from remote `host`.
+    /// The file populates the lazy load blob and can be retrieved
+    /// by a call of `get-blob()` after calling `get-file()`.
+    get-file: func(host: string, name: string) -> result<_, string>;
+
+    /// `list-files()`: list all files we have stored on remote `host`.
+    list-files: func(host: string) -> result<list<string>, string>;
+}
+
+world server-template-dot-os-api-v0 {
+    export server;
+}
+
+world server-template-dot-os-v0 {
+    import server;
+    include process-v0;
+}

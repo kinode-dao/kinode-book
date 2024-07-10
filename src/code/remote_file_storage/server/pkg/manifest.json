@@ -1,0 +1,17 @@
+[
+    {
+        "process_name": "server",
+        "process_wasm_path": "/server.wasm",
+        "on_exit": "None",
+        "request_networking": true,
+        "request_capabilities": [
+            "http_server:distro:sys",
+            "vfs:distro:sys"
+        ],
+        "grant_capabilities": [
+            "tester:tester:sys",
+            "vfs:distro:sys"
+        ],
+        "public": true
+    }
+]
