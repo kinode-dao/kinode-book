@@ -11,7 +11,7 @@ See discussion [here](https://component-model.bytecodealliance.org/design/why-co
 
 Kinode processes make use of these two advantages.
 Processes within a package — a group of processes, also referred to as an app — may define an API in WIT format.
-Each process defines a [WIT interface](https://component-model.bytecodealliance.org/design/wit.html#interfaces); the package defines a [WIT world](https://component-model.bytecodealliance.org/design/wit.html#interfaces).
+Each process defines a [WIT `interface`](https://component-model.bytecodealliance.org/design/wit.html#interfaces); the package defines a [WIT `world`](https://component-model.bytecodealliance.org/design/wit.html#interfaces).
 The API is published alongside the package.
 Other packages may then import and depend upon that API, and thus communicate with the processes in that package.
 The publication of the API also allows for easy inspection by developers or by machines, e.g., LLM agents.
@@ -90,5 +90,5 @@ kit n chat
 cat chat/test/chat_test/api/*
 ```
 
-Here, `chat-template-dot-os-v0` is the `test/` package world.
+Here, `chat-template-dot-os-v0` is the `test/` package `world`.
 It `import`s types from `interface`s defined in two other WIT files.

@@ -60,6 +60,7 @@
   - [Writing Data to ETH](./cookbook/writing_data_to_eth.md)
   - [Use ZK proofs with SP1](./cookbook/zk_with_sp1.md)
   - [Talking to the Outside World](./cookbook/talking_to_the_outside_world.md)
+  - [Exporting & Importing Package APIs](./cookbook/package_apis.md)
 - [API Reference](./api_reference.md)
   - [ETH Provider API](./apis/eth_provider.md)
   - [Frontend/UI Development](./apis/frontend_development.md)
