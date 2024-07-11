@@ -94,6 +94,10 @@ Thus, when developing on a fake node, you must first build and start any depende
 
 #### Process
 
+The `client` process here is a [script](../cookbook/writing_scripts.md).
+In general, importers of APIs are just processes, but in this case, it made more sense for this specific functionality to write it as a script.
+The `Args` and `Command` `struct`s set up command-line parsing and are unrelated to the WIT API.
+
 ```rust
 {{#includehidetest ../code/remote_file_storage/client/client/src/lib.rs}}
 ```
