@@ -160,5 +160,5 @@ The interface is defined as:
 A `run` `request` starts the test.
 A `run` `response` marks the end of a test, and is either an `Ok` Result, indicating success, or a `Err` Result with information as to where the error occurred.
 
-In the Rust language, a helper macro for failures can be found in [`tester_types.rs`](https://github.com/kinode-dao/kinode/blob/main/kinode/packages/tester/tester_types.rs).
+In the Rust language, a helper macro for failures can be found in [`tester_lib.rs`](https://github.com/kinode-dao/kinode/blob/main/kinode/packages/tester/tester_lib.rs).
 The macro is `fail!()`: it automatically sends the Response as specified above, filing out the fields, and exits.
