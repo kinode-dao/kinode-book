@@ -29,11 +29,11 @@ As summarized [above](#exporting-an-api), the `server` process defines an `inter
 The API is defined by `server-template-dot-os-api-v0`: the functions in the `server` interface are defined [below](#api-function-definitions) by `wit_bindgen::generate!()`ing that `world`.
 
 The example covered in this document shows an `interface` that has functions exported.
-However, for `interface`s that export only types, no `api` world (like `server-template-dot-os-api-v0` here) is required.
-Instead, the WIT API alone suffices to export the types, and the imported writes a `world` that looks like [this, below](#wit-api-1).
+However, for `interface`s that export only types, no `-api-` world (like `server-template-dot-os-api-v0` here) is required.
+Instead, the WIT API alone suffices to export the types, and the importer writes a `world` that looks like [this, below](#wit-api-1).
 For example, consider the `chat` template's `api/` and its usage in the `test/` package:
 ```
-kit b my_chat
+kit n my_chat
 cat my_chat/api/my_chat\:template.os-v0.wit
 cat my_chat/test/my_chat_test/api/my_chat_test\:template.os-v0.wit
 ```
