@@ -42,7 +42,3 @@ The router is responsible for forwarding the message to the indirect node and si
 
 For more information about the architectural specifics of the networking protocol, see [Networking Protocol](./networking_protocol.md).
 The main takeaway for the identity system is that _domain provenance_ and _domain resolution_ are unified by KNS.
-
-Like .eth for ENS, the KNS domain space is fixed inside the `.os` top-level domain.
-However, Kinode DAO has the right to manage domains, including domains other than `.os`, so domain availability is likely to expand in the future (subject to governance decisions).
-Eventually, Kinode DAO hopes to link various TLDs to existing NFT communities and other identity systems.
