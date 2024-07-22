@@ -61,7 +61,6 @@ To both `build` and `start-package` in one command, use `kit build-start-package
 ## Arguments
 
 ```
-$ kit build --help
 Build a Kinode package
 
 Usage: kit build [OPTIONS] [DIR]
@@ -70,12 +69,17 @@ Arguments:
   [DIR]  The package directory to build [default: /home/nick/git/kit]
 
 Options:
-      --no-ui                If set, do NOT build the web UI for the process; no-op if passed with UI_ONLY
-      --ui-only              If set, build ONLY the web UI for the process; no-op if passed with NO_UI
-  -s, --skip-deps-check      If set, do not check for dependencies
-      --features <FEATURES>  Pass these comma-delimited feature flags to Rust cargo builds
-  -v, --verbose              If set, output stdout and stderr
-  -h, --help                 Print help
+      --no-ui                    If set, do NOT build the web UI for the process; no-op if passed with UI_ONLY
+      --ui-only                  If set, build ONLY the web UI for the process; no-op if passed with NO_UI
+  -s, --skip-deps-check          If set, do not check for dependencies
+      --features <FEATURES>      Pass these comma-delimited feature flags to Rust cargo builds
+  -p, --port <NODE_PORT>         localhost node port; for remote see https://book.kinode.org/hosted-nodes.html#using-kit-with-your-hosted-node [default: 8080]
+  -d, --download-from <NODE>     Download API from this node if not found
+  -w, --world <WORLD>            Fallback WIT world name
+  -l, --local-dependency <PATH>  Path to local dependency package (can specify multiple times)
+  -f, --force                    Force a rebuild
+  -v, --verbose                  If set, output stdout and stderr
+  -h, --help                     Print help
 ```
 
 ### Optional positional arg: `DIR`
@@ -104,6 +108,35 @@ Build the package with the given [cargo features](https://doc.rust-lang.org/carg
 
 Features can be used like shown [here](https://doc.rust-lang.org/cargo/reference/features.html#command-line-feature-options).
 Currently the only feature supported system-wide is `simulation-mode`.
+
+### `--port`
+
+short: `-p`
+
+Node to pull dependencies from.
+A package's dependencies can be satisfied by either:
+1. A live node, the one running at the port given here, or
+2. By local dependencies (specified using [`--local-dependency`](#--local-dependency), below).
+
+### `--download-from`
+
+short: `-d`
+
+The mirror to download dependencies from (default: package `publisher`).
+
+### `--world`
+
+short: `-w`
+
+[WIT `world`](../process/wit-apis.md) to use.
+Not required for Rust processes; use for py or js.
+
+### `--local-dependency`
+
+short: `-l`
+
+A path to a package that satisfies a build dependency.
+Can be specified multiple times.
 
 ### `--verbose`
 
