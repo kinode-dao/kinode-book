@@ -1,5 +1,8 @@
 # WIT APIs
 
+This document describes how Kinode OS processes use WIT to export or import APIs at a conceptual level.
+If you are interested in usage examples, see [the Package APIs recipe](../cookbook/package_apis.md).
+
 ## High-level Overview
 
 Kinode OS runs processes that are WebAssembly components, as discussed [elsewhere](./processes.md#wasm-and-kinode).

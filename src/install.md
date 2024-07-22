@@ -9,7 +9,7 @@ After acquiring the software, you can learn how to run it and [Join the Network]
 
 ## Option 1: Download Binary (Recommended)
 
-The Kinode DAO distributes pre-compiled binaries for MacOS and Linux Debian derivatives, like Ubuntu.
+Kinode core distributes pre-compiled binaries for MacOS and Linux Debian derivatives, like Ubuntu.
 
 First, get the software itself by downloading a [precompiled release binary](https://github.com/kinode-dao/kinode/releases).
 Choose the correct binary for your particular computer architecture and OS.
