@@ -1,6 +1,6 @@
 # Hosted Nodes User Guide
 
-Kinode DAO runs a Kinode hosting service for users who do not want to run a Kinode themselves.
+Sybil Technologies runs a Kinode hosting service for users who do not want to run a node themselves.
 These hosted Kinodes are useful for both end users and developers.
 This guide is largely targeted at developers who want to develop Kinode applications using their hosted Kinode.
 End users may also find the [Managing Your Kinode](#managing-your-kinode) section useful.
@@ -11,8 +11,8 @@ A more expansive guide can be found [here](https://www.digitalocean.com/communit
 
 ## Managing Your Kinode
 
-[Valet](https://valet.kinode.org/) is the interface for managing your Kinode hosted by Kinode DAO.
-Kinode DAO plans to open-source the hosting code so there will be other hosting options in the future.
+[Valet](https://valet.kinode.org/) is the interface for managing your hosted node.
+We plan to open-source the hosting code so there will be other hosting options in the future.
 Once logged in, `Your Kinodes` will be displayed: clicking on the name of a Kinode will navigate to the homepage for that Kinode.
 Clicking on the gear icon will open a modal with some information about the Kinode.
 Click `Show advanced details` to reveal information for accessing your Kinode's terminal.

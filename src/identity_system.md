@@ -5,8 +5,12 @@ This identity must be self-sovereign, unforgeable, and easy to discover by peers
 Kinode uses a domain system similar to [ENS](https://ens.domains/) to achieve this.
 It should be noted that, in our system, the concepts of `domain`, `identity`, and `username` are identical and interchangeable.
 
-Like ENS, Kinode domains (managed by our KNS) are registered by a wallet and owned in the form of an NFT.
-However, unlike ENS, Kinode domains never expire. Additionally, they contain metadata necessary to cover both:
+Also important to understanding KNS identities is that other onchain identity protocols can be absorbed and supported by KNS.
+The KNS is not an attempt at replacing or competing with existing onchain identity primitives such as ENS and Lens.
+This has already been done for ENS protocol.
+
+Kinode domains (managed by our KNS) are registered by a wallet and owned in the form of an NFT.
+They contain metadata necessary to cover both:
 
 - **Domain provenance** - to demonstrate that the NFT owner has provenance of a given Kinode identity.
 - **Domain resolution** - to be able to route messages to a given identity on the Kinode network.
@@ -42,7 +46,3 @@ The router is responsible for forwarding the message to the indirect node and si
 
 For more information about the architectural specifics of the networking protocol, see [Networking Protocol](./networking_protocol.md).
 The main takeaway for the identity system is that _domain provenance_ and _domain resolution_ are unified by KNS.
-
-Like .eth for ENS, the KNS domain space is fixed inside the `.os` top-level domain.
-However, Kinode DAO has the right to manage domains, including domains other than `.os`, so domain availability is likely to expand in the future (subject to governance decisions).
-Eventually, Kinode DAO hopes to link various TLDs to existing NFT communities and other identity systems.
