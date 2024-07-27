@@ -3,7 +3,7 @@
 Kinode packages can export APIs, as discussed [here](../process/wit-apis.md).
 Processes can also import APIs.
 These APIs can consist of types as well as functions.
-This document focuses on:
+This recipe focuses on:
 1. Simple examples of exporting and importing APIs (find the full code [here](https://github.com/kinode-dao/kinode-book/tree/main/src/code/remote_file_storage)).
 2. Demonstrations of `kit` tooling to help build and export or import APIs.
 
@@ -72,17 +72,25 @@ A normal process: the [`server`](https://github.com/kinode-dao/kinode-book/tree/
 #### `metadata.json`
 
 The [`metadata.json`](https://github.com/kinode-dao/kinode-book/blob/main/src/code/remote_file_storage/client/metadata.json#L14-L16) file has a `properties.dependencies` field.
-When the `dependencies` field is populated, [`kit build`](../kit/build.md) will fetch that dependency from a Kinode hosting it.
+When the `dependencies` field is populated, [`kit build`](../kit/build.md) will fetch that dependency from either:
+1. [A livenet Kinode hosting it](#../kit/build.md#--port).
+2. [A local path](#../kit/build.#--local-dependency).
+3. An HTTP endpoint (coming soon).
 
 #### Fetching Dependencies
 
-`kit build` requires a `--port` (or `-p` for short) argument when building a package that has a non-empty `dependencies` field.
+`kit build` resolves dependencies in a few ways.
+
+The first is from a livenet Kinode hosting the depenency.
+This method requires a [`--port`](#../kit/build.md#--port) (or `-p` for short) flag when building a package that has a non-empty `dependencies` field.
 That `--port` corresponds to the Kinode hosting the API dependency.
 
 To host an API, your Kinode must either:
 1. Have that package downloaded by the `app_store`.
 2. Be a live node, in which case it will attempt to contact the publisher of the package, and download the package.
 Thus, when developing on a fake node, you must first build and start any dependencies on your fake node before building packages that depend upon them: see [usage example below](#remote-file-storage-usage-example).
+
+The second way `kit build` resolves dependencies is with a [local path](#../kit/build.#--local-dependency).
 
 ### Example: Remote File Storage Client Script
 
@@ -121,6 +129,12 @@ kit bs src/code/remote_file_storage/server
 # Build & start client.
 ## Here the `-p 8080` is to fetch deps for building client (see the metadata.json dependencies field).
 kit b src/code/remote_file_storage/client -p 8080 && kit s src/code/remote_file_storage/client -p 8081
+```
+
+An alternative way to satisfy the `server` dependency of `client`:
+```
+## The `-l` satisfies the dependency using a local path.
+kit b src/code/remote_file_storage/client -l src/code/remote_file_storage/server
 ```
 
 ### Usage
