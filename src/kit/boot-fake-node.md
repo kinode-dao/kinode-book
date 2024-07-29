@@ -24,7 +24,7 @@ For example, to start two fake nodes, `fake.dev` and `fake2.dev`:
 kit boot-fake-node
 
 # In a new terminal
-kit boot-fake-node -f fake2.dev -p 8081 -h /tmp/kinode-fake-node-2
+kit boot-fake-node -f fake2.dev -p 8081 -o /tmp/kinode-fake-node-2
 
 # Send a message from fake2.dev to fake.dev
 # In the terminal of fake2.dev:
@@ -58,7 +58,7 @@ Options:
   -r, --runtime-path <PATH>
           Path to Kinode core repo (overrides --version)
   -v, --version <VERSION>
-          Version of Kinode binary to use (overridden by --runtime-path) [default: latest] [possible values: latest, v0.7.4, v0.7.3, v0.7.2]
+          Version of Kinode binary to use (overridden by --runtime-path) [default: latest] [possible values: latest, v0.8.6, v0.8.5, v0.8.4]
   -p, --port <NODE_PORT>
           The port to run the fake node on [default: 8080]
   -o, --home <HOME>

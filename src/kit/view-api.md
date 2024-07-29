@@ -36,9 +36,9 @@ Arguments:
   [PACKAGE_ID]  Get API of this package (default: list all APIs)
 
 Options:
-  -p, --port <NODE_PORT>  Node port: for use on localhost (overridden by URL) [default: 8080]
-  -u, --url <URL>         Node URL (overrides NODE_PORT)
-  -h, --help              Print help
+  -p, --port <NODE_PORT>      localhost node port; for remote see https://book.kinode.org/hosted-nodes.html#using-kit-with-your-hosted-node [default: 8080]
+  -d, --download-from <NODE>  Download API from this node if not found
+  -h, --help                  Print help
 ```
 
 ### Positional arg: `PACKAGE_ID`
@@ -53,10 +53,8 @@ short: `-p`
 For nodes running on localhost, the port of the node; defaults to `8080`.
 `--port` is overridden by `--url` if both are supplied.
 
-### `--url`
+### `--download-from`
 
-short: `-u`
+short: `-d`
 
-The URL the node is hosted at.
-Can be either localhost or remote.
-`--url` overrides `--port` if both are supplied.
+The mirror to download dependencies from (default: package `publisher`).

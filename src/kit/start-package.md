@@ -27,16 +27,15 @@ To both `build` and `start-package` in one command, use `kit build-start-package
 
 ```
 $ kit start-package --help
-Start a built Kinode process
+Start a built Kinode package
 
 Usage: kit start-package [OPTIONS] [DIR]
 
 Arguments:
-  [DIR]  The package directory to build [default: /home/nick/git/kit]
+  [DIR]  The package directory to start [default: /home/nick/git/kinode-book/src]
 
 Options:
-  -p, --port <NODE_PORT>  Node port: for use on localhost (overridden by URL) [default: 8080]
-  -u, --url <URL>         Node URL (overrides NODE_PORT)
+  -p, --port <NODE_PORT>  localhost node port; for remote see https://book.kinode.org/hosted-nodes.html#using-kit-with-your-hosted-node [default: 8080]
   -h, --help              Print help
 ```
 
@@ -48,13 +47,5 @@ The package directory to install and start on the node; defaults to current work
 
 short: `-p`
 
-For nodes running on localhost, the port of the node; defaults to `8080`.
-`--port` is overridden by `--url` if both are supplied.
-
-### `--url`
-
-short: `-u`
-
-The URL the node is hosted at.
-Can be either localhost or remote.
-`--url` overrides `--port` if both are supplied.
+The localhost port of the node; defaults to `8080`.
+To interact with a remote node, see [here](../hosted-nodes.md#using-kit-with-your-hosted-node).

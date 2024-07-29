@@ -67,7 +67,7 @@ Build a Kinode package
 Usage: kit build [OPTIONS] [DIR]
 
 Arguments:
-  [DIR]  The package directory to build [default: /home/nick/git/kit]
+  [DIR]  The package directory to build [default: /home/nick/git/kinode-book/src]
 
 Options:
       --no-ui
@@ -94,7 +94,6 @@ Options:
           If set, output stdout and stderr
   -h, --help
           Print help
-
 ```
 
 ### Optional positional arg: `DIR`

@@ -317,7 +317,7 @@ Congratulations: you've now built and installed your first application on Kinode
 To test out the functionality of `my_chat_app`, spin up another fake node to chat with in a new terminal:
 
 ```bash
-kit boot-fake-node -h /tmp/kinode-fake-node-2 -p 8081 -f fake2.dev
+kit boot-fake-node -o /tmp/kinode-fake-node-2 -p 8081 -f fake2.dev
 ```
 
 The fake nodes communicate over a mocked local network.

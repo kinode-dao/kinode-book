@@ -23,7 +23,7 @@ Commands:
   reset-cache          Reset kit cache (Kinode core binaries, logs, etc.)
   run-tests            Run Kinode tests [aliases: t]
   setup                Fetch & setup kit dependencies
-  start-package        Start a built Kinode process [aliases: s]
+  start-package        Start a built Kinode package [aliases: s]
   update               Fetch the most recent version of kit
   view-api             Fetch the list of APIs or a specific API [aliases: v]
   help                 Print this message or the help of the given subcommand(s)

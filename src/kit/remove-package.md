@@ -30,13 +30,12 @@ Remove a running package from a node
 Usage: kit remove-package [OPTIONS] [DIR]
 
 Arguments:
-  [DIR]  The package directory to remove (Overridden by PACKAGE/PUBLISHER) [default: /home/nick/git/kit]
+  [DIR]  The package directory to remove (Overridden by PACKAGE/PUBLISHER) [default: /home/nick/git/kinode-book/src]
 
 Options:
   -a, --package <PACKAGE>      Name of the package (Overrides DIR)
-      --publisher <PUBLISHER>  Name of the publisher (Overrides DIR)
-  -p, --port <NODE_PORT>       Node port: for use on localhost (overridden by URL) [default: 8080]
-  -u, --url <URL>              Node URL (overrides NODE_PORT)
+  -u, --publisher <PUBLISHER>  Name of the publisher (Overrides DIR)
+  -p, --port <NODE_PORT>       localhost node port; for remote see https://book.kinode.org/hosted-nodes.html#using-kit-with-your-hosted-node [default: 8080]
   -h, --help                   Print help
 ```
 
@@ -51,6 +50,8 @@ short: `-a`
 The package name of the package to be removed; default is derived from `metadata.json` in `DIR`.
 
 ### `--publisher`
+
+short `-u`
 
 The publisher of the package to be removed; default is derived from `metadata.json` in `DIR`.
 
