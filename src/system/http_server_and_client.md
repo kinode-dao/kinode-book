@@ -18,7 +18,7 @@ At startup, the server either:
 
 The server then binds this port, listening for HTTP and WebSocket requests.
 
-You can find usage examples [here](../cookbook/talking_to_the_outside_world.md).
+**You can find usage examples [here](../cookbook/talking_to_the_outside_world.md).**
 
 ## Private and Public Serving
 

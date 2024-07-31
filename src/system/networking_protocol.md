@@ -19,6 +19,12 @@ Since the protocol is encrypted, a secure underlying connection with TLS or HTTP
 WebSockets are prioritized since to make purely in-browser Kinodes a possibility.
 The other transport protocols with slots in the onchain identity data structure are: TCP, UDP, and WebTransport.
 
+Currently, only WebSockets and TCP are implemented in the runtime.
+As part of the protocol, nodes identify the supported transport protocols of their counterparty and choose the optimal one to use.
+Even nodes that do not share common transport protocols may communicate via routers.
+Direct nodes must have at least one transport protocol in common.
+It is strongly recommended that all nodes support WebSockets, including future browser-based nodes and mobile-nodes.
+
 ### 2. Onchain Networking Information
 
 All nodes must publish an Ed25519 EdDSA networking public key onchain using the protocol registry contract.
@@ -41,11 +47,6 @@ In order to acquire such routers in practice, a node will likely need to provide
 
 
 ### 3. WebSockets protocol
-
-Currently, only the WebSockets protocol is implemented.
-In the future, the `net:distro:sys` runtime module will be responsible for implementing the networking protocol on top of the other transport protocols declared onchain.
-The runtime will also be responsible for choosing the optimal way to serve a given message based on the recipient's onchain networking information.
-Each protocol may have different precise semantics depending on the underlying transport protocol: the following is a general description of the WebSockets protocol.
 
 This protocol does not make use of any [WebSocket frames](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#exchanging_data_frames) other than Binary, Ping, and Pong.
 Pings should be responded to with a Pong.
