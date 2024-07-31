@@ -27,6 +27,7 @@ Options:
       --tcp-port <PORT>        Kinode internal TCP protocol port [default: first unbound at or above 10000]
       --verbosity <VERBOSITY>  Verbosity level: higher is more verbose [default: 0]
       --reveal-ip              If set to false, as an indirect node, always use routers to connect to other nodes.
+      --detached               Run in detached mode (don't accept input)
       --rpc <RPC>              Add a WebSockets RPC URL at boot
       --password <PASSWORD>    Node password (in double quotes)
   -h, --help                   Print help

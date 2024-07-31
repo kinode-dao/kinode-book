@@ -3,7 +3,7 @@
 - [Getting Started](./getting_started/getting_started.md)
   - [Quick Start](./getting_started/quick_start.md)
   - [Introduction](./getting_started/intro.md)
-  - [Identity System](./getting_started/identity_system.md)
+  - [Kimap and KNS](./getting_started/kimap.md)
   - [Design Philosophy](./getting_started/design_philosophy.md)
   - [Installation](./getting_started/install.md)
   - [Join the Network](./getting_started/login.md)
