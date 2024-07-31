@@ -1,6 +1,6 @@
 # Process Semantics
 
-### Overview
+## Overview
 
 On Kinode OS, processes are the building blocks for peer-to-peer applications.
 The Kinode runtime handles message-passing between processes, plus the startup and teardown of said processes.
@@ -8,8 +8,8 @@ This section describes the message design as it relates to processes.
 
 Each process instance has a globally unique identifier, or `Address`, composed of four elements.
 - the publisher's node
-- the package name (not to be confused with `PackageId`)
-- the process name (not to be confused with `ProcessId`). Processes spawn with their own identifier (`process_name`): either a developer-selected string or a randomly-generated number as string.
+- the package name
+- the process name. This may be a developer-selected string or a randomly-generated number as string.
 - the node the process is running on (your node).
 
 The way these elements compose is the following:
@@ -27,18 +27,20 @@ process_one:my_cool_software:publisher_node.os
 8513024814:my_cool_software:publisher_node.os
 ```
 
-[Addresses](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) look like:
+Finally, [Addresses](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) look like:
 
 ```
 [node]@[process_name]:[package_name]:[publisher_node]
 some_user.os@process_one:my_cool_software:publisher_node.os
 ```
 
+--------
+
 Processes are compiled to Wasm.
 They can be started once and complete immediately, or they can run forever.
 They can spawn other processes, and coordinate in arbitrarily complex ways by passing messages to one another.
 
-### Process State
+## Process State
 
 Kinode processes can be stateless or stateful.
 In this case, state refers to data that is persisted between process instantiations.
@@ -50,9 +52,14 @@ Data might be persisted after every message ingested, after every X minutes, aft
 When data is persisted, the kernel saves it to our abstracted filesystem, which not only persists data on disk, but also across arbitrarily many encrypted remote backups as configured at the user-system-level.
 
 This design allows for ephemeral state that lives in-memory, or truly permanent state, encrypted across many remote backups, synchronized and safe.
-[Read more about filesystem persistence here](../files.md).
 
-### Requests and Responses
+Processes have access to multiple methods for persisting state:
+
+- Saving a state object with the system calls available to every process, seen [here](../../cookbook/save_state.md).
+- [Using the virtual filesystem to read and write from disk](../files.md), useful for persisting state that needs to be shared between processes.
+- Using the [SQLite](../../apis/sqlite.md) or [KV](../../apis/kv.md) APIs to persist state in a database.
+
+## Requests and Responses
 
 Processes communicate by passing messages, of which there are two kinds: `requests` and `responses`.
 
