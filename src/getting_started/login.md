@@ -34,7 +34,7 @@ Options:
 ```
 
 A home directory must be supplied — where the node will store its files.
-The `--rpc` flag is an optional `wss://` WebSocket link to an Ethereum RPC, allowing the Kinode to send and receive Ethereum transactions — used in the [identity system](./identity_system.md) as mentioned [above](#creating-an-alchemy-account).
+The `--rpc` flag is an optional `wss://` WebSocket link to an Ethereum RPC, allowing the Kinode to send and receive Ethereum transactions — used in the [identity system](../getting_started/identity_system.md) as mentioned [above](#creating-an-alchemy-account).
 If this is not supplied, the node will use a set of default RPC providers served by other nodes on the network.
 If the `--port` flag is supplied, Kinode will attempt to bind that port for serving HTTP and will exit if that port is already taken.
 If no `--port` flag is supplied, Kinode will bind to `8080` if it is available, or the first port above `8080` if not.
@@ -43,25 +43,25 @@ If no `--port` flag is supplied, Kinode will bind to `8080` if it is available, 
 
 Create a new "app" on [Alchemy](https://dashboard.alchemy.com/apps) for Optimism Mainnet.
 
-![Alchemy Create App](./assets/alchemy-create-app.png)
+![Alchemy Create App](../assets/alchemy-create-app.png)
 
 Copy the WebSocket API key from the API Key button:
 
-![Alchemy API Key](./assets/alchemy-api-key.png)
+![Alchemy API Key](../assets/alchemy-api-key.png)
 
 #### Alternative to Alchemy
 
 As an alternative to using Alchemy's RPC API key, [Infura's](https://app.infura.io) endpoints may be used. Upon creating an Infura account, the first key is already created and titled 'My First Key'. Click on the title to edit the key.
 
-![Infura My First Key](./assets/my_first_key_infura.png)
+![Infura My First Key](../assets/my_first_key_infura.png)
 
 Next, check the box next to Optimism "MAINNET". After one is chosen, click "SAVE CHANGES". Then, at the top, click "Active Endpoints".
 
-![Create Endpoint Infura](./assets/create_endpoint_infura.png)
+![Create Endpoint Infura](../assets/create_endpoint_infura.png)
 
 On the "Active Endpoints" tab, there are tabs for "HTTPS" and "WebSockets". Select the WebSockets tab. Copy this endpoint and use it in place of the Alchemy endpoint in the following step, "Running the Binary".
 
-![Active Endpoints Infura](./assets/active_endpoints_infura.png)
+![Active Endpoints Infura](../assets/active_endpoints_infura.png)
 
 </details>
 
@@ -86,12 +86,12 @@ and open that `localhost` address in a web browser.
 Next, register an identity.
 If the page looks like:
 
-![Register need wallet](./assets/register-need-wallet.png)
+![Register need wallet](../assets/register-need-wallet.png)
 
 then proceed to [Acquiring a Wallet](#aside-acquiring-a-wallet).
 Otherwise, if the page looks like:
 
-![Register have wallet](./assets/register-have-wallet.png)
+![Register have wallet](../assets/register-have-wallet.png)
 
 the browser already has a supported wallet installed.
 Click `Register Kinode Name` and proceed to [Connecting the Wallet](#connecting-the-wallet).
@@ -106,7 +106,7 @@ Install Metamask [here](https://metamask.io/download/).
 
 After clicking 'Register Kinode Name', click `Connect Wallet` and follow the wallet prompts:
 
-![Register connect wallet](./assets/register-connect-wallet.png)
+![Register connect wallet](../assets/register-connect-wallet.png)
 
 ### Aside: Bridging ETH to Optimism
 
@@ -119,7 +119,7 @@ When registering on Kinode, you may choose between running a direct or indirect 
 Most users should use an indirect node.
 To do this, simply leave the box below name registration unchecked.
 
-![Register select name](./assets/register-select-name.png)
+![Register select name](../assets/register-select-name.png)
 
 An indirect node connects to the network through a router, which is a direct node that serves as an intermediary, passing packets from sender to receiver.
 Routers make connecting to the network convenient, and so are the default.
@@ -142,20 +142,20 @@ As an indirect node, only your router knows your IP.
 
 After clicking `Register .os name`, click through the wallet prompts to send the transaction:
 
-![Register wallet prompt](./assets/register-wallet-prompt.png)
+![Register wallet prompt](../assets/register-wallet-prompt.png)
 
 ### What Does the Password Do?
 
 The password encrypts the node's networking key.
 The networking key is how your node communicates securely with other nodes, and how other nodes can be certain that you are who you say you are.
 
-![Register set password](./assets/register-set-password.png)
+![Register set password](../assets/register-set-password.png)
 
 ## Welcome to the Network
 
 After setting the node password, you will be greeted with the homepage.
 
-![Homepage](./assets/register-homepage.png)
+![Homepage](../assets/register-homepage.png)
 
 Try downloading, installing, and using some apps on the App Store.
 Come ask for recommendations in the [Kinode Discord](https://discord.gg/mYDj74NkfP)!

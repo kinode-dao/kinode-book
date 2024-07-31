@@ -77,7 +77,7 @@ The mirror to download dependencies from (default: package `publisher`).
 
 short: `-w`
 
-[WIT `world`](../process/wit-apis.md) to use.
+[WIT `world`](../system/process/wit_apis.md) to use.
 Not required for Rust processes; use for py or js.
 
 ### `--local-dependency`

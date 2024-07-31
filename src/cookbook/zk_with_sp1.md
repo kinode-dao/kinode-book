@@ -11,7 +11,7 @@ In a terminal window, start a fake node to use for development of this app.
 kit boot-fake-node
 ```
 
-In another terminal, create a new app using [kit](../kit-dev-toolkit.md).
+In another terminal, create a new app using [kit](../kit/kit-dev-toolkit.md).
 Use the fibonacci template, which can then be modified to calculate fibonacci numbers in a *provably correct* way.
 ```bash
 kit new my_zk_app -t fibonacci

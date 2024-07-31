@@ -44,5 +44,5 @@ The router is responsible for forwarding the message to the indirect node and si
 
 ## Conclusion
 
-For more information about the architectural specifics of the networking protocol, see [Networking Protocol](./networking_protocol.md).
+For more information about the architectural specifics of the networking protocol, see [Networking Protocol](../system/networking_protocol.md).
 The main takeaway for the identity system is that _domain provenance_ and _domain resolution_ are unified by KNS.

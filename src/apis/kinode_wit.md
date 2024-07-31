@@ -40,7 +40,7 @@ This category is also responsible for functions that give processes the ability 
 
 Capabilities management functions relate to the capabilities-based security system imposed by the kernel on processes.
 Processes must acquire and manage capabilities in order to perform tasks external to themselves, such as messaging another process or writing to a file.
-See the [capabilities overview](../process/capabilities.md) for more details.
+See the [capabilities overview](../system/process/capabilities.md) for more details.
 
 Lastly, message I/O functions are used to send and receive messages between processes.
 Message-passing is the primary means by which processes communicate not only with themselves, but also with runtime modules which expose all kinds of I/O abilities.

@@ -3,7 +3,7 @@
 This entry will teach you to build a simple file transfer app, allowing nodes to download files from a public directory.
 It will use the [VFS](../apis/vfs.md) to read and write files, and will spin up worker processes for the transfer.
 
-This guide assumes a basic understanding of Kinode process building, some familiarity with [`kit`](../kit-dev-toolkit.md), requests and responses, and some knowledge of rust syntax.
+This guide assumes a basic understanding of Kinode process building, some familiarity with [`kit`](../kit/kit-dev-toolkit.md), requests and responses, and some knowledge of rust syntax.
 
 ## Contents
 
@@ -289,7 +289,7 @@ There are two ways to accomplish this.
 The first is to add `context` to Requests sent so that different up/downloads can be disambiguated as they come in.
 The second is to spawn a child "worker" to handle each up/download.
 Using a child process also allows Requests to await the corresponding Response.
-For further reading, see discussion on [`contexts`](../process/processes.md#please-respond), [awaiting](../process/processes.md#awaiting-a-response), [spawning children](../process/processes.md#spawning-child-processes), and more on the [parent-child pattern](../cookbook/manage_child_processes.md).
+For further reading, see discussion on [`contexts`](../system/process/processes.md#please-respond), [awaiting](../system/process/processes.md#awaiting-a-response), [spawning children](../system/process/processes.md#spawning-child-processes), and more on the [parent-child pattern](../cookbook/manage_child_processes.md).
 
 #### The main process: `file_transfer`
 

@@ -6,8 +6,8 @@ In addition to allowing read/write connections directly to WebSocket RPC endpoin
 The node must be configured to allow relay connections, which can be done with a public/private flag or explicit allow/deny list.
 
 As with other runtime modules, processes should generally use the [kinode_process_lib](https://github.com/kinode-dao/process_lib) to interact with the RPC provider.
-See [Reading Data from ETH](./cookbook/reading_data_from_eth.md) for an example of doing this in a process.
-For more advanced or direct usage, such as configuring the provider module, see the [API Reference](./apis/eth_provider.md).
+See [Reading Data from ETH](../cookbook/reading_data_from_eth.md) for an example of doing this in a process.
+For more advanced or direct usage, such as configuring the provider module, see the [API Reference](../apis/eth_provider.md).
 
 ### Supported Chains
 
@@ -17,7 +17,7 @@ It does not currently support HTTP endpoints, as subscriptions are vastly prefer
 
 ### Configuration
 
-The [API Reference](./apis/eth_provider.md) demonstrates how to format requests to `eth:distro:sys` that adjust its config during runtime.
+The [API Reference](../apis/eth_provider.md) demonstrates how to format requests to `eth:distro:sys` that adjust its config during runtime.
 This includes adding and removing providers (whether other Kinodes or chain RPCs) and adjusting the permissions for other nodes to use this node as a relay.
 However, most configuration is done in an optional file named `.eth-providers` inside the home folder of a node.
 If this file is not present, a node will boot using the default providers hardcoded for testnet or mainnet, depending on where the node lives.

@@ -1,7 +1,7 @@
 # Public Key Infrastructure
 
 The following is a high level overview of Kinode's [public key infrastructure](https://en.wikipedia.org/wiki/Public_key_infrastructure), the Kinode Identity System, or [KNS](https://github.com/kinode-dao/KNS).
-You can find a more general discussion of the Kinode [identity system](./identity_system.md) here.
+You can find a more general discussion of the Kinode [identity system](../getting_started/identity_system.md) here.
 
 ## Identity Registration
 
@@ -15,12 +15,12 @@ So at a high level, the PKI needs to maintain two elements: nodes' public keys a
 
 The networking public key is used to encrypt and decrypt communications with other nodes.
 In addition, the key serves as an identity that other nodes can verify.
-When nodes first connect, they engage in an [initial handshake ceremony](./networking_protocol.md#32-establishing-a-connection) to create an encryption channel using both of their public keys.
+When nodes first connect, they engage in an [initial handshake ceremony](networking_protocol.md#32-establishing-a-connection) to create an encryption channel using both of their public keys.
 The resulting connection is encrypted end-to-end.
 
 ### Networking Information
 
-Networking information depends on whether a node is direct or routed (for more, see [networking protocol](./networking_protocol.md)).
+Networking information depends on whether a node is direct or routed (for more, see [networking protocol](networking_protocol.md)).
 
 Direct nodes send and receive networking traffic directly to and from all nodes on the network.
 In doing so they must provide their IP address, and one or more of the following:

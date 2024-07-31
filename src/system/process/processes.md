@@ -103,7 +103,7 @@ In contrast, if a file-transfer process can transfer more than one file at a tim
 The constraint on awaiting is a primary reason why it is desirable to [spawn child processes](#spawning-child-processes).
 Continuing the file-transfer example, by spawning one child "worker" process per file to be transferred, each worker can use the await mechanic to simplify the code, while not limiting performance.
 
-There is more discussion of child processes [here](../cookbook/manage_child_processes.md), and an example of them in action in the [`file_transfer` cookbook](../cookbook/file_transfer.md).
+There is more discussion of child processes [here](../../cookbook/manage_child_processes.md), and an example of them in action in the [`file_transfer` cookbook](../../cookbook/file_transfer.md).
 
 #### Message Structure
 
@@ -172,7 +172,7 @@ Child processes can be used to:
 3. Run IO-heavy code without blocking the parent
 4. Break out code that is more easily written with awaits to avoid blocking the parent
 
-There is more discussion of child processes [here](../cookbook/manage_child_processes.md), and an example of them in action in the [`file_transfer` cookbook](../cookbook/file_transfer.md).
+There is more discussion of child processes [here](../../cookbook/manage_child_processes.md), and an example of them in action in the [`file_transfer` cookbook](../../cookbook/file_transfer.md).
 
 ### Conclusion
 

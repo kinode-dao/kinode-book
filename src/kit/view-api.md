@@ -20,7 +20,7 @@ kit view-api app_store:sys
 
 ## Discussion
 
-Packages have the option to [expose their API using a WIT file](../process/wit-apis.md).
+Packages have the option to [expose their API using a WIT file](../system/process/wit_apis.md).
 When a package is distributed, its API is posted by the distributor along with the package itself.
 Downloading the package also downloads the API.
 
