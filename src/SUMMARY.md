@@ -48,7 +48,7 @@
   - [Chess Engine](./chess_app/chess_engine.md)
   - [Adding a Frontend](./chess_app/frontend.md)
   - [Putting Everything Together](./chess_app/putting_everything_together.md)
-  - [Extension 1: Chat](./chess_app/chat.md)
+  - [Extension: Chat](./chess_app/chat.md)
 - [Cookbook (Handy Recipes)](./cookbook/cookbook.md)
   - [Saving State](./cookbook/save_state.md)
   - [Managing Child Processes](./cookbook/manage_child_processes.md)
