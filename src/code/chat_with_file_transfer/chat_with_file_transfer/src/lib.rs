@@ -9,8 +9,9 @@ use crate::kinode::process::file_transfer_worker::{
 };
 use crate::kinode::process::standard::{Address as WitAddress, ProcessId as WitProcessId};
 use kinode_process_lib::{
-    await_message, call_init, println, vfs::create_drive, Address, Message, ProcessId, Request,
-    Response,
+    await_message, call_init, get_capability, println,
+    vfs::{create_drive, open_file},
+    Address, Message, ProcessId, Request, Response,
 };
 
 wit_bindgen::generate!({
@@ -166,12 +167,65 @@ fn handle_message(
     }
 }
 
+#[cfg(feature = "test")]
+#[derive(Debug, serde::Deserialize, serde::Serialize, process_macros::SerdeJsonInto)]
+enum Setup {
+    Caps,
+    WriteFile { name: String, contents: Vec<u8> },
+}
+
+#[cfg(feature = "test")]
+fn handle_tester_setup(our: &Address, drive_path: &str) -> anyhow::Result<()> {
+    println!("awaiting setup...");
+
+    let Ok(message) = await_message() else {
+        return Err(anyhow::anyhow!("a"));
+    };
+    // TODO: confirm its from tester
+    match message.body().try_into()? {
+        Setup::Caps => {
+            println!("got caps...");
+            let vfs_read_cap = serde_json::json!({
+                "kind": "read",
+                "drive": drive_path,
+            })
+            .to_string();
+            let vfs_address = Address {
+                node: our.node.clone(),
+                process: "vfs:distro:sys".parse()?,
+            };
+
+            let read_cap = get_capability(&vfs_address, &vfs_read_cap).unwrap();
+
+            Response::new()
+                .body(vec![])
+                .capabilities(vec![read_cap])
+                .send()
+                .unwrap();
+            println!("sent caps");
+        }
+        Setup::WriteFile {
+            ref name,
+            ref contents,
+        } => {
+            println!("got write file...");
+            let file = open_file(&format!("{drive_path}/{name}"), true, None)?;
+            file.write(contents)?;
+        }
+    }
+    println!("setup done");
+    Ok(())
+}
+
 call_init!(init);
 fn init(our: Address) {
     println!("begin");
 
-    let _drive_path = create_drive(our.package_id(), "files", None).unwrap();
+    let drive_path = create_drive(our.package_id(), "files", None).unwrap();
     let mut message_archive = HashMap::new();
+
+    #[cfg(feature = "test")]
+    handle_tester_setup(&our, &drive_path).unwrap();
 
     loop {
         match await_message() {
