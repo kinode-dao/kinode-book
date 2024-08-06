@@ -5,12 +5,11 @@ runtime_build_release = false
 
 
 [[tests]]
-dependency_package_paths = ["..", "../../file_transfer"]
 setup_packages = [
     { path = "..", run = true }
 ]
 setup_scripts = []
-test_package_paths = ["chat_with_file_transfer_test"]
+test_package_paths = ["file_transfer_test"]
 test_scripts = []
 timeout_secs = 5
 fakechain_router = 8545
