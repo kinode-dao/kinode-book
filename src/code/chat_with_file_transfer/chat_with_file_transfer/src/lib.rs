@@ -169,6 +169,7 @@ fn handle_message(
 
 #[cfg(feature = "test")]
 #[derive(Debug, serde::Deserialize, serde::Serialize, process_macros::SerdeJsonInto)]
+#[cfg(feature = "test")]
 enum Setup {
     Caps,
     WriteFile { name: String, contents: Vec<u8> },
