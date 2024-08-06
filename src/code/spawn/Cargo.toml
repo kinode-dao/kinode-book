@@ -1,0 +1,11 @@
+[workspace]
+resolver = "2"
+members = [
+    "parent",
+    "child",
+]
+
+[profile.release]
+panic = "abort"
+opt-level = "s"
+lto = true
