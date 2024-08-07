@@ -32,8 +32,9 @@ fn init(our: Address) {
                 params: "\"messaging\"".into(),
             },
         ],
-        vec![],
-        // this process will not be public
+        // allow tester to message child in case this is being run as a test
+        vec!["tester:tester:sys".parse::<ProcessId>().unwrap()],
+        // this process will not be public: only processes with proper caps can message it
         false,
     ) {
         Ok(spawned_process_id) => spawned_process_id,
