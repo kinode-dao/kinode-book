@@ -2,42 +2,36 @@
 Scripts are just processes.
 They are written almost exactly like applications, with a few key differences:
 - Scripts always terminate, while apps may run indefinitely.
-When writing a script, you cannot control the `OnExit` behavior like you can with an application
-- Scripts are called with an initial set of arguments (passed in via the `terminal`)
+- When writing a script, you cannot control the `OnExit` behavior like you can with an application
+- Scripts are called with an initial set of arguments (passed in via the terminal)
 - Scripts are registered in the `scripts.json` file instead of the `manifest.json` file
 
 ## Writing a Script
-Consider the simplest possible script: `echo`, which takes in an argument, and prints it out again:
+Consider the simplest possible script: `echo` (found in the runtime [here](https://github.com/kinode-dao/kinode/blob/main/kinode/packages/terminal/echo)), which takes in an argument and prints it out again:
 ```rust
-use kinode_process_lib::{await_next_request_body, call_init, println, Address, Response};
+use kinode_process_lib::{script, Address};
 
 wit_bindgen::generate!({
-    path: "wit",
-    world: "process",
+    path: "target/wit",
+    world: "process-v0",
 });
 
-call_init!(init);
-fn init(_our: Address) {
-    let Ok(args) = await_next_request_body() else {
-        println!("echo: failed to get args, aborting");
-        return;
-    };
-
-    match String::from_utf8(args.clone()) {
-        Ok(s) => println!("{}", s),
-        Err(_) => println!("{:?}", args),
-    }
+script!(init);
+fn init(_our: Address, args: String) -> String {
+    args
 }
+
 ```
-From writing applications, this should look very familiar - the imports, `wit_bindgen::generate!`, `call_init!`, `init(our: Address)`, etc. are all exactly the same.
-The first unique thing about scripts is that they have no `loop` over `await_message`.
-Instead, the initial arguments will come from a single message from the terminal.
-`process_lib` provides a convenience function, `await_next_message_body()`, to make it easy to read.
-Next, simply `String`ify the message body, and print it out.
+From writing applications, this should look very familiar - the imports, `wit_bindgen::generate!`, etc.
 
-Arbitrary logic can be put below `await_next_message_body` - just like an app, you can fire-off a number of requests, choose to await their responses, handle errors, etc. just like normal.
+Note the use of a macro `script!` instead of the usual `call_init!`.
+This macro handles the boilerplate associated with script processes:
+- Creating an init function, just like all processes
+- Awaiting an initial request from the terminal, which provides the script with its arguments
+- Parsing the body of that request into a string
+- Returning a string to be either printed or sent as a response, depending on how the script was called
 
-In this case, `echo` sends simply reserializes the body to a `String` and prints it out.
+If you want to create an advanced script, consider looking at the source code of the `script!` macro in [process_lib](https://github.com/kinode-dao/process_lib/blob/9a53504693676094ba06f601312457675d10ca8a/src/scripting/mod.rs#L11).
 
 ## Publishing a Script
 Unlike processes associated with a long-running application, which will be put into the `manifest.json`, scripts must be registered in a separate `scripts.json` file.
@@ -49,20 +43,21 @@ While very similar, there are a few important differences; here's an example tha
         "public": false,
         "request_networking": false,
         "request_capabilities": [],
-        "grant_capabilities": []
-    }
+        "grant_capabilities": [],
+        "wit_version": 0
+    },
 }
 ```
 This `scripts.json` file corresponds to a package which publishes a single script, `echo`, which doesn't request `root` capabilities, or any capabilities for that matter.
 The keys of this object are the process paths inside of the `pkg/` folder.
 The name of the script will be the file path, with `.wasm` taken off.
 The object that `echo.wasm` points to is very similar to `manifest.json`, with a few things removed, and `root` has been added:
-- `root` means that all the capabilities held by the `terminal:terminal:sys` are passed to this script (this is powerful, and rarely needed)
+- `root` means that all the capabilities held by `terminal:terminal:sys` are passed to this script (this is powerful, and rarely needed)
 - `public`: same as `manifest.json` - corresponds to whether or not other processes can message `echo.wasm` without the messsaging cap
 - `request_networking`: same as `manifest.json` - corresponds to whether or not this script will need to send messaages over the network
 - `request_capabilities`: same as `manifest.json` - a list of capabilities that will be granted to this script on startup (NOTE if you have `root`, there is no reason to populate `request_capabilities` as well)
 - `grant_capabilities`: same as `manifest.json` - a list of messaging caps to `echo.wasm` to be given to other processes on startup
-As long as you have a `scripts.json` file, your scripts will be callable from the terminal when someone else downloads your package
+As long as you have a `scripts.json` file, your scripts will be callable from the terminal when someone else downloads your package.
 
 ## Calling a Script
 After having called `kit bs`, simply type `my_script:my_package:publisher <ARGS>` in the terminal.
