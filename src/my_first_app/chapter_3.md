@@ -26,7 +26,7 @@ You can define your types in Rust, but then:
 2. Importing types is haphazard and on a per-package basis.
 3. Every package might place the types in a different place.
 
-Instead, use the WIT language to define your API, discussed further [here](../process/wit-apis.md).
+Instead, use the WIT language to define your API, discussed further [here](../system/process/wit_apis.md).
 Briefly, WIT is a language-independent way to define types and functions for [Wasm components](https://component-model.bytecodealliance.org/design/why-component-model.html) like Kinode processes.
 Kinode packages can define their API using a WIT file.
 That WIT file is used to generate code in the given language during compile-time.
@@ -96,7 +96,7 @@ At this point, you can use the terminal to test your message types!
 
 You can find the full code [here](https://github.com/kinode-dao/kinode-book/tree/main/src/code/mfa_data_demo).
 
-First, try sending a `Hello` using the [`m` terminal script](../terminal.md#m---message-a-process).
+First, try sending a `Hello` using the [`m` terminal script](../system/terminal.md#m---message-a-process).
 Get the address of your process by looking at the "started" printout that came from it in the terminal.
 As a reminder, these values (`<your_process>`, `<your_package>`, `<your_publisher>`) can be found in the `metadata.json` and `manifest.json` package files.
 

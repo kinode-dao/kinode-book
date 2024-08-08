@@ -3,7 +3,7 @@
 This section will teach you how to get the Kinode core software, required to run a live node.
 After acquiring the software, you can learn how to run it and [Join the Network](./login.md).
 
-- If you are just interested in starting development as fast as possible, skip to [My First Kinode Application](./build-and-deploy-an-app.md).
+- If you are just interested in starting development as fast as possible, skip to [My First Kinode Application](../my_first_app/build_and_deploy_an_app.md).
 - If you want to run a Kinode without managing it yourself, use the [Valet](https://valet.kinode.org) hosted service.
 - If you want to make edits to the Kinode core software, see [Build From Source](#option-3-build-from-source).
 
@@ -13,7 +13,7 @@ Kinode core distributes pre-compiled binaries for MacOS and Linux Debian derivat
 
 First, get the software itself by downloading a [precompiled release binary](https://github.com/kinode-dao/kinode/releases).
 Choose the correct binary for your particular computer architecture and OS.
-There is no need to download the `simulation-mode` binary — it is used behind the scenes by [`kit`](./kit/boot-fake-node.md).
+There is no need to download the `simulation-mode` binary — it is used behind the scenes by [`kit`](../kit/boot-fake-node.md).
 Extract the `.zip` file: the binary is inside.
 
 Note that some operating systems, particularly Apple, may flag the download as suspicious.
@@ -23,7 +23,7 @@ Note that some operating systems, particularly Apple, may flag the download as s
 First, attempt to run the binary, which Apple will block.
 Then, go to `System Settings > Privacy and Security` and click to `Open Anyway` for the `kinode` binary:
 
-![Apple unknown developer](./assets/apple-unknown-developer.png)
+![Apple unknown developer](../assets/apple-unknown-developer.png)
 
 ## Option 2: Docker
 

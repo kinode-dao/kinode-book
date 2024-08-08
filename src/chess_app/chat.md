@@ -2,7 +2,7 @@
 
 So, at this point you've got a working chess game with a frontend.
 There are a number of obvious improvements to the program to be made, as listed at the end of the [last chapter](./putting_everything_together.md).
-The best way to understand those improvements is to start exploring other areas of the docs, such as the chapters on [capabilities-based security](../process/capabilities.md) and the [networking protocol](../networking_protocol.md), for error handling.
+The best way to understand those improvements is to start exploring other areas of the docs, such as the chapters on [capabilities-based security](../system/process/capabilities.md) and the [networking protocol](../system/networking_protocol.md), for error handling.
 
 This chapter will instead focus on how to *extend* an existing program with new functionality.
 Chat is a basic feature for a chess program, but will touch the existing code in many places.

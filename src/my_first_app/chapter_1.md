@@ -19,7 +19,7 @@ cargo install --git https://github.com/kinode-dao/kit --locked
 
 ## Creating a New Kinode Package Template
 
-The `kit` toolkit has a [variety of features](../kit-dev-toolkit.md).
+The `kit` toolkit has a [variety of features](../kit/kit-dev-toolkit.md).
 One of those tools is `new`, which creates a template for a Kinode package.
 The `new` tool takes two arguments: a path to create the template directory and a name for the package:
 
@@ -49,7 +49,7 @@ kit new my_chat_app
 
 ## Exploring the Package
 
-Kinode packages are sets of one or more Kinode [processes](../process/processes.md).
+Kinode packages are sets of one or more Kinode [processes](../system/process/processes.md).
 A Kinode package is represented in Unix as a directory that has a `pkg/` directory within.
 Each process within the package is its own directory.
 By default, the `kit new` command creates a simple, one-process package, a chat app.
@@ -112,7 +112,7 @@ The files in the `pkg/` directory are injected into the Kinode with [`kit start-
 
 The `metadata.json` is a required file that contains app metadata which is used in the Kinode [App Store](./chapter_5.html)
 
-The `api/` directory contains the [WIT API](../process/wit-apis.md) for the `my_chat_app` package, see more discussion [below](#api).
+The `api/` directory contains the [WIT API](../system/process/wit_apis.md) for the `my_chat_app` package, see more discussion [below](#api).
 
 Lastly, the `test/` directory contains tests for the `my_chat_app` package.
 The `tests.toml` file specifies the configuration of the tests.
@@ -197,7 +197,7 @@ The `publisher` can also be set with a `kit new --publisher` flag.
 The `wit_version` is an optional field.
 If elided, the package will use [`kinode.wit` `0.7.0`](https://github.com/kinode-dao/kinode-wit/blob/aa2c8b11c9171b949d1991c32f58591c0e881f85/kinode.wit).
 If included with a value of `0`, it will use [`kinode.wit` `0.8.0`](https://github.com/kinode-dao/kinode-wit/blob/758fac1fb144f89c2a486778c62cbea2fb5840ac/kinode.wit).
-The `dependencies` field is also optional; see discussion in [WIT APIs](../process/wit-apis.md).
+The `dependencies` field is also optional; see discussion in [WIT APIs](../system/process/wit_apis.md).
 The rest of these fields are not required for development, but become important when publishing a package with the [`app_store`](https://github.com/kinode-dao/kinode/tree/main/kinode/packages/app_store).
 
 As an aside: each process has a unique `ProcessId`, used to address messages to that process, that looks like
@@ -206,14 +206,14 @@ As an aside: each process has a unique `ProcessId`, used to address messages to 
 <process_name>:<package_name>:<publisher>
 ```
 
-You can read more about `ProcessId`s [here](../process/processes.md#overview).
+You can read more about `ProcessId`s [here](../system/process/processes.md#overview).
 
 ### `api/`
 
 The `api/` directory is an optional directory where packages can declare their public API.
 Other packages can then mark a package as a dependency in their `metadata.json` and
 
-For further reading, see discussion in [WIT APIs](../process/wit-apis.md), and [`kit view-api`](../kit/view-api.md).
+For further reading, see discussion in [WIT APIs](../system/process/wit_apis.md), and [`kit view-api`](../kit/view-api.md).
 
 ## Building the Package
 
@@ -275,7 +275,7 @@ The `.dev` suffix is used for development nodes.
 
 Alternatively, development sometimes calls for a real node, which has access to the actual Kinode network and its providers.
 
-To develop on a real Kinode, connect to the network and follow the instructions to [setup a Kinode](../install.md).
+To develop on a real Kinode, connect to the network and follow the instructions to [setup a Kinode](../getting_started/install.md).
 
 ## Starting the Package
 

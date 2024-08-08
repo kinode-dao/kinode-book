@@ -6,7 +6,7 @@ This API is documented, rather, for those who wish to implement their own networ
 
 The networking API is implemented in the `net:distro:sys` process.
 
-For the specific networking protocol, see the [networking protocol](../networking_protocol.md) chapter.
+For the specific networking protocol, see the [networking protocol](../system/networking_protocol.md) chapter.
 This chapter is rather to describe the message-based API that the `net:distro:sys` process exposes.
 
 `Net`, like all processes and runtime modules, is architected around a main message-receiving loop.
@@ -16,7 +16,7 @@ The received `Request`s are handled in one of three ways:
 
 - If the `target.node` is our domain, but the `source.node` is not, the message is either parsed as the `NetActions` enum, or if it fails to parse, is treated as a "hello" message and printed in the terminal, size permitting. This "hello" protocol simply attempts to display the `message.body` as a UTF-8 string and is mostly used for network debugging.
 
-- If the `source.node` is our domain, but the `target.node` is not, the message is sent to the target using the [networking protocol](../networking_protocol.md) implementation.
+- If the `source.node` is our domain, but the `target.node` is not, the message is sent to the target using the [networking protocol](../system/networking_protocol.md) implementation.
 
 Let's look at `NetActions`. Note that this message type can be received from remote or local processes.
 Different implementations of the networking protocol may reject actions depending on whether they were instigated locally or remotely, and also discriminate on which remote node sent the action.

@@ -1,5 +1,11 @@
 # Frontend/UI Development
 
+Kinode can easily serve any webpage or web app developed with normal libraries and frameworks.
+
+There are some specific endpoints, JS libraries, and process_lib functions that are helpful for doing frontend development.
+
+There are also some important considerations and "gotchas" that can happen when trying to do frontend development.
+
 Kinode OS can serve a website or web app just like any HTTP webserver.
 The preferred method is to upload your static assets on install by placing them in the `pkg` folder.
 By convention, `kit` bundles these assets into a directory inside `pkg` called `ui`, but you can call it anything.
@@ -13,6 +19,14 @@ my_package
         ├── assets (can have any name)
         └── index.html
 ```
+
+## /our & /our.js
+
+Every node has both `/our` and `/our.js` endpoints.
+`/our` returns the node's ID as a string like `'my-node'`.
+`/our.js` returns a JS script that sets `window.our = { node: 'my-node' }`.
+By convention, you can then easily set `window.our.process` either in your UI code or from a process-specific endpoint.
+The frontend would then have `window.our` set for use in your code.
 
 ## Serving a Website
 
@@ -78,3 +92,19 @@ For example, if your base URL is `/my_process:my_package:template.os`, then a `f
 ```
 fetch('/my_process:my_package:template.os/my-endpoint')
 ```
+
+## Local Development and "gotchas"
+
+When developing a frontend locally, particularly with a framework like React, it is helpful to proxy HTTP requests through to your node.
+The `vite.config.ts` provided in the `kit` template has code to handle this proxying.
+
+It is important to remember that the frontend will always have the process name as the first part of the HTTP path,
+so all HTTP requests and file sources should start with the process name.
+Many frontend JavaScript frameworks will handle this by default if you set the `base` or `baseUrl` properly.
+
+In development, websocket connections can be more annoying to proxy, so it is often easier to simply hardcode the URL if in development.
+See your framework documentation for how to check if you are in dev or prod.
+The `kit` template already handles this for you.
+
+Developing against a remote node is simple, you just have to change the proxy target in `vite.config.ts` to the URL of your node.
+By default the template will target `http://localhost:8080`.

@@ -2,7 +2,7 @@
 
 It is extremely rare for an app to have direct access to the terminal api.
 Normally, the terminal will be used to call scripts, which will have access to the process in question.
-For documentation on using, writing, publishing, and composing scripts, see the [terminal use documentation](../terminal.md), or for a quick start, the [script cookbook](../cookbook/writing_scripts.md).
+For documentation on using, writing, publishing, and composing scripts, see the [terminal use documentation](../system/terminal.md), or for a quick start, the [script cookbook](../cookbook/writing_scripts.md).
 
 The Kinode terminal is broken up into two segments: a Wasm app, called `terminal:terminal:sys`, and a runtime module called `terminal:distro:sys`.
 The Wasm app is the central area where terminal logic and authority live.

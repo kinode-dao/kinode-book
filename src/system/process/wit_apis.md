@@ -1,11 +1,11 @@
 # WIT APIs
 
 This document describes how Kinode OS processes use WIT to export or import APIs at a conceptual level.
-If you are interested in usage examples, see [the Package APIs recipe](../cookbook/package_apis.md).
+If you are interested in usage examples, see [the Package APIs recipe](../../cookbook/package_apis.md).
 
 ## High-level Overview
 
-Kinode OS runs processes that are WebAssembly components, as discussed [elsewhere](./processes.md#wasm-and-kinode).
+Kinode OS runs processes that are WebAssembly components, as discussed [elsewhere](processes.md#wasm-and-kinode).
 Two key advantages of WebAssembly components are
 
 1. The declaration of types and functions using the cross-language Wasm Interface Type (WIT) language
@@ -86,7 +86,7 @@ They can also `include` other `world`s, copying that `world`s `import`s and `exp
 An `export` is an `interface` that a package defines and makes available, while an `import` is an `interface` that must be made available to the package.
 If an `interface` contains only types, the presence of the WIT file is enough to provide that interface: the types can be generated from the WIT file.
 However, if an `import`ed `interface` contains `func`s as well, a Wasm component is required that `export`s those functions.
-For example, consider the `chat` template's `test/` package (see [`kit` installation instructions](../kit/install.md#getting-kit)):
+For example, consider the `chat` template's `test/` package (see [`kit` installation instructions](../../kit/install.md#getting-kit)):
 
 ```
 kit n chat

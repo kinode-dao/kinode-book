@@ -1,6 +1,6 @@
 # Exporting & Importing Package APIs
 
-Kinode packages can export APIs, as discussed [here](../process/wit-apis.md).
+Kinode packages can export APIs, as discussed [here](../system/process/wit_apis.md).
 Processes can also import APIs.
 These APIs can consist of types as well as functions.
 This recipe focuses on:
@@ -10,7 +10,7 @@ This recipe focuses on:
 ## Exporting an API
 
 APIs are defined in a WIT file.
-A brief summary of more [thorough discussion](../process/wit-apis.md#high-level-overview) is provided here:
+A brief summary of more [thorough discussion](../system/process/wit_apis.md#high-level-overview) is provided here:
 1. [WIT (Wasm Interface Type)](https://component-model.bytecodealliance.org/design/wit.html) is a language to define APIs.
    Kinode packages may define a WIT API by placing a WIT file in the top-level `api/` directory.
 2. Processes define a [WIT `interface`](https://component-model.bytecodealliance.org/design/wit.html#interfaces).

@@ -140,7 +140,7 @@ Key                 | Value Type     | Value Description
 `home`              | Path           | Where to place node's home directory
 `fake_node_name`    | String         | Name of fake node
 `password`          | String or Null | Password of fake node (default: `"secret"`)
-`rpc`               | String or Null | [`wss://` URI of Ethereum RPC](../login.md#starting-the-kinode-node)
+`rpc`               | String or Null | [`wss://` URI of Ethereum RPC](../getting_started/login.md#starting-the-kinode-node)
 `runtime_verbosity` | Integer >= 0   | The verbosity level to start the runtime with; higher is more verbose (default: `0`)
 
 For example:

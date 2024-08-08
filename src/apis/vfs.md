@@ -10,7 +10,7 @@ Every request takes a path and a corresponding action.
 
 A drive is a directory within a package's VFS directory, e.g., `app_store:sys/pkg/` or `your_package:publisher.os/my_drive/`.
 Drives are owned by packages.
-Packages can share access to drives they own via [capabilities](../process/capabilities.md).
+Packages can share access to drives they own via [capabilities](../system/process/capabilities.md).
 Each package is spawned with two drives: [`pkg/`](#pkg-drive) and [`tmp/`](#tmp-drive).
 All processes in a package have caps to those drives.
 Processes can also create additional drives.
