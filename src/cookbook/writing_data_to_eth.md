@@ -52,7 +52,7 @@ contract DeployScript is Script {
             0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
         );
         vm.startBroadcast(wallet.privateKey);
-        
+
         Counter counter = new Counter();
         console.log("Counter deployed at address: ", address(counter));
         vm.stopBroadcast();
@@ -106,11 +106,11 @@ You can do the following:
 sol! {
     contract Counter {
         uint256 public number;
-    
+
         function setNumber(uint256 newNumber) public {
             number = newNumber;
         }
-    
+
         function increment() public {
             number++;
         }
@@ -139,11 +139,11 @@ wit_bindgen::generate!({
 sol! {
     contract Counter {
         uint256 public number;
-    
+
         function setNumber(uint256 newNumber) public {
             number = newNumber;
         }
-    
+
         function increment() public {
             number++;
         }
@@ -206,7 +206,8 @@ alloy = { version = "0.1.2", features = [
     "signer-local",
     "consensus",
     "rpc-types"
-]}```
+]}
+```
 
 You'll also define a simple enum so you can call the program with each of the 3 actions:
 

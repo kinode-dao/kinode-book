@@ -1,0 +1,15 @@
+[
+    {
+        "process_name": "parent",
+        "process_wasm_path": "/parent.wasm",
+        "on_exit": "None",
+        "request_networking": false,
+        "request_capabilities": [
+            "http_client:distro:sys",
+            "http_server:distro:sys",
+            "vfs:distro:sys"
+        ],
+        "grant_capabilities": [],
+        "public": false
+    }
+]

@@ -1,0 +1,5 @@
+world remote-file-storage-test-template-dot-os-v0 {
+    import server;
+    import tester;
+    include process-v0;
+}

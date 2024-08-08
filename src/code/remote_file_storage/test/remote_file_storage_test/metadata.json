@@ -1,0 +1,21 @@
+{
+    "name": "remote_file_storage Test",
+    "description": "A test for remote_file_storage.",
+    "image": "",
+    "properties": {
+        "package_name": "remote_file_storage_test",
+        "current_version": "0.1.0",
+        "publisher": "template.os",
+        "mirrors": [],
+        "code_hashes": {
+            "0.1.0": ""
+        },
+        "wit_version": 0,
+        "dependencies": [
+            "server:template.os",
+            "tester:sys"
+        ]
+    },
+    "external_url": "",
+    "animation_url": ""
+}
