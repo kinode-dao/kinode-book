@@ -1,0 +1,15 @@
+[
+    {
+        "process_name": "chat_with_file_transfer_test",
+        "process_wasm_path": "/chat_with_file_transfer_test.wasm",
+        "on_exit": "Restart",
+        "request_networking": false,
+        "request_capabilities": [
+            "chat_with_file_transfer:chat_with_file_transfer:template.os"
+        ],
+        "grant_capabilities": [
+            "chat_with_file_transfer:chat_with_file_transfer:template.os"
+        ],
+        "public": true
+    }
+]
