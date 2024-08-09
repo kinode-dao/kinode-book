@@ -7,7 +7,7 @@
 Get deps:
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-cargo install mdbook
+cargo install --git https://github.com/nick1udwig/mdBook --branch hf/dont-write-searchindex-json --locked mdbook
 cargo install mdbook-linkcheck
 cargo install mdbook-webinclude
 cargo install --git https://github.com/nick1udwig/mdbook-hide-feature --locked

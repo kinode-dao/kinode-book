@@ -10,4 +10,5 @@ src/code/**/target
 src/code/**/*.wasm
 src/code/**/*.zip
 src/code/**/wasi_snapshot_preview1.wasm
+src/code/**/Cargo.lock
 **/home
