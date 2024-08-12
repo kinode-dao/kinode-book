@@ -24,12 +24,12 @@ spawn
 To start a child process, use the [`spawn()`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/fn.spawn.html) function from [`kinode_process_lib`](https://github.com/kinode-dao/process_lib).
 The following example demonstrates a basic parent process whose sole function is to spawn a child process and grant it the ability to send messages using `http_client`:
 ```rust
-{{#includehidetest ../code/spawn/parent/src/lib.rs}}
+{{#includehidetest ../../code/spawn/parent/src/lib.rs}}
 ```
 
 The child process can be anything, for simplicity's sake, here is a degenerate process that does nothing but print it's name and die:
 ```rust
-{{#includehidetest ../code/spawn/child/src/lib.rs}}
+{{#includehidetest ../../code/spawn/child/src/lib.rs}}
 ```
 The spawn function in Kinode comprises several parameters, each serving a specific purpose in the process creation:
 

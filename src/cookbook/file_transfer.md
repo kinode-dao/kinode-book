@@ -39,25 +39,25 @@ If you use the `file_transfer_worker` or `file_transfer_worker_api` in your own 
 ## WIT API
 
 ```rust
-{{#includehidetest ../code/file_transfer/api/file_transfer:template.os-v0.wit}}
+{{#includehidetest ../../code/file_transfer/api/file_transfer:template.os-v0.wit}}
 ```
 
 ## Main Process
 
 ```rust
-{{#includehidetest ../code/file_transfer/file_transfer/src/lib.rs}}
+{{#includehidetest ../../code/file_transfer/file_transfer/src/lib.rs}}
 ```
 
 ## Worker
 
 ```rust
-{{#includehidetest ../code/file_transfer/file_transfer_worker/src/lib.rs}}
+{{#includehidetest ../../code/file_transfer/file_transfer_worker/src/lib.rs}}
 ```
 
 ## API
 
 ```rust
-{{#includehidetest ../code/file_transfer/file_transfer_worker_api/src/lib.rs}}
+{{#includehidetest ../../code/file_transfer/file_transfer_worker_api/src/lib.rs}}
 ```
 
 ## Example Usage
