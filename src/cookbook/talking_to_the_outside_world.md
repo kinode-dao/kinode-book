@@ -12,7 +12,7 @@ This document focuses on simple usage examples of each.
 ### HTTP Client
 
 ```rust
-{{#includehidetest ../code/http_client/http_client/src/lib.rs}}
+{{#includehidetest ../../code/http_client/http_client/src/lib.rs}}
 ```
 
 [Full example package](https://github.com/kinode-dao/kinode-book/tree/main/src/code/http_client).
@@ -20,7 +20,7 @@ This document focuses on simple usage examples of each.
 ### HTTP Server
 
 ```rust
-{{#includehidetest ../code/http_server/http_server/src/lib.rs}}
+{{#includehidetest ../../code/http_server/http_server/src/lib.rs}}
 ```
 
 [Full example package](https://github.com/kinode-dao/kinode-book/tree/main/src/code/http_server).
@@ -31,12 +31,12 @@ This document focuses on simple usage examples of each.
 
 The Kinode process:
 ```rust
-{{#includehidetest ../code/ws_client/ws_client/src/lib.rs}}
+{{#includehidetest ../../code/ws_client/ws_client/src/lib.rs}}
 ```
 
 An example WS server:
 ```python
-{{#includehidetest ../code/ws_client/ws_server.py}}
+{{#includehidetest ../../code/ws_client/ws_server.py}}
 ```
 
 [Full example package & client](https://github.com/kinode-dao/kinode-book/tree/main/src/code/ws_client).
@@ -45,12 +45,12 @@ An example WS server:
 
 The Kinode process:
 ```rust
-{{#includehidetest ../code/ws_server/ws_server/src/lib.rs}}
+{{#includehidetest ../../code/ws_server/ws_server/src/lib.rs}}
 ```
 
 An example WS client:
 ```python
-{{#includehidetest ../code/ws_server/ws_client.py}}
+{{#includehidetest ../../code/ws_server/ws_client.py}}
 ```
 
 [Full example package & client](https://github.com/kinode-dao/kinode-book/tree/main/src/code/ws_server).
@@ -64,12 +64,12 @@ Use the following pattern to allow the WebSocket client to reply with a Response
 
 The Kinode process:
 ```rust
-{{#includehidetest ../code/ws_server_with_reply/ws_server_with_reply/src/lib.rs}}
+{{#includehidetest ../../code/ws_server_with_reply/ws_server_with_reply/src/lib.rs}}
 ```
 
 An example WS client:
 ```python
-{{#includehidetest ../code/ws_server_with_reply/ws_client.py}}
+{{#includehidetest ../../code/ws_server_with_reply/ws_client.py}}
 ```
 
 [Full example package & client](https://github.com/kinode-dao/kinode-book/tree/main/src/code/ws_server_with_reply).

@@ -68,13 +68,13 @@ Compare the [process](#process-1) with the unmodified `kit n chat` process.
 #### WIT API
 
 ```rust
-{{#includehidetest ../code/chat_with_file_transfer/api/chat_with_file_transfer:template.os-v0.wit}}
+{{#includehidetest ../../code/chat_with_file_transfer/api/chat_with_file_transfer:template.os-v0.wit}}
 ```
 
 #### Process
 
 ```rust
-{{#includehidetest ../code/chat_with_file_transfer/chat_with_file_transfer/src/lib.rs}}
+{{#includehidetest ../../code/chat_with_file_transfer/chat_with_file_transfer/src/lib.rs}}
 ```
 
 ## Chat with File Transfer Usage Example
@@ -93,11 +93,11 @@ kit b file_transfer -a file_transfer/pkg/file_transfer_worker.wasm
 
 # Build chat_with_file_transfer.
 ## The `-l` satisfies the dependency using a local path.
-kit b src/code/chat_with_file_transfer -l file_transfer
+kit b src/../code/chat_with_file_transfer -l file_transfer
 
 # Start chat_with_file_transfer on fake nodes.
-kit s src/code/chat_with_file_transfer
-kit s src/code/chat_with_file_transfer -p 8081
+kit s src/../code/chat_with_file_transfer
+kit s src/../code/chat_with_file_transfer -p 8081
 ```
 
 ### Usage
