@@ -12,14 +12,19 @@ Kimap aims to change this by providing a single, shared, onchain namespace that 
 1. All keys are strings containing exclusively characters 0-9, a-z (lowercase), - (hyphen).
 2. A key may be one of two types, a name-key or a data-key.
 3. Every name-key may create sub-entries directly beneath it.
-4. Every name-key is an ERC-721[^1] NFT (non-fungible token), with a connected token-bound account with a counterfactual address, that is a smart contract account implemented according to the ERC-7579[^2] standard.
-5. Every name-key may inscribe data in data-keys directly beneath it.
-6. All keys can be declared either mutable or immutable.
+4. Every name-key is an ERC-721[^1] NFT (non-fungible token), with a connected token-bound account[^2] with a counterfactual address.
+5. The implementation of the token-bound account may be set when a name-key is created.
+6. If the parent entry of a name-key has a token-bound account implementation set (a "gene"), then the name-key will automatically inherit this implementation.
+7. Every name-key may inscribe data in data-keys directly beneath it.
+8. A data-key may be mutable (a "note", prepended with `~`) or immutable (a "fact", prepended with `!`).
 
 [^1]: https://eips.ethereum.org/EIPS/eip-721
-[^2]: https://eips.ethereum.org/EIPS/eip-7579
+[^2]: https://ercs.ethereum.org/ERCS/erc-6551
 
 See the Kinode whitepaper for a full specification which goes into detail regarding token-bound accounts, sub-entry management, the use of data keys, and protocol extensibility.
+
+Kimap is tightly integrated into the operating system. At the runtime level, networking identities are verified against the kimap namespace.
+In userspace, programs such as the App Store make use of kimap by storing and reading data from it to define global state, such as apps available for download.
 
 ## KNS: Kinode Name System
 
@@ -83,9 +88,9 @@ Routers should themselves be direct nodes.
 If a string in the array is not a valid node identity, or it is a valid node identity but not a direct one, that router will not be used by the networking protocol.
 Further discussion of the networking protocol specification can be found [here](../system/networking_protocol.md).
 
-The bytes at an `~ip` entry must be 16 big-endian bytes corresponding to a 128-bit unsigned integer.
-This integer is interpreted as an IPv4 address if it is <32-bit.
-Otherwise it is interpreted as an IPv6 address.
+The bytes at an `~ip` entry must be either 4 or 16 big-endian bytes.
+A 4-byte entry represents a 32-bit unsigned integer and is interpreted as an IPv4 address.
+A 16-byte entry represents a 128-bit unsigned integer and is interpreted as an IPv6 address.
 
 Lastly, the bytes at any of the following port entries must be 2 big-endian bytes corresponding to a 16-bit unsigned integer:
 
