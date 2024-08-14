@@ -27,6 +27,7 @@
   - [`new`](./kit/new.md)
   - [`build`](./kit/build.md)
   - [`start-package`](./kit/start-package.md)
+  - [`publish`](./kit/publish.md)
   - [`build-start-package`](./kit/build-start-package.md)
   - [`remove-package`](./kit/remove-package.md)
   - [`chain`](./kit/chain.md)

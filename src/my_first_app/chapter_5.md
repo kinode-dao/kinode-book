@@ -4,40 +4,55 @@ So, you've made a new process.
 You've tested your code and are ready to share with friends, or perhaps just install across multiple nodes in order to do more testing.
 
 First, it's a good idea to publish the code to a public repository.
-This can be added to your package metadata.json like so:
+This can be added to your package `metadata.json` like so:
 ```json
 ...
 "website": "https://github.com/your_package_repo",
 ...
 ```
+At a minimum you will need to publish the `metadata.json`.
 
 Next, review all the data in [`pkg/manifest.json`](./chapter_1.md#pkgmanifestjson) and [`metadata.json`](./chapter_1.md#pkgmetadatajson).
 The `package_name` field in `metadata.json` determines the name of the package.
 The `publisher` field determines the name of the publisher (you!).
 
-**Note: you *can* set any publisher name you want, but others will be able to verify that you are the publisher by comparing the value in this field with a signature attached to the entry in a (good) app store or package manager, so it's a good idea to put *your node identity* here.**
-
 Once you're ready to share, it's quite easy.
-If you are developing on a fake node, you'll have to boot a real one, then install this package locally in order to publish on the network.
-If you're already on a real node, you can go ahead and navigate to the App Store on the homepage and go through the publishing flow.
 
-In the near future, you will be able to quickly and easily publish your applications to the network using a GUI from the App Store.
+If you are developing on a fake node, you'll have to boot a real one, then install this package locally in order to publish on the network, e.g.
+```
+kit s my_package
+```
 
-Right now, you can deploy your app to the network by following the steps in the next section.
 
-## Ad-Hoc App Deployment
+## Using the App Store GUI
 
-While the App Store GUI is under development, this series of steps will allow you to deploy your app to the network.
-Soon, it will be a lot easier!
+Navigate to the App Store and follow the `Publish` flow, which will guide you through publishing your application.
 
-1. Install the app on your node.
-1. In your terminal, navigate to `<your_node_dir>/vfs/<your_package>/pkg`.
-1. Hash the .zip file with SHA256: `sha256sum <your_package>.zip`
-1. Add the hash to your package's [`metadata.json`](./chapter_1.md#pkgmetadatajson), under `properties` -> `code_hashes` -> `<app_version>`.
-1. Save the `metadata.json` file and ensure it is hosted somewhere on the internet accessible via URL.
-For GitHub repositories, you can access the file's raw contents at the following link: `https://raw.githubusercontent.com/<your_package_repo>/main/metadata.json`
-1. Navigate to the App Store on the homepage and click "Publish" (the upload icon).
-1. Enter your package information, passing the URL of your `metadata.json` file in the `Metadata URL` field.
-1. Click "Publish".
+## Using [`kit publish`](../kit/publish.md)
+
+Alternatively, you can publish your application from the command-line using [`kit publish`](../kit/publish.md).
+To do so, you'll need to create a keystore.
+The keystore is an encrypted wallet private key: the key that owns your publishing node.
+[See below] for discussion of how to create the keystore.
+
+In addition, you'll need an ETH RPC endpoint.
+See the [`OPTIONAL: Acquiring an RPC API Key` section](../getting_started/login.md#starting-the-kinode) for a walkthrough of how to get an Alchemy API key.
+
+### Making a Keystore
+
+Keystores, also known as [Web3 Secret Storage](https://ethereum.org/en/developers/docs/data-structures-and-encoding/web3-secret-storage/), can be created in many ways; here, use [`foundry`](https://getfoundry.sh/)s `cast`.
+First, [get `foundry`](https://getfoundry.sh/), and then run:
+```
+cast wallet import -i my_wallet
+```
+following the prompts to create your keystore named `my_wallet`.
+
+### Running [`kit publish`](../kit/publish.md)
+
+To publish your package, run:
+```
+kit publish --metadata-uri https://raw.githubusercontent.com/path/to/metadata.json --keystore-path ~/.foundry/keystores/my_wallet --rpc wss://opt-mainnet.g.alchemy.com/v2/<ALCHEMY_API_KEY> --real
+```
+and enter the password you created when making the keystore, here `my_wallet`.
 
 Congratulations, your app is now live on the network!

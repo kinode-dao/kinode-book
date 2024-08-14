@@ -1,0 +1,107 @@
+# `kit publish`
+
+short: `kit p`
+
+`kit publish` creates entries in the Kimap, publishing the given package according to the `app_store`s protocol.
+It can also be used to update or unpublish previously-published packages.
+`kit publish` directly writes to the Kimap: it does not interact with a Kinode.
+
+## Example Usage
+
+```bash
+# Publish a package on the real (live) network.
+kit publish --metadata-uri https://raw.githubusercontent.com/path/to/metadata.json --keystore-path ~/.foundry/keystores/dev --rpc wss://opt-mainnet.g.alchemy.com/v2/<ALCHEMY_API_KEY> --real
+
+# Unublish a package.
+kit publish --metadata-uri https://raw.githubusercontent.com/path/to/metadata.json --keystore-path ~/.foundry/keystores/dev --rpc wss://opt-mainnet.g.alchemy.com/v2/<ALCHEMY_API_KEY> --real --unpublish
+```
+
+See [Sharing with the World](../my_first_app/chapter_5.md) for a tutorial on how to use `kit publish`.
+
+## Arguments
+
+```
+$ kit publish --help
+Publish or update a package
+
+Usage: kit publish [OPTIONS] --metadata-uri <URI> --keystore-path <PATH> --rpc <RPC_URI> [DIR]
+
+Arguments:
+  [DIR]  The package directory to publish [default: CWD]
+
+Options:
+  -u, --metadata-uri <URI>
+          URI where metadata lives
+  -k, --keystore-path <PATH>
+          Path to private key keystore
+  -r, --rpc <RPC_URI>
+          The ETH RPC WebSockets URI
+  -e, --real
+          If set, deploy to real network [default: fake node]
+      --unpublish
+          If set, unpublish existing published package [default: publish a package]
+  -g, --gas-limit <GAS_LIMIT>
+          The ETH transaction gas limit [default: 1_000_000]
+  -p, --priority-fee <MAX_PRIORITY_FEE_PER_GAS>
+          The ETH transaction max priority fee per gas [default: estimated from network conditions]
+  -f, --fee-per-gas <MAX_FEE_PER_GAS>
+          The ETH transaction max fee per gas [default: estimated from network conditions]
+  -h, --help
+          Print help
+```
+
+### Positional arg: `DIR`
+
+Publish the metadata for the package in this directory.
+
+### `--metadata-uri`
+
+short: `-u`
+
+The URI hosting the `metadata.json`.
+You must place the `metadata.json` somewhere public before publishing your package on Kimap.
+A common place to host `metadata.json` is on your package's Github repo.
+
+### `--keystore-path`
+
+short: `-k`
+
+Path to the keystore.
+The keystore is a [Web3 Secret Storage file](https://ethereum.org/en/developers/docs/data-structures-and-encoding/web3-secret-storage/) that holds an encrypted copy of your private keys.
+See the [Sharing with the World](../my_first_app/chapter_5.md) usage example for one way to create a keystore.
+
+### `--rpc`
+
+short: `-r`
+
+The Ethereum RPC endpoint to use.
+For fakenodes this runs by default at `ws://localhost:8545`.
+
+### `--real`
+
+short: `-e`
+
+Manipulate the real (live) Kimap.
+Default is to manipulate the fakenode Kimap.
+
+### `--unpublish`
+
+Remove a previously-published package.
+
+### `--gas-limit`
+
+short: `-g`
+
+Set the gas limit for the transaction.
+
+### `--priority-fee`
+
+short: `-p`
+
+Set the priority fee for the transaction.
+
+### `--fee-per-gas`
+
+short: `-f`
+
+Set the price of gas for the transaction.
