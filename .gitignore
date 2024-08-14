@@ -6,8 +6,8 @@ book/*
 */**/.DS_Store
 */**/node_modules
 
-src/code/**/target
-src/code/**/*.wasm
-src/code/**/*.zip
-src/code/**/wasi_snapshot_preview1.wasm
+code/**/target
+code/**/*.wasm
+code/**/*.zip
+code/**/wasi_snapshot_preview1.wasm
 **/home

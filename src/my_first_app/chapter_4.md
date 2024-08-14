@@ -13,7 +13,7 @@ The [`process_lib`](../process_stdlib/overview.md) contains types and functions 
 At the top of your process, import [`get_blob`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/fn.get_blob.html), [`homepage`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/homepage/index.html), and [`http`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/index.html) from [`kinode_process_lib`](../process_stdlib/overview.md) along with the rest of the imports.
 You'll use `get_blob()` to grab the `body` bytes of an incoming HTTP request.
 ```rust
-{{#include ../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:4:7}}
+{{#include ../../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:4:7}}
 ```
 
 Keep the custom WIT-defined `MfaRequest` the same, and keep using that for terminal input.
@@ -24,7 +24,7 @@ You can also bind static content to a path using another function in the library
 
 ```rust
 ...
-{{#include ../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:91:94}}
+{{#include ../../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:91:94}}
 ...
 ```
 
@@ -37,21 +37,21 @@ In order to skip authentication, set the second argument to false here.
 
 To handle different kinds of Requests (or Responses), wrap them in a meta `Req` or `Res`:
 ```rust
-{{#include ../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:25:30}}
+{{#include ../../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:25:30}}
 ```
 and `match` on it in the top-level `handle_message()`:
 ```rust
-{{#include ../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:74:88}}
+{{#include ../../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:74:88}}
 ```
 
 Here, the [logic that was previously](./chapter_3.md#handling-messages) in `handle_message()` is now factored out into `handle_mfa_request()` and `handle_mfa_response()`:
 
 ```rust
-{{#include ../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:32:47}}
+{{#include ../../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:32:47}}
 
 ...
 
-{{#include ../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:66:72}}
+{{#include ../../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:66:72}}
 ```
 
 As a side-note, different apps will want to discriminate between incoming messages differently.
@@ -61,7 +61,7 @@ For example, to restrict what senders are accepted (say to your own node or to s
 
 Finally, define `handle_http_message()`.
 ```rust
-{{#include ../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:49:64}}
+{{#include ../../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:49:64}}
 ```
 
 Walking through the code, first, you must parse out the HTTP request from the `HttpServerRequest`.
@@ -70,17 +70,17 @@ If your application only needs to handle one type of request (e.g., only HTTP re
 This example is overly thorough for demonstration purposes.
 
 ```rust
-{{#include ../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:50:52}}
+{{#include ../../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:50:52}}
 ```
 
 Next, check the HTTP method in order to only handle PUT requests:
 ```rust
-{{#include ../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:53:55}}
+{{#include ../../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:53:55}}
 ```
 
 Finally, grab the `blob` from the request, send a `200 OK` response to the client, and handle the `blob` by sending a `Request` to ourselves with the `blob` as the `body`.
 ```rust
-{{#include ../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:56:62}}
+{{#include ../../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:56:62}}
 ```
 This could be done in a different way, but this simple pattern is useful for letting HTTP requests masquerade as in-Kinode requests.
 
@@ -100,7 +100,7 @@ Also, remember to request the capability to message `http_server` in `manifest.j
 ### The Full Code
 
 ```rust
-{{#include ../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs}}
+{{#include ../../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs}}
 ```
 
 Use the following cURL command to send a `Hello` Request
@@ -126,7 +126,7 @@ But for maximum ease and efficiency, use the static bind command on `/` and move
 To do this, edit the bind commands in `my_init_fn` to look like this:
 
 ```rust
-{{#include ../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:95:96}}
+{{#include ../../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:95:96}}
 ```
 
 Here you are setting `authenticated` to `false` in the [`bind_http_path()`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/fn.bind_http_path.html) call, but to `true` in the [`serve_index_html`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/fn.serve_index_html.html) call.
@@ -138,7 +138,7 @@ Create a `ui/` directory in the package root, and then a new file in `ui/index.h
 **Make sure to replace the fetch URL with your process ID!**
 
 ```html
-{{#include ../code/mfa_fe_demo/ui/index.html}}
+{{#include ../../code/mfa_fe_demo/ui/index.html}}
 ```
 
 This is a super barebones `index.html` that provides a form to make requests to the `/api` endpoint.
@@ -147,7 +147,7 @@ Additional UI dev info can be found [here](../apis/frontend_development.md).
 Next, add two more entries to `manifest.json`: messaging capabilities to the [VFS](../system/files.md) which is required to store and access the UI `index.html`, and the `homepage` capability which is required to add our app to the user's homepage (next section):
 ```json
 ...
-{{#include ../code/mfa_fe_demo/pkg/manifest.json:7:11}}
+{{#include ../../code/mfa_fe_demo/pkg/manifest.json:7:11}}
 ...
 ```
 
@@ -185,7 +185,7 @@ Then, move `icon` next to `lib.rs` in your app's `src/` directory.
 Finally, include the icon data in your `lib.rs` file just after the imports:
 
 ```rust
-{{#include ../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:18}}
+{{#include ../../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:18}}
 ```
 
 #### Clicking the Button
@@ -196,7 +196,7 @@ In your `init()`, add the following line:
 This line in the `init()` function adds your process, with the given icon, to the homepage:
 
 ```rust
-{{#include ../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:96}}
+{{#include ../../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:96}}
 ```
 
 ### Writing a Widget
@@ -207,11 +207,11 @@ They are quite simple to configure.
 In `add_to_homepage()`, the final field optionally sets the widget:
 
 ```rust
-{{#include ../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:96}}
+{{#include ../../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:96}}
 ```
 which uses the `WIDGET` constant, here:
 ```rust
-{{#include ../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:20:23}}
+{{#include ../../code/mfa_fe_demo/mfa_fe_demo/src/lib.rs:20:23}}
 ```
 
 After another `kit bs`, you should be able to reload your homepage and see your app icon under "All Apps", as well as your new widget.

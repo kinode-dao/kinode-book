@@ -44,7 +44,7 @@ So, to bring it all together...
 In order to compile properly to the Kinode environment, based on the WIT file, every process must generate the WIT bindings for the `process` `world`, which is an interface for the Kinode kernel.
 
 ```rust
-{{#include ../code/mfa_message_demo/mfa_message_demo/src/lib.rs:3:6}}
+{{#include ../../code/mfa_message_demo/mfa_message_demo/src/lib.rs:3:6}}
 ```
 
 ### `init()` Function
@@ -61,7 +61,7 @@ This is the entry point for the process, and the `init()` function is the first 
 The definition of the `Component` struct can be done manually, but it's easier to import the [`kinode_process_lib`](../process_stdlib/overview.md) crate (a sort of standard library for Kinode processes written in Rust) and use the `call_init!` macro.
 
 ```rust
-{{#include ../code/mfa_message_demo/mfa_message_demo/src/lib.rs::9}}
+{{#include ../../code/mfa_message_demo/mfa_message_demo/src/lib.rs::9}}
 ...
 ```
 
@@ -102,7 +102,7 @@ If you know that a `target` and `body` was set, you can safely unwrap this: send
 You can modify your request to expect a response, and your message-handling to send one back, as well as parse the received request into a string.
 
 ```rust
-{{#include ../code/mfa_message_demo/mfa_message_demo/src/lib.rs:12:16}}
+{{#include ../../code/mfa_message_demo/mfa_message_demo/src/lib.rs:12:16}}
 ```
 
 The `expects_response` method takes a timeout in seconds.
@@ -122,13 +122,13 @@ Use a `match` statement to check whether the incoming value is a message or an e
 To send a `Response` back, import the `Response` type from `process_lib` and send one from the `Request` branch.
 
 ```rust
-{{#include ../code/mfa_message_demo/mfa_message_demo/src/lib.rs:18:34}}
+{{#include ../../code/mfa_message_demo/mfa_message_demo/src/lib.rs:18:34}}
 ```
 
 Putting it all together:
 
 ```rust
-{{#include ../code/mfa_message_demo/mfa_message_demo/src/lib.rs}}
+{{#include ../../code/mfa_message_demo/mfa_message_demo/src/lib.rs}}
 ```
 
 Run

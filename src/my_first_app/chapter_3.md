@@ -16,7 +16,7 @@ In this section, you will use `serde_json` to serialize your Rust structs to a b
 
 Our old request looked like this:
 ```rust
-{{#include ../code/mfa_message_demo/mfa_message_demo/src/lib.rs:12:16}}
+{{#include ../../code/mfa_message_demo/mfa_message_demo/src/lib.rs:12:16}}
 ```
 
 What if you want to have two kinds of messages, which your process can handle differently?
@@ -33,16 +33,16 @@ That WIT file is used to generate code in the given language during compile-time
 Kinode also defines a conventional place for these WIT APIs and provides infrastructure for viewing and importing the APIs of other packages.
 
 ```wit
-{{#includehidetest ../code/mfa_data_demo/api/mfa_data_demo:template.os-v0.wit}}
+{{#includehidetest ../../code/mfa_data_demo/api/mfa_data_demo:template.os-v0.wit}}
 ```
 
 The `wit_bindgen::generate!()` macro changes slightly, since the `world` is now as defined in the API:
 ```rust
-{{#include ../code/mfa_data_demo/mfa_data_demo/src/lib.rs:4:9}}
+{{#include ../../code/mfa_data_demo/mfa_data_demo/src/lib.rs:4:9}}
 ```
 which generates the types defined in the WIT API:
 ```rust
-{{#include ../code/mfa_data_demo/mfa_data_demo/src/lib.rs:1}}
+{{#include ../../code/mfa_data_demo/mfa_data_demo/src/lib.rs:1}}
 ```
 It further adds the derives for `serde` so that these types can be used smoothly.
 
@@ -64,7 +64,7 @@ In this example, you will learn how to handle a Request.
 So, create a request that uses the new `body` type:
 
 ```rust
-{{#include ../code/mfa_data_demo/mfa_data_demo/src/lib.rs:39:43}}
+{{#include ../../code/mfa_data_demo/mfa_data_demo/src/lib.rs:39:43}}
 ```
 
 Next, change the way you handle a message in your process to use your new `body` type.
@@ -72,7 +72,7 @@ Break out the logic to handle a message into its own function, `handle_message()
 `handle_message()` should branch on whether the message is a Request or Response.
 Then, attempt to parse every message into the `MfaRequest`/`MfaResponse`, `enum` as appropriate, handle the two cases, and handle any message that doesn't comport to the type.
 ```rust
-{{#include ../code/mfa_data_demo/mfa_data_demo/src/lib.rs:11:34}}
+{{#include ../../code/mfa_data_demo/mfa_data_demo/src/lib.rs:11:34}}
 ```
 
 ### Granting Capabilities
@@ -82,14 +82,14 @@ That way, you can use the terminal to send `Hello` and `Goodbye` messages.
 Go into the manifest, and under the process name, edit (or add) the `grant_capabilities` field like so:
 
 ```json
-{{#include ../code/mfa_data_demo/pkg/manifest.json:10:12}}
+{{#include ../../code/mfa_data_demo/pkg/manifest.json:10:12}}
 ```
 
 ### Build and Run the Code!
 
 After all this, your code should look like:
 ```rust
-{{#include ../code/mfa_data_demo/mfa_data_demo/src/lib.rs}}
+{{#include ../../code/mfa_data_demo/mfa_data_demo/src/lib.rs}}
 ```
 You should be able to build and start your package, then see that initial `Hello` message.
 At this point, you can use the terminal to test your message types!
