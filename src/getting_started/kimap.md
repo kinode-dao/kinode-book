@@ -65,16 +65,16 @@ The router is responsible for forwarding the message to the indirect node and si
 
 The definition of a node identity in the KNS protocol is any kimap entry that has:
 
-1. A `~net-key` sub-entry AND
+1. A `~net-key` note AND
 2. Either:
-   a. A `~routers` sub-entry OR
-   b. An `~ip` sub-entry AND at least one of:
-      - `~tcp-port` sub-entry
-      - `~udp-port` sub-entry
-      - `~ws-port` sub-entry
-      - `~wt-port` sub-entry
+   a. A `~routers` note OR
+   b. An `~ip` note AND at least one of:
+      - `~tcp-port` note
+      - `~udp-port` note
+      - `~ws-port` note
+      - `~wt-port` note
 
-Direct nodes are those that publish an `~ip` and one or more of the `port` sub-entries.
+Direct nodes are those that publish an `~ip` and one or more of the port notes.
 Indirect nodes are those that publish `~routers`.
 
 The data stored at `~net-key` must be 32 bytes corresponding to an Ed25519 public key.

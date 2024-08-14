@@ -33,20 +33,50 @@ Therefore, all nodes must have robust access to the onchain PKI, meaning: multip
 Because it may take time for a new networking key to proliferate to all nodes, (anywhere from seconds to days depending on chain indexing access) a node that changes its networking key should expect downtime immediately after doing so.
 
 Nodes that wish to make direct connections must post an IP and port onchain.
-The registry contract has one IP slot per node, which the owner address of a node can update at will.
-The contract has four port slots, one each for WebSockets (`ws`), TCP, UDP, and WebTransport (`wt`).
-Each port slot can be updated individually by the owner address of a node.
-Indirect nodes must leave these slots blank, and instead fill out a `routing` field, which contains a list of nodes that are allowed and expected to route messages to them.
+This is done by publishing `note` keys in [kimap](../getting_started/kimap.md).
+In particular, the networking protocol expects the following pattern of data available:
 
-Nodes with onchain networking information (an IP address and at least one port) will be referred to as **direct** nodes, and ones without will be referred to as **indirect** nodes.
+1. A `~net-key` note AND
+2. Either:
+   a. A `~routers` note OR
+   b. An `~ip` note AND at least one of:
+      - `~tcp-port` note
+      - `~udp-port` note
+      - `~ws-port` note
+      - `~wt-port` note
+
+Nodes with onchain networking information (an IP address and at least one port) are referred to as **direct** nodes, and ones without are referred to as **indirect** or **routed** nodes.
 
 If a node is indirect, it must initiate a connection with at least one of its allowed routers in order to begin networking.
 Until such a connection is successfully established, the indirect node is offline.
 In practice, an indirect node that wants reliable access to the network should (1) have many routers listed onchain and (2) connect to as many of them as possible on startup.
 In order to acquire such routers in practice, a node will likely need to provide some payment or service to them.
 
+### 3. Protocol Selection
 
-### 3. WebSockets protocol
+When one node seeks to send a message to another node, it first checks to see if it has an existing route to send it on.
+If it does, that route is used.
+If not, the node will use the information available about the other node to try and establish a route.
+
+If the target node is direct, the route may be direct, using one of the available transport methods.
+If a direct node presents multiple ports using notes in kimap, the priority is currently:
+
+1. TCP
+2. WS
+
+As more protocols are supported by various runtimes, this priority list will expand.
+
+Once a transport method is selected, if the connection fails, the target will be considered offline.
+A node does not need to try every route available: if a direct node presents a port, it must service connections on that method to be considered online.
+
+If the target node is indirect, the route must be established through one of their routers.
+As many routers as can be attempted within the message's timeout may be tried.
+The selection of which routers to try in what order is implementation-specific.
+When a router is being attempted, the transport method will be determined as in a standard direct connection, described above.
+If a router is offline, the next router is tried.
+If no routers are online, the indirect node will be considered offline.
+
+### 4. WebSockets Protocol
 
 This protocol does not make use of any [WebSocket frames](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#exchanging_data_frames) other than Binary, Ping, and Pong.
 Pings should be responded to with a Pong.
@@ -56,7 +86,7 @@ Binary frames in the current protocol version (1) are limited to 10MB. This incl
 
 All data structures are serialized and deserialized using [MessagePack](https://msgpack.org/index.html).
 
-#### 3.1. Establishing a Connection
+#### 4.1. Establishing a Connection
 
 The WebSockets protocol uses the [Noise Protocol Framework](http://www.noiseprotocol.org/noise.html) to encrypt all messages end-to-end.
 The parameters used are `Noise_XX_25519_ChaChaPoly_BLAKE2s`.
@@ -118,7 +148,7 @@ Finally, the initiator responds with the `s, se` pattern, including a `Handshake
 
 After this pattern is complete, the connection switches to transport mode and can be used to send and receive messages.
 
-#### 3.2. Sending Messages
+#### 4.2. Sending Messages
 
 Every message sent over the connection is a `KernelMessage`, serialized with MessagePack, then encrypted using the keys exchanged in the Noise protocol XX pattern, sent in a single Binary WebSockets message.
 
@@ -135,7 +165,7 @@ struct KernelMessage {
 
 See [`Address`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html), [`Rsvp`](https://github.com/kinode-dao/kinode/blob/5504f2a6c1b28eb5102aee9a56d2a278f1e5a2dd/lib/src/core.rs#L891-L894), [`Message`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/enum.Message.html),and [`LazyLoadBlob`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.LazyLoadBlob.html) data types.
 
-#### 3.3. Receiving Messages
+#### 4.3. Receiving Messages
 
 When listening for messages, the protocol may ignore messages other than Binary, but should also respond to Ping messages with Pongs.
 
@@ -144,7 +174,7 @@ If this fails, the message should be ignored and the connection must be closed.
 
 Successfully decrypted and deserialized messages should have their `source` field checked for the correct node ID and then passed to the kernel.
 
-#### 3.4. Closing a Connection
+#### 4.4. Closing a Connection
 
 A connection can be intentionally closed by any party, at any time.
 Other causes of connection closure are discussed in this section.
@@ -161,7 +191,13 @@ These behaviors are necessary since they indicate that the networking informatio
 
 Connections may be closed due to inactivity or load-balancing. This behavior is implementation-specific.
 
-### 4. Connection Maintenance and Errors
+### 5. TCP Protocol
+
+The TCP protocol is largely the same as the WebSockets protocol but without the use of Binary frames. `KernelMessage`s are instead streamed.
+More documentation to come -- for now, read source here:
+https://github.com/kinode-dao/kinode/blob/main/kinode/src/net/tcp/utils.rs
+
+### 6. Connection Maintenance and Errors
 
 The system's networking module seeks to abstract away the many complexities of p2p networking from app developers.
 To this end, it reduces all networking issues to either Offline or Timeout.
