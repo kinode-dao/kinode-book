@@ -27,7 +27,7 @@ Build and start a Kinode package
 Usage: kit build-start-package [OPTIONS] [DIR]
 
 Arguments:
-  [DIR]  The package directory to build [default: /home/nick/git/kinode-book/src]
+  [DIR]  The package directory to build [default: CWD]
 
 Options:
   -p, --port <NODE_PORT>

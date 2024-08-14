@@ -32,7 +32,7 @@ Start a built Kinode package
 Usage: kit start-package [OPTIONS] [DIR]
 
 Arguments:
-  [DIR]  The package directory to start [default: /home/nick/git/kinode-book/src]
+  [DIR]  The package directory to start [default: CWD]
 
 Options:
   -p, --port <NODE_PORT>  localhost node port; for remote see https://book.kinode.org/hosted-nodes.html#using-kit-with-your-hosted-node [default: 8080]
