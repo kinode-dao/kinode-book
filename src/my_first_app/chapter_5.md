@@ -31,9 +31,14 @@ Navigate to the App Store and follow the `Publish` flow, which will guide you th
 ## Using [`kit publish`](../kit/publish.md)
 
 Alternatively, you can publish your application from the command-line using [`kit publish`](../kit/publish.md).
-To do so, you'll need to create a keystore.
+To do so, you'll either need to
+1. Create a keystore.
+2. Use a Ledger.
+3. Use a Trezor.
+
 The keystore is an encrypted wallet private key: the key that owns your publishing node.
-[See below] for discussion of how to create the keystore.
+[See below](#making-a-keystore) for discussion of how to create the keystore.
+To use a hardware wallet, simply input the appropriate flag to `kit publish` (`-l` for Ledger or `-t` for Trezor).
 
 In addition, you'll need an ETH RPC endpoint.
 See the [`OPTIONAL: Acquiring an RPC API Key` section](../getting_started/login.md#starting-the-kinode) for a walkthrough of how to get an Alchemy API key.

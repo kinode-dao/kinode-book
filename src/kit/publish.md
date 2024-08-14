@@ -30,10 +30,14 @@ Arguments:
   [DIR]  The package directory to publish [default: CWD]
 
 Options:
+  -k, --keystore-path <PATH>
+          Path to private key keystore (choose 1 of `k`, `l`, `t`)
+  -l, --ledger
+          Use Ledger private key (choose 1 of `k`, `l`, `t`)
+  -t, --trezor
+          Use Trezor private key (choose 1 of `k`, `l`, `t`)
   -u, --metadata-uri <URI>
           URI where metadata lives
-  -k, --keystore-path <PATH>
-          Path to private key keystore
   -r, --rpc <RPC_URI>
           The ETH RPC WebSockets URI
   -e, --real
@@ -66,9 +70,27 @@ A common place to host `metadata.json` is on your package's Github repo.
 
 short: `-k`
 
-Path to the keystore.
+Use private key from keystore given by path.
 The keystore is a [Web3 Secret Storage file](https://ethereum.org/en/developers/docs/data-structures-and-encoding/web3-secret-storage/) that holds an encrypted copy of your private keys.
 See the [Sharing with the World](../my_first_app/chapter_5.md) usage example for one way to create a keystore.
+
+Must supply one and only one of `--keystore-path`, `--ledger`, or `--trezor`.
+
+### `--ledger`
+
+short: `-l`
+
+Use private key from Ledger.
+
+Must supply one and only one of `--keystore-path`, `--ledger`, or `--trezor`.
+
+### `--trezor`
+
+short: `-t`
+
+Use private key from Trezor.
+
+Must supply one and only one of `--keystore-path`, `--ledger`, or `--trezor`.
 
 ### `--rpc`
 
