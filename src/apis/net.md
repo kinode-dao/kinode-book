@@ -37,8 +37,6 @@ pub enum NetAction {
     GetPeers,
     /// get the [`Identity`] struct for a single peer
     GetPeer(String),
-    /// get the [`NodeId`] associated with a given namehash, if any
-    GetName(String),
     /// get a user-readable diagnostics string containing networking inforamtion
     GetDiagnostics,
     /// sign the attached blob payload, sign with our node's networking key.
@@ -55,13 +53,11 @@ pub enum NetAction {
     }
 }
 
-struct KnsUpdate {
-    pub name: String, // actual username / domain name
-    pub owner: String,
-    pub node: String, // hex namehash of node
+pub struct KnsUpdate {
+    pub name: String,
     pub public_key: String,
-    pub ip: String,
-    pub port: u16,
+    pub ips: Vec<String>,
+    pub ports: BTreeMap<String, u16>,
     pub routers: Vec<String>,
 }
 ```
@@ -91,14 +87,14 @@ Finally, let's look at the type parsed from a `Response`.
 ```rust
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum NetResponse {
+    /// response to [`NetAction::ConnectionRequest`]
     Accepted(NodeId),
+    /// response to [`NetAction::ConnectionRequest`]
     Rejected(NodeId),
     /// response to [`NetAction::GetPeers`]
     Peers(Vec<Identity>),
     /// response to [`NetAction::GetPeer`]
     Peer(Option<Identity>),
-    /// response to [`NetAction::GetName`]
-    Name(Option<String>),
     /// response to [`NetAction::GetDiagnostics`]. a user-readable string.
     Diagnostics(String),
     /// response to [`NetAction::Sign`]. contains the signature in blob

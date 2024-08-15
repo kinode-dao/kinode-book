@@ -56,12 +56,32 @@ All `KernelCommand`s are sent in the body field of a `Request`, serialized to JS
 Only `InitializeProcess`, `RunProcess`, and `KillProcess` will give back a `Response`, also serialized to JSON text bytes using `serde_json`:
 
 ```rust
+#[derive(Debug, Serialize, Deserialize)]
 pub enum KernelResponse {
-    InitializedProcess,       // given back after a successful InitializeProcess
-    InitializeProcessError,   // given back after a failed InitializeProcess
-    StartedProcess,           // given back after a successful RunProcess
-    RunProcessError,          // given back after a failed RunProcess
-    KilledProcess(ProcessId), // given back after a KillProcess request
+    InitializedProcess,
+    InitializeProcessError,
+    StartedProcess,
+    RunProcessError,
+    KilledProcess(ProcessId),
+    Debug(KernelPrintResponse),
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub enum KernelPrintResponse {
+    ProcessMap(UserspaceProcessMap),
+    Process(Option<UserspacePersistedProcess>),
+    HasCap(Option<bool>),
+}
+
+pub type UserspaceProcessMap = HashMap<ProcessId, UserspacePersistedProcess>;
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct UserspacePersistedProcess {
+    pub wasm_bytes_handle: String,
+    pub wit_version: Option<u32>,
+    pub on_exit: OnExit,
+    pub capabilities: HashSet<Capability>,
+    pub public: bool,
 }
 ```
 

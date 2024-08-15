@@ -52,6 +52,8 @@ pub enum EthResponse {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub enum EthError {
+    /// RPC provider returned an error
+    RpcError(ErrorPayload),
     /// provider module cannot parse message
     MalformedRequest,
     /// No RPC provider for the chain
@@ -105,12 +107,11 @@ The `eth` portion of the `process_lib` library will handle the serialization and
 If a process has the `root` capability from `eth:distro:sys`, it can send `EthConfigAction` requests.
 These actions are used to adjust the underlying providers and relays used by the module, and its settings regarding acting as a relayer for other nodes (public/private/granular etc).
 
+The configuration of the ETH provider is persisted across two files named `.eth_providers` and `.eth_access_settings` in the node's home directory. `.eth_access_settings` is only created if the configuration is set past the default (private, empty allow/deny lists).
+
 ```rust
 /// The action type used for configuring eth:distro:sys. Only processes which have the "root"
 /// capability from eth:distro:sys can successfully send this action.
-///
-/// NOTE: changes to config will not be persisted between boots, they must be saved in .env
-/// to be reflected between boots. TODO: can change this
 #[derive(Debug, Serialize, Deserialize)]
 pub enum EthConfigAction {
     /// Add a new provider to the list of providers.
@@ -141,21 +142,21 @@ pub enum EthConfigAction {
     GetState,
 }
 
-pub type SavedConfigs = Vec<ProviderConfig>;
+pub type SavedConfigs = HashSet<ProviderConfig>;
 
 /// Provider config. Can currently be a node or a ws provider instance.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, Hash, Eq, PartialEq)]
 pub struct ProviderConfig {
     pub chain_id: u64,
     pub trusted: bool,
     pub provider: NodeOrRpcUrl,
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, Hash, Eq, PartialEq)]
 pub enum NodeOrRpcUrl {
     Node {
         kns_update: crate::core::KnsUpdate,
-        use_as_provider: bool, // for routers inside saved config
+        use_as_provider: bool, // false for just-routers inside saved config
     },
     RpcUrl(String),
 }
