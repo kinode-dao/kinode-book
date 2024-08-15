@@ -8,8 +8,8 @@ kit n file_transfer -t file_transfer
 
 The `file_transfer` package shows off a few parts of Kinode userspace:
 1. It makes use of the [VFS](../apis/vfs.md) to store files on disk.
-2. It uses a manager-worker pattern (see conceptual discussion [here](../process/processes.md#awaiting-a-response) and [here](../process/processes.md#spawning-child-processes)) to enable multiple concurrent uploads/downloads without sacrificing code readability.
-3. It exports its [WIT API](../process/wit-apis.md) so that other packages can easily build in file transfer functionality in a library-like manner, as demonstrated in [another recipe](./package_apis_workers.md).
+2. It uses a manager-worker pattern (see conceptual discussion [here](../system/process/processes.md#awaiting-a-response) and [here](../system/process/processes.md#spawning-child-processes)) to enable multiple concurrent uploads/downloads without sacrificing code readability.
+3. It exports its [WIT API](../system/process/wit_apis.md) so that other packages can easily build in file transfer functionality in a library-like manner, as demonstrated in [another recipe](./package_apis_workers.md).
 
 ## Protocol
 

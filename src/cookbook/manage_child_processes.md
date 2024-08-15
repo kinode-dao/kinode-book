@@ -27,7 +27,7 @@ The following example demonstrates a basic parent process whose sole function is
 {{#includehidetest ../../code/spawn/parent/src/lib.rs}}
 ```
 
-The child process can be anything, for simplicity's sake, here is a degenerate process that does nothing but print it's name and die:
+The child process can be anything, for simplicity's sake, here is a degenerate process that does nothing but print its name and die:
 ```rust
 {{#includehidetest ../../code/spawn/child/src/lib.rs}}
 ```

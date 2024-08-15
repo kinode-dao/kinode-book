@@ -26,10 +26,9 @@ If you're interested in learning more about how to write Kinode processes, there
 - Consider what another app might look like that uses the chess engine as a library.
 Alter the process to serve this use case, or add another process that can be spawned to do such a thing.
 
-There are also three extensions to this tutorial which dive into specific use cases which make the most of Kinode OS:
+There are also extensions to this tutorial which dive into specific use cases which make the most of Kinode OS:
 
 - [Chat](./chat.md)
-- Payment Integration (using ETH) [coming soon]
-- LLM Integration (play chess against the AI!) [coming soon]
+- [more coming soon](#)
 
 The full code is available [here](https://github.com/kinode-dao/kinode/tree/main/kinode/packages/chess).
