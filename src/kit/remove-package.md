@@ -30,7 +30,7 @@ Remove a running package from a node
 Usage: kit remove-package [OPTIONS] [DIR]
 
 Arguments:
-  [DIR]  The package directory to remove (Overridden by PACKAGE/PUBLISHER) [default: /home/nick/git/kinode-book/src]
+  [DIR]  The package directory to remove (Overridden by PACKAGE/PUBLISHER) [default: CWD]
 
 Options:
   -a, --package <PACKAGE>      Name of the package (Overrides DIR)

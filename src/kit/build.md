@@ -67,7 +67,7 @@ Build a Kinode package
 Usage: kit build [OPTIONS] [DIR]
 
 Arguments:
-  [DIR]  The package directory to build [default: /home/nick/git/kinode-book/src]
+  [DIR]  The package directory to build [default: CWD]
 
 Options:
       --no-ui

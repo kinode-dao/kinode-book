@@ -11,7 +11,7 @@ It's also strongly recommended that you read and understand the [file transfer a
 - [File Transfer](#file-transfer)
 - [UI](#ui)
 - [Next Steps](#next-steps)
-- [Github Repo](https://github.com/bitful-pannul/file_transfer)
+- [GitHub Repo](https://github.com/bitful-pannul/file_transfer)
 
 ## Start
 
@@ -671,6 +671,6 @@ The UI will be served from `http://localhost:8080/file_transfer:file_transfer:te
 Now that you've built a simple UI, you can try building your own app!
 Check out the [APIs](../apis/api_reference.md) to see what's possible.
 
-## Github Repo
+## GitHub Repo
 
 You can find the full code for this example [here](http://github.com/bitful-pannul/file_transfer).

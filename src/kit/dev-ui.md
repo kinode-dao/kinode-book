@@ -23,7 +23,7 @@ Start the web UI development server with hot reloading (same as `cd ui && npm i 
 Usage: kit dev-ui [OPTIONS] [DIR]
 
 Arguments:
-  [DIR]  The package directory to build (must contain a `ui` directory) [default: /home/nick/git/kinode-book/src]
+  [DIR]  The package directory to build (must contain a `ui` directory) [default: CWD]
 
 Options:
   -p, --port <NODE_PORT>  localhost node port; for remote see https://book.kinode.org/hosted-nodes.html#using-kit-with-your-hosted-node [default: 8080]

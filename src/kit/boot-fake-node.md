@@ -58,7 +58,7 @@ Options:
   -r, --runtime-path <PATH>
           Path to Kinode core repo (overrides --version)
   -v, --version <VERSION>
-          Version of Kinode binary to use (overridden by --runtime-path) [default: latest] [possible values: latest, v0.8.6, v0.8.5, v0.8.4]
+          Version of Kinode binary to use (overridden by --runtime-path) [default: latest] [possible values: latest, v0.8.7, v0.8.6, v0.8.5]
   -p, --port <NODE_PORT>
           The port to run the fake node on [default: 8080]
   -o, --home <HOME>
@@ -68,7 +68,7 @@ Options:
   -c, --fakechain-port <FAKECHAIN_PORT>
           The port to run the fakechain on (or to connect to) [default: 8545]
       --rpc <RPC_ENDPOINT>
-          Ethereum RPC endpoint (wss://)
+          Ethereum Optimism mainnet RPC endpoint (wss://)
       --persist
           If set, do not delete node home after exit
       --password <PASSWORD>
