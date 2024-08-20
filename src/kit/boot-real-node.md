@@ -40,10 +40,10 @@ Usage: kit boot-real-node [OPTIONS] --home <HOME>
 
 Options:
   -r, --runtime-path <PATH>    Path to Kinode core repo (overrides --version)
-  -v, --version <VERSION>      Version of Kinode binary to use (overridden by --runtime-path) [default: latest] [possible values: latest, v0.8.6, v0.8.5, v0.8.4]
+  -v, --version <VERSION>      Version of Kinode binary to use (overridden by --runtime-path) [default: latest] [possible values: latest, v0.8.7, v0.8.6, v0.8.5]
   -p, --port <NODE_PORT>       The port to run the real node on [default: 8080]
   -o, --home <HOME>            Path to home directory for real node
-      --rpc <RPC_ENDPOINT>     Ethereum RPC endpoint (wss://)
+      --rpc <RPC_ENDPOINT>     Ethereum Optimism mainnet RPC endpoint (wss://)
       --release                If set and given --runtime-path, compile release build [default: debug build]
       --verbosity <VERBOSITY>  Verbosity of node: higher is more verbose [default: 0]
   -h, --help                   Print help

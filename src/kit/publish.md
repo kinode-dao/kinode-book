@@ -9,7 +9,7 @@ It can also be used to update or unpublish previously-published packages.
 ## Example Usage
 
 ```bash
-# Publish a package on the real (live) network.
+# Publish a package on the real network (Optimism mainnet).
 kit publish --metadata-uri https://raw.githubusercontent.com/path/to/metadata.json --keystore-path ~/.foundry/keystores/dev --rpc wss://opt-mainnet.g.alchemy.com/v2/<ALCHEMY_API_KEY> --real
 
 # Unublish a package.
@@ -39,7 +39,7 @@ Options:
   -u, --metadata-uri <URI>
           URI where metadata lives
   -r, --rpc <RPC_URI>
-          The ETH RPC WebSockets URI
+          Ethereum Optimism mainnet RPC endpoint (wss://)
   -e, --real
           If set, deploy to real network [default: fake node]
       --unpublish
@@ -64,7 +64,8 @@ short: `-u`
 
 The URI hosting the `metadata.json`.
 You must place the `metadata.json` somewhere public before publishing your package on Kimap.
-A common place to host `metadata.json` is on your package's Github repo.
+A common place to host `metadata.json` is on your package's GitHub repo.
+If you use GitHub, make sure to use the static link to the specific commit, not a branch-specific URL (e.g. `main`) that will change with new commits.
 
 ### `--keystore-path`
 
