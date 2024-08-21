@@ -43,7 +43,7 @@ rustchat
     └── ...
 ```
 
-The `pkg/` directory can then be zipped and injected into the node with [`kit start-package`](./start-package.md).
+The `pkg/` directory is then zipped and can be injected into the node with [`kit start-package`](./start-package.md).
 
 `kit build` also builds the UI if it is found in `pkg/ui/`.
 There must exist a `ui/package.json` file with a `scripts` object containing the following arguments:

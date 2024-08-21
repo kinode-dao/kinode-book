@@ -11,6 +11,13 @@ This can be added to your package `metadata.json` like so:
 ...
 ```
 At a minimum you will need to publish the `metadata.json`.
+An easy option is to publish it on GitHub.
+If you use GitHub, make sure to use the static link to the specific commit, not a branch-specific URL (e.g. `main`) that wil change with new commits.
+For example, `https://raw.githubusercontent.com/nick1udwig/chat/master/metadata.json` is not the correct link to use, because it will change when new commits are added.
+You want to use a link like `https://raw.githubusercontent.com/nick1udwig/chat/191dce595ad00a956de04b9728f479dee04863c7/metadata.json` which will not change when new commits are added.
+
+You'll need to populate the `code_hashes` field of `metadata.json`.
+The hash can be found by running `kit build` on your package: it will be output after a successful build.
 
 Next, review all the data in [`pkg/manifest.json`](./chapter_1.md#pkgmanifestjson) and [`metadata.json`](./chapter_1.md#pkgmetadatajson).
 The `package_name` field in `metadata.json` determines the name of the package.
@@ -22,7 +29,6 @@ If you are developing on a fake node, you'll have to boot a real one, then insta
 ```
 kit s my_package
 ```
-
 
 ## Using the App Store GUI
 

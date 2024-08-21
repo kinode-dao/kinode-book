@@ -66,6 +66,8 @@ The URI hosting the `metadata.json`.
 You must place the `metadata.json` somewhere public before publishing your package on Kimap.
 A common place to host `metadata.json` is on your package's GitHub repo.
 If you use GitHub, make sure to use the static link to the specific commit, not a branch-specific URL (e.g. `main`) that will change with new commits.
+For example, `https://raw.githubusercontent.com/nick1udwig/chat/master/metadata.json` is not the correct link to use, because it will change when new commits are added.
+You want to use a link like `https://raw.githubusercontent.com/nick1udwig/chat/191dce595ad00a956de04b9728f479dee04863c7/metadata.json` which will not change when new commits are added.
 
 ### `--keystore-path`
 
