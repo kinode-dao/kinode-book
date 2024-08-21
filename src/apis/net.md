@@ -6,7 +6,7 @@ This API is documented, rather, for those who wish to implement their own networ
 
 The networking API is implemented in the `net:distro:sys` process.
 
-For the specific networking protocol, see the [networking protocol](../networking_protocol.md) chapter.
+For the specific networking protocol, see the [networking protocol](../system/networking_protocol.md) chapter.
 This chapter is rather to describe the message-based API that the `net:distro:sys` process exposes.
 
 `Net`, like all processes and runtime modules, is architected around a main message-receiving loop.
@@ -16,7 +16,7 @@ The received `Request`s are handled in one of three ways:
 
 - If the `target.node` is our domain, but the `source.node` is not, the message is either parsed as the `NetActions` enum, or if it fails to parse, is treated as a "hello" message and printed in the terminal, size permitting. This "hello" protocol simply attempts to display the `message.body` as a UTF-8 string and is mostly used for network debugging.
 
-- If the `source.node` is our domain, but the `target.node` is not, the message is sent to the target using the [networking protocol](../networking_protocol.md) implementation.
+- If the `source.node` is our domain, but the `target.node` is not, the message is sent to the target using the [networking protocol](../system/networking_protocol.md) implementation.
 
 Let's look at `NetActions`. Note that this message type can be received from remote or local processes.
 Different implementations of the networking protocol may reject actions depending on whether they were instigated locally or remotely, and also discriminate on which remote node sent the action.
@@ -37,8 +37,6 @@ pub enum NetAction {
     GetPeers,
     /// get the [`Identity`] struct for a single peer
     GetPeer(String),
-    /// get the [`NodeId`] associated with a given namehash, if any
-    GetName(String),
     /// get a user-readable diagnostics string containing networking inforamtion
     GetDiagnostics,
     /// sign the attached blob payload, sign with our node's networking key.
@@ -55,13 +53,11 @@ pub enum NetAction {
     }
 }
 
-struct KnsUpdate {
-    pub name: String, // actual username / domain name
-    pub owner: String,
-    pub node: String, // hex namehash of node
+pub struct KnsUpdate {
+    pub name: String,
     pub public_key: String,
-    pub ip: String,
-    pub port: u16,
+    pub ips: Vec<String>,
+    pub ports: BTreeMap<String, u16>,
     pub routers: Vec<String>,
 }
 ```
@@ -91,14 +87,14 @@ Finally, let's look at the type parsed from a `Response`.
 ```rust
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum NetResponse {
+    /// response to [`NetAction::ConnectionRequest`]
     Accepted(NodeId),
+    /// response to [`NetAction::ConnectionRequest`]
     Rejected(NodeId),
     /// response to [`NetAction::GetPeers`]
     Peers(Vec<Identity>),
     /// response to [`NetAction::GetPeer`]
     Peer(Option<Identity>),
-    /// response to [`NetAction::GetName`]
-    Name(Option<String>),
     /// response to [`NetAction::GetDiagnostics`]. a user-readable string.
     Diagnostics(String),
     /// response to [`NetAction::Sign`]. contains the signature in blob

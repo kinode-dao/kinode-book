@@ -8,7 +8,7 @@ Note — the app you will build in Sections 2 through 5 is *not* `my_chat_app`; 
 ## Requirements
 
 This section assumes you've completed the steps outlined in [Environment Setup](./chapter_1.md) to construct your development environment or otherwise have a basic Kinode app open in your code editor of choice.
-You should also be actively running a Kinode ([live](../login.md) or [fake](./chapter_1.md#booting-a-fake-kinode-node)) such that you can quickly compile and test your code!
+You should also be actively running a Kinode ([live](../getting_started/login.md) or [fake](./chapter_1.md#booting-a-fake-kinode-node)) such that you can quickly compile and test your code!
 Tight feedback loops when building: very important.
 
 ## Starting from Scratch
@@ -36,7 +36,7 @@ The component, however, internally defines how that `world` is implemented.
 This interface is defined via [WIT](https://component-model.bytecodealliance.org/design/wit.html).
 
 WIT bindings are the glue code that is necessary for the interaction between Wasm modules and their host environment.
-They may be written in any Wasm-compatible language — Kinode offers the most support for Rust with [`kit`](../kit-dev-toolkit.md) and [`process_lib`](../process_stdlib/overview.md).
+They may be written in any Wasm-compatible language — Kinode offers the most support for Rust with [`kit`](../kit/kit-dev-toolkit.md) and [`process_lib`](../process_stdlib/overview.md).
 The `world`, types, imports, and exports are all declared in a [WIT file](https://github.com/kinode-dao/kinode-wit/blob/master/kinode.wit), and using that file, [`wit_bindgen`](https://github.com/bytecodealliance/wit-bindgen) generates the code for the bindings.
 
 So, to bring it all together...
@@ -88,7 +88,7 @@ It's very simple to use:
         .send();
 ```
 
-Because this process might not have [capabilities](../process/capabilities.md) to message any other (local or remote) processes, for the purposes of this tutorial, just send the message to itself.
+Because this process might not have [capabilities](../system/process/capabilities.md) to message any other (local or remote) processes, for the purposes of this tutorial, just send the message to itself.
 
 ```rust
     Request::to(&our)

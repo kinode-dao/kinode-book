@@ -43,7 +43,7 @@ rustchat
     └── ...
 ```
 
-The `pkg/` directory can then be zipped and injected into the node with [`kit start-package`](./start-package.md).
+The `pkg/` directory is then zipped and can be injected into the node with [`kit start-package`](./start-package.md).
 
 `kit build` also builds the UI if it is found in `pkg/ui/`.
 There must exist a `ui/package.json` file with a `scripts` object containing the following arguments:
@@ -67,7 +67,7 @@ Build a Kinode package
 Usage: kit build [OPTIONS] [DIR]
 
 Arguments:
-  [DIR]  The package directory to build [default: /home/nick/git/kinode-book/src]
+  [DIR]  The package directory to build [default: CWD]
 
 Options:
       --no-ui
@@ -142,7 +142,7 @@ The mirror to download dependencies from (default: package `publisher`).
 
 short: `-w`
 
-[WIT `world`](../process/wit-apis.md) to use.
+[WIT `world`](../system/process/wit_apis.md) to use.
 Not required for Rust processes; use for py or js.
 
 ### `--local-dependency`

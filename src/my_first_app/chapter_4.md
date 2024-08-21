@@ -144,7 +144,7 @@ Create a `ui/` directory in the package root, and then a new file in `ui/index.h
 This is a super barebones `index.html` that provides a form to make requests to the `/api` endpoint.
 Additional UI dev info can be found [here](../apis/frontend_development.md).
 
-Next, add two more entries to `manifest.json`: messaging capabilities to the [VFS](../files.md) which is required to store and access the UI `index.html`, and the `homepage` capability which is required to add our app to the user's homepage (next section):
+Next, add two more entries to `manifest.json`: messaging capabilities to the [VFS](../system/files.md) which is required to store and access the UI `index.html`, and the `homepage` capability which is required to add our app to the user's homepage (next section):
 ```json
 ...
 {{#include ../../code/mfa_fe_demo/pkg/manifest.json:7:11}}

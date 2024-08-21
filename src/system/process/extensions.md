@@ -10,7 +10,7 @@ The cost of extensions is that they are not as nicely bundled within the Kinode 
 Extensions are [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) clients that connect to a paired Kinode process to extend library, language, or hardware support.
 
 Kinode processes are [Wasm components](https://component-model.bytecodealliance.org/design/why-component-model.html), which leads to advantages and disadvantages.
-The rest of the book (and in particular the [processes chapter](./processes.md)) discusses the advantages (e.g., integration with the Kinode Request/Response system and the capabilities security model).
+The rest of the book (and in particular the [processes chapter](../../system/process/processes.md)) discusses the advantages (e.g., integration with the Kinode Request/Response system and the capabilities security model).
 Two of the main disadvantages are:
 1. Only certain libraries and languages can be used.
 2. Hardware accelerators like GPUs are not easily accessible.
@@ -34,7 +34,7 @@ Only write an extension if there is no other choice.
 
 An extension is composed of two parts: a Kinode package and the extension itself.
 They communicate with each other over a WebSocket connection that is managed by Kinode.
-Look at the [Talking to the Outside World recipe](../cookbook/talking_to_the_outside_world.md#websockets-server-with-reply-type) for an example.
+Look at the [Talking to the Outside World recipe](../../cookbook/talking_to_the_outside_world.md#websockets-server-with-reply-type) for an example.
 The [examples below](#examples) show some more working extensions.
 
 ### The WebSocket protocol
@@ -103,7 +103,7 @@ Specifically, the interface process must:
 
 #### Bind an Extension WebSocket
 
-The [`kinode_process_lib`](../process_stdlib/overview.md) provides an easy way to bind an extension WebSocket:
+The [`kinode_process_lib`](../../process_stdlib/overview.md) provides an easy way to bind an extension WebSocket:
 
 ```
 kinode_process_lib::http::bind_ext_path("/")?;
@@ -133,7 +133,7 @@ It is recommended to use the following protocol:
    Then the extension can indicate its reply is a Response, which will allow your Kinode process to properly route it back to the original requestor.
 3. If possible, the original requestor should serialize the `lazy_load_blob`, and the type of `lazy_load_blob` should be defined accordingly.
    Then, all the interface process needs to do is `inherit` the `lazy_load_blob` in its `http_server` Request.
-   This increases efficiency since it avoids bringing those bytes across the Wasm boundry between the process and the runtime (see more discussion [here](./processes.md#message-structure)).
+   This increases efficiency since it avoids bringing those bytes across the Wasm boundry between the process and the runtime (see more discussion [here](../process/processes.md#message-structure)).
 
 #### Handle WebSocket Messages
 

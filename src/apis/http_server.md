@@ -203,4 +203,4 @@ pub struct HttpResponse {
 This response is only required for HTTP requests.
 `WebSocketOpen`, `WebSocketPush`, and `WebSocketClose` requests do not require a response.
 If a process is meant to send data over an open WebSocket connection, it must issue a `HttpServerAction::WebSocketPush` request with the appropriate `channel_id`.
-Find discussion of the `HttpServerAction::WebSocketExt*` requests in the [extensions document](../process/extensions.md).
+Find discussion of the `HttpServerAction::WebSocketExt*` requests in the [extensions document](../system/process/extensions.md).

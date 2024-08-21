@@ -84,7 +84,7 @@ Example:
   echo Hello World!
 ```
 
-For more information on writing your own scripts, see the [cookbook](./cookbook/writing_scripts.md).
+For more information on writing your own scripts, see the [cookbook](../cookbook/writing_scripts.md).
 
 ## Packaging Scripts with `scripts.json`
 

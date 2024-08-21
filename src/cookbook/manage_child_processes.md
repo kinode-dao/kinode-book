@@ -1,6 +1,6 @@
 # Spawning and Managing Child Processes
 
-In Kinode OS, a "parent" process can create additional processes, known as "children" (also discussed [here](../process/processes.md#spawning-child-processes)).
+In Kinode OS, a "parent" process can create additional processes, known as "children" (also discussed [here](../system/process/processes.md#spawning-child-processes)).
 These child processes are particularly useful for handling intensive tasks (referred to as "workers") that require long computation times without hindering the performance of the main application.
 They are also beneficial for segregating distinct logical components.
 Each process is its own subdirectory within the package.
@@ -27,7 +27,7 @@ The following example demonstrates a basic parent process whose sole function is
 {{#includehidetest ../../code/spawn/parent/src/lib.rs}}
 ```
 
-The child process can be anything, for simplicity's sake, here is a degenerate process that does nothing but print it's name and die:
+The child process can be anything, for simplicity's sake, here is a degenerate process that does nothing but print its name and die:
 ```rust
 {{#includehidetest ../../code/spawn/child/src/lib.rs}}
 ```

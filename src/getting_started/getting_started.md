@@ -15,5 +15,5 @@ If you're a non-technical user:
 
 If you're a developer:
 
-- Get your hands dirty with the [Quick Start](./quick-start.md), or the more detailed [My First Kinode Application](./build-and-deploy-an-app.md) tutorial.
-- Learn how to boot a Kinode locally in the [Installation](./install.md) section.
+- Get your hands dirty with the [Quick Start](quick_start.md), or the more detailed [My First Kinode Application](../my_first_app/build_and_deploy_an_app.md) tutorial.
+- Learn how to boot a Kinode locally in the [Installation](install.md) section.

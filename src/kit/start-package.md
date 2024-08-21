@@ -19,7 +19,8 @@ kit start-package
 `kit start-package` injects a built package into the given node and starts it.
 `start-package` is designed to be used after a package has been built with [`kit build`](./build.md).
 The `pkg/` directory contains metadata about the package for the node as well as the `.wasm` binaries for each process.
-So `kit start-package` first zips the `pkg/` directory (located in the package directory given in the argument), and then it injects a message to the node to start the package.
+The final step in the `build` process is to zip the `pkg/` directory.
+`kit start-package` looks for the zipped `pkg/` and then injects a message to the node to start the package.
 
 To both `build` and `start-package` in one command, use `kit build-start-package`.
 
@@ -32,7 +33,7 @@ Start a built Kinode package
 Usage: kit start-package [OPTIONS] [DIR]
 
 Arguments:
-  [DIR]  The package directory to start [default: /home/nick/git/kinode-book/src]
+  [DIR]  The package directory to start [default: CWD]
 
 Options:
   -p, --port <NODE_PORT>  localhost node port; for remote see https://book.kinode.org/hosted-nodes.html#using-kit-with-your-hosted-node [default: 8080]
