@@ -25,7 +25,7 @@ wit_bindgen::generate!({
 const WS_PATH: &str = "/";
 
 fn handle_http_message(
-    our: &Address,
+    _our: &Address,
     message: &Message,
     connection: &mut Option<u32>,
 ) -> Result<()> {
@@ -34,7 +34,7 @@ fn handle_http_message(
             return Err(anyhow!("unexpected HTTP request"));
         }
         http::HttpServerRequest::WebSocketOpen { path, channel_id } => {
-            assert_eq!(path, our.process.to_string());
+            assert_eq!(path, WS_PATH);
             assert_eq!(*connection, None);
 
             *connection = Some(channel_id.clone());

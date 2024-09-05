@@ -1,0 +1,182 @@
+runtime = { FetchVersion = "latest" }
+# runtime = { RepoPath = "~/git/kinode" }
+persist_home = false
+runtime_build_release = false
+
+
+[[tests]]
+dependency_package_paths = ["chat_with_file_transfer", "file_transfer"]
+setup_packages = [
+    { path = "chat_with_file_transfer", run = true }
+]
+setup_scripts = []
+test_package_paths = ["chat_with_file_transfer/test/chat_with_file_transfer_test"]
+test_scripts = []
+timeout_secs = 5
+fakechain_router = 8545
+
+[[tests.nodes]]
+port = 8080
+home = "home/first"
+fake_node_name = "first.dev"
+runtime_verbosity = 2
+
+[[tests.nodes]]
+port = 8081
+home = "home/second"
+fake_node_name = "second.dev"
+runtime_verbosity = 2
+
+
+[[tests]]
+dependency_package_paths = ["mfa_data_demo"]
+setup_packages = [
+    { path = "mfa_data_demo", run = true }
+]
+setup_scripts = []
+test_package_paths = ["mfa_data_demo/test/mfa_data_demo_test"]
+test_scripts = []
+timeout_secs = 5
+fakechain_router = 8545
+
+[[tests.nodes]]
+port = 8080
+home = "home/first"
+fake_node_name = "first.dev"
+runtime_verbosity = 2
+
+
+[[tests]]
+dependency_package_paths = ["mfa_fe_demo"]
+setup_packages = [
+    { path = "mfa_fe_demo", run = true }
+]
+setup_scripts = []
+test_package_paths = ["mfa_fe_demo/test/mfa_fe_demo_test"]
+test_scripts = [
+    { path = "mfa_fe_demo/curl-endpoint.sh", args = "" },
+]
+timeout_secs = 5
+fakechain_router = 8545
+
+[[tests.nodes]]
+port = 8080
+home = "home/first"
+fake_node_name = "first.dev"
+runtime_verbosity = 2
+
+
+[[tests]]
+dependency_package_paths = []
+setup_packages = [
+    { path = "mfa_message_demo", run = true }
+]
+setup_scripts = []
+test_package_paths = ["mfa_message_demo/test/mfa_message_demo_test"]
+test_scripts = []
+timeout_secs = 5
+fakechain_router = 8545
+
+[[tests.nodes]]
+port = 8080
+home = "home/first"
+fake_node_name = "first.dev"
+runtime_verbosity = 2
+
+
+[[tests]]
+dependency_package_paths = ["remote_file_storage/server"]
+setup_packages = [
+    { path = "remote_file_storage/server", run = true }
+]
+setup_scripts = []
+test_package_paths = ["remote_file_storage/test/remote_file_storage_test"]
+test_scripts = []
+timeout_secs = 5
+fakechain_router = 8545
+
+[[tests.nodes]]
+port = 8080
+home = "home/first"
+fake_node_name = "first.dev"
+runtime_verbosity = 2
+
+[[tests.nodes]]
+port = 8081
+home = "home/second"
+fake_node_name = "second.dev"
+runtime_verbosity = 2
+
+
+[[tests]]
+dependency_package_paths = []
+setup_packages = [
+    { path = "spawn", run = true }
+]
+setup_scripts = []
+test_package_paths = ["spawn/test/spawn_test"]
+test_scripts = []
+timeout_secs = 5
+fakechain_router = 8545
+
+[[tests.nodes]]
+port = 8080
+home = "home/first"
+fake_node_name = "first.dev"
+runtime_verbosity = 2
+
+
+[[tests]]
+dependency_package_paths = []
+setup_packages = [
+    { path = "ws_client", run = false }
+]
+setup_scripts = [
+    { path = "ws_client/ws_server.py", args = "" }
+]
+test_package_paths = ["ws_client/test/ws_client_test"]
+test_scripts = []
+timeout_secs = 5
+fakechain_router = 8545
+
+[[tests.nodes]]
+port = 8080
+home = "home/first"
+fake_node_name = "first.dev"
+runtime_verbosity = 2
+
+
+[[tests]]
+dependency_package_paths = []
+setup_packages = [
+    { path = "ws_server", run = true }
+]
+setup_scripts = []
+test_package_paths = []
+test_scripts = [{ path = "ws_server/ws_client.py", args = "" }]
+timeout_secs = 5
+fakechain_router = 8545
+
+[[tests.nodes]]
+port = 8080
+home = "home/first"
+fake_node_name = "first.dev"
+runtime_verbosity = 2
+
+
+[[tests]]
+dependency_package_paths = []
+setup_packages = [
+    { path = "ws_server_with_reply", run = true }
+]
+setup_scripts = []
+test_package_paths = []
+test_scripts = [{ path = "ws_server_with_reply/ws_client.py", args = "" }]
+timeout_secs = 5
+fakechain_router = 8545
+
+[[tests.nodes]]
+port = 8080
+home = "home/first"
+fake_node_name = "first.dev"
+runtime_verbosity = 2

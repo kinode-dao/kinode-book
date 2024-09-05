@@ -21,8 +21,43 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Build job
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+    - name: Install unzip
+      run: sudo apt-get install unzip
+    - name: Get latest release from kinode-dao/kit
+      id: get-latest-release
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const repo = {
+            owner: 'kinode-dao',
+            repo: 'kit',
+          };
+          const release = await github.rest.repos.getLatestRelease(repo);
+          const asset = release.data.assets.find(asset => asset.name.match(/kit-x86_64-unknown-linux-gnu\.zip/));
+          if (!asset) {
+            throw new Error('Asset not found');
+          }
+          return {
+            download_url: asset.browser_download_url,
+            tag_name: release.data.tag_name
+          };
+    - name: Download the Kit release
+      run: wget -q ${DOWNLOAD_URL} -O kit.zip
+      env:
+        DOWNLOAD_URL: ${{ steps.get-latest-release.outputs.download_url }}
+    - name: Unzip the release
+      run: unzip kit.zip
+    - name: Run Kit tests
+      run: ./kit t code/tests.toml
+
   build:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -65,7 +100,6 @@ jobs:
           asset_name: book.tar.gz
           asset_content_type: application/gzip
 
-  # Deployment job
   deploy:
     environment:
       name: github-pages
