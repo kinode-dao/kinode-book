@@ -29,6 +29,17 @@ jobs:
       uses: actions/checkout@v2
     - name: Install unzip
       run: sudo apt-get install unzip
+    - name: Install Cargo
+      run: |
+        cargo install wasm-tools
+        rustup install nightly
+        rustup target add wasm32-wasi
+        rustup target add wasm32-wasi --toolchain nightly
+        cargo install cargo-wasi
+    - name: Install Foundry
+      run: |
+        curl -L https://foundry.paradigm.xyz | bash
+        echo "$HOME/.foundry/bin" >> $GITHUB_PATH
     - name: Get latest release from kinode-dao/kit
       id: get-latest-release
       uses: actions/github-script@v6
