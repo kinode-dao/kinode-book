@@ -73,10 +73,10 @@ jobs:
         run: tar zxf foundry.tar.gz
       - name: Add Foundry to path
         run: |
-          echo "$HOME/anvil" >> $GITHUB_PATH
-          echo "$HOME/cast" >> $GITHUB_PATH
-          echo "$HOME/chisel" >> $GITHUB_PATH
-          echo "$HOME/forge" >> $GITHUB_PATH
+          echo "$PWD/anvil" >> $GITHUB_PATH
+          echo "$PWD/cast" >> $GITHUB_PATH
+          echo "$PWD/chisel" >> $GITHUB_PATH
+          echo "$PWD/forge" >> $GITHUB_PATH
       - name: Get latest release from kinode-dao/kit
         id: get-latest-kit-release
         uses: actions/github-script@v6
