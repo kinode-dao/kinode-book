@@ -43,7 +43,7 @@ jobs:
           #    source /home/runner/.bashrc && foundryup
 
       - name: Get latest release from foundry-rs/foundry
-        id: get-latest-release
+        id: get-latest-foundry-release
         uses: actions/github-script@v6
         with:
           script: |
@@ -61,7 +61,7 @@ jobs:
       - name: Download the Foundry release
         run: wget -q ${DOWNLOAD_URL} -O foundry.tar.gz
         env:
-          DOWNLOAD_URL: ${{ steps.get-latest-release.outputs.result }}
+          DOWNLOAD_URL: ${{ steps.get-latest-foundry-release.outputs.result }}
       - name: Untar the release
         run: tar zxf foundry.tar.gz
       - name: Add Foundry to path
@@ -71,7 +71,7 @@ jobs:
           echo "$HOME/chisel" >> $GITHUB_PATH
           echo "$HOME/forge" >> $GITHUB_PATH
       - name: Get latest release from kinode-dao/kit
-        id: get-latest-release
+        id: get-latest-kit-release
         uses: actions/github-script@v6
         with:
           script: |
@@ -89,7 +89,7 @@ jobs:
       - name: Download the Kit release
         run: wget -q ${DOWNLOAD_URL} -O kit.zip
         env:
-          DOWNLOAD_URL: ${{ steps.get-latest-release.outputs.result }}
+          DOWNLOAD_URL: ${{ steps.get-latest-kit-release.outputs.result }}
       - name: Unzip the release
         run: unzip kit.zip
       - name: Run Kit tests
