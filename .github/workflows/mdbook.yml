@@ -43,11 +43,14 @@ jobs:
           if (!asset) {
             throw new Error('Asset not found');
           }
-`         core.setOutput('download_url', asset.browser_download_url);
+          return {
+            download_url: asset.browser_download_url,
+            tag_name: release.data.tag_name
+          };
     - name: Download the Kit release
       run: wget -q ${DOWNLOAD_URL} -O kit.zip
       env:
-        DOWNLOAD_URL: ${{ steps.get-latest-release.outputs.download_url }}
+        DOWNLOAD_URL: ${{ steps.get-latest-release.outputs.result.download_url }}
     - name: Unzip the release
       run: unzip kit.zip
     - name: Run Kit tests
