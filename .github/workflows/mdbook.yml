@@ -102,6 +102,8 @@ jobs:
       - name: Run Kit tests
         run: |
           ls -l
+          which ls
+          which ./anvil
           which anvil
           which cast
           which chisel
