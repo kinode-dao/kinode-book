@@ -102,6 +102,10 @@ jobs:
       - name: Run Kit tests
         run: |
           ls -l
+          which anvil
+          which cast
+          which chisel
+          which forge
           ./kit t code/tests.toml
 
   build:
