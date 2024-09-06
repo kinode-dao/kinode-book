@@ -101,6 +101,8 @@ jobs:
         run: unzip kit.zip
       - name: Run Kit tests
         run: |
+          pwd
+          echo $PATH
           ls -l
           which ls
           which ./anvil
