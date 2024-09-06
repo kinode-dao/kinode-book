@@ -78,6 +78,7 @@ jobs:
           echo "$HOME/chisel" >> $GITHUB_PATH
           echo "$HOME/forge" >> $GITHUB_PATH
           echo $GITHUB_PATH
+          cat $GITHUB_PATH
       - name: Get latest release from kinode-dao/kit
         id: get-latest-kit-release
         uses: actions/github-script@v6
@@ -103,6 +104,12 @@ jobs:
       - name: Run Kit tests
         run: |
           echo $GITHUB_PATH
+          cat $GITHUB_PATH
+          echo "$HOME/anvil" >> $GITHUB_PATH
+          echo "$HOME/cast" >> $GITHUB_PATH
+          echo "$HOME/chisel" >> $GITHUB_PATH
+          echo "$HOME/forge" >> $GITHUB_PATH
+          cat $GITHUB_PATH
           ./kit t code/tests.toml
 
   build:
