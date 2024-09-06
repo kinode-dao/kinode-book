@@ -101,11 +101,8 @@ jobs:
         run: unzip kit.zip
       - name: Run Kit tests
         run: |
-          echo $PATH
           ls -l
           ./kit t code/tests.toml
-        env:
-          PATH: ${{ env.PATH }}
 
   build:
     needs: test
