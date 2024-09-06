@@ -50,9 +50,25 @@ jobs:
             const repo = {
               owner: 'foundry-rs',
               repo: 'foundry',
+              per_page: 1,
+              page: 1,
             };
-            const release = await github.rest.repos.getLatestRelease(repo);
-            const asset = release.data.assets.find(asset => asset.name.match(/foundry_nightly_linux_amd64\.tar\.gz/));
+            #const release = await github.rest.repos.getLatestRelease(repo);
+            #const asset = release.data.assets.find(asset => asset.name.match(/foundry_nightly_linux_amd64\.tar\.gz/));
+
+            const releases = await github.rest.repos.listReleases(repo);
+            const preReleases = releases.data.filter(release => release.prerelease);
+
+            // Sort pre-releases by created_at date in descending order
+            preReleases.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            if (preReleases.length === 0) {
+              throw new Error('No pre-releases found');
+            }
+
+            const latestPreRelease = preReleases[0];
+            const asset = latestPreRelease.assets.find(asset => asset.name.match(/kit-x86_64-unknown-linux-gnu\.zip/));
+
             if (!asset) {
               throw new Error('Asset not found');
             }
