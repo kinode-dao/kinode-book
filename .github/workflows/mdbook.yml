@@ -44,6 +44,8 @@ jobs:
           if (!asset) {
             throw new Error('Asset not found');
           }
+          console.log(asset.browser_download_url);
+          console.log(release.data.tag_name);
           return {
             download_url: asset.browser_download_url,
             tag_name: release.data.tag_name
