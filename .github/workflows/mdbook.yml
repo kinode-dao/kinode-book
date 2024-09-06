@@ -26,21 +26,15 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Install unzip
-        run: sudo apt-get install unzip
       - name: Install Cargo
         run: |
+          curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf -y | sh
+          rustup update
           cargo install wasm-tools
           rustup install nightly
           rustup target add wasm32-wasi
           rustup target add wasm32-wasi --toolchain nightly
           cargo install cargo-wasi
-
-          #- name: Install Foundry
-          #  run: |
-          #    curl -L https://foundry.paradigm.xyz | bash
-          #    echo "$HOME/.foundry/bin" >> $GITHUB_PATH
-          #    source /home/runner/.bashrc && foundryup
 
       - name: Get latest release from foundry-rs/foundry
         id: get-latest-foundry-release
@@ -83,6 +77,7 @@ jobs:
           echo "$HOME/cast" >> $GITHUB_PATH
           echo "$HOME/chisel" >> $GITHUB_PATH
           echo "$HOME/forge" >> $GITHUB_PATH
+          echo $GITHUB_PATH
       - name: Get latest release from kinode-dao/kit
         id: get-latest-kit-release
         uses: actions/github-script@v6
@@ -106,7 +101,9 @@ jobs:
       - name: Unzip the release
         run: unzip kit.zip
       - name: Run Kit tests
-        run: ./kit t code/tests.toml
+        run: |
+          echo $GITHUB_PATH
+          ./kit t code/tests.toml
 
   build:
     needs: test
@@ -115,8 +112,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install mdBook
         run: |
-          curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf -y | sh
-          rustup update
           cargo install --git https://github.com/nick1udwig/mdBook --branch hf/dont-write-searchindex-json --locked mdbook
           cargo install mdbook-linkcheck
           cargo install mdbook-webinclude
