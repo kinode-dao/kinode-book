@@ -13,7 +13,6 @@ permissions:
   contents: write
   pages: write
   id-token: write
-  actions: read
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -44,16 +43,9 @@ jobs:
           if (!asset) {
             throw new Error('Asset not found');
           }
-          console.log(asset.browser_download_url);
-          console.log(release.data.tag_name);
-          return {
-            download_url: asset.browser_download_url,
-            tag_name: release.data.tag_name
-          };
+`         core.setOutput('download_url', asset.browser_download_url);
     - name: Download the Kit release
-      run: |
-        echo ${DOWNLOAD_URL}
-        wget -q ${DOWNLOAD_URL} -O kit.zip
+      run: wget -q ${DOWNLOAD_URL} -O kit.zip
       env:
         DOWNLOAD_URL: ${{ steps.get-latest-release.outputs.download_url }}
     - name: Unzip the release
