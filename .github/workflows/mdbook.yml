@@ -73,6 +73,7 @@ jobs:
         run: tar zxf foundry.tar.gz
       - name: Add Foundry to path
         run: |
+          echo "$PWD" >> $GITHUB_PATH
           echo "$PWD/anvil" >> $GITHUB_PATH
           echo "$PWD/cast" >> $GITHUB_PATH
           echo "$PWD/chisel" >> $GITHUB_PATH
