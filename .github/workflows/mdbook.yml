@@ -73,6 +73,8 @@ jobs:
         run: tar zxf foundry.tar.gz
       - name: Add Foundry to path
         run: |
+          echo $PATH
+          ls
           echo "$HOME/anvil" >> $GITHUB_PATH
           echo "$HOME/cast" >> $GITHUB_PATH
           echo "$HOME/chisel" >> $GITHUB_PATH
@@ -104,7 +106,9 @@ jobs:
       - name: Run Kit tests
         run: |
           echo $GITHUB_PATH
+          echo $PATH
           cat $GITHUB_PATH
+          ls
           echo "$HOME/anvil" >> $GITHUB_PATH
           echo "$HOME/cast" >> $GITHUB_PATH
           echo "$HOME/chisel" >> $GITHUB_PATH
