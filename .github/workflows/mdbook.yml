@@ -48,7 +48,9 @@ jobs:
             tag_name: release.data.tag_name
           };
     - name: Download the Kit release
-      run: wget -q ${DOWNLOAD_URL} -O kit.zip
+      run: |
+        echo ${DOWNLOAD_URL}
+        wget -q ${DOWNLOAD_URL} -O kit.zip
       env:
         DOWNLOAD_URL: ${{ steps.get-latest-release.outputs.download_url }}
     - name: Unzip the release
