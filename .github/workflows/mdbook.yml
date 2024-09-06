@@ -106,6 +106,7 @@ jobs:
           ls -l
           which ls
           which ./anvil
+          realpath ./anvil
           which anvil
           which cast
           which chisel
