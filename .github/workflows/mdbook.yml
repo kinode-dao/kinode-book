@@ -107,6 +107,8 @@ jobs:
         run: |
           pwd
           ls -l
+          ./kinode --version
+          ./kit --version
           ./kit t code/tests.toml
 
   build:
