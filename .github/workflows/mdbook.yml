@@ -103,7 +103,11 @@ jobs:
         run: unzip kinode.zip
 
       - name: Run Kit tests
-        run: ./kit t code/tests.toml
+        #run: ./kit t code/tests.toml
+        run: |
+          pwd
+          ls -l
+          ./kit t code/tests.toml
 
   build:
     needs: test
