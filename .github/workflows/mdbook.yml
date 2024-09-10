@@ -35,9 +35,6 @@ jobs:
           rustup target add wasm32-wasi
           rustup target add wasm32-wasi --toolchain nightly
           cargo install cargo-wasi
-          nvm --version
-          node --version
-          npm --version
           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
           source ~/.bashrc
           nvm install 20.0.0
