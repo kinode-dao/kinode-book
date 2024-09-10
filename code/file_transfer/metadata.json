@@ -13,6 +13,9 @@
         "wit_version": 0,
         "dependencies": [
             "file_transfer:template.os"
+        ],
+        "api_includes": [
+            "pkg/file_transfer_worker.wasm"
         ]
     },
     "external_url": "",
