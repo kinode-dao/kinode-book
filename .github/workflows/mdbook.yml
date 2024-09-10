@@ -109,7 +109,7 @@ jobs:
           ls -l
           ./kinode --version
           ./kit --version
-          ./kit t code/tests.toml
+          ./kit t code/tests.toml 2>&1
 
   build:
     needs: test
