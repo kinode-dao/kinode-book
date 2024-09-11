@@ -12,7 +12,7 @@ setup_packages = [
 setup_scripts = []
 test_package_paths = ["mfa_fe_demo_test"]
 test_scripts = [
-    { path = "../curl-endpoint.sh", args = "" },
+    "../curl-endpoint.sh",
 ]
 timeout_secs = 5
 fakechain_router = 8545
