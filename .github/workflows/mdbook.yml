@@ -26,11 +26,11 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Set up nvm, node, npm: p0
+      - name: Set up nvm, node, npm p0
         run: |
           echo "$HOME" >> $GITHUB_PATH
           echo "NVM_DIR=$HOME/.nvm" >> $GITHUB_ENV
-      - name: Set up nvm, node, npm: p1
+      - name: Set up nvm, node, npm p1
         run: |
           source $NVM_DIR/nvm.sh
           nvm install 20.0.0
