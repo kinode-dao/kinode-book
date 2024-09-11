@@ -26,7 +26,7 @@ const WIDGET: &str = "<html><body><h1>Hello, Kinode!</h1></body></html>";
 #[serde(untagged)] // untagged as a meta-type for all incoming responses
 enum Req {
     MfaRequest(MfaRequest),
-    HttpRequest(http::HttpServerRequest),
+    HttpRequest(http::server::HttpServerRequest),
 }
 
 fn handle_mfa_request(request: &MfaRequest) -> Result<bool> {
@@ -46,7 +46,7 @@ fn handle_mfa_request(request: &MfaRequest) -> Result<bool> {
     Ok(false)
 }
 
-fn handle_http_request(our: &Address, request: http::HttpServerRequest) -> Result<()> {
+fn handle_http_request(our: &Address, request: http::server::HttpServerRequest) -> Result<()> {
     let Some(http_request) = request.request() else {
         return Err(anyhow!("received a WebSocket message, skipping"));
     };
@@ -58,7 +58,7 @@ fn handle_http_request(our: &Address, request: http::HttpServerRequest) -> Resul
             "received a PUT HTTP request with no body, skipping"
         ));
     };
-    http::send_response(http::StatusCode::OK, None, vec![]);
+    http::server::send_response(http::StatusCode::OK, None, vec![]);
     Request::to(our).body(body.bytes).send().unwrap();
     Ok(())
 }
@@ -91,8 +91,17 @@ call_init!(init);
 fn init(our: Address) {
     println!("begin");
 
-    http::bind_http_path("/api", false, false).unwrap();
-    http::serve_index_html(&our, "ui", true, false, vec!["/"]).unwrap();
+    let server_config = http::server::HttpBindingConfig::default().authenticated(false);
+    let mut server = http::server::HttpServer::new(5);
+    server.bind_http_path("/api", server_config).unwrap();
+    server
+        .serve_file(
+            &our,
+            "ui",
+            vec!["/"],
+            http::server::HttpBindingConfig::default(),
+        )
+        .unwrap();
     homepage::add_to_homepage("My First App", Some(ICON), Some("/"), Some(WIDGET));
 
     Request::to(&our)
