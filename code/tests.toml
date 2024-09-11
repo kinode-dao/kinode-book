@@ -54,7 +54,7 @@ setup_packages = [
 setup_scripts = []
 test_package_paths = ["mfa_fe_demo/test/mfa_fe_demo_test"]
 test_scripts = [
-    { path = "mfa_fe_demo/curl-endpoint.sh", args = "" },
+    "mfa_fe_demo/curl-endpoint.sh",
 ]
 timeout_secs = 5
 fakechain_router = 8545
@@ -132,7 +132,7 @@ setup_packages = [
     { path = "ws_client", run = false }
 ]
 setup_scripts = [
-    { path = "ws_client/requirements.sh && ws_client/ws_server.py", args = "" }
+    "ws_client/requirements.sh && ws_client/ws_server.py",
 ]
 test_package_paths = ["ws_client/test/ws_client_test"]
 test_scripts = []
@@ -154,7 +154,7 @@ setup_packages = [
 setup_scripts = []
 test_package_paths = []
 test_scripts = [
-    { path = "ws_server/requirements.sh && ws_server/ws_client.py", args = "" }
+    "ws_server/requirements.sh && ws_server/ws_client.py",
 ]
 timeout_secs = 5
 fakechain_router = 8545
@@ -174,7 +174,7 @@ setup_packages = [
 setup_scripts = []
 test_package_paths = []
 test_scripts = [
-    { path = "ws_server_with_reply/requirements.sh && ws_server_with_reply/ws_client.py", args = "" }
+    "ws_server_with_reply/requirements.sh && ws_server_with_reply/ws_client.py",
 ]
 timeout_secs = 5
 fakechain_router = 8545
