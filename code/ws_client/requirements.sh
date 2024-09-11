@@ -23,10 +23,11 @@ fi
 python -m pip install --upgrade pip
 
 # Install packages from the requirements.txt file.
-if [ -f "requirements.txt" ]; then
+script_dir=$(dirname "$(crossplatform_realpath "${BASH_SOURCE[0]}")")
+requirements_path = "${script_dir}/requirements.txt"
+if [ -f "$requirements_path" ]; then
     echo "Installing packages from requirements.txt..."
-    script_dir=$(dirname "$(crossplatform_realpath "${BASH_SOURCE[0]}")")
-    pip install -r ${script_dir}/requirements.txt
+    pip install -r $requirements_path
 else
     echo "Error: requirements.txt does not exist."
     exit 0
