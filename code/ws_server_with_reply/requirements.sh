@@ -1,5 +1,17 @@
 #!/bin/bash
 
+crossplatform_realpath_inner() {
+    python -c "import os; print(os.path.realpath('$1'))"
+}
+
+crossplatform_realpath() {
+    if [ -e "$1" ] || [ -L "$1" ]; then
+        crossplatform_realpath_inner "$1"
+    else
+        return 1
+    fi
+}
+
 # Check if pip is installed and install it if it is not.
 if ! command -v pip &> /dev/null
 then
@@ -13,7 +25,8 @@ python -m pip install --upgrade pip
 # Install packages from the requirements.txt file.
 if [ -f "requirements.txt" ]; then
     echo "Installing packages from requirements.txt..."
-    pip install -r requirements.txt
+    script_dir=$(dirname "$(crossplatform_realpath "${BASH_SOURCE[0]}")")
+    pip install -r ${script_dir}/requirements.txt
 else
     echo "Error: requirements.txt does not exist."
     exit 0
