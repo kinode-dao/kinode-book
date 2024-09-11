@@ -26,14 +26,16 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Add home to path
-        run: echo "$HOME" >> $GITHUB_PATH
-      - name: Install build dependencies
+      - name: Set up nvm, node, npm: p0
         run: |
-          echo "$PATH"
-          ls -la
-          ls -la ~
+          echo "$HOME" >> $GITHUB_PATH
+          echo "NVM_DIR=$HOME/.nvm" >> $GITHUB_ENV
+      - name: Set up nvm, node, npm: p1
+        run: |
+          source $NVM_DIR/nvm.sh
           nvm install 20.0.0
+      - name: Set up cargo
+        run: |
           curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf -y | sh
           rustup update
           cargo install wasm-tools
