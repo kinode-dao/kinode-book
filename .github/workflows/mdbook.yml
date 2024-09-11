@@ -113,11 +113,7 @@ jobs:
       - name: Run Kit tests
         #run: ./kit t code/tests.toml
         run: |
-          pwd
-          ls -l
-          ./kinode --version
-          ./kit --version
-          ./kit t code/tests.toml 2>&1
+          { ./kit t code/tests.toml; } 2>&1
 
   build:
     needs: test
