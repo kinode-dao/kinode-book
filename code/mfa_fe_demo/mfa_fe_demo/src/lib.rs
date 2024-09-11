@@ -97,7 +97,7 @@ fn init(our: Address) {
     server
         .serve_file(
             &our,
-            "ui",
+            "ui/index.html",
             vec!["/"],
             http::server::HttpBindingConfig::default(),
         )
