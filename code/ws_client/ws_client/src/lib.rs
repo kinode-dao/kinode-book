@@ -27,30 +27,30 @@ const WS_URL: &str = "ws://localhost:8765";
 const CONNECTION: u32 = 0;
 
 fn handle_http_message(message: &Message, connection: &u32) -> Result<()> {
-    match serde_json::from_slice::<http::HttpClientRequest>(message.body())? {
-        http::HttpClientRequest::WebSocketClose { channel_id } => {
+    match serde_json::from_slice::<http::client::HttpClientRequest>(message.body())? {
+        http::client::HttpClientRequest::WebSocketClose { channel_id } => {
             assert_eq!(*connection, channel_id);
         }
-        http::HttpClientRequest::WebSocketPush {
+        http::client::HttpClientRequest::WebSocketPush {
             channel_id,
             message_type,
         } => {
             assert_eq!(*connection, channel_id);
-            if message_type == http::WsMessageType::Close {
+            if message_type == http::client::WsMessageType::Close {
                 println!("got Close push");
                 return Ok(());
             }
 
-            assert_eq!(message_type, http::WsMessageType::Text);
+            assert_eq!(message_type, http::client::WsMessageType::Text);
 
             let Some(blob) = get_blob() else {
                 return Err(anyhow!("got WebSocketPush with no blob"));
             };
             println!("Received from server: {:?}", String::from_utf8(blob.bytes));
 
-            http::send_ws_client_push(
+            http::client::send_ws_client_push(
                 connection.clone(),
-                http::WsMessageType::Text,
+                http::client::WsMessageType::Text,
                 LazyLoadBlob {
                     mime: Some("application/json".to_string()),
                     bytes: serde_json::to_vec("Hello from client").unwrap(),
@@ -63,7 +63,7 @@ fn handle_http_message(message: &Message, connection: &u32) -> Result<()> {
 
 fn talk_to_ws() -> Result<()> {
     let connection = CONNECTION;
-    http::open_ws_connection(WS_URL.to_string(), None, connection)?;
+    http::client::open_ws_connection(WS_URL.to_string(), None, connection)?;
 
     match await_message() {
         Ok(message) => {
