@@ -26,6 +26,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
+      - name: Add home to path
+        run: echo "$HOME" >> $GITHUB_PATH
       - name: Install build dependencies
         run: |
           curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf -y | sh
@@ -35,8 +37,6 @@ jobs:
           rustup target add wasm32-wasi
           rustup target add wasm32-wasi --toolchain nightly
           cargo install cargo-wasi
-          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-          source ~/.bashrc
           nvm install 20.0.0
       #- name: Get latest release from foundry-rs/foundry
       #  id: get-latest-foundry-release
