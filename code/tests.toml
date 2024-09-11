@@ -132,8 +132,7 @@ setup_packages = [
     { path = "ws_client", run = false }
 ]
 setup_scripts = [
-    { path = "ws_client/requirements.sh", args = "" },
-    { path = "ws_client/ws_server.py", args = "" }
+    { path = "ws_client/requirements.sh && ws_client/ws_server.py", args = "" }
 ]
 test_package_paths = ["ws_client/test/ws_client_test"]
 test_scripts = []
@@ -152,11 +151,11 @@ dependency_package_paths = []
 setup_packages = [
     { path = "ws_server", run = true }
 ]
-setup_scripts = [
-    { path = "ws_server/requirements.sh", args = "" }
-]
+setup_scripts = []
 test_package_paths = []
-test_scripts = [{ path = "ws_server/ws_client.py", args = "" }]
+test_scripts = [
+    { path = "ws_server/requirements.sh && ws_server/ws_client.py", args = "" }
+]
 timeout_secs = 5
 fakechain_router = 8545
 
@@ -172,11 +171,11 @@ dependency_package_paths = []
 setup_packages = [
     { path = "ws_server_with_reply", run = true }
 ]
-setup_scripts = [
-    { path = "ws_server/requirements.sh", args = "" }
-]
+setup_scripts = []
 test_package_paths = []
-test_scripts = [{ path = "ws_server_with_reply/ws_client.py", args = "" }]
+test_scripts = [
+    { path = "ws_server_with_reply/requirements.sh && ws_server_with_reply/ws_client.py", args = "" }
+]
 timeout_secs = 5
 fakechain_router = 8545
 
