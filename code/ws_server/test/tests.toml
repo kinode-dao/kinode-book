@@ -9,7 +9,9 @@ dependency_package_paths = []
 setup_packages = [
     { path = "..", run = true }
 ]
-setup_scripts = []
+setup_scripts = [
+    { path = "ws_server/requirements.sh", args = "" }
+]
 test_package_paths = []
 test_scripts = [{ path = "../ws_client.py", args = "" }]
 timeout_secs = 5

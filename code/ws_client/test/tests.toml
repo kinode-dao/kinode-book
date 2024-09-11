@@ -10,6 +10,7 @@ setup_packages = [
     { path = "..", run = false }
 ]
 setup_scripts = [
+    { path = "ws_server/requirements.sh", args = "" },
     { path = "../ws_server.py", args = "" }
 ]
 test_package_paths = ["ws_client_test"]
