@@ -12,6 +12,11 @@ edit-url-template = "https://github.com/kinode-dao/kinode-book/edit/main/{path}"
 enable = true
 level = 1
 
+[output.html.redirect]
+"/intro.html" = "/getting_started/intro.html"
+"/build_and_deploy_an_app.html" = "/my_first_app/build_and_deploy_an_app.html"
+"/install.html" = "/getting_started/install.html"
+
 [output.linkcheck]
 
 [preprocessor.webinclude]
