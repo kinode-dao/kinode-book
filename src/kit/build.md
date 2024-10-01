@@ -61,13 +61,12 @@ To both `build` and `start-package` in one command, use `kit build-start-package
 ## Arguments
 
 ```
-kit build --help
 Build a Kinode package
 
 Usage: kit build [OPTIONS] [DIR]
 
 Arguments:
-  [DIR]  The package directory to build [default: CWD]
+  [DIR]  The package directory to build [default: /home/nick/git/kit]
 
 Options:
       --no-ui
@@ -88,6 +87,8 @@ Options:
           Path to local dependency package (can specify multiple times)
   -a, --add-to-api <PATH>
           Path to file to add to api.zip (can specify multiple times)
+  -r, --reproducible
+          Make a reproducible build using Docker
   -f, --force
           Force a rebuild
   -v, --verbose
@@ -158,6 +159,21 @@ short: `-a`
 
 A path to a file to include in the API published alongside the package.
 Can be specified multiple times.
+
+### `--reproducible`
+
+short: `-r`
+
+Make a reproducible build with a deterministic hash.
+
+Rust does not produce reproducible builds unless:
+1. The path of the source is the same.
+2. Compiler versions match (e.g., `rustc`, `gcc`, `ld`).
+3. `build.rs` is deterministic.
+
+`kit` allows reproducible builds by building the package inside a Docker image, which controls 1 and 2.
+
+The Docker image is published for `x86_64` Linux machines specifically, but also works on `x86_64` MacOS machines.
 
 ### `--force`
 
