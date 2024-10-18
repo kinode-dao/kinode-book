@@ -29,7 +29,7 @@ If it does, the FS does the read/write; if not, the request will be denied.
 
 When developing an application, `manifest.json` will be your first encounter with capabilties. With this file, capabilities are directly granted to a process on startup.
 Upon install, the package manager (also referred to as "app store") surfaces these requested capabilities to the user, who can then choose to grant them or not.
-Here is a `manfiest.json` example for the `chess` app:
+Here is a `manifest.json` example for the `chess` app:
 ```json
 [
     {
