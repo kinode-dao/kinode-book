@@ -20,6 +20,8 @@ This code is run on each incoming request to the `contacts` process.
 Depending on the kind of request, the code generates one of four different required capabilities and checks whether the necessary one is present in the `capabilities` field of the message.
 If not, the process responds with an error message.
 
+This example uses the same API as the `contacts` app included in the default Kinode distribution: for a guide to use the *actual* contacts system primitive, see [Managing Contacts](managing_contacts.md).
+
 Note that the format of the capability is presented in a [WIT API](../system/process/wit_apis.md) file alongside the request and response types.
 This allows other processes to easily produce the correct capability when requesting it.
 
