@@ -81,7 +81,7 @@ To use the contacts primitive to get a list of existing contacts, follow these s
 
 1. Download or copy the WIT API file into your package `/api` folder
 
-2. Generate your WIT bindings to include this API ([note that you can compose this with additional APIs if desired](../cookbook/use_app_apis.md))
+2. Generate your WIT bindings to include this API ([note that you can compose this with additional APIs if desired](../cookbook/package_apis.md))
 
 ```rust
 wit_bindgen::generate!({
