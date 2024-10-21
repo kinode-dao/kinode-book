@@ -53,6 +53,7 @@
 - [Cookbook (Handy Recipes)](./cookbook/cookbook.md)
   - [Saving State](./cookbook/save_state.md)
   - [Managing Child Processes](./cookbook/manage_child_processes.md)
+  - [Use WIT APIs in Your App](./cookbook/use_app_apis.md)
   - [Publishing a Website or Web App](./cookbook/publish_to_web.md)
   - [Simple File Transfer Guide](./cookbook/file_transfer.md)
   - [Intro to Web UI with File Transfer](./cookbook/file_transfer_ui.md)
