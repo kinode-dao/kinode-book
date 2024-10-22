@@ -10,7 +10,7 @@ Each contact has a map of fields which are labeled by a string key and contain a
 Here is the full [WIT API](../system/process/wit_apis.md) for `contacts:contacts:sys`:
 ```wit
 interface contacts {
-    enum capabilities {
+    enum capability {
         read-name-only,
         read,
         add,
@@ -37,7 +37,7 @@ interface contacts {
         add-field,
         remove-contact,
         remove-field,
-        error(string),    // any failed request will receive this response
+        err(string),      // any failed request will receive this response
     }
 }
 
@@ -114,7 +114,7 @@ let contacts_process = Address::from((our.node(), "contacts", "contacts", "sys")
 
 let read_names_cap = Capability::new(
     &contacts_process,
-    serde_json::to_string(&contacts::Capabilities::ReadNameOnly).unwrap(),
+    serde_json::to_string(&contacts::Capability::ReadNameOnly).unwrap(),
 );
 
 let response = Request::to(&contacts_process)

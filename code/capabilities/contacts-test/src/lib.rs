@@ -25,22 +25,22 @@ fn init(our: Address) {
 
     let read_names_cap = Capability::new(
         &contacts_process,
-        serde_json::to_string(&contacts::Capabilities::ReadNameOnly).unwrap(),
+        serde_json::to_string(&contacts::Capability::ReadNameOnly).unwrap(),
     );
 
     let read_cap = Capability::new(
         &contacts_process,
-        serde_json::to_string(&contacts::Capabilities::Read).unwrap(),
+        serde_json::to_string(&contacts::Capability::Read).unwrap(),
     );
 
     let add_cap = Capability::new(
         &contacts_process,
-        serde_json::to_string(&contacts::Capabilities::Add).unwrap(),
+        serde_json::to_string(&contacts::Capability::Add).unwrap(),
     );
 
     let remove_cap = Capability::new(
         &contacts_process,
-        serde_json::to_string(&contacts::Capabilities::Remove).unwrap(),
+        serde_json::to_string(&contacts::Capability::Remove).unwrap(),
     );
 
     kiprintln!("requesting all names from contacts");

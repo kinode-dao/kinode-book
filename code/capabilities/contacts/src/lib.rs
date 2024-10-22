@@ -123,7 +123,7 @@ fn handle_contacts_request(
 ) -> (contacts::Response, Option<LazyLoadBlob>) {
     let Ok(request) = serde_json::from_slice::<contacts::Request>(request_bytes) else {
         return (
-            contacts::Response::Error("Malformed request".to_string()),
+            contacts::Response::Err("Malformed request".to_string()),
             None,
         );
     };
@@ -133,22 +133,22 @@ fn handle_contacts_request(
         let required_capability = Capability::new(
             &state.our,
             serde_json::to_string(&match request {
-                contacts::Request::GetNames => contacts::Capabilities::ReadNameOnly,
+                contacts::Request::GetNames => contacts::Capability::ReadNameOnly,
                 contacts::Request::GetAllContacts | contacts::Request::GetContact(_) => {
-                    contacts::Capabilities::Read
+                    contacts::Capability::Read
                 }
                 contacts::Request::AddContact(_) | contacts::Request::AddField(_) => {
-                    contacts::Capabilities::Add
+                    contacts::Capability::Add
                 }
                 contacts::Request::RemoveContact(_) | contacts::Request::RemoveField(_) => {
-                    contacts::Capabilities::Remove
+                    contacts::Capability::Remove
                 }
             })
             .unwrap(),
         );
         if !capabilities.contains(&required_capability) {
             return (
-                contacts::Response::Error("Missing capability".to_string()),
+                contacts::Response::Err("Missing capability".to_string()),
                 None,
             );
         }
@@ -187,10 +187,7 @@ fn handle_contacts_request(
         }
         contacts::Request::AddField((node, field, value)) => {
             let Ok(value) = serde_json::from_str::<serde_json::Value>(&value) else {
-                return (
-                    contacts::Response::Error("Malformed value".to_string()),
-                    None,
-                );
+                return (contacts::Response::Err("Malformed value".to_string()), None);
             };
             state.add_field(node, field, value);
             (contacts::Response::AddField, None)
