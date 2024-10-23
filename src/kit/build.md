@@ -28,16 +28,16 @@ After compiling each process, it places the output `.wasm` binaries within the `
 Here is an example of what a package directory will look like after using `kit build`:
 
 ```
-rustchat
+my-rust-chat
 ├── Cargo.lock
 ├── Cargo.toml
 ├── metadata.json
 ├── pkg
 │   ├── manifest.json
-│   ├── rustchat.wasm
+│   ├── my-rust-chat.wasm
 │   ├── scripts.json
 │   └── send.wasm
-├── rustchat
+├── my-rust-chat
 │   └── ...
 └── send
     └── ...
@@ -61,6 +61,7 @@ To both `build` and `start-package` in one command, use `kit build-start-package
 ## Arguments
 
 ```
+$ kit build --help
 Build a Kinode package
 
 Usage: kit build [OPTIONS] [DIR]
@@ -73,6 +74,10 @@ Options:
           If set, do NOT build the web UI for the process; no-op if passed with UI_ONLY
       --ui-only
           If set, build ONLY the web UI for the process; no-op if passed with NO_UI
+  -i, --include <INCLUDE>
+          Build only these processes/UIs (can specify multiple times) (default: build all)
+  -e, --exclude <EXCLUDE>
+          Build all but these processes/UIs (can specify multiple times) (default: build all)
   -s, --skip-deps-check
           If set, do not check for dependencies
       --features <FEATURES>
@@ -110,6 +115,24 @@ Does nothing if passed with `--ui-only`.
 
 Build ONLY the UI for a package with a UI.
 Otherwise, for a package with a UI, both the package and the UI will be built.
+
+### `--include`
+
+short: `-i`
+
+Only build these processes/UIs within the package.
+Can be specified multiple times.
+
+If not specified, build all.
+
+### `--exclude`
+
+short: `-e`
+
+Do not build these processes/UIs within the package.
+Can be specified multiple times.
+
+If not specified, build all.
 
 ### `--skip-deps-check`
 

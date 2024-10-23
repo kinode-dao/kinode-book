@@ -60,7 +60,7 @@ The object that `echo.wasm` points to is very similar to `manifest.json`, with a
 As long as you have a `scripts.json` file, your scripts will be callable from the terminal when someone else downloads your package.
 
 ## Calling a Script
-After having called `kit bs`, simply type `my_script:my_package:publisher <ARGS>` in the terminal.
+After having called `kit bs`, simply type `my-script:my-package:publisher <ARGS>` in the terminal.
 For instance, the `echo` script is published as part of `terminal:sys`, so you can call
 ```bash
 echo:terminal:sys Hello World!

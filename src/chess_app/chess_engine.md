@@ -7,8 +7,8 @@ Chess is a good example for a Kinode application walk-through because:
 2. It's a multiplayer game, showing Kinode's p2p communications and ability to serve frontends
 3. It's fun!
 
-In `my_chess/Cargo.toml`, which should be in the `my_chess/` process directory inside the `my_chess/` package directory, add `pleco = "0.5"` to your dependencies.
-In your `my_chess/src/lib.rs`, replace the existing code with:
+In `my-chess/Cargo.toml`, which should be in the `my-chess/` process directory inside the `my-chess/` package directory, add `pleco = "0.5"` to your dependencies.
+In your `my-chess/src/lib.rs`, replace the existing code with:
 
 ```rust
 use pleco::Board;
@@ -23,9 +23,9 @@ call_init!(init);
 fn init(our: Address) {
     println!("started");
 
-    let my_chess_board = Board::start_pos().fen();
+    let my-chess_board = Board::start_pos().fen();
 
-    println!("my_chess_board: {my_chess_board}");
+    println!("my-chess_board: {my-chess_board}");
 
     loop {
         // Call await_message() to receive any incoming messages.
@@ -50,12 +50,12 @@ To make your app multiplayer, start by creating a persisted state for the chess 
 
 The first step to creating a multiplayer or otherwise networked project is adjusting your `manifest.json` to specify what [capabilities](../system/process/capabilities.md) your process will grant.
 
-Go to `my_chess/manifest.json` and make sure your chess process is public and gets network access:
+Go to `my-chess/manifest.json` and make sure your chess process is public and gets network access:
 ```json
 [
     {
-        "process_name": "my_chess",
-        "process_wasm_path": "/my_chess.wasm",
+        "process_name": "my-chess",
+        "process_wasm_path": "/my-chess.wasm",
         "on_exit": "Restart",
         "request_networking": true,
         "request_capabilities": [],
@@ -65,7 +65,7 @@ Go to `my_chess/manifest.json` and make sure your chess process is public and ge
 ]
 ```
 
-Now, in `my_chess/src/lib.rs` add the following simple Request/Response interface and persistable game state:
+Now, in `my-chess/src/lib.rs` add the following simple Request/Response interface and persistable game state:
 ```rust
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
@@ -141,8 +141,8 @@ Below, you'll find the full code for the CLI version of the app.
 You can build it and install it on a node using `kit`.
 You can interact with it in the terminal, primitively, like so (assuming your first node is `fake.os` and second is `fake2.os`):
 ```
-m our@my_chess:my_chess:template.os '{"NewGame": {"white": "fake.os", "black": "fake2.os"}}'
-m our@my_chess:my_chess:template.os '{"Move": {"game_id": "fake2.os", "move_str": "e2e4"}}'
+m our@my-chess:my-chess:template.os '{"NewGame": {"white": "fake.os", "black": "fake2.os"}}'
+m our@my-chess:my-chess:template.os '{"Move": {"game_id": "fake2.os", "move_str": "e2e4"}}'
 ```
 (If you want to make a more ergonomic CLI app, consider parsing `body` as a string, or better yet, writing [terminal scripts](../cookbook/writing_scripts.md) for various game actions.)
 
@@ -150,10 +150,10 @@ As you read through the code, you might notice a problem with this app: there's 
 A fun project would be to add a CLI command that shows you, in-terminal, the board for a given `game_id`.
 But in the [next chapter](./frontend.md), we'll add a frontend to this app so you can see your games in a browser.
 
-`my_chess/Cargo.toml`:
+`my-chess/Cargo.toml`:
 ```toml
 [package]
-name = "my_chess"
+name = "my-chess"
 version = "0.1.0"
 edition = "2021"
 
@@ -178,7 +178,7 @@ crate-type = ["cdylib"]
 package = "kinode:process"
 ```
 
-`my_chess/src/lib.rs`:
+`my-chess/src/lib.rs`:
 ```rust
 use kinode_process_lib::{
     await_message, call_init, get_typed_state, println, set_state, Address, Message, NodeId,

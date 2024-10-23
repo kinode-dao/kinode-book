@@ -14,8 +14,8 @@ kit boot-fake-node
 In another terminal, create a new app using [kit](../kit/kit-dev-toolkit.md).
 Use the fibonacci template, which can then be modified to calculate fibonacci numbers in a *provably correct* way.
 ```bash
-kit new my_zk_app -t fibonacci
-cd my_zk_app
+kit new my-zk-app -t fibonacci
+cd my-zk-app
 kit bs
 ```
 
@@ -23,13 +23,13 @@ Take note of the basic fibonacci program in the template.
 The program presents a request/response pattern where a requester asks for the nth fibonacci number, and the process calculates and returns it.
 This can be seen in action by running the following command in the fake node's terminal:
 ```bash
-m our@my_zk_app:my_zk_app:template.os -a 5 '{"Number": 10}'
+m our@my-zk-app:my-zk-app:template.os -a 5 '{"Number": 10}'
 ```
 (Change the package name to whatever you named your app + the publisher node as assigned in `metadata.json`.)
 
 You should see a print from the process that looks like this, and a returned JSON response that the terminal prints:
 ```
-my_zk_app: fibonacci(10) = 55; 375ns
+my-zk-app: fibonacci(10) = 55; 375ns
 {"Number":55}
 ```
 
@@ -42,7 +42,7 @@ This can be seen in action by booting another fake node (while keeping the first
 # need to set a custom name and port so as not to overlap with first node
 kit boot-fake-node -p 8081 --fake-node-name fake2.os
 # wait for the node to boot
-m fake.os@my_zk_app:my_zk_app:template.os -a 5 '{"Number": 10}'
+m fake.os@my-zk-app:my-zk-app:template.os -a 5 '{"Number": 10}'
 ```
 (Replace the target node ID with the first fake node, which by default is `fake.os`)
 
@@ -56,7 +56,7 @@ ZK proofs can solve this problem.
 
 To add ZK proofs to this simple fibonacci program, you can use the [SP1](https://github.com/succinctlabs/sp1) library to write a program in Rust, then produce proofs against it.
 
-First, add the SP1 dependency to the `Cargo.toml` file for `my_zk_app`:
+First, add the SP1 dependency to the `Cargo.toml` file for `my-zk-app`:
 ```toml
 [dependencies]
 ...
@@ -224,7 +224,7 @@ fn init(our: Address) {
 Install this app on two nodes -- they can be the fake `kit` nodes from before, or real ones on the network.
 Next, send a message from one to the other, asking it to generate a fibonacci proof!
 ```
-m our@my_zk_app:my_zk_app:template.os -a 30 '{"ProveIt": {"target": "fake.os", "n": 10}}'
+m our@my-zk-app:my-zk-app:template.os -a 30 '{"ProveIt": {"target": "fake.os", "n": 10}}'
 ```
 As usual, set the process ID to what you used, and set the `target` JSON value to the other node's name.
 Try a few different numbers -- see if you can generate a timeout (it's set at 30 seconds now, both in the terminal command and inside the app code).

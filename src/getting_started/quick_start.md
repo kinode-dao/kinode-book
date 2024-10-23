@@ -16,24 +16,24 @@ kit boot-fake-node --home /tmp/kinode-fake-node-2 --port 8081 --fake-node-name f
 
 # Back in the original terminal that is not running a fake node:
 ## Create and build a chat app from a template:
-kit new my_chat_app
-kit build my_chat_app
+kit new my-chat-app
+kit build my-chat-app
 
 ## Load the chat app into each node & start it:
-kit start-package my_chat_app
-kit start-package my_chat_app --port 8081
+kit start-package my-chat-app
+kit start-package my-chat-app --port 8081
 
 ## Chat between the nodes:
-kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.dev", "message": "hello from the outside world"}}'
-kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.dev", "message": "replying from fake2.dev using first method..."}}' --node fake2.dev
-kit inject-message my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.dev", "message": "and second!"}}' -p 8081
+kit inject-message my-chat-app:my-chat-app:template.os '{"Send": {"target": "fake2.dev", "message": "hello from the outside world"}}'
+kit inject-message my-chat-app:my-chat-app:template.os '{"Send": {"target": "fake.dev", "message": "replying from fake2.dev using first method..."}}' --node fake2.dev
+kit inject-message my-chat-app:my-chat-app:template.os '{"Send": {"target": "fake.dev", "message": "and second!"}}' -p 8081
 
 # Or, from the terminal running one of the fake nodes:
 ## First fake node terminal:
-m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake2.dev", "message": "hello world"}}'
+m our@my-chat-app:my-chat-app:template.os '{"Send": {"target": "fake2.dev", "message": "hello world"}}'
 
 ## Second fake node terminal:
-m our@my_chat_app:my_chat_app:template.os '{"Send": {"target": "fake.dev", "message": "wow, it works!"}}'
+m our@my-chat-app:my-chat-app:template.os '{"Send": {"target": "fake.dev", "message": "wow, it works!"}}'
 ```
 
 ## Next steps

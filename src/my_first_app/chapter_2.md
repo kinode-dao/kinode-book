@@ -3,7 +3,7 @@
 In this section you will learn how to use different parts of a process, how request-response handling works, and other implementation details with regards to messaging.
 The process you will build will be simple — it messages itself and responds to itself, printing whenever it gets messages.
 
-Note — the app you will build in Sections 2 through 5 is *not* `my_chat_app`; it is simply a series of examples designed to demonstrate how to use the system's features.
+Note — the app you will build in Sections 2 through 5 is *not* `my-chat-app`; it is simply a series of examples designed to demonstrate how to use the system's features.
 
 ## Requirements
 

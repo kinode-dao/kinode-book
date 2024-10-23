@@ -13,7 +13,7 @@ The simplest way to connect from a browser is to use the `@kinode/client-api` li
 ```rs
 const api = new KinodeEncryptorApi({
   nodeId: window.our.node, // this is set if the /our.js script is present in index.html
-  processId: "my_package:my_package:template.os",
+  processId: "my-package:my-package:template.os",
   onOpen: (_event, api) => {
     console.log('Connected to Kinode')
     // Send a message to the node via WebSocket
@@ -41,7 +41,7 @@ const websocket = new WebSocket("http://localhost:8080/");
 
 const message = JSON.stringify({
     "auth_token": getCookie(`kinode-auth_${nodeId}`),
-    "target_process": "my_package:my_package:template.os",
+    "target_process": "my-package:my-package:template.os",
     "encrypted": false,
 });
 

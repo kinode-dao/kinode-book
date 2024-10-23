@@ -13,7 +13,7 @@ You **must** place your `index.html` in the top-level folder.
 The structure should look like this:
 
 ```
-my_package
+my-package
 └── pkg
     └── ui (can have any name)
         ├── assets (can have any name)
@@ -37,8 +37,8 @@ serve_ui(&our, "ui", true, false, vec!["/"]).unwrap();
 ```
 
 This will serve the `index.html` in the specified folder (here, `"ui"`) at the home path of your process.
-If your process is called `my_process:my_package:template.os` and your Kinode is running locally on port 8080,
-then the UI will be served at `http://localhost:8080/my_process:my_package:template.os`.
+If your process is called `my-process:my-package:template.os` and your Kinode is running locally on port 8080,
+then the UI will be served at `http://localhost:8080/my-process:my-package:template.os`.
 
 `serve_ui` takes five arguments: our `&Address`, the name of the folder that contains your frontend, whether the UI requires authentication, whether the UI is local-only, and the path(s) on which to serve the UI (usually `["/"]`).
 
@@ -51,21 +51,21 @@ To make development easy, your setup should support a base URL and http proxying
 ### Base URL
 
 All processes in Kinode OS are namespaced by process name in the standard format of `process:package:publisher`.
-So if your process is called `my_process:my_package:template.os`, then your process can only bind HTTP paths that start with `/my_process:my_package:template.os`.
+So if your process is called `my-process:my-package:template.os`, then your process can only bind HTTP paths that start with `/my-process:my-package:template.os`.
 Your UI should be developed and compiled with the base URL set to the appropriate process path.
 
 #### Vite
 
 In `vite.config.ts` (or `.js`) set `base` to your full process name, i.e.
 ```
-base: '/my_process:my_package:template.os'
+base: '/my-process:my-package:template.os'
 ```
 
 #### Create React App
 
 In `package.json` set `homepage` to your full process name, i.e.
 ```
-homepage: '/my_process:my_package:template.os'
+homepage: '/my-process:my-package:template.os'
 ```
 
 ### Proxying HTTP Requests
@@ -87,10 +87,10 @@ proxy: 'http://localhost:8080'
 ### Making HTTP Requests
 
 When making HTTP requests in your UI, make sure to prepend your base URL to the request.
-For example, if your base URL is `/my_process:my_package:template.os`, then a `fetch` request to `/my-endpoint` would look like this:
+For example, if your base URL is `/my-process:my-package:template.os`, then a `fetch` request to `/my-endpoint` would look like this:
 
 ```
-fetch('/my_process:my_package:template.os/my-endpoint')
+fetch('/my-process:my-package:template.os/my-endpoint')
 ```
 
 ## Local Development and "gotchas"

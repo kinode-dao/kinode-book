@@ -9,7 +9,7 @@ All other files should be in a directory called `assets` inside of `ui`, so `/pk
 The structure should look like this:
 
 ```
-my_package
+my-package
 └── pkg
     └── ui
         ├── assets
@@ -25,8 +25,8 @@ serve_ui(&our, "ui", true, false, vec!["/"]).unwrap();
 ```
 
 This will serve the `index.html` in the specified folder at the home path of your process.
-If your process is called `main:my_package:myusername.os` and your Kinode is running locally on port 8080,
-then the UI will be served at `http://localhost:8080/main:my_package:myusername.os`.
+If your process is called `main:my-package:myusername.os` and your Kinode is running locally on port 8080,
+then the UI will be served at `http://localhost:8080/main:my-package:myusername.os`.
 
 `serve_ui` takes five arguments: the process' `&Address`, the name of the folder inside `pkg` that contains the `index.html` and other associated UI files, whether the UI requires authentication, whether the UI is local-only, and the path(s) on which to serve the UI (usually `["/"]`).
 By convention, this is the `ui` directory inside of the `pkg` directory that will be uploaded when you install the process.
@@ -77,7 +77,7 @@ In this case, the `/assets` directory must be in the `/ui` directory which must 
 So your project would look like this:
 
 ```
-my_package
+my-package
 └── pkg
     └── ui
         ├── assets

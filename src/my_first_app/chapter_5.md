@@ -27,7 +27,7 @@ Once you're ready to share, it's quite easy.
 
 If you are developing on a fake node, you'll have to boot a real one, then install this package locally in order to publish on the network, e.g.
 ```
-kit s my_package
+kit s my-package
 ```
 
 ## Using the App Store GUI
@@ -54,16 +54,16 @@ See the [`OPTIONAL: Acquiring an RPC API Key` section](../getting_started/login.
 Keystores, also known as [Web3 Secret Storage](https://ethereum.org/en/developers/docs/data-structures-and-encoding/web3-secret-storage/), can be created in many ways; here, use [`foundry`](https://getfoundry.sh/)s `cast`.
 First, [get `foundry`](https://getfoundry.sh/), and then run:
 ```
-cast wallet import -i my_wallet
+cast wallet import -i my-wallet
 ```
-following the prompts to create your keystore named `my_wallet`.
+following the prompts to create your keystore named `my-wallet`.
 
 ### Running [`kit publish`](../kit/publish.md)
 
 To publish your package, run:
 ```
-kit publish --metadata-uri https://raw.githubusercontent.com/path/to/metadata.json --keystore-path ~/.foundry/keystores/my_wallet --rpc wss://opt-mainnet.g.alchemy.com/v2/<ALCHEMY_API_KEY> --real
+kit publish --metadata-uri https://raw.githubusercontent.com/path/to/metadata.json --keystore-path ~/.foundry/keystores/my-wallet --rpc wss://opt-mainnet.g.alchemy.com/v2/<ALCHEMY_API_KEY> --real
 ```
-and enter the password you created when making the keystore, here `my_wallet`.
+and enter the password you created when making the keystore, here `my-wallet`.
 
 Congratulations, your app is now live on the network!
