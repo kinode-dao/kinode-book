@@ -128,13 +128,13 @@ kit bs src/../code/remote_file_storage/server
 
 # Build & start client.
 ## Here the `-p 8080` is to fetch deps for building client (see the metadata.json dependencies field).
-kit b src/../code/remote_file_storage/client -p 8080 && kit s src/code/remote_file_storage/client -p 8081
+kit b src/../code/remote_file_storage/client -p 8080 && kit s src/../code/remote_file_storage/client -p 8081
 ```
 
 An alternative way to satisfy the `server` dependency of `client`:
 ```
 ## The `-l` satisfies the dependency using a local path.
-kit b src/../code/remote_file_storage/client -l src/code/remote_file_storage/server
+kit b src/../code/remote_file_storage/client -l src/../code/remote_file_storage/server
 ```
 
 ### Usage
