@@ -27,7 +27,7 @@ Build and start a Kinode package
 Usage: kit build-start-package [OPTIONS] [DIR]
 
 Arguments:
-  [DIR]  The package directory to build [default: CWD]
+  [DIR]  The package directory to build [default: /home/nick/git/kit]
 
 Options:
   -p, --port <NODE_PORT>
@@ -44,10 +44,16 @@ Options:
           If set, do NOT build the web UI for the process; no-op if passed with UI_ONLY
       --ui-only
           If set, build ONLY the web UI for the process
+  -i, --include <INCLUDE>
+          Build only these processes/UIs (can specify multiple times) (default: build all)
+  -e, --exclude <EXCLUDE>
+          Build all but these processes/UIs (can specify multiple times) (default: build all)
   -s, --skip-deps-check
           If set, do not check for dependencies
       --features <FEATURES>
           Pass these comma-delimited feature flags to Rust cargo builds
+  -r, --reproducible
+          Make a reproducible build using Docker
   -f, --force
           Force a rebuild
   -v, --verbose
@@ -104,6 +110,24 @@ Does nothing if passed with `--ui-only`.
 Build ONLY the UI for a package with a UI.
 Otherwise, for a package with a UI, both the package and the UI will be built.
 
+### `--include`
+
+short: `-i`
+
+Only build these processes/UIs within the package.
+Can be specified multiple times.
+
+If not specified, build all.
+
+### `--exclude`
+
+short: `-e`
+
+Do not build these processes/UIs within the package.
+Can be specified multiple times.
+
+If not specified, build all.
+
 ### `--skip-deps-check`
 
 short: `-s`
@@ -116,6 +140,21 @@ Build the package with the given [cargo features](https://doc.rust-lang.org/carg
 
 Features can be used like shown [here](https://doc.rust-lang.org/cargo/reference/features.html#command-line-feature-options).
 Currently the only feature supported system-wide is `simulation-mode`.
+
+### `--reproducible`
+
+short: `-r`
+
+Make a reproducible build with a deterministic hash.
+
+Rust does not produce reproducible builds unless:
+1. The path of the source is the same.
+2. Compiler versions match (e.g., `rustc`, `gcc`, `ld`).
+3. `build.rs` is deterministic.
+
+`kit` allows reproducible builds by building the package inside a Docker image, which controls 1 and 2.
+
+The Docker image is published for `x86_64` Linux machines specifically, but also works on `x86_64` MacOS machines.
 
 ### `--force`
 

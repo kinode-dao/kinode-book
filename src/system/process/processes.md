@@ -7,31 +7,32 @@ The Kinode runtime handles message-passing between processes, plus the startup a
 This section describes the message design as it relates to processes.
 
 Each process instance has a globally unique identifier, or `Address`, composed of four elements.
-- the publisher's node
-- the package name
-- the process name. This may be a developer-selected string or a randomly-generated number as string.
-- the node the process is running on (your node).
+- the publisher's node (containing a-z, A-Z, 0-9, `-`, and `.`)
+- the package name (containing a-z, A-Z, 0-9, and `-`)
+- the process name  (containing a-z, A-Z, 0-9, and `-`).
+  This may be a developer-selected string or a randomly-generated number as string.
+- the node the process is running on (often your node: `our` for short).
 
 The way these elements compose is the following:
 
 [Package IDs](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/struct.PackageId.html) look like:
 ```
-[package_name]:[publisher_node]
-my_cool_software:publisher_node.os
+[package-name]:[publisher-node]
+my-cool-software:publisher-node.os
 ```
 
 [Process IDs](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.ProcessId.html) look like:
 ```
-[process_name]:[package_name]:[publisher_node]
-process_one:my_cool_software:publisher_node.os
-8513024814:my_cool_software:publisher_node.os
+[process-name]:[package-name]:[publisher-node]
+process-one:my-cool-software:publisher-node.os
+8513024814:my-cool-software:publisher-node.os
 ```
 
 Finally, [Addresses](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) look like:
 
 ```
-[node]@[process_name]:[package_name]:[publisher_node]
-some_user.os@process_one:my_cool_software:publisher_node.os
+[node]@[process-name]:[package-name]:[publisher-node]
+some-user.os@process-one:my-cool-software:publisher-node.os
 ```
 
 --------

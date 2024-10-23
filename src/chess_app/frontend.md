@@ -18,14 +18,14 @@ Additional UI dev info can be found [here](../apis/frontend_development.md).
 
 Get the chess UI files and place them in the proper place (next to `pkg/`):
 ```bash
-# run in the top-level directory of your my_chess package
+# run in the top-level directory of your my-chess package
 git clone https://github.com/kinode-dao/chess-ui ui
 ```
 
 Chess will use the built-in HTTP server runtime module to serve a static frontend and receive HTTP requests from it.
 You'll also use a WebSocket connection to send updates to the frontend when the game state changes.
 
-In `my_chess/src/lib.rs`, inside `init()`:
+In `my-chess/src/lib.rs`, inside `init()`:
 ```rust
 use kinode_process_lib::{http::server, homepage};
 
@@ -63,7 +63,7 @@ These requests all serve HTTP that can only be accessed by a logged-in node user
 Requests on the `/games` path will arrive as requests to your process, and you'll have to handle them and respond.
 To do this, add a branch to the main request-handling function that takes requests from *our* `http_server:distro:sys`.
 
-In `my_chess/src/lib.rs`, inside the part of `handle_request()` that handles local requests:
+In `my-chess/src/lib.rs`, inside the part of `handle_request()` that handles local requests:
 ```rust
 ...
     // if the message is from the HTTP server runtime module, we should handle it
@@ -82,7 +82,7 @@ This can be a security risk: if your app is handling sensitive actions from the 
 You should never expect users to "only install non-malicious apps" — instead, use a *secure subdomain* to isolate your app's HTTP resources from other processes.
 See the [HTTP Server API](../apis/http_server.md) for more details.
 
-In `my_chess/src/lib.rs`:
+In `my-chess/src/lib.rs`:
 ```rust
 /// Handle HTTP requests from our own frontend.
 fn handle_http_request(
@@ -278,7 +278,7 @@ Almost there!
 One more missing piece: the backend needs to send WebSocket updates to the frontend after each move in order to update the board without a refresh.
 Since open channels are already tracked in `HttpServer`, you just need to send a push to each open channel when a move occurs.
 
-In `my_chess/src/lib.rs`, add a helper function:
+In `my-chess/src/lib.rs`, add a helper function:
 ```rust
 fn send_ws_update(http_server: &mut server::HttpServer, game: &Game) {
     http_server.ws_push_all_channels(
