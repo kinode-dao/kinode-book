@@ -110,15 +110,16 @@ Install Rust and some `cargo` tools, by running the following in your terminal:
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 cargo install wasm-tools
 rustup install nightly
-rustup target add wasm32-wasi
-rustup target add wasm32-wasi --toolchain nightly
+rustup target add wasm32-wasip1 --toolchain nightly
 cargo install cargo-wasi
 ```
 
 For more information, or debugging, see the [Rust lang install page](https://www.rust-lang.org/tools/install).
 
-Kinode uses the **nightly** build of Rust.
+Kinode uses the stable build of Rust, but the Wasm processes use the **nightly** build of Rust..
 You will want to run the command `rustup update` on a regular basis to keep your version of the language current, especially if you run into issues compiling the runtime down the line.
+
+You will also need to [install NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) in order to build the Wasm processes that are bundled with the core binary.
 
 ### Acquire Kinode core
 
@@ -128,14 +129,20 @@ Clone and set up the repository:
 git clone https://github.com/kinode-dao/kinode.git
 ```
 
+Build the packages that are bundled with the binary:
+```bash
+cargo run -p build_packages
+```
+
 Build the binary:
 
 ```bash
 # OPTIONAL: --release flag
-cargo +nightly build -p kinode
+cargo build -p kinode
 ```
 
-The resulting binary will be at path `kinode/target/debug/kinode`. (Note that this is the binary crate inside the `kinode` workspace.)
+The resulting binary will be at path `kinode/target/debug/kinode`.
+(Note that this is the binary crate inside the `kinode` workspace.)
 
 You can also build the binary with the `--release` flag.
 Building without `--release` will produce the binary significantly faster, as it does not perform any optimizations during compilation, but the node will run much more slowly after compiling.
