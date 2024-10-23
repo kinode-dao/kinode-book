@@ -30,7 +30,7 @@ You can also bind static content to a path using another function in the library
 
 [`http::bind_http_path("/", false, false)`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/fn.bind_http_path.html) arguments mean the following:
 - The first argument is the path to bind.
-Note that requests will be namespaced under the process name, so this will be accessible at e.g. `/my_process_name/`.
+Note that requests will be namespaced under the process name, so this will be accessible at e.g. `/my-process-name/`.
 - The second argument marks whether to serve the path only to authenticated clients
 In order to skip authentication, set the second argument to false here.
 - The third argument marks whether to only serve the path locally.

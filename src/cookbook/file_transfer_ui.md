@@ -18,10 +18,10 @@ It's also strongly recommended that you read and understand the [file transfer a
 Create a new project with `kit`, passing the `--ui` flag:
 
 ```bash
-kit new file_transfer --ui
+kit new file-transfer --ui
 ```
 
-This will create a new project with a `ui` directory for the Vite/React UI code, in addition to the `file_transfer` directory where the usual Rust code will be located.
+This will create a new project with a `ui` directory for the Vite/React UI code, in addition to the `file-transfer` directory where the usual Rust code will be located.
 
 ## File Transfer
 
@@ -62,14 +62,14 @@ If you've never used Vite before, check out the [docs](https://vitejs.dev/guide/
 ### Build it!
 
 To build the UI, run `kit build` (or just `kit b`).
-This will build the UI and copy the files into the `pkg/ui` directory, then build `file_transfer` as usual.
-The UI will be served from `http://localhost:8080` (or your custom node URL/port) at `/file_transfer:file_transfer:template.os`.
-However, you will need to configure Vite to allow your UI to communicate seamlessly with the `file_transfer` app on your node.
+This will build the UI and copy the files into the `pkg/ui` directory, then build `file-transfer` as usual.
+The UI will be served from `http://localhost:8080` (or your custom node URL/port) at `/file-transfer:file-transfer:template.os`.
+However, you will need to configure Vite to allow your UI to communicate seamlessly with the `file-transfer` app on your node.
 
 ### Configure Vite
 
 You will be configuring your Vite environment in order to enable development on Kinode.
-This step is necessary to allow your *development* UI (which will change often, and rebuild quickly) to communicate with the `file_transfer` app on your node (which will change rarely, and rebuild slowly).
+This step is necessary to allow your *development* UI (which will change often, and rebuild quickly) to communicate with the `file-transfer` app on your node (which will change rarely, and rebuild slowly).
 
 #### Example `vite.config.ts`
 ```ts
@@ -523,7 +523,7 @@ function FileEntry({ file, node }: Props) {
 
     useEffect(() => {
         // To display the filename ergonomically,
-        //   you strip the `file_transfer:file_transfer:template.os/files/`
+        //   you strip the `file-transfer:file-transfer:template.os/files/`
         //   prefix from the file name.
         const filename = file.name.split('/files/').pop() || '';
         setActualFilename(filename);
@@ -660,11 +660,11 @@ export default SearchFiles;
 
 Now that you've written your UI code, you can build it.
 
-1. Run `kit build` (or just `kit b`) to build the UI and file_transfer process.
+1. Run `kit build` (or just `kit b`) to build the UI and `file-transfer` process.
 1. Run `kit start-package -p 8080` (or just `kit s`) to install the package to your node running on port 8080.
 
 In the future, you can run both of these steps in a single command, with `kit bs`.
-The UI will be served from `http://localhost:8080/file_transfer:file_transfer:template.os`.
+The UI will be served from `http://localhost:8080/file-transfer:file-transfer:template.os`.
 
 ## Next Steps
 
