@@ -59,6 +59,8 @@
   - [Writing and Running Scripts](./cookbook/writing_scripts.md)
   - [Reading Data from ETH](./cookbook/reading_data_from_eth.md)
   - [Writing Data to ETH](./cookbook/writing_data_to_eth.md)
+  - [Creating and Using Capabilities](./cookbook/creating_and_using_capabilities.md)
+  - [Managing Contacts](./cookbook/managing_contacts.md)
   - [Use ZK proofs with SP1](./cookbook/zk_with_sp1.md)
   - [Talking to the Outside World](./cookbook/talking_to_the_outside_world.md)
   - [Exporting & Importing Package APIs](./cookbook/package_apis.md)
