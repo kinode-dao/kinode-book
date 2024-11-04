@@ -211,9 +211,10 @@ You can read more about `ProcessId`s [here](../system/process/processes.md#overv
 ### `api/`
 
 The `api/` directory is an optional directory where packages can declare their public API.
-Other packages can then mark a package as a dependency in their `metadata.json` and
+Other packages can then mark a package as a dependency in their `metadata.json` to include those types and functions defined therein.
+The API is useful for composability and for LLM agents as definitions of "tools" for programatic access.
 
-For further reading, see discussion in [WIT APIs](../system/process/wit_apis.md), and [`kit view-api`](../kit/view-api.md).
+For further reading, see discussion in [WIT APIs](../system/process/wit_apis.md), [the package APIs recipe](../cookbook/package_apis.md), [the package APIs (with workers) recipe](../cookbook/package_apis_workers.md), and [`kit view-api`](../kit/view-api.md).
 
 ## Building the Package
 
