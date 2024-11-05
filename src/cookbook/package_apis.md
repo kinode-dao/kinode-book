@@ -33,9 +33,9 @@ However, for `interface`s that export only types, no `-api-` world (like `server
 Instead, the WIT API alone suffices to export the types, and the importer writes a `world` that looks like [this, below](#wit-api-1).
 For example, consider the `chat` template's `api/` and its usage in the `test/` package:
 ```
-kit n my_chat
-cat my_chat/api/my_chat\:template.os-v0.wit
-cat my_chat/test/my_chat_test/api/my_chat_test\:template.os-v0.wit
+kit n my-chat
+cat my-chat/api/my-chat\:template.os-v0.wit
+cat my-chat/test/my-chat-test/api/my-chat-test\:template.os-v0.wit
 ```
 
 #### API Function Definitions
@@ -128,13 +128,13 @@ kit bs src/../code/remote_file_storage/server
 
 # Build & start client.
 ## Here the `-p 8080` is to fetch deps for building client (see the metadata.json dependencies field).
-kit b src/../code/remote_file_storage/client -p 8080 && kit s src/code/remote_file_storage/client -p 8081
+kit b src/../code/remote_file_storage/client -p 8080 && kit s src/../code/remote_file_storage/client -p 8081
 ```
 
 An alternative way to satisfy the `server` dependency of `client`:
 ```
 ## The `-l` satisfies the dependency using a local path.
-kit b src/../code/remote_file_storage/client -l src/code/remote_file_storage/server
+kit b src/../code/remote_file_storage/client -l src/../code/remote_file_storage/server
 ```
 
 ### Usage
