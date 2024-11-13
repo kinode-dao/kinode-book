@@ -1,9 +1,9 @@
 {
-    "name": "save_state",
+    "name": "save-state",
     "description": "",
     "image": "",
     "properties": {
-        "package_name": "save_state",
+        "package_name": "save-state",
         "current_version": "0.1.0",
         "publisher": "template.os",
         "mirrors": [],

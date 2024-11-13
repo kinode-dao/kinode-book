@@ -1,5 +1,5 @@
 [package]
-name = "save_state"
+name = "save-state"
 version = "0.1.0"
 edition = "2021"
 

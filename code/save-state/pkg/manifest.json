@@ -1,7 +1,7 @@
 [
     {
-        "process_name": "save_state",
-        "process_wasm_path": "/save_state.wasm",
+        "process_name": "save-state",
+        "process_wasm_path": "/save-state.wasm",
         "on_exit": "Restart",
         "request_networking": false,
         "request_capabilities": [],

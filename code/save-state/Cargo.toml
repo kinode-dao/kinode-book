@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
-    "save_state"
+    "save-state"
 ]
 
 [profile.release]
