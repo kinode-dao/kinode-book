@@ -1,9 +1,9 @@
 {
-    "name": "mfa_message_demo Test",
-    "description": "A test for mfa_message_demo.",
+    "name": "mfa-message-demo",
+    "description": "",
     "image": "",
     "properties": {
-        "package_name": "mfa_message_demo_test",
+        "package_name": "mfa-message-demo",
         "current_version": "0.1.0",
         "publisher": "template.os",
         "mirrors": [],
@@ -11,9 +11,7 @@
             "0.1.0": ""
         },
         "wit_version": 0,
-        "dependencies": [
-            "tester:sys"
-        ]
+        "dependencies": []
     },
     "external_url": "",
     "animation_url": ""

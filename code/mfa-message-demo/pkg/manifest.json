@@ -1,11 +1,11 @@
 [
     {
-        "process_name": "mfa_message_demo",
-        "process_wasm_path": "/mfa_message_demo.wasm",
+        "process_name": "mfa-message-demo",
+        "process_wasm_path": "/mfa-message-demo.wasm",
         "on_exit": "Restart",
         "request_networking": false,
         "request_capabilities": [
-            "http_server:distro:sys"
+            "http-server:distro:sys"
         ],
         "grant_capabilities": [
             "tester:tester:sys"

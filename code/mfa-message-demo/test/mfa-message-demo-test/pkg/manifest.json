@@ -1,0 +1,15 @@
+[
+    {
+        "process_name": "mfa-message-demo-test",
+        "process_wasm_path": "/mfa-message-demo-test.wasm",
+        "on_exit": "Restart",
+        "request_networking": false,
+        "request_capabilities": [
+            "mfa-message-demo:mfa-message-demo:template.os"
+        ],
+        "grant_capabilities": [
+            "mfa-message-demo:mfa-message-demo:template.os"
+        ],
+        "public": true
+    }
+]

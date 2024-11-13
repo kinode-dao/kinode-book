@@ -1,5 +1,5 @@
 [package]
-name = "mfa_message_demo"
+name = "mfa-message-demo"
 version = "0.1.0"
 edition = "2021"
 
