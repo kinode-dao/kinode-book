@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
-    "ws_client_test",
+    "ws-client-test",
 ]
 
 [profile.release]

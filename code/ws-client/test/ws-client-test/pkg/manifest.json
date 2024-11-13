@@ -1,0 +1,17 @@
+[
+    {
+        "process_name": "ws-client-test",
+        "process_wasm_path": "/ws-client-test.wasm",
+        "on_exit": "Restart",
+        "request_networking": false,
+        "request_capabilities": [
+            "http-client:distro:sys",
+            "ws-client:ws-client:template.os"
+        ],
+        "grant_capabilities": [
+            "http-client:distro:sys",
+            "ws-client:ws-client:template.os"
+        ],
+        "public": true
+    }
+]

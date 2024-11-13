@@ -5,10 +5,10 @@
 /// kit f
 ///
 /// # Start WS server from a new terminal.
-/// ./ws_client/ws_server.py
+/// ./ws-client/ws-server.py
 ///
 /// # Start package from a new terminal.
-/// kit bs ws_client
+/// kit bs ws-client
 /// ```
 use anyhow::{anyhow, Result};
 
@@ -67,7 +67,7 @@ fn talk_to_ws() -> Result<()> {
 
     match await_message() {
         Ok(message) => {
-            if message.source().process == "http_client:distro:sys" {
+            if message.source().process == "http-client:distro:sys" {
                 if let Err(e) = handle_http_message(&message, &connection) {
                     println!("{e}");
                 }

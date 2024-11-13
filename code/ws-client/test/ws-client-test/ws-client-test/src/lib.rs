@@ -23,11 +23,11 @@ fn init(our: Address) {
     // get Run from tester
     let message = await_message().unwrap();
     if !message.is_request() {
-        fail!("ws_client_test");
+        fail!("ws-client-test");
     }
     let source = message.source();
     if our.node != source.node {
-        fail!("ws_client_test");
+        fail!("ws-client-test");
     }
     let TesterRequest::Run(RunRequest { .. }) = message.body().try_into().unwrap();
 
@@ -35,16 +35,16 @@ fn init(our: Address) {
     // run client
     let child = spawn(
         None,
-        &format!("{}/setup/ws_client.wasm", our.package_id()),
+        &format!("{}/setup/ws-client.wasm", our.package_id()),
         OnExit::Requests(vec![
             Request::to(&our).body(serde_json::to_vec(&Err::<(), ()>(())).unwrap())
         ]),
         our_capabilities(),
-        vec!["http_client:distro:sys".parse().unwrap()],
+        vec!["http-client:distro:sys".parse().unwrap()],
         false,
     );
     if child.is_err() {
-        fail!("ws_client_test");
+        fail!("ws-client-test");
     }
 
     // give child our process id
@@ -61,18 +61,18 @@ fn init(our: Address) {
     let message = await_message().unwrap();
     println!("d");
     if !message.is_request() {
-        fail!("ws_client_test");
+        fail!("ws-client-test");
     }
     println!("e");
     let source = message.source();
     if our.node != source.node {
-        fail!("ws_client_test");
+        fail!("ws-client-test");
     }
     println!("f");
     match serde_json::from_slice(message.body()).unwrap() {
         Err(()) => {
             println!("g");
-            fail!("ws_client_test");
+            fail!("ws-client-test");
         }
         Ok(()) => {
             println!("h");

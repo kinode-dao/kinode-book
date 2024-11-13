@@ -1,9 +1,9 @@
 {
-    "name": "ws_client",
-    "description": "",
+    "name": "ws-client Test",
+    "description": "A test for ws-client.",
     "image": "",
     "properties": {
-        "package_name": "ws_client",
+        "package_name": "ws-client-test",
         "current_version": "0.1.0",
         "publisher": "template.os",
         "mirrors": [],
@@ -11,7 +11,9 @@
             "0.1.0": ""
         },
         "wit_version": 0,
-        "dependencies": []
+        "dependencies": [
+            "tester:sys"
+        ]
     },
     "external_url": "",
     "animation_url": ""

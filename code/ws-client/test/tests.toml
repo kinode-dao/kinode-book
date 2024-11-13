@@ -10,9 +10,9 @@ setup_packages = [
     { path = "..", run = false }
 ]
 setup_scripts = [
-    "../requirements.sh && ../ws_server.py",
+    "../requirements.sh && ../ws-server.py",
 ]
-test_package_paths = ["ws_client_test"]
+test_package_paths = ["ws-client-test"]
 test_scripts = []
 timeout_secs = 5
 fakechain_router = 8545
