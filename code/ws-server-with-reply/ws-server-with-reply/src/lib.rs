@@ -5,14 +5,13 @@
 /// kit f
 ///
 /// # Start package from a new terminal.
-/// kit bs ws_server_with_reply
+/// kit bs ws-server-with-reply
 ///
 /// # Connect from WS client script.
-/// ./ws_server/ws_client.py
+/// ./ws-server/ws-client.py
 /// ```
 use anyhow::{anyhow, Result};
 
-use kinode_process_lib::kernel_types::MessageType;
 use kinode_process_lib::{
     await_message, call_init, get_blob, http, println, Address, LazyLoadBlob, Message, Request,
 };
@@ -29,22 +28,22 @@ fn handle_http_message(
     message: &Message,
     connection: &mut Option<u32>,
 ) -> Result<()> {
-    match serde_json::from_slice::<http::HttpServerRequest>(message.body())? {
-        http::HttpServerRequest::Http(_) => {
+    match serde_json::from_slice::<http::server::HttpServerRequest>(message.body())? {
+        http::server::HttpServerRequest::Http(_) => {
             return Err(anyhow!("unexpected HTTP request"));
         }
-        http::HttpServerRequest::WebSocketOpen { path, channel_id } => {
+        http::server::HttpServerRequest::WebSocketOpen { path, channel_id } => {
             assert_eq!(path, WS_PATH);
             assert_eq!(*connection, None);
 
             *connection = Some(channel_id.clone());
 
-            Request::to("our@http_server:distro:sys".parse::<Address>()?)
+            Request::to("our@http-server:distro:sys".parse::<Address>()?)
                 .body(serde_json::to_vec(
-                    &http::HttpServerAction::WebSocketExtPushOutgoing {
+                    &http::server::HttpServerAction::WebSocketExtPushOutgoing {
                         channel_id,
-                        message_type: http::WsMessageType::Binary,
-                        desired_reply_type: MessageType::Response,
+                        message_type: http::server::WsMessageType::Binary,
+                        desired_reply_type: http::server::MessageType::Response,
                     },
                 )?)
                 .expects_response(15)
@@ -54,22 +53,22 @@ fn handle_http_message(
                 })
                 .send()?;
         }
-        http::HttpServerRequest::WebSocketClose(channel_id) => {
+        http::server::HttpServerRequest::WebSocketClose(channel_id) => {
             assert_eq!(*connection, Some(channel_id));
 
             *connection = None;
         }
-        http::HttpServerRequest::WebSocketPush {
+        http::server::HttpServerRequest::WebSocketPush {
             channel_id,
             message_type,
         } => {
             assert_eq!(*connection, Some(channel_id));
-            if message_type == http::WsMessageType::Close {
+            if message_type == http::server::WsMessageType::Close {
                 println!("got Close push");
                 return Ok(());
             }
 
-            assert_eq!(message_type, http::WsMessageType::Binary);
+            assert_eq!(message_type, http::server::WsMessageType::Binary);
 
             let Some(blob) = get_blob() else {
                 return Err(anyhow!("got WebSocketPush with no blob"));
@@ -88,12 +87,18 @@ fn init(our: Address) {
     println!("begin");
 
     let mut connection: Option<u32> = None;
-    http::bind_ws_path(WS_PATH, false, false).unwrap();
+    let mut server = http::server::HttpServer::new(5);
+    server
+        .bind_ws_path(
+            WS_PATH,
+            http::server::WsBindingConfig::new(false, false, false, false),
+        )
+        .unwrap();
 
     loop {
         match await_message() {
             Ok(message) => {
-                if message.source().process == "http_server:distro:sys" {
+                if message.source().process == "http-server:distro:sys" {
                     if let Err(e) = handle_http_message(&our, &message, &mut connection) {
                         println!("{e}");
                     }

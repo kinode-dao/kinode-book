@@ -1,14 +1,14 @@
 [
     {
-        "process_name": "ws_server_with_reply",
-        "process_wasm_path": "/ws_server_with_reply.wasm",
+        "process_name": "ws-server-with-reply",
+        "process_wasm_path": "/ws-server-with-reply.wasm",
         "on_exit": "None",
         "request_networking": false,
         "request_capabilities": [
-            "http_server:distro:sys"
+            "http-server:distro:sys"
         ],
         "grant_capabilities": [
-            "http_server:distro:sys"
+            "http-server:distro:sys"
         ],
         "public": false
     }

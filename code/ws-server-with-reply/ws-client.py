@@ -5,7 +5,7 @@ import msgpack
 import websockets
 
 async def connect_websocket(
-    uri="ws://localhost:8080/ws_server_with_reply:ws_server_with_reply:template.os",
+    uri="ws://localhost:8080/ws-server-with-reply:ws-server-with-reply:template.os",
     max_retries=5,
     delay_secs=0.5,
 ):
@@ -36,7 +36,7 @@ async def websocket_client():
     response = msgpack.packb(response, use_bin_type=True)
     await websocket.send(response)
 
-    websocket.close()
+    await websocket.close()
 
 def main():
     asyncio.run(websocket_client())

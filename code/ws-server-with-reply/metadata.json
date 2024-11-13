@@ -1,9 +1,9 @@
 {
-    "name": "ws_server_with_reply",
+    "name": "ws-server-with-reply",
     "description": "",
     "image": "",
     "properties": {
-        "package_name": "ws_server_with_reply",
+        "package_name": "ws-server-with-reply",
         "current_version": "0.1.0",
         "publisher": "template.os",
         "mirrors": [],
