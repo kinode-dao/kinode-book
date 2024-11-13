@@ -5,12 +5,12 @@ runtime_build_release = false
 
 
 [[tests]]
-dependency_package_paths = ["chat_with_file_transfer", "file_transfer"]
+dependency_package_paths = ["chat-with-file-transfer", "file-transfer"]
 setup_packages = [
-    { path = "chat_with_file_transfer", run = true }
+    { path = "chat-with-file-transfer", run = true }
 ]
 setup_scripts = []
-test_package_paths = ["chat_with_file_transfer/test/chat_with_file_transfer_test"]
+test_package_paths = ["chat-with-file-transfer/test/chat-with-file-transfer-test"]
 test_scripts = []
 timeout_secs = 5
 fakechain_router = 8545
@@ -29,12 +29,12 @@ runtime_verbosity = 2
 
 
 [[tests]]
-dependency_package_paths = ["mfa_data_demo"]
+dependency_package_paths = ["mfa-data-demo"]
 setup_packages = [
-    { path = "mfa_data_demo", run = true }
+    { path = "mfa-data-demo", run = true }
 ]
 setup_scripts = []
-test_package_paths = ["mfa_data_demo/test/mfa_data_demo_test"]
+test_package_paths = ["mfa-data-demo/test/mfa-data-demo-test"]
 test_scripts = []
 timeout_secs = 5
 fakechain_router = 8545
@@ -47,14 +47,14 @@ runtime_verbosity = 2
 
 
 [[tests]]
-dependency_package_paths = ["mfa_fe_demo"]
+dependency_package_paths = ["mfa-fe-demo"]
 setup_packages = [
-    { path = "mfa_fe_demo", run = true }
+    { path = "mfa-fe-demo", run = true }
 ]
 setup_scripts = []
-test_package_paths = ["mfa_fe_demo/test/mfa_fe_demo_test"]
+test_package_paths = ["mfa-fe-demo/test/mfa-fe-demo-test"]
 test_scripts = [
-    "mfa_fe_demo/curl-endpoint.sh",
+    "mfa-fe-demo/curl-endpoint.sh",
 ]
 timeout_secs = 5
 fakechain_router = 8545
@@ -69,10 +69,10 @@ runtime_verbosity = 2
 [[tests]]
 dependency_package_paths = []
 setup_packages = [
-    { path = "mfa_message_demo", run = true }
+    { path = "mfa-message-demo", run = true }
 ]
 setup_scripts = []
-test_package_paths = ["mfa_message_demo/test/mfa_message_demo_test"]
+test_package_paths = ["mfa-message-demo/test/mfa-message-demo-test"]
 test_scripts = []
 timeout_secs = 5
 fakechain_router = 8545
@@ -85,12 +85,12 @@ runtime_verbosity = 2
 
 
 [[tests]]
-dependency_package_paths = ["remote_file_storage/server"]
+dependency_package_paths = ["remote-file-storage/server"]
 setup_packages = [
-    { path = "remote_file_storage/server", run = true }
+    { path = "remote-file-storage/server", run = true }
 ]
 setup_scripts = []
-test_package_paths = ["remote_file_storage/test/remote_file_storage_test"]
+test_package_paths = ["remote-file-storage/test/remote-file-storage-test"]
 test_scripts = []
 timeout_secs = 5
 fakechain_router = 8545
@@ -114,7 +114,7 @@ setup_packages = [
     { path = "spawn", run = true }
 ]
 setup_scripts = []
-test_package_paths = ["spawn/test/spawn_test"]
+test_package_paths = ["spawn/test/spawn-test"]
 test_scripts = []
 timeout_secs = 5
 fakechain_router = 8545
@@ -129,12 +129,12 @@ runtime_verbosity = 2
 [[tests]]
 dependency_package_paths = []
 setup_packages = [
-    { path = "ws_client", run = false }
+    { path = "ws-client", run = false }
 ]
 setup_scripts = [
-    "ws_client/requirements.sh && ws_client/ws_server.py",
+    "ws-client/requirements.sh && ws-client/ws-server.py",
 ]
-test_package_paths = ["ws_client/test/ws_client_test"]
+test_package_paths = ["ws-client/test/ws-client-test"]
 test_scripts = []
 timeout_secs = 5
 fakechain_router = 8545
@@ -149,12 +149,12 @@ runtime_verbosity = 2
 [[tests]]
 dependency_package_paths = []
 setup_packages = [
-    { path = "ws_server", run = true }
+    { path = "ws-server", run = true }
 ]
 setup_scripts = []
 test_package_paths = []
 test_scripts = [
-    "ws_server/requirements.sh && ws_server/ws_client.py",
+    "ws-server/requirements.sh && ws-server/ws-client.py",
 ]
 timeout_secs = 5
 fakechain_router = 8545
@@ -169,12 +169,12 @@ runtime_verbosity = 2
 [[tests]]
 dependency_package_paths = []
 setup_packages = [
-    { path = "ws_server_with_reply", run = true }
+    { path = "ws-server-with-reply", run = true }
 ]
 setup_scripts = []
 test_package_paths = []
 test_scripts = [
-    "ws_server_with_reply/requirements.sh && ws_server_with_reply/ws_client.py",
+    "ws-server-with-reply/requirements.sh && ws-server-with-reply/ws-client.py",
 ]
 timeout_secs = 5
 fakechain_router = 8545

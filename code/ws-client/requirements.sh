@@ -1,7 +1,7 @@
 #!/bin/bash
 
 crossplatform_realpath_inner() {
-    python -c "import os; print(os.path.realpath('$1'))"
+    python3 -c "import os; print(os.path.realpath('$1'))"
 }
 
 crossplatform_realpath() {
@@ -16,11 +16,11 @@ crossplatform_realpath() {
 if ! command -v pip &> /dev/null
 then
     echo "pip could not be found, installing..."
-    python -m ensurepip --upgrade
+    python3 -m ensurepip --upgrade
 fi
 
 # Update pip to the latest version.
-python -m pip install --upgrade pip
+python3 -m pip install --upgrade pip
 
 # Install packages from the requirements.txt file.
 script_dir=$(dirname "$(crossplatform_realpath "${BASH_SOURCE[0]}")")
