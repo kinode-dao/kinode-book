@@ -1,5 +1,5 @@
 [package]
-name = "remote_file_storage_test"
+name = "remote-file-storage-test"
 version = "0.1.0"
 edition = "2021"
 

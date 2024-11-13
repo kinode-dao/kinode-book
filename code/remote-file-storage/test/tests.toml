@@ -10,7 +10,7 @@ setup_packages = [
     { path = "../server", run = true }
 ]
 setup_scripts = []
-test_package_paths = ["remote_file_storage_test"]
+test_package_paths = ["remote-file-storage-test"]
 test_scripts = []
 timeout_secs = 5
 fakechain_router = 8545

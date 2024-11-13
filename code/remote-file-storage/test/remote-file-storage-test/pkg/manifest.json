@@ -1,7 +1,7 @@
 [
     {
-        "process_name": "remote_file_storage_test",
-        "process_wasm_path": "/remote_file_storage_test.wasm",
+        "process_name": "remote-file-storage-test",
+        "process_wasm_path": "/remote-file-storage-test.wasm",
         "on_exit": "Restart",
         "request_networking": false,
         "request_capabilities": [

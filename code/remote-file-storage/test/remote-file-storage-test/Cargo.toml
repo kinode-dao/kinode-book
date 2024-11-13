@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
-    "remote_file_storage_test",
+    "remote-file-storage-test",
 ]
 
 [profile.release]

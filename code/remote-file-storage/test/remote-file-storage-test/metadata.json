@@ -1,9 +1,9 @@
 {
-    "name": "remote_file_storage Test",
-    "description": "A test for remote_file_storage.",
+    "name": "remote-file-storage Test",
+    "description": "A test for remote-file-storage.",
     "image": "",
     "properties": {
-        "package_name": "remote_file_storage_test",
+        "package_name": "remote-file-storage-test",
         "current_version": "0.1.0",
         "publisher": "template.os",
         "mirrors": [],

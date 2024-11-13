@@ -19,7 +19,7 @@ fn run_test(our: &Address) -> anyhow::Result<()> {
     let message = await_message()?;
 
     if !message.is_request() {
-        fail!("mfa_data_demo_test");
+        fail!("file-storage-test");
     }
     let source = message.source();
     if our.node != source.node {
@@ -33,7 +33,7 @@ fn run_test(our: &Address) -> anyhow::Result<()> {
         ..
     }) = message.body().try_into()?;
     if node_names.len() != 2 {
-        fail!("mfa_data_demo_test");
+        fail!("file-storage-test");
     }
 
     let file_path = "tester:sys/pkg/manifest.json";
@@ -41,23 +41,23 @@ fn run_test(our: &Address) -> anyhow::Result<()> {
 
     // put file onto worker
     if put_file(worker, file_path, "manifest.json").is_err() {
-        fail!("file_storage_test");
+        fail!("file-storage-test");
     }
 
     // check file is on worker
     let Ok(files) = list_files(worker) else {
-        fail!("file_storage_test");
+        fail!("file-storage-test");
     };
     if files != vec!["manifest.json"] {
-        fail!("file_storage_test");
+        fail!("file-storage-test");
     }
 
     // read out the file on worker from master
     if get_file(worker, "manifest.json").is_err() {
-        fail!("file_storage_test");
+        fail!("file-storage-test");
     }
     let Some(contents) = get_blob() else {
-        fail!("file_storage_test");
+        fail!("file-storage-test");
     };
 
     // compare result to original file contents
@@ -68,7 +68,7 @@ fn run_test(our: &Address) -> anyhow::Result<()> {
     let expected_contents = file.read()?;
 
     if contents.bytes() != expected_contents {
-        fail!("file_storage_test");
+        fail!("file-storage-test");
     }
 
     Response::new().body(TesterResponse::Run(Ok(()))).send()?;
@@ -82,8 +82,8 @@ fn init(our: Address) {
     match run_test(&our) {
         Ok(()) => {}
         Err(e) => {
-            println!("mfa_data_demo_test: error: {e:?}");
-            fail!("mfa_data_demo_test");
+            println!("file-storage-test: error: {e:?}");
+            fail!("file-storage-test");
         }
     };
 }
