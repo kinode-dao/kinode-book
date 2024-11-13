@@ -38,7 +38,7 @@ fn handle_http_message(
 
             *connection = Some(channel_id.clone());
 
-            Request::to("our@http-server:distro:sys".parse::<Address>()?)
+            Request::to("our@http_server:distro:sys".parse::<Address>()?)
                 .body(serde_json::to_vec(
                     &http::server::HttpServerAction::WebSocketExtPushOutgoing {
                         channel_id,
@@ -98,7 +98,7 @@ fn init(our: Address) {
     loop {
         match await_message() {
             Ok(message) => {
-                if message.source().process == "http-server:distro:sys" {
+                if message.source().process == "http_server:distro:sys" {
                     if let Err(e) = handle_http_message(&our, &message, &mut connection) {
                         println!("{e}");
                     }

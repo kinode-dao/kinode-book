@@ -5,10 +5,10 @@
         "on_exit": "None",
         "request_networking": false,
         "request_capabilities": [
-            "http-client:distro:sys"
+            "http_client:distro:sys"
         ],
         "grant_capabilities": [
-            "http-client:distro:sys"
+            "http_client:distro:sys"
         ],
         "public": false
     }

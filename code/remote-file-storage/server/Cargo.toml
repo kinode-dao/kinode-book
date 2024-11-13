@@ -2,7 +2,7 @@
 resolver = "2"
 members = [
     "server",
-    "server_api",
+    "server-api",
 ]
 
 [profile.release]

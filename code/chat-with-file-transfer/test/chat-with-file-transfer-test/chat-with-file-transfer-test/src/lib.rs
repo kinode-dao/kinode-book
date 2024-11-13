@@ -156,6 +156,7 @@ fn handle_message(our: &Address) -> anyhow::Result<()> {
     }
 
     // Test file_transfer_worker
+    println!("chat-with-file-transfer-test: d");
     let response = Request::new()
         .target(our_chat_address.clone())
         .body(WorkerRequest::Download(DownloadRequest {

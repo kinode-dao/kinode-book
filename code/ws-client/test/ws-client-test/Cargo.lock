@@ -3163,7 +3163,6 @@ name = "ws-client-test"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "bincode",
  "kinode_process_lib",
  "process_macros",
  "rmp-serde",

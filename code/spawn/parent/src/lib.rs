@@ -27,7 +27,7 @@ fn init(our: Address) {
             Capability {
                 issuer: Address::new(
                     &our.node,
-                    "http-client:distro:sys".parse::<ProcessId>().unwrap(),
+                    "http_client:distro:sys".parse::<ProcessId>().unwrap(),
                 ),
                 params: "\"messaging\"".into(),
             },

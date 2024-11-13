@@ -58,7 +58,7 @@ fn init(_our: Address) {
     loop {
         match await_message() {
             Ok(message) => {
-                if message.source().process == "http-server:distro:sys" {
+                if message.source().process == "http_server:distro:sys" {
                     if let Err(e) = handle_http_message(&message) {
                         println!("{e}");
                     }
