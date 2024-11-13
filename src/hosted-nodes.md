@@ -11,7 +11,7 @@ A more expansive guide can be found [here](https://www.digitalocean.com/communit
 
 ## Managing Your Kinode
 
-[Valet](https://valet.kinode.org/) is the interface for managing your hosted node.
+[Valet](https://valet.uncentered.systems) is the interface for managing your hosted node.
 We plan to open-source the hosting code so there will be other hosting options in the future.
 Once logged in, `Your Kinodes` will be displayed: clicking on the name of a Kinode will navigate to the homepage for that Kinode.
 Clicking on the gear icon will open a modal with some information about the Kinode.
@@ -20,7 +20,7 @@ Click `Show advanced details` to reveal information for accessing your Kinode's 
 ## Accessing Your Kinode's Terminal
 
 As discussed in [Managing Your Kinode](#managing-your-kinode), navigate to:
-1. https://valet.kinode.org/
+1. [https://valet.uncentered.systems](https://valet.uncentered.systems)
 2. `Your Kinodes`
 3. Gear icon
 4. `Show advanced details`

@@ -90,7 +90,7 @@ For more information on writing your own scripts, see the [cookbook](../cookbook
 
 For your scripts to be usable by the terminal, you must include a `pkg/scripts.json` file, like [this one](https://github.com/kinode-dao/kinode/blob/main/kinode/packages/terminal/pkg/scripts.json).
 Note that this is a core package and this file should not be edited, but rather you should create one in your own package.
-For more discussion on package folder structure, look [here](https://book.kinode.org/my_first_app/chapter_1.html#exploring-the-package).
+For more discussion on package folder structure, look [here](../my_first_app/chapter_1.md#exploring-the-package).
 
 The JSON object in `scripts.json` describes the configuration for each script in your package.
 Each top-level key represents the path of a process in your package, usually just `"myscript.wasm"`, `"echo.wasm"`, etc.

@@ -37,7 +37,7 @@ This interface is defined via [WIT](https://component-model.bytecodealliance.org
 
 WIT bindings are the glue code that is necessary for the interaction between Wasm modules and their host environment.
 They may be written in any Wasm-compatible language — Kinode offers the most support for Rust with [`kit`](../kit/kit-dev-toolkit.md) and [`process_lib`](../process_stdlib/overview.md).
-The `world`, types, imports, and exports are all declared in a [WIT file](https://github.com/kinode-dao/kinode-wit/blob/master/kinode.wit), and using that file, [`wit_bindgen`](https://github.com/bytecodealliance/wit-bindgen) generates the code for the bindings.
+The `world`, types, imports, and exports are all declared in a [WIT file](https://github.com/kinode-dao/kinode-wit/blob/v0.8/kinode.wit), and using that file, [`wit_bindgen`](https://github.com/bytecodealliance/wit-bindgen) generates the code for the bindings.
 
 So, to bring it all together...
 

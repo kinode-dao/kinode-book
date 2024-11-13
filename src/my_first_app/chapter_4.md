@@ -28,7 +28,7 @@ You can also bind static content to a path using another function in the library
 ...
 ```
 
-[`http::bind_http_path("/", false, false)`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/fn.bind_http_path.html) arguments mean the following:
+[`http::bind_http_path("/", false, false)`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/server/struct.HttpServer.html#method.bind_http_path) arguments mean the following:
 - The first argument is the path to bind.
 Note that requests will be namespaced under the process name, so this will be accessible at e.g. `/my-process-name/`.
 - The second argument marks whether to serve the path only to authenticated clients
@@ -126,10 +126,10 @@ But for maximum ease and efficiency, use the static bind command on `/` and move
 To do this, edit the bind commands in `my_init_fn` to look like this:
 
 ```rust
-{{#include ../../code/mfa-fe-demo/mfa-fe-demo/src/lib.rs:95:96}}
+{{#include ../../code/mfa-fe-demo/mfa-fe-demo/src/lib.rs:95:104}}
 ```
 
-Here you are setting `authenticated` to `false` in the [`bind_http_path()`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/fn.bind_http_path.html) call, but to `true` in the [`serve_index_html`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/fn.serve_index_html.html) call.
+Here you are setting `authenticated` to `false` in the [`bind_http_path()`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/server/struct.HttpServer.html#method.bind_http_path) call, but to `true` in the [`serve_file`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/server/struct.HttpServer.html#method.serve_file) call.
 This means the API is public; if instead you want the webpage to be served exclusively by the browser, change `authenticated` to `true` in `bind_http_path()` as well.
 
 You must also add a static `index.html` file to the package.
