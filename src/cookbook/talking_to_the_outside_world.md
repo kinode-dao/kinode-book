@@ -20,7 +20,7 @@ This document focuses on simple usage examples of each.
 ### HTTP Server
 
 ```rust
-{{#includehidetest ../../code/http-server/http_server/src/lib.rs}}
+{{#includehidetest ../../code/http-server/http-server/src/lib.rs}}
 ```
 
 [Full example package](https://github.com/kinode-dao/kinode-book/tree/main/code/http-server).
@@ -50,7 +50,7 @@ The Kinode process:
 
 An example WS client:
 ```python
-{{#includehidetest ../../code/ws-server/ws_client.py}}
+{{#includehidetest ../../code/ws-server/ws-client.py}}
 ```
 
 [Full example package & client](https://github.com/kinode-dao/kinode-book/tree/main/code/ws-server).

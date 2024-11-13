@@ -138,7 +138,7 @@ Create a `ui/` directory in the package root, and then a new file in `ui/index.h
 **Make sure to replace the fetch URL with your process ID!**
 
 ```html
-{{#include ../../code/mfa-fe-demo/ui/index.html}}
+{{#include ../../code/mfa-fe-demo/pkg/ui/index.html}}
 ```
 
 This is a super barebones `index.html` that provides a form to make requests to the `/api` endpoint.

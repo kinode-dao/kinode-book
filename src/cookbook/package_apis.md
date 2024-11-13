@@ -41,14 +41,14 @@ cat my-chat/test/my-chat-test/api/my-chat-test\:template.os-v0.wit
 #### API Function Definitions
 
 ```rust
-{{#includehidetest ../../code/remote-file-storage/server/server_api/src/lib.rs}}
+{{#includehidetest ../../code/remote-file-storage/server/server-api/src/lib.rs}}
 ```
 
 Functions must be defined if exported in an interface, as they are here.
-Functions are defined by creating a directory just like a process directory, but with a slightly different `lib.rs` (see [directory structure](https://github.com/kinode-dao/kinode-book/tree/main/src/../code/remote-file-storage/server/server_api)).
+Functions are defined by creating a directory just like a process directory, but with a slightly different `lib.rs` (see [directory structure](https://github.com/kinode-dao/kinode-book/tree/main/src/../code/remote-file-storage/server/server-api)).
 Note the definition of `struct Api`, the `impl Guest for Api`, and the `export!(Api)`:
 ```rust
-{{#include ../../code/remote-file-storage/server/server_api/src/lib.rs:93:94}}
+{{#include ../../code/remote-file-storage/server/server-api/src/lib.rs:93:94}}
 
 ...
 
