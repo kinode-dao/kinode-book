@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
-    "http_client"
+    "http-client"
 ]
 
 [profile.release]

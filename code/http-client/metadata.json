@@ -1,9 +1,9 @@
 {
-    "name": "http_client",
+    "name": "http-client",
     "description": "",
     "image": "",
     "properties": {
-        "package_name": "http_client",
+        "package_name": "http-client",
         "current_version": "0.1.0",
         "publisher": "template.os",
         "mirrors": [],

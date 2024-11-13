@@ -5,7 +5,7 @@
 /// kit f
 ///
 /// # Start package from a new terminal.
-/// kit bs http_client
+/// kit bs http-client
 /// ```
 use kinode_process_lib::{call_init, http, println, Address};
 
@@ -21,7 +21,8 @@ fn init(_our: Address) {
     println!("begin");
 
     let url = url::Url::parse(URL).expect("failed to parse url");
-    let response = http::send_request_await_response(http::Method::GET, url, None, 5, vec![]);
+    let response =
+        http::client::send_request_await_response(http::Method::GET, url, None, 5, vec![]);
 
     match response {
         Err(e) => panic!("request failed: {e:?}"),
