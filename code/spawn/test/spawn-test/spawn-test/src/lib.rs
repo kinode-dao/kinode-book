@@ -17,11 +17,11 @@ fn run_test(our: &Address) -> anyhow::Result<()> {
     let message = await_message()?;
 
     if !message.is_request() {
-        fail!("spawn_test");
+        fail!("spawn-test");
     }
     let source = message.source();
     if our.node != source.node {
-        fail!("spawn_test");
+        fail!("spawn-test");
     }
 
     let TesterRequest::Run(RunRequest {
@@ -29,12 +29,12 @@ fn run_test(our: &Address) -> anyhow::Result<()> {
         ..
     }) = message.body().try_into()?;
     if node_names.len() != 1 {
-        fail!("spawn_test");
+        fail!("spawn-test");
     }
 
     let our_test_process_address = Address {
         node: our.node.clone(),
-        process: "spawned_child_process:spawn:template.os".parse()?,
+        process: "spawned-child-process:spawn:template.os".parse()?,
     };
     let response = Request::new()
         .target(our_test_process_address)
@@ -42,7 +42,7 @@ fn run_test(our: &Address) -> anyhow::Result<()> {
         .send_and_await_response(5)??;
 
     let Ok(Ok::<(), ()>(())) = serde_json::from_slice(response.body()) else {
-        fail!("spawn_test");
+        fail!("spawn-test");
     };
 
     Response::new()
@@ -60,8 +60,8 @@ fn init(our: Address) {
     match run_test(&our) {
         Ok(()) => {}
         Err(e) => {
-            println!("spawn_test: error: {e:?}");
-            fail!("spawn_test");
+            println!("spawn-test: error: {e:?}");
+            fail!("spawn-test");
         }
     };
 }

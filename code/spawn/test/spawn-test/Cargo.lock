@@ -2346,11 +2346,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "spawn_test"
+name = "spawn-test"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "bincode",
  "kinode_process_lib",
  "process_macros",
  "rmp-serde",

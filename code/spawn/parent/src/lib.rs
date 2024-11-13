@@ -15,7 +15,7 @@ fn init(our: Address) {
     // this function actually spawns the child process
     let _spawned_process_id = match spawn(
         // name of the child process (None -> random number)
-        Some("spawned_child_process"),
+        Some("spawned-child-process"),
         // path to find the compiled Wasm file for the child process
         &format!("{}/pkg/child.wasm", our.package_id()),
         // what to do when child crashes/panics/finishes
@@ -27,7 +27,7 @@ fn init(our: Address) {
             Capability {
                 issuer: Address::new(
                     &our.node,
-                    "http_client:distro:sys".parse::<ProcessId>().unwrap(),
+                    "http-client:distro:sys".parse::<ProcessId>().unwrap(),
                 ),
                 params: "\"messaging\"".into(),
             },

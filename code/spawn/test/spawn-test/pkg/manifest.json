@@ -1,14 +1,14 @@
 [
     {
-        "process_name": "spawn_test",
-        "process_wasm_path": "/spawn_test.wasm",
+        "process_name": "spawn-test",
+        "process_wasm_path": "/spawn-test.wasm",
         "on_exit": "Restart",
         "request_networking": false,
         "request_capabilities": [
-            "spawned_child_process:spawn:template.os"
+            "spawned-child-process:spawn:template.os"
         ],
         "grant_capabilities": [
-            "spawned_child_process:spawn:template.os"
+            "spawned-child-process:spawn:template.os"
         ],
         "public": false
     }
