@@ -1,9 +1,9 @@
 {
-    "name": "mfa_data_demo",
+    "name": "mfa-data-demo",
     "description": "",
     "image": "",
     "properties": {
-        "package_name": "mfa_data_demo",
+        "package_name": "mfa-data-demo",
         "current_version": "0.1.0",
         "publisher": "template.os",
         "mirrors": [],
