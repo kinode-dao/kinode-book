@@ -4,7 +4,7 @@ Kinode packages can export APIs, as discussed [here](../system/process/wit_apis.
 Processes can also import APIs.
 These APIs can consist of types as well as functions.
 This recipe focuses on:
-1. Simple examples of exporting and importing APIs (find the full code [here](https://github.com/kinode-dao/kinode-book/tree/main/src/code/remote_file_storage)).
+1. Simple examples of exporting and importing APIs (find the full code [here](https://github.com/kinode-dao/kinode-book/tree/main/code/remote-file-storage)).
 2. Demonstrations of `kit` tooling to help build and export or import APIs.
 
 ## Exporting an API
@@ -22,7 +22,7 @@ A brief summary of more [thorough discussion](../system/process/wit_apis.md#high
 #### WIT API
 
 ```rust
-{{#includehidetest ../../code/remote_file_storage/server/api/server:template.os-v0.wit}}
+{{#includehidetest ../../code/remote-file-storage/server/api/server:template.os-v0.wit}}
 ```
 
 As summarized [above](#exporting-an-api), the `server` process defines an `interface` of the same name, and the package defines the `world server-template-dot-os-v0`.
@@ -41,28 +41,28 @@ cat my-chat/test/my-chat-test/api/my-chat-test\:template.os-v0.wit
 #### API Function Definitions
 
 ```rust
-{{#includehidetest ../../code/remote_file_storage/server/server_api/src/lib.rs}}
+{{#includehidetest ../../code/remote-file-storage/server/server_api/src/lib.rs}}
 ```
 
 Functions must be defined if exported in an interface, as they are here.
-Functions are defined by creating a directory just like a process directory, but with a slightly different `lib.rs` (see [directory structure](https://github.com/kinode-dao/kinode-book/tree/main/src/../code/remote_file_storage/server/server_api)).
+Functions are defined by creating a directory just like a process directory, but with a slightly different `lib.rs` (see [directory structure](https://github.com/kinode-dao/kinode-book/tree/main/src/../code/remote-file-storage/server/server_api)).
 Note the definition of `struct Api`, the `impl Guest for Api`, and the `export!(Api)`:
 ```rust
-{{#include ../../code/remote_file_storage/server/server_api/src/lib.rs:93:94}}
+{{#include ../../code/remote-file-storage/server/server_api/src/lib.rs:93:94}}
 
 ...
 
-{{#include ../../code/remote_file_storage/server/server_api/src/lib.rs:115:116}}
+{{#include ../../code/remote-file-storage/server/server-api/src/lib.rs:115:116}}
 ```
 The `export`ed functions are defined here.
 Note the function signatures match those defined in the WIT API.
 
 #### Process
 
-A normal process: the [`server`](https://github.com/kinode-dao/kinode-book/tree/main/src/code/remote_file_storage/server/server/src/lib.rs) handles Requests from consumers of the API.
+A normal process: the [`server`](https://github.com/kinode-dao/kinode-book/tree/main/code/remote-file-storage/server/server/src/lib.rs) handles Requests from consumers of the API.
 
 ```rust
-{{#includehidetest ../../code/remote_file_storage/server/server/src/lib.rs}}
+{{#includehidetest ../../code/remote-file-storage/server/server/src/lib.rs}}
 ```
 
 ## Importing an API
@@ -71,7 +71,7 @@ A normal process: the [`server`](https://github.com/kinode-dao/kinode-book/tree/
 
 #### `metadata.json`
 
-The [`metadata.json`](https://github.com/kinode-dao/kinode-book/blob/main/src/code/remote_file_storage/client/metadata.json#L14-L16) file has a `properties.dependencies` field.
+The [`metadata.json`](https://github.com/kinode-dao/kinode-book/blob/main/src/code/remote-file-storage/client/metadata.json#L14-L16) file has a `properties.dependencies` field.
 When the `dependencies` field is populated, [`kit build`](../kit/build.md) will fetch that dependency from either:
 1. [A livenet Kinode hosting it](#../kit/build.md#--port).
 2. [A local path](#../kit/build.#--local-dependency).
@@ -97,7 +97,7 @@ The second way `kit build` resolves dependencies is with a [local path](#../kit/
 #### WIT API
 
 ```rust
-{{#includehidetest ../../code/remote_file_storage/client/api/client:template.os-v0.wit}}
+{{#includehidetest ../../code/remote-file-storage/client/api/client:template.os-v0.wit}}
 ```
 
 #### Process
@@ -107,7 +107,7 @@ In general, importers of APIs are just processes, but in this case, it made more
 The `Args` and `Command` `struct`s set up command-line parsing and are unrelated to the WIT API.
 
 ```rust
-{{#includehidetest ../../code/remote_file_storage/client/client/src/lib.rs}}
+{{#includehidetest ../../code/remote-file-storage/client/client/src/lib.rs}}
 ```
 
 ## Remote File Storage Usage Example
@@ -124,17 +124,17 @@ kit f -o /tmp/kinode-fake-node-2 -p 8081 -f fake2.dev
 # Build & start server.
 ## Note starting is required because we need a deployed copy of server's API in order to build client.
 ## Below is it assumed that `kinode-book` is the CWD.
-kit bs src/../code/remote_file_storage/server
+kit bs src/../code/remote-file-storage/server
 
 # Build & start client.
 ## Here the `-p 8080` is to fetch deps for building client (see the metadata.json dependencies field).
-kit b src/../code/remote_file_storage/client -p 8080 && kit s src/../code/remote_file_storage/client -p 8081
+kit b src/../code/remote-file-storage/client -p 8080 && kit s src/../code/remote-file-storage/client -p 8081
 ```
 
 An alternative way to satisfy the `server` dependency of `client`:
 ```
 ## The `-l` satisfies the dependency using a local path.
-kit b src/../code/remote_file_storage/client -l src/../code/remote_file_storage/server
+kit b src/../code/remote-file-storage/client -l src/../code/remote-file-storage/server
 ```
 
 ### Usage

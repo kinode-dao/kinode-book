@@ -1,6 +1,6 @@
 # File Transfer
 
-This recipe looks at the `file_transfer` package, a template included with `kit` and also copied [here](https://github.com/kinode-dao/kinode-book/tree/main/src/code/file_transfer).
+This recipe looks at the `file_transfer` package, a template included with `kit` and also copied [here](https://github.com/kinode-dao/kinode-book/tree/main/code/file-transfer).
 To create the template use
 ```
 kit n file_transfer -t file_transfer
@@ -21,14 +21,14 @@ Specifically, it provides a function, `start_download()`, which spins up a worke
 When called on the node serving the file, it spins up a worker to upload the requested file to the requestor.
 
 Downloading a file proceeds as follows:
-1. Requestor [calls](https://github.com/kinode-dao/kinode-book/blob/main/src/code/file_transfer/file_transfer/src/lib.rs#L94) [`start_download()`](https://github.com/kinode-dao/kinode-book/blob/main/src/code/file_transfer/file_transfer_worker_api/src/lib.rs#L14-L55), which:
+1. Requestor [calls](https://github.com/kinode-dao/kinode-book/blob/main/code/file-transfer/file-transfer/src/lib.rs#L94) [`start_download()`](https://github.com/kinode-dao/kinode-book/blob/main/src/code/file-transfer/file-transfer-worker-api/src/lib.rs#L14-L55), which:
    1. `spawn()`s a `file_transfer_worker`.
    2. Passes `file_transfer_worker` a `Download` Request variant.
-   3. `file_transfer_worker` [forwards a modified `Download` Request variant to the `target`](https://github.com/kinode-dao/kinode-book/blob/main/src/code/file_transfer/file_transfer_worker/src/lib.rs#L70-L79).
+   3. `file_transfer_worker` [forwards a modified `Download` Request variant to the `target`](https://github.com/kinode-dao/kinode-book/blob/main/src/code/file-transfer/file-transfer-worker/src/lib.rs#L70-L79).
 2. Provider receives `Download` Request variant, calls `start_download()`, which:
    1. `spawn()`s a `file_transfer_worker`.
    2. Passes `file_transfer_worker` the `Download` Request variant.
-   3. [Sends chunks of file to the requestor's `file_transfer_worker`](https://github.com/kinode-dao/kinode-book/blob/main/src/code/file_transfer/file_transfer_worker/src/lib.rs#L81-L110).
+   3. [Sends chunks of file to the requestor's `file_transfer_worker`](https://github.com/kinode-dao/kinode-book/blob/main/src/code/file-transfer/file-transfer-worker/src/lib.rs#L81-L110).
 
 Thus, a worker is responsible for downloading/uploading a single file, and then exits.
 All longer-term state and functionality is the responsibility of the main process, here, `file_transfer`.
@@ -39,25 +39,25 @@ If you use the `file_transfer_worker` or `file_transfer_worker_api` in your own 
 ## WIT API
 
 ```rust
-{{#includehidetest ../../code/file_transfer/api/file_transfer:template.os-v0.wit}}
+{{#includehidetest ../../code/file-transfer/api/file-transfer:template.os-v0.wit}}
 ```
 
 ## Main Process
 
 ```rust
-{{#includehidetest ../../code/file_transfer/file_transfer/src/lib.rs}}
+{{#includehidetest ../../code/file-transfer/file-transfer/src/lib.rs}}
 ```
 
 ## Worker
 
 ```rust
-{{#includehidetest ../../code/file_transfer/file_transfer_worker/src/lib.rs}}
+{{#includehidetest ../../code/file-transfer/file-transfer-worker/src/lib.rs}}
 ```
 
 ## API
 
 ```rust
-{{#includehidetest ../../code/file_transfer/file_transfer_worker_api/src/lib.rs}}
+{{#includehidetest ../../code/file-transfer/file-transfer-worker-api/src/lib.rs}}
 ```
 
 ## Example Usage
