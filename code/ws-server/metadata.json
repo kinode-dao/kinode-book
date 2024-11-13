@@ -1,9 +1,9 @@
 {
-    "name": "ws_server",
+    "name": "ws-server",
     "description": "",
     "image": "",
     "properties": {
-        "package_name": "ws_server",
+        "package_name": "ws-server",
         "current_version": "0.1.0",
         "publisher": "template.os",
         "mirrors": [],

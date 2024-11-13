@@ -4,7 +4,7 @@ import asyncio
 import websockets
 
 async def connect_websocket(
-    uri="ws://localhost:8080/ws_server:ws_server:template.os",
+    uri="ws://localhost:8080/ws-server:ws-server:template.os",
     max_retries=5,
     delay_secs=0.5,
 ):
@@ -32,7 +32,7 @@ async def websocket_client():
     await websocket.send(response)
     print(f"Sent to server: {response}")
 
-    websocket.close()
+    await websocket.close()
 
 def main():
     asyncio.run(websocket_client())

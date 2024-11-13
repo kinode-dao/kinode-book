@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
-    "ws_server"
+    "ws-server"
 ]
 
 [profile.release]
