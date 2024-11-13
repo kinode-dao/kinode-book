@@ -1,5 +1,5 @@
 [package]
-name = "mfa_fe_demo_test"
+name = "mfa-fe-demo-test"
 version = "0.1.0"
 edition = "2021"
 

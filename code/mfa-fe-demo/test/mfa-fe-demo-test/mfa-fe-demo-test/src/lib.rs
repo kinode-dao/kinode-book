@@ -17,7 +17,7 @@ fn handle_message(our: &Address) -> anyhow::Result<()> {
     let message = await_message()?;
 
     if !message.is_request() {
-        fail!("mfa_fe_demo_test");
+        fail!("mfa-fe-demo-test");
     }
     let source = message.source();
     if our.node != source.node {
@@ -31,23 +31,23 @@ fn handle_message(our: &Address) -> anyhow::Result<()> {
         ..
     }) = message.body().try_into()?;
     if node_names.len() != 1 {
-        fail!("mfa_fe_demo_test");
+        fail!("mfa-fe-demo-test");
     }
 
-    let our_demo_address = format!("{}@mfa_fe_demo:mfa_fe_demo:template.os", our.node).parse()?;
+    let our_demo_address = format!("{}@mfa-fe-demo:mfa-fe-demo:template.os", our.node).parse()?;
 
     let response = Request::new()
         .target(&our_demo_address)
         .body(MfaRequest::Hello("hello from test".to_string()))
         .send_and_await_response(5)??;
     if response.is_request() {
-        fail!("mfa_fe_demo_test");
+        fail!("mfa-fe-demo-test");
     };
     let MfaResponse::Hello(ref text) = response.body().try_into()? else {
-        fail!("mfa_fe_demo_test");
+        fail!("mfa-fe-demo-test");
     };
     if text != "hello to you too!" {
-        fail!("mfa_fe_demo_test");
+        fail!("mfa-fe-demo-test");
     }
 
     Response::new().body(TesterResponse::Run(Ok(()))).send()?;
@@ -63,8 +63,8 @@ fn init(our: Address) {
         match handle_message(&our) {
             Ok(()) => {}
             Err(e) => {
-                println!("mfa_fe_demo_test: error: {e:?}");
-                fail!("mfa_fe_demo_test");
+                println!("mfa-fe-demo-test: error: {e:?}");
+                fail!("mfa-fe-demo-test");
             }
         };
     }

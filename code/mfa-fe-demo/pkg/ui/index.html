@@ -15,7 +15,7 @@
     </main>
     <script>
         async function say_hello(text) {
-          const result = await fetch("/mfa_fe_demo:mfa_fe_demo:template.os/api", {
+          const result = await fetch("/mfa-fe-demo:mfa-fe-demo:template.os/api", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ "Hello": text }),

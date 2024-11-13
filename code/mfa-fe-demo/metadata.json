@@ -1,9 +1,9 @@
 {
-    "name": "mfa_fe_demo Test",
-    "description": "A test for mfa_fe_demo.",
+    "name": "mfa-fe-demo",
+    "description": "",
     "image": "",
     "properties": {
-        "package_name": "mfa_fe_demo_test",
+        "package_name": "mfa-fe-demo",
         "current_version": "0.1.0",
         "publisher": "template.os",
         "mirrors": [],
@@ -11,10 +11,7 @@
             "0.1.0": ""
         },
         "wit_version": 0,
-        "dependencies": [
-            "mfa_fe_demo:template.os",
-            "tester:sys"
-        ]
+        "dependencies": []
     },
     "external_url": "",
     "animation_url": ""

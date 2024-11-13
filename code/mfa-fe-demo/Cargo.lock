@@ -1448,8 +1448,8 @@ dependencies = [
 
 [[package]]
 name = "kinode_process_lib"
-version = "0.9.0"
-source = "git+https://github.com/kinode-dao/process_lib?tag=v0.9.0#284f202376b3cd3ce0c03aa660a006fc6187f236"
+version = "0.9.4"
+source = "git+https://github.com/kinode-dao/process_lib?rev=778457a#778457ae52c934fd17e0e846127a9472a8e03170"
 dependencies = [
  "alloy",
  "alloy-primitives",
@@ -1530,7 +1530,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3"
 
 [[package]]
-name = "mfa_fe_demo"
+name = "mfa-fe-demo"
 version = "0.1.0"
 dependencies = [
  "anyhow",

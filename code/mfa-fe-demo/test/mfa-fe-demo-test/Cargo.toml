@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
-    "mfa_fe_demo",
+    "mfa-fe-demo-test",
 ]
 
 [profile.release]

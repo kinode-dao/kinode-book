@@ -10,7 +10,7 @@ setup_packages = [
     { path = "..", run = true }
 ]
 setup_scripts = []
-test_package_paths = ["mfa_fe_demo_test"]
+test_package_paths = ["mfa-fe-demo-test"]
 test_scripts = [
     "../curl-endpoint.sh",
 ]
