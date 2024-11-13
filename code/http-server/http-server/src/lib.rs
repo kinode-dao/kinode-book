@@ -5,10 +5,10 @@
 /// kit f
 ///
 /// # Start package from a new terminal.
-/// kit bs http_server
+/// kit bs http-server
 ///
 /// # Send an HTTP request.
-/// curl -X PUT -d '{"Hello": "greetings"}' http://localhost:8080/http_server:http_server:template.os
+/// curl -X PUT -d '{"Hello": "greetings"}' http://localhost:8080/http-server:http-server:template.os
 /// ```
 use anyhow::{anyhow, Result};
 
@@ -21,7 +21,7 @@ wit_bindgen::generate!({
 
 /// Handle a message from the HTTP server.
 fn handle_http_message(message: &Message) -> Result<()> {
-    let Ok(server_request) = http::HttpServerRequest::from_bytes(message.body()) else {
+    let Ok(server_request) = http::server::HttpServerRequest::from_bytes(message.body()) else {
         return Err(anyhow!("received a message with weird `body`!"));
     };
     let Some(http_request) = server_request.request() else {
@@ -35,7 +35,7 @@ fn handle_http_message(message: &Message) -> Result<()> {
             "received a PUT HTTP request with no body, skipping"
         ));
     };
-    http::send_response(http::StatusCode::OK, None, vec![]);
+    http::server::send_response(http::StatusCode::OK, None, vec![]);
     println!(
         "{:?}",
         serde_json::from_slice::<serde_json::Value>(&body.bytes)
@@ -47,12 +47,18 @@ call_init!(init);
 fn init(_our: Address) {
     println!("begin");
 
-    http::bind_http_path("/", false, false).unwrap();
+    let mut server = http::server::HttpServer::new(5);
+    server
+        .bind_http_path(
+            "/",
+            http::server::HttpBindingConfig::new(false, false, false, None),
+        )
+        .unwrap();
 
     loop {
         match await_message() {
             Ok(message) => {
-                if message.source().process == "http_server:distro:sys" {
+                if message.source().process == "http-server:distro:sys" {
                     if let Err(e) = handle_http_message(&message) {
                         println!("{e}");
                     }

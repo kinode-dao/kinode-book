@@ -1,14 +1,14 @@
 [
     {
-        "process_name": "http_server",
-        "process_wasm_path": "/http_server.wasm",
+        "process_name": "http-server",
+        "process_wasm_path": "/http-server.wasm",
         "on_exit": "Restart",
         "request_networking": false,
         "request_capabilities": [
-            "http_server:distro:sys"
+            "http-server:distro:sys"
         ],
         "grant_capabilities": [
-            "http_server:distro:sys"
+            "http-server:distro:sys"
         ],
         "public": false
     }

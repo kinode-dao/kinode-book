@@ -1,9 +1,9 @@
 {
-    "name": "http_server",
+    "name": "http-server",
     "description": "",
     "image": "",
     "properties": {
-        "package_name": "http_server",
+        "package_name": "http-server",
         "current_version": "0.1.0",
         "publisher": "template.os",
         "mirrors": [],
