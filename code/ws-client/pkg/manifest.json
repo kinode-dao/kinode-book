@@ -1,0 +1,15 @@
+[
+    {
+        "process_name": "ws-client",
+        "process_wasm_path": "/ws-client.wasm",
+        "on_exit": "None",
+        "request_networking": false,
+        "request_capabilities": [
+            "http_client:distro:sys"
+        ],
+        "grant_capabilities": [
+            "http_client:distro:sys"
+        ],
+        "public": false
+    }
+]

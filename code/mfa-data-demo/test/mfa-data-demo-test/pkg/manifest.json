@@ -1,0 +1,15 @@
+[
+    {
+        "process_name": "mfa-data-demo-test",
+        "process_wasm_path": "/mfa-data-demo-test.wasm",
+        "on_exit": "Restart",
+        "request_networking": false,
+        "request_capabilities": [
+            "mfa-data-demo:mfa-data-demo:template.os"
+        ],
+        "grant_capabilities": [
+            "mfa-data-demo:mfa-data-demo:template.os"
+        ],
+        "public": true
+    }
+]

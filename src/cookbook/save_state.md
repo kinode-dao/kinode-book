@@ -17,7 +17,7 @@ It is considered good practice to save state any time the process mutates it.
 Here's an example of a process that saves and loads state:
 
 ```rust
-{{#includehidetest ../../code/save_state/save_state/src/lib.rs}}
+{{#includehidetest ../../code/save-state/save-state/src/lib.rs}}
 ```
 
 This process has a simple u64 counter that is incremented on each initialization.

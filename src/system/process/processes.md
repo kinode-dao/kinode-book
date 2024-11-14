@@ -15,20 +15,20 @@ Each process instance has a globally unique identifier, or `Address`, composed o
 
 The way these elements compose is the following:
 
-[Package IDs](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/struct.PackageId.html) look like:
+[`PackageId`s](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.PackageId.html) look like:
 ```
 [package-name]:[publisher-node]
 my-cool-software:publisher-node.os
 ```
 
-[Process IDs](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.ProcessId.html) look like:
+[`ProcessId`s](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.ProcessId.html) look like:
 ```
 [process-name]:[package-name]:[publisher-node]
 process-one:my-cool-software:publisher-node.os
 8513024814:my-cool-software:publisher-node.os
 ```
 
-Finally, [Addresses](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) look like:
+Finally, [`Address`es](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) look like:
 
 ```
 [node]@[process-name]:[package-name]:[publisher-node]

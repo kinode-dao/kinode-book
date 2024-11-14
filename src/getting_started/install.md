@@ -4,7 +4,7 @@ This section will teach you how to get the Kinode core software, required to run
 After acquiring the software, you can learn how to run it and [Join the Network](./login.md).
 
 - If you are just interested in starting development as fast as possible, skip to [My First Kinode Application](../my_first_app/build_and_deploy_an_app.md).
-- If you want to run a Kinode without managing it yourself, use the [Valet](https://valet.kinode.org) hosted service.
+- If you want to run a Kinode without managing it yourself, use the [Valet](https://valet.uncentered.systems) hosted service.
 - If you want to make edits to the Kinode core software, see [Build From Source](#option-3-build-from-source).
 
 ## Option 1: Download Binary (Recommended)

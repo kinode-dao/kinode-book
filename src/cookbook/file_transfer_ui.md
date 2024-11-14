@@ -43,7 +43,7 @@ You just need to build a UI to take advantage of these capabilities.
 ## UI
 
 `kit` has a built-in UI template that you can use to build your UI.
-The UI template is a simple [React](https://reactjs.org/) app that uses [Vite](https://vitejs.dev/) as a build tool.
+The UI template is a simple [React](https://react.dev/) app that uses [Vite](https://vite.dev/) as a build tool.
 
 Our objective is a UI that looks something like this:
 
@@ -55,9 +55,9 @@ Our UI will need to enable all of the above features.
 
 ### Vite
 
-You will develop your UI on [Vite](https://vitejs.dev/), a fast, opinionated frontend build tool.
+You will develop your UI on [Vite](https://vite.dev/), a fast, opinionated frontend build tool.
 It's like [Webpack](https://webpack.js.org/), but faster and with less configuration.
-If you've never used Vite before, check out the [docs](https://vitejs.dev/guide/).
+If you've never used Vite before, check out the [docs](https://vite.dev/guide/).
 
 ### Build it!
 
@@ -148,14 +148,14 @@ Now let's look at the UI code.
 
 ### Example UI Code
 
-The UI is built on [React](https://reactjs.org/), a popular frontend framework.
-If you've never used React before, check out the [docs](https://reactjs.org/docs/getting-started.html).
+The UI is built on [React](https://react.dev), a popular frontend framework.
+If you've never used React before, check out the [docs](https://react.dev/learn).
 
 ### Types and Stores
 
-You will use [Zustand](http://npmjs.org/package/zustand) to manage your state.
+You will use [Zustand](http://npmjs.com/package/zustand) to manage your state.
 Zustand is a simple state management library that uses React hooks.
-If you've never used Zustand before, check out the [docs](https://github.com/pmndrs/zustand?tab=readme-ov-file).
+If you've never used Zustand before, check out the [docs](https://github.com/pmndrs/zustand).
 
 #### `ui/src/types/KinoFile.ts`
 
@@ -254,7 +254,7 @@ export default useFileTransferStore
 
 ### Style
 
-We'll use [Tailwind CSS](https://tailwindcss.com/) for styling.
+We'll use [Tailwind CSS](https://tailwindcss.com) for styling.
 This is a popular CSS framework that allows you to style your app using only CSS classes.
 If you've never used Tailwind before, check out the [docs](https://tailwindcss.com/docs)!
 

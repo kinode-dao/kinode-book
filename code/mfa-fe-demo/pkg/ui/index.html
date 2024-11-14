@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <main>
+        <h1>This is a website!</h1>
+        <p>Enter a message to send to the process:</p>
+        <form id="hello-form" class="col">
+        <input id="hello" required="" name="hello" placeholder="hello world" value="">
+        <button> PUT </button>
+      </form>
+    </main>
+    <script>
+        async function say_hello(text) {
+          const result = await fetch("/mfa-fe-demo:mfa-fe-demo:template.os/api", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ "Hello": text }),
+          });
+          console.log(result);
+        }
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+          const form = document.getElementById("hello-form");
+          form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const text = document.getElementById("hello").value;
+            say_hello(text);
+          });
+        });
+    </script>
+  </body>
+</html>
+

@@ -7,7 +7,7 @@ They are written almost exactly like applications, with a few key differences:
 - Scripts are registered in the `scripts.json` file instead of the `manifest.json` file
 
 ## Writing a Script
-Consider the simplest possible script: `echo` (found in the runtime [here](https://github.com/kinode-dao/kinode/blob/main/kinode/packages/terminal/echo)), which takes in an argument and prints it out again:
+Consider the simplest possible script: `echo` (found in the runtime [here](https://github.com/kinode-dao/kinode/tree/main/kinode/packages/terminal/echo)), which takes in an argument and prints it out again:
 ```rust
 use kinode_process_lib::{script, Address};
 
@@ -31,7 +31,7 @@ This macro handles the boilerplate associated with script processes:
 - Parsing the body of that request into a string
 - Returning a string to be either printed or sent as a response, depending on how the script was called
 
-If you want to create an advanced script, consider looking at the source code of the `script!` macro in [process_lib](https://github.com/kinode-dao/process_lib/blob/9a53504693676094ba06f601312457675d10ca8a/src/scripting/mod.rs#L11).
+If you want to create an advanced script, consider looking at the source code of the `script!` macro in [`process_lib`](https://github.com/kinode-dao/process_lib/blob/9a53504693676094ba06f601312457675d10ca8a/src/scripting/mod.rs#L11).
 
 ## Publishing a Script
 Unlike processes associated with a long-running application, which will be put into the `manifest.json`, scripts must be registered in a separate `scripts.json` file.

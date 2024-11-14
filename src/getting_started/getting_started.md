@@ -9,7 +9,7 @@ You are reading the Kinode Book, which is a technical document targeted at devel
 If you're a non-technical user:
 
 - Learn about Kinode at the [Kinode blog](https://kinode.org/blog).
-- Spin up a hosted node at [Valet](https://valet.kinode.org/).
+- Spin up a hosted node at [Valet](https://valet.uncentered.systems).
 - [Follow us on X](https://x.com/intent/follow?screen_name=Kinode).
 - Join the conversation on [our Discord](https://discord.gg/mYDj74NkfP) or [Telegram](https://t.me/KinodeOS).
 

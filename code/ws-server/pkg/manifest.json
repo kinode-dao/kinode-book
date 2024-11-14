@@ -1,0 +1,15 @@
+[
+    {
+        "process_name": "ws-server",
+        "process_wasm_path": "/ws-server.wasm",
+        "on_exit": "None",
+        "request_networking": false,
+        "request_capabilities": [
+            "http_server:distro:sys"
+        ],
+        "grant_capabilities": [
+            "http_server:distro:sys"
+        ],
+        "public": false
+    }
+]
