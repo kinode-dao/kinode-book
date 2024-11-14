@@ -1,0 +1,16 @@
+[
+    {
+        "process_name": "mfa-data-demo",
+        "process_wasm_path": "/mfa-data-demo.wasm",
+        "on_exit": "None",
+        "request_networking": false,
+        "request_capabilities": [
+            "http_server:distro:sys"
+        ],
+        "grant_capabilities": [
+            "terminal:terminal:sys",
+            "tester:tester:sys"
+        ],
+        "public": false
+    }
+]

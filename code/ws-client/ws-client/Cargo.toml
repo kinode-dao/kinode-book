@@ -1,0 +1,21 @@
+[package]
+name = "ws-client"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+test = []
+
+[dependencies]
+anyhow = "1"
+kinode_process_lib = { git = "https://github.com/kinode-dao/process_lib", tag = "v0.9.6" }
+url = "2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+wit-bindgen = "0.24.0"
+
+[lib]
+crate-type = ["cdylib"]
+
+[package.metadata.component]
+package = "kinode:process"

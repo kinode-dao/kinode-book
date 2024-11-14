@@ -1,0 +1,21 @@
+{
+    "name": "mfa-data-demo Test",
+    "description": "A test for mfa-data-demo.",
+    "image": "",
+    "properties": {
+        "package_name": "mfa-data-demo-test",
+        "current_version": "0.1.0",
+        "publisher": "template.os",
+        "mirrors": [],
+        "code_hashes": {
+            "0.1.0": ""
+        },
+        "wit_version": 0,
+        "dependencies": [
+            "mfa-data-demo:template.os",
+            "tester:sys"
+        ]
+    },
+    "external_url": "",
+    "animation_url": ""
+}

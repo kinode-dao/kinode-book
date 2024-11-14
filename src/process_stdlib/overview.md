@@ -24,7 +24,7 @@ Since the current major version of both is 0, breaking changes can occur at any 
 Once the major version reaches 1, breaking changes will only occur between major versions.
 As is, **developers may have to update their version of `process_lib` as they update Kinode OS.**
 
-Since Kinode apps use the [WebAssembly Component Model](https://component-model.bytecodealliance.org/), they are built on top of a [WIT](https://component-model.bytecodealliance.org/design/wit.html) (Wasm Interface Type) [package](https://github.com/kinode-dao/kinode-wit/blob/master/kinode.wit).
+Since Kinode apps use the [WebAssembly Component Model](https://component-model.bytecodealliance.org/), they are built on top of a [WIT](https://component-model.bytecodealliance.org/design/wit.html) (Wasm Interface Type) [package](https://github.com/kinode-dao/kinode-wit/blob/v0.8/kinode.wit).
 [`wit-bindgen`](https://github.com/bytecodealliance/wit-bindgen) is used to generate Rust code from a WIT file.
 The generated code then contains the core types and functions that are available to all Kinode apps.
 

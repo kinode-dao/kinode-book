@@ -1,7 +1,7 @@
 # Join the Network
 
 This page discusses joining the network with a locally-run Kinode.
-To instead join with a hosted node, see [Valet](https://valet.kinode.org/).
+To instead join with a hosted node, see [Valet](https://valet.uncentered.systems).
 
 These directions are particular to the Kinode beta release.
 Kinode is in active development on Optimism.

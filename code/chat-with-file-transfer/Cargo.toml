@@ -1,0 +1,12 @@
+[workspace]
+resolver = "2"
+members = [
+    "chat-with-file-transfer",
+    "download",
+    "send",
+]
+
+[profile.release]
+panic = "abort"
+opt-level = "s"
+lto = true

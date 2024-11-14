@@ -42,15 +42,14 @@ The [examples below](#examples) show some more working extensions.
 The process [binds a WebSocket](#bind-an-extension-websocket), so Kinode acts as the WebSocket server.
 The extension acts as a client, connecting to the WebSocket served by the Kinode process.
 
-The process sends `HttpServerAction::WebSocketExtPushOutgoing` Requests to the `http_server`(look [here](https://book.kinode.org/http_server_and_client.html
-) and [here](https://book.kinode.org/apis/http_server.html)) to communicate with the extension (see the `enum` defined at the bottom of this section).
+The process sends [`HttpServerAction::WebSocketExtPushOutgoing`](https://docs.rs/kinode_process_lib/0.9.6/kinode_process_lib/http/server/enum.HttpServerAction.html#variant.WebSocketExtPushOutgoing) Requests to the `http_server`(look [here](../http_server_and_client.md) and [here](../..//apis/http_server.md)) to communicate with the extension (see the `enum` defined at the bottom of this section).
 
 Table 1: `HttpServerAction::WebSocketExtPushOutgoing` Inputs
 
 Field Name           | Description
 -------------------- | -----------
 `channel_id`         | Given in a WebSocket message after a client connects.
-`message_type`       | The WebSocketMessage type — recommended to be [`WsMessageType::Binary`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/enum.WsMessageType.html).
+`message_type`       | The WebSocketMessage type — recommended to be [`WsMessageType::Binary`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/server/enum.WsMessageType.html).
 `desired_reply_type` | The Kinode `MessageType` type that the extension should return — `Request` or `Response`.
 
 The [`lazy_load_blob`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.LazyLoadBlob.html) is the payload for the WebSocket message.
@@ -125,7 +124,7 @@ The [WebSocket protocol section](#the-websocket-protocol) above discusses how to
 Briefly, a `HttpServerAction::WebSocketExtPushOutgoing` Request is sent to the `http_server`, with the payload in the `lazy_load_blob`.
 
 It is recommended to use the following protocol:
-1. Use the [`WsMessageType::Binary`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/enum.WsMessageType.html) WebSocket message type and use MessagePack to (de)serialize your messages.
+1. Use the [`WsMessageType::Binary`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/server/enum.WsMessageType.html) WebSocket message type and use MessagePack to (de)serialize your messages.
    [MessagePack](https://msgpack.org) is space-efficient and well supported by a variety of languages.
    Structs, dictionaries, arrays, etc. can be (de)serialized in this way.
    The extension must support MessagePack anyways, since the `HttpServerAction::WebSocketExtPushData` is (de)serialized using it.
@@ -139,7 +138,7 @@ It is recommended to use the following protocol:
 
 At a minimum, the interface process must handle:
 
-Table 2: [`HttpServerRequest`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/enum.HttpServerRequest.html) Variants
+Table 2: [`HttpServerRequest`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/server/enum.HttpServerRequest.html) Variants
 
 `HttpServerRequest` variant | Description
 --------------------------- | -----------
@@ -165,5 +164,5 @@ The `id` and `kinode_message_type` should be mirrored by the extension: what it 
 
 Find some working examples of runtime extensions below:
 
-* [An untrusted Python code runner](https://github.com/hosted-fornet/kinode-python)
-* [A framework for evaluating ML models](https://github.com/hosted-fornet/kinode-ml)
+* [An untrusted Python code runner](https://github.com/nick1udwig/kinode-python)
+* [A framework for evaluating ML models](https://github.com/nick1udwig/kinode-ml)

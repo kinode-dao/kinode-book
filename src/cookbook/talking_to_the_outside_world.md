@@ -12,18 +12,18 @@ This document focuses on simple usage examples of each.
 ### HTTP Client
 
 ```rust
-{{#includehidetest ../../code/http_client/http_client/src/lib.rs}}
+{{#includehidetest ../../code/http-client/http-client/src/lib.rs}}
 ```
 
-[Full example package](https://github.com/kinode-dao/kinode-book/tree/main/src/code/http_client).
+[Full example package](https://github.com/kinode-dao/kinode-book/tree/main/code/http-client).
 
 ### HTTP Server
 
 ```rust
-{{#includehidetest ../../code/http_server/http_server/src/lib.rs}}
+{{#includehidetest ../../code/http-server/http-server/src/lib.rs}}
 ```
 
-[Full example package](https://github.com/kinode-dao/kinode-book/tree/main/src/code/http_server).
+[Full example package](https://github.com/kinode-dao/kinode-book/tree/main/code/http-server).
 
 ## WebSockets
 
@@ -31,29 +31,29 @@ This document focuses on simple usage examples of each.
 
 The Kinode process:
 ```rust
-{{#includehidetest ../../code/ws_client/ws_client/src/lib.rs}}
+{{#includehidetest ../../code/ws-client/ws-client/src/lib.rs}}
 ```
 
 An example WS server:
 ```python
-{{#includehidetest ../../code/ws_client/ws_server.py}}
+{{#includehidetest ../../code/ws-client/ws-server.py}}
 ```
 
-[Full example package & client](https://github.com/kinode-dao/kinode-book/tree/main/src/code/ws_client).
+[Full example package & client](https://github.com/kinode-dao/kinode-book/tree/main/code/ws-client).
 
 ## WebSockets Server
 
 The Kinode process:
 ```rust
-{{#includehidetest ../../code/ws_server/ws_server/src/lib.rs}}
+{{#includehidetest ../../code/ws-server/ws-server/src/lib.rs}}
 ```
 
 An example WS client:
 ```python
-{{#includehidetest ../../code/ws_server/ws_client.py}}
+{{#includehidetest ../../code/ws-server/ws-client.py}}
 ```
 
-[Full example package & client](https://github.com/kinode-dao/kinode-book/tree/main/src/code/ws_server).
+[Full example package & client](https://github.com/kinode-dao/kinode-book/tree/main/code/ws-server).
 
 ## WebSockets Server with Reply Type
 
@@ -64,14 +64,14 @@ Use the following pattern to allow the WebSocket client to reply with a Response
 
 The Kinode process:
 ```rust
-{{#includehidetest ../../code/ws_server_with_reply/ws_server_with_reply/src/lib.rs}}
+{{#includehidetest ../../code/ws-server-with-reply/ws-server-with-reply/src/lib.rs}}
 ```
 
 An example WS client:
 ```python
-{{#includehidetest ../../code/ws_server_with_reply/ws_client.py}}
+{{#includehidetest ../../code/ws-server-with-reply/ws-client.py}}
 ```
 
-[Full example package & client](https://github.com/kinode-dao/kinode-book/tree/main/src/code/ws_server_with_reply).
+[Full example package & client](https://github.com/kinode-dao/kinode-book/tree/main/code/ws-server-with-reply).
 
 You can find this pattern used in [Kinode Extensions](../system/process/extensions.md).

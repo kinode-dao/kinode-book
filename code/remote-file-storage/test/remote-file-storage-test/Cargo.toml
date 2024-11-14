@@ -1,0 +1,10 @@
+[workspace]
+resolver = "2"
+members = [
+    "remote-file-storage-test",
+]
+
+[profile.release]
+panic = "abort"
+opt-level = "s"
+lto = true

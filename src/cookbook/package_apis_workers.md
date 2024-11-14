@@ -54,7 +54,7 @@ The `file_transfer` process imports and uses the exported `start_download()`:
 
 #### `metadata.json`
 
-The [`metadata.json`](https://github.com/kinode-dao/kinode-book/blob/main/src/code/chat_with_file_transfer/metadata.json#L14-L16) file has a `properties.dependencies` field.
+The [`metadata.json`](https://github.com/kinode-dao/kinode-book/blob/main/src/code/chat-with-file-transfer/metadata.json#L14-L16) file has a `properties.dependencies` field.
 When the `dependencies` field is populated, [`kit build`](../kit/build.md) will fetch that dependency from a Kinode hosting it.
 
 See [previous recipe](./package_apis.md#dependencies) for more discussion of dependencies.
@@ -68,13 +68,13 @@ Compare the [process](#process-1) with the unmodified `kit n chat` process.
 #### WIT API
 
 ```rust
-{{#includehidetest ../../code/chat_with_file_transfer/api/chat_with_file_transfer:template.os-v0.wit}}
+{{#includehidetest ../../code/chat-with-file-transfer/api/chat-with-file-transfer:template.os-v0.wit}}
 ```
 
 #### Process
 
 ```rust
-{{#includehidetest ../../code/chat_with_file_transfer/chat_with_file_transfer/src/lib.rs}}
+{{#includehidetest ../../code/chat-with-file-transfer/chat-with-file-transfer/src/lib.rs}}
 ```
 
 ## Chat with File Transfer Usage Example
@@ -93,22 +93,22 @@ kit b file_transfer -a file_transfer/pkg/file_transfer_worker.wasm
 
 # Build chat_with_file_transfer.
 ## The `-l` satisfies the dependency using a local path.
-kit b src/../code/chat_with_file_transfer -l file_transfer
+kit b src/../code/chat-with-file-transfer -l file-transfer
 
 # Start chat_with_file_transfer on fake nodes.
-kit s src/../code/chat_with_file_transfer
-kit s src/../code/chat_with_file_transfer -p 8081
+kit s src/../code/chat-with-file-transfer
+kit s src/../code/chat-with-file-transfer -p 8081
 ```
 
 ### Usage
 
 ```
-# First, put a file into `/tmp/kinode-fake-node-2/vfs/chat_with_file_transfer:template.os/files/`, e.g.:
-echo 'hello world' > /tmp/kinode-fake-node-2/vfs/chat_with_file_transfer:template.os/files/my_file.txt
+# First, put a file into `/tmp/kinode-fake-node-2/vfs/chat-with-file-transfer:template.os/files/`, e.g.:
+echo 'hello world' > /tmp/kinode-fake-node-2/vfs/chat-with-file-transfer:template.os/files/my_file.txt
 
 # In fake.dev terminal, download the file.
-download:chat_with_file_transfer:template.os my_file.txt fake2.dev
+download:chat-with-file-transfer:template.os my_file.txt fake2.dev
 
 # Confirm file was downloaded:
-cat /tmp/kinode-fake-node/vfs/chat_with_file_transfer:template.os/files/my_file.txt
+cat /tmp/kinode-fake-node/vfs/chat-with-file-transfer:template.os/files/my_file.txt
 ```
