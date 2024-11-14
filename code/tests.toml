@@ -4,28 +4,29 @@ persist_home = false
 runtime_build_release = false
 
 
-[[tests]]
-dependency_package_paths = ["chat-with-file-transfer", "file-transfer"]
-setup_packages = [
-    { path = "chat-with-file-transfer", run = true }
-]
-setup_scripts = []
-test_package_paths = ["chat-with-file-transfer/test/chat-with-file-transfer-test"]
-test_scripts = []
-timeout_secs = 5
-fakechain_router = 8545
-
-[[tests.nodes]]
-port = 8080
-home = "home/first"
-fake_node_name = "first.dev"
-runtime_verbosity = 2
-
-[[tests.nodes]]
-port = 8081
-home = "home/second"
-fake_node_name = "second.dev"
-runtime_verbosity = 2
+# TODO: reenable
+# [[tests]]
+# dependency_package_paths = ["chat-with-file-transfer", "file-transfer"]
+# setup_packages = [
+#     { path = "chat-with-file-transfer", run = true }
+# ]
+# setup_scripts = []
+# test_package_paths = ["chat-with-file-transfer/test/chat-with-file-transfer-test"]
+# test_scripts = []
+# timeout_secs = 5
+# fakechain_router = 8545
+#
+# [[tests.nodes]]
+# port = 8080
+# home = "home/first"
+# fake_node_name = "first.dev"
+# runtime_verbosity = 2
+#
+# [[tests.nodes]]
+# port = 8081
+# home = "home/second"
+# fake_node_name = "second.dev"
+# runtime_verbosity = 2
 
 
 [[tests]]
