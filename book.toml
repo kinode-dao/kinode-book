@@ -19,6 +19,8 @@ level = 1
 
 [output.linkcheck]
 
+[output.single_file]
+
 [preprocessor.webinclude]
 
 [preprocessor.hide-feature]

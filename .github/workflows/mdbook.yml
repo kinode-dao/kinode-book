@@ -141,7 +141,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install mdBook
         run: |
-          cargo install --git https://github.com/nick1udwig/mdBook --branch hf/dont-write-searchindex-json --locked mdbook
+          cargo install --git https://github.com/nick1udwig/mdBook --branch hf/output-single-md-file --locked mdbook
           cargo install mdbook-linkcheck
           cargo install mdbook-webinclude
           cargo install --git https://github.com/nick1udwig/mdbook-hide-feature --locked
@@ -166,7 +166,7 @@ jobs:
           release_name: Release ${{ github.run_number }}
           draft: false
           prerelease: false
-      - name: Upload Release Asset
+      - name: Upload Release Asset (.tar.gz)
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -175,6 +175,15 @@ jobs:
           asset_path: ./book.tar.gz
           asset_name: book.tar.gz
           asset_content_type: application/gzip
+      - name: Upload Release Asset (.md)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./book/single-file/book.md
+          asset_name: book.md
+          asset_content_type: text/markdown
 
   deploy:
     environment:
