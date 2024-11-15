@@ -20,15 +20,13 @@ kit new my-rust-chat
 
 # Create rust chat with UI
 kit new my-rust-chat-with-ui --ui
-
-# Create fibonacci in python
-kit new my-py-fib --language python --template fibonacci
 ```
 
 ## Discussion
 
 You can create a variety of templates using `kit new`.
-Currently, three languages are supported: `rust` (the default), `python`, and `javascript`.
+Currently, one language is supported: `rust`.
+Ask us in the [Discord](https://discord.gg/mYDj74NkfP) about `python`, and `javascript` templates.
 Four templates are currently supported, as described in the [following section](./new.html#existshas-ui-enabled-version).
 In addition, some subset of these templates also have a UI-enabled version.
 
@@ -39,8 +37,6 @@ The following table specifies whether a template "Exists/Has UI-enabled version"
 Language     | `chat`  | `echo` | `fibonacci` | `file-transfer`
 ------------ | ------- | ------ | ----------- | ---------------
 `rust`       | yes/yes | yes/no | yes/no      | yes/no
-`python`     | yes/no  | yes/no | yes/no      | no/no
-`javascript` | yes/no  | yes/no | yes/no      | no/no
 
 Brief description of each template:
 
@@ -58,13 +54,13 @@ Create a Kinode template package
 Usage: kit new [OPTIONS] <DIR>
 
 Arguments:
-  <DIR>  Path to create template directory at
+  <DIR>  Path to create template directory at (must contain only a-z, A-Z, 0-9, `-`)
 
 Options:
-  -a, --package <PACKAGE>      Name of the package [default: DIR]
-  -u, --publisher <PUBLISHER>  Name of the publisher [default: template.os]
-  -l, --language <LANGUAGE>    Programming language of the template [default: rust] [possible values: rust, python, javascript]
-  -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: chat, echo, fibonacci, file-transfer]
+  -a, --package <PACKAGE>      Name of the package (must contain only a-z, A-Z, 0-9, `-`) [default: DIR]
+  -u, --publisher <PUBLISHER>  Name of the publisher (must contain only a-z, A-Z, 0-9, `-`, `.`) [default: template.os]
+  -l, --language <LANGUAGE>    Programming language of the template [default: rust] [possible values: rust]
+  -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: blank, chat, echo, fibonacci, file-transfer]
       --ui                     If set, use the template with UI
   -h, --help                   Print help
 ```
@@ -93,7 +89,8 @@ Must be Kimap-safe (plus `.`): contain only a-z, A-Z, 0-9, `-`, and `.`.
 short: `-l`
 
 Template language; defaults to `rust`.
-Currently supports `rust`, `python`, and `javascript`.
+Currently supports `rust`.
+Ask us in the [Discord](https://discord.gg/mYDj74NkfP) about `python`, and `javascript` templates.
 
 ### `--template`
 

@@ -18,68 +18,38 @@ my-package
 
 ## Serving Static Assets
 
-The simplest way to serve a UI is using the `serve_ui` function from `process_lib`:
+The simplest way to serve a UI is using the [`http::HttpServer::serve_ui()`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/server/struct.HttpServer.html#method.serve_ui) method from `process_lib`:
 
 ```rs
-serve_ui(&our, "ui", true, false, vec!["/"]).unwrap();
+let mut server = http::server::HttpServer::new(5);
+server
+    .serve_ui(
+        &our,
+        "ui",
+        vec!["/"],
+        http::server::HttpBindingConfig::new(true, false, false, None),
+    )
+    .unwrap();
 ```
 
 This will serve the `index.html` in the specified folder at the home path of your process.
-If your process is called `main:my-package:myusername.os` and your Kinode is running locally on port 8080,
-then the UI will be served at `http://localhost:8080/main:my-package:myusername.os`.
+If your process is called `main:my-package:myusername.os` and your Kinode is running locally on port 8080, then the UI will be served at `http://localhost:8080/main:my-package:myusername.os`.
 
-`serve_ui` takes five arguments: the process' `&Address`, the name of the folder inside `pkg` that contains the `index.html` and other associated UI files, whether the UI requires authentication, whether the UI is local-only, and the path(s) on which to serve the UI (usually `["/"]`).
-By convention, this is the `ui` directory inside of the `pkg` directory that will be uploaded when you install the process.
-There must be an `index.html` in the `"ui"` directory (or whatever your top-level directory is called).
+`serve_ui` takes four arguments:
+1. The process' `&Address`
+2. The name of the folder inside `pkg` that contains the `index.html` and other associated UI files.
+   By convention, this is the `ui` directory inside of the `pkg` directory that will be uploaded when you install the process.
+   There must be an `index.html` in the `"ui"` directory (or whatever your top-level directory is called).
+3. The path(s) on which to serve the UI (usually `["/"]`)
+4. The configuration for the binding:
+   - Whether the UI requires authentication
+   - Whether the UI is local-only
+   - Whether the content is static (not relevant here)
+   - Whether to serve as a secure subdomain
 
-Under the hood, `serve_ui` uses `http_bind_static_path` which caches files in memory with `http_server` to respond to HTTP requests more quickly.
-The signature for `http_bind_static_path` is below:
-
-```rs
-pub fn bind_http_static_path<T>(
-    path: T,
-    authenticated: bool,
-    local_only: bool,
-    content_type: Option<String>,
-    content: Vec<u8>,
-) -> anyhow::Result<()>
-```
-
+Under the hood, `serve_ui` uses [`bind_http_static_path`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/server/struct.HttpServer.html#method.bind_http_static_path) which caches files in memory with `http_server` to respond to HTTP requests more quickly.
 The two additional parameters are the `content_type` (an optional String) and the `content` (bytes).
 The content will be served at the named route with the `Content-Type` header set appropriately.
 
 Note that `serve_ui` caches all files in `http_server`, so if your website or web app has hundreds of MBs of asset files (like high-res images), then you will want to use a different method to serve content.
-In this case, you would bind the `index.html` file to your main route, and then bind a given HTTP route to serve all of your assets like so:
-
-```rs
-serve_index_html(&our, "ui", true, false, vec!["/"]).unwrap();
-bind_http_path("/assets/*", true, false).unwrap();
-```
-
-Then in your request handler, you can use `handle_ui_asset_request` to get the file whose path matches the HTTP route of the request:
-
-```rs
-let body = message.body();
-if let Ok(http_request) = serde_json::from_slice::<HttpServerRequest>(body) {
-    match http_request {
-        HttpServerRequest::Http(IncomingHttpRequest { url, .. }) => {
-            if url.contains(&format!("/{}/assets/", our.process.to_string())) {
-                return handle_ui_asset_request(our, "ui", &url);
-            }
-        }
-        _ => {}
-    }
-}
-```
-
-`handle_ui_asset_request` takes our (&Address), the top-level directory that contains the files, and the `url` of the incoming request.
-In this case, the `/assets` directory must be in the `/ui` directory which must be uploaded from `pkg` when the process is installed.
-So your project would look like this:
-
-```
-my-package
-└── pkg
-    └── ui
-        ├── assets
-        └── index.html
-```
+For example, see the [`docs:docs:nick.kino` application](https://github.com/nick1udwig/docs/blob/master/docs/src/lib.rs).

@@ -9,7 +9,7 @@ In the last section, you created a simple request-response pattern that uses str
 This is fine for certain limited cases, but in practice, most Kinode processes written in Rust use a `body` type that is serialized and deserialized to bytes using [Serde](https://serde.rs/).
 There are a multitude of libraries that implement Serde's `Serialize` and `Deserialize` traits, and the process developer is responsible for selecting a strategy that is appropriate for their use case.
 
-Some popular options are `bincode`, [`rmp_serde`](https://docs.rs/rmp-serde/latest/rmp_serde/) ([MessagePack](https://msgpack.org/index.html)), and `serde_json`.
+Some popular options are [`bincode`](https://docs.rs/bincode/latest/bincode/), [`rmp_serde`](https://docs.rs/rmp-serde/latest/rmp_serde/) ([MessagePack](https://msgpack.org/index.html)), and [`serde_json`](https://docs.rs/serde_json/latest/serde_json/).
 In this section, you will use `serde_json` to serialize your Rust structs to a byte vector of JSON.
 
 ### Defining the `body` Type
@@ -20,7 +20,7 @@ Our old request looked like this:
 ```
 
 What if you want to have two kinds of messages, which your process can handle differently?
-You need a type that implements the `Serialize` and `Deserialize` traits, and use that as your `body` type.
+You need a type that implements the `serde::Serialize` and `serde::Deserialize` traits, and use that as your `body` type.
 You can define your types in Rust, but then:
 1. Processes in other languages will then have to rewrite your types.
 2. Importing types is haphazard and on a per-package basis.
@@ -56,7 +56,7 @@ This comes with a number of benefits:
 
 Defining `body` types is just one step towards writing interoperable code.
 It's also critical to document the overall structure of the program along with message `blob`s and `metadata` used, if any.
-Writing interoperable code is necessary for enabling permissionless composability, and Kinode OS aims to make this the default kind of program, unlike the centralized web.
+Writing interoperable code is necessary for enabling permissionless composability, and Kinode aims to make this the default kind of program, unlike the centralized web.
 
 ### Handling Messages
 
@@ -82,7 +82,9 @@ That way, you can use the terminal to send `Hello` and `Goodbye` messages.
 Go into the manifest, and under the process name, edit (or add) the `grant_capabilities` field like so:
 
 ```json
-{{#include ../../code/mfa-data-demo/pkg/manifest.json:10:12}}
+...
+{{#include ../../code/mfa-data-demo/pkg/manifest.json:10:13}}
+...
 ```
 
 ### Build and Run the Code!
@@ -101,19 +103,19 @@ Get the address of your process by looking at the "started" printout that came f
 As a reminder, these values (`<your_process>`, `<your_package>`, `<your_publisher>`) can be found in the `metadata.json` and `manifest.json` package files.
 
 ```bash
-m our@<your_process>:<your_package>:<your_publisher> '{"Hello": "hey there"}'
+m our@<your-process>:<your-package>:<your-publisher> '{"Hello": "hey there"}'
 ```
 
 You should see the message text printed.
 To grab and print the Response, append a `-a 5` to the terminal command:
 ```bash
-m our@<your_process>:<your_package>:<your_publisher> '{"Hello": "hey there"}' -a 5
+m our@<your-process>:<your-package>:<your-publisher> '{"Hello": "hey there"}' -a 5
 ```
 Next, try a goodbye.
 This will cause the process to exit.
 
 ```bash
-m our@<your_process>:<your_package>:<your_publisher> '"Goodbye"'
+m our@<your-process>:<your-package>:<your-publisher> '"Goodbye"'
 ```
 
 If you try to send another `Hello` now, nothing will happen, because the process has exited [(assuming you have set `on_exit: "None"`; with `on_exit: "Restart"` it will immediately start up again)](#aside-on_exit).

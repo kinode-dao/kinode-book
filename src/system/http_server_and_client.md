@@ -1,13 +1,14 @@
 # HTTP Server & Client
 
 No server or web services backend would be complete without an HTTP interface.
-Kinodes must be able to both create and serve HTTP requests.
-This enables Kinode apps to read data from the web (and other Kinodes), and also serve both public and private websites and APIs.
-The HTTP server is how most processes in the Kinode present their interface to the user, through an authenticated web browser.
+Kinode can both create and serve HTTP requests.
+As a result, Kinode apps can read data from the web (and other Kinodes), and also serve both public and private websites and APIs.
+The HTTP server is how most processes in Kinode present their interface to the user, through an authenticated web browser.
 
 The specification for the [server](../apis/http_server.md) and [client](../apis/http_client.md) APIs are available in the API reference.
 These APIs are accessible via messaging the [`http_server:distro:sys`](https://github.com/kinode-dao/kinode/blob/main/kinode/src/http/server.rs) and [`http_client:distro:sys`](https://github.com/kinode-dao/kinode/blob/main/kinode/src/http/client.rs) runtime modules, respectively.
-The only [capability](../system/process/capabilities.md) required to use either process is the one to message it, granted by the kernel.
+The only [`capability`](../system/process/capabilities.md) required to use either process is the one to message it, granted by the kernel.
+It is recommended to interact with the `http_server` and `http_client` using the [`kinode_process_lib`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/index.html)
 
 WebSocket server/client functionality is presented alongside HTTP.
 
@@ -18,7 +19,11 @@ At startup, the server either:
 
 The server then binds this port, listening for HTTP and WebSocket requests.
 
-**You can find usage examples [here](../cookbook/talking_to_the_outside_world.md).**
+You can find usage examples [here](../cookbook/talking_to_the_outside_world.md).
+See also [`kit new`](../kit/new.md)s `chat` with GUI template which you can create using
+```
+kit new my-chat --ui
+```
 
 ## Private and Public Serving
 

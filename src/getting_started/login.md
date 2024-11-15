@@ -14,6 +14,10 @@ Print out the arguments expected by the binary:
 
 ```
 $ ./kinode --help
+
+DOCKER_BUILD_IMAGE_VERSION: none
+PACKAGES_ZIP_HASH: 9558ea0e2180aea1afc69cbf055a4da14c51cea67fbff9cfb847533caef301fd
+
 A General Purpose Sovereign Cloud Computing Platform
 
 Usage: kinode [OPTIONS] <home>
@@ -22,16 +26,38 @@ Arguments:
   <home>  Path to home directory
 
 Options:
-      --port <PORT>            Port to bind [default: first unbound at or above 8080]
-      --ws-port <PORT>         Kinode internal WebSockets protocol port [default: first unbound at or above 9000]
-      --tcp-port <PORT>        Kinode internal TCP protocol port [default: first unbound at or above 10000]
-      --verbosity <VERBOSITY>  Verbosity level: higher is more verbose [default: 0]
-      --reveal-ip              If set to false, as an indirect node, always use routers to connect to other nodes.
-      --detached               Run in detached mode (don't accept input)
-      --rpc <RPC>              Add a WebSockets RPC URL at boot
-      --password <PASSWORD>    Node password (in double quotes)
-  -h, --help                   Print help
-  -V, --version                Print version
+  -p, --port <PORT>
+          Port to bind [default: first unbound at or above 8080]
+      --ws-port <PORT>
+          Kinode internal WebSockets protocol port [default: first unbound at or above 9000]
+      --tcp-port <PORT>
+          Kinode internal TCP protocol port [default: first unbound at or above 10000]
+  -v, --verbosity <VERBOSITY>
+          Verbosity level: higher is more verbose [default: 0]
+  -l, --logging-off
+          Run in non-logging mode (toggled at runtime by CTRL+L): do not write all terminal output to file in .terminal_logs directory
+      --reveal-ip
+          If set to false, as an indirect node, always use routers to connect to other nodes.
+  -d, --detached
+          Run in detached mode (don't accept input)
+      --rpc <RPC>
+          Add a WebSockets RPC URL at boot
+      --password <PASSWORD>
+          Node password (in double quotes)
+      --max-log-size <MAX_LOG_SIZE_BYTES>
+          Max size of all logs in bytes; setting to 0 -> no size limit (default 16MB)
+      --number-log-files <NUMBER_LOG_FILES>
+          Number of logs to rotate (default 4)
+      --max-peers <MAX_PEERS>
+          Maximum number of peers to hold active connections with (default 32)
+      --max-passthroughs <MAX_PASSTHROUGHS>
+          Maximum number of passthroughs serve as a router (default 0)
+      --soft-ulimit <SOFT_ULIMIT>
+          Enforce a static maximum number of file descriptors (default fetched from system)
+  -h, --help
+          Print help
+  -V, --version
+          Print version
 ```
 
 A home directory must be supplied — where the node will store its files.
@@ -74,6 +100,8 @@ In a terminal window, run:
 ./kinode path/to/home
 ```
 
+where `path/to/home` is the directory where you want your new node's files to be placed, or, if booting an existing node, is that node's existing home directory.
+
 A new browser tab should open, but if not, look in the terminal for this line:
 
 ```
@@ -85,27 +113,22 @@ and open that `localhost` address in a web browser.
 ## Registering an Identity
 
 Next, register an identity.
-If the page looks like:
 
-![Register need wallet](../assets/register-need-wallet.png)
+![Register start](../assets/register-start.png)
 
-then proceed to [Acquiring a Wallet](#aside-acquiring-a-wallet).
-Otherwise, if the page looks like:
-
-![Register have wallet](../assets/register-have-wallet.png)
-
-the browser already has a supported wallet installed.
-Click `Register Kinode Name` and proceed to [Connecting the Wallet](#connecting-the-wallet).
+Click `Register .os Name`.
+If you've already got a wallet, proceed to [Connecting the Wallet](#connecting-the-wallet).
+Otherwise, you're going to need to [Acquire a Wallet](#aside-acquiring-a-wallet).
 
 ### Aside: Acquiring a Wallet
 
 To register an identity, Kinode must send an Ethereum transaction, which requires ETH and a cryptocurrency wallet.
 While many wallets will work, the examples below use Metamask.
-Install Metamask [here](https://metamask.io/download/).
+Install Metamask [here](https://metamask.io/download/) if you don't already have it.
 
 ### Connecting the Wallet
 
-After clicking 'Register Kinode Name', click `Connect Wallet` and follow the wallet prompts:
+After clicking `Register .os Name`, follow the prompts in the `Connect a Wallet` modal (if you haven't already connected a wallet):
 
 ![Register connect wallet](../assets/register-connect-wallet.png)
 
@@ -143,14 +166,22 @@ As an indirect node, only your router knows your IP.
 
 After clicking `Register .os name`, click through the wallet prompts to send the transaction:
 
-![Register wallet prompt](../assets/register-wallet-prompt.png)
+![Register confirm wallet](../assets/register-confirm-wallet.png)
+
+![Register metamask](../assets/register-metamask.png)
+
+You'll see your node name being pre-committed, and then will send another transaction to mint:
+
+![Register precommitting](../assets/register-precommitting.png)
+
+![Register mint](../assets/register-mint.png)
 
 ### What Does the Password Do?
 
+Finally, you'll set your password.
+
 The password encrypts the node's networking key.
 The networking key is how your node communicates securely with other nodes, and how other nodes can be certain that you are who you say you are.
-
-![Register set password](../assets/register-set-password.png)
 
 ## Welcome to the Network
 

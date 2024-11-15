@@ -195,7 +195,7 @@ Connections may be closed due to inactivity or load-balancing. This behavior is 
 
 The TCP protocol is largely the same as the WebSockets protocol but without the use of Binary frames. `KernelMessage`s are instead streamed.
 More documentation to come -- for now, read source here:
-https://github.com/kinode-dao/kinode/blob/main/kinode/src/net/tcp/utils.rs
+[https://github.com/kinode-dao/kinode/blob/main/kinode/src/net/tcp/utils.rs](https://gist.github.com/nick1udwig/d3d2d8ef588258162bdad1d1bbcabf43)
 
 ### 6. Connection Maintenance and Errors
 

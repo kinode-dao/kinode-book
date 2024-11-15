@@ -22,21 +22,28 @@ Note that while the `kns_indexer` and `app_store` apps in fake nodes use this ch
 ## Arguments
 
 ```
-$ kit c --help
+$ kit chain --help
 Start a local chain for development
 
 Usage: kit chain [OPTIONS]
 
 Options:
-  -p, --port <PORT>  Port to run the chain on [default: 8545]
-  -v, --verbose      If set, output stdout and stderr
-  -h, --help         Print help
+  -p, --port <PORT>        Port to run the chain on [default: 8545]
+  -v, --version <VERSION>  Version of Kinode binary to run chain for (foundry version must match Kinode version) [default: latest] [possible values: latest, v0.9.9, v0.9.8, v0.9.7]
+  -v, --verbose            If set, output stdout and stderr
+  -h, --help               Print help
 ```
 
 ### `--port`
 
 Port to run anvil fakechain on.
 Defaults to `8545`.
+
+### `--version`
+
+Kinode binary version to run chain for.
+Different Kinode versions have different `foundry` compatibility due to breaking changes in chain state formatting.
+`kit` will prompt you to install the proper version of `foundry`.
 
 ### `--verbose`
 

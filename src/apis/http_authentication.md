@@ -1,6 +1,6 @@
 # HTTP API
 
-In Kinode OS, incoming HTTP requests are handled by a Rust `warp` server in the core `http_server:distro:sys` process.
+Incoming HTTP requests are handled by a Rust `warp` server in the core `http_server:distro:sys` process.
 This process handles binding (registering) routes, simple JWT-based authentication, and serving a `/login` page if auth is missing.
 
 ## Binding (Registering) HTTP Paths

@@ -12,7 +12,8 @@ It can be retrieved later only by `get_state`, and only the original process tha
 Processes frequently use this feature to maintain key state between restarts, which can happen at any time as a result of crashes, package updates, or node reboots.
 It is considered good practice to save state any time the process mutates it.
 
-**Keep in mind that every state set/get incurs an asynchronous disk read/write for the entire state object. If storing large amounts of data, consider using the [`vfs`, `sqlite`, and/or `kv` modules](../system/databases.md)!**
+**Keep in mind that every state set/get incurs an asynchronous disk read/write for the entire state object.
+If storing large amounts of data, consider using the [`vfs`, `sqlite`, and/or `kv` modules](../system/databases.md)!**
 
 Here's an example of a process that saves and loads state:
 

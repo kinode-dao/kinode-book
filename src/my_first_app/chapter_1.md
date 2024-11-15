@@ -6,7 +6,7 @@ The application will be a simple chat interface: `my-chat-app`.
 
 The following assumes a Unix environment — macOS or Linux.
 If on Windows, [get WSL](https://learn.microsoft.com/en-us/windows/wsl/install) first.
-In general, Kinode OS does not support Windows.
+In general, Kinode does not support Windows.
 
 ## Acquiring Rust and the Kinode Development Tools (`kit`)
 
@@ -16,6 +16,8 @@ Install Rust and the Kinode Development Tools, or `kit`:
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 cargo install --git https://github.com/kinode-dao/kit --locked
 ```
+
+You can find a video guide that walks through setting up `kit` [here](https://www.youtube.com/watch?v=N8B_s_cm61k).
 
 ## Creating a New Kinode Package Template
 
@@ -30,12 +32,12 @@ Create a Kinode template package
 Usage: kit new [OPTIONS] <DIR>
 
 Arguments:
-  <DIR>  Path to create template directory at
+  <DIR>  Path to create template directory at (must contain only a-z, A-Z, 0-9, `-`)
 
 Options:
-  -a, --package <PACKAGE>      Name of the package [default: DIR]
-  -u, --publisher <PUBLISHER>  Name of the publisher [default: template.os]
-  -l, --language <LANGUAGE>    Programming language of the template [default: rust] [possible values: rust, python, javascript]
+  -a, --package <PACKAGE>      Name of the package (must contain only a-z, A-Z, 0-9, `-`) [default: DIR]
+  -u, --publisher <PUBLISHER>  Name of the publisher (must contain only a-z, A-Z, 0-9, `-`, `.`) [default: template.os]
+  -l, --language <LANGUAGE>    Programming language of the template [default: rust] [possible values: rust]
   -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: blank, chat, echo, fibonacci, file-transfer]
       --ui                     If set, use the template with UI
   -h, --help                   Print help
@@ -77,9 +79,7 @@ my-chat-app
 └── test
     ├── my-chat-app-test
     │   ├── api
-    │   │   ├── my-chat-app:template.os-v0.wit
-    │   │   ├── my-chat-app_test:template.os-v0.wit
-    │   │   └── tester:sys-v0.wit
+    │   │   └── my-chat-app-test:template.os-v0.wit
     │   ├── Cargo.toml
     │   ├── metadata.json
     │   ├── my-chat-app-test
@@ -110,7 +110,7 @@ The `pkg/` dirctory contains two files:
 The `pkg/` directory is also where `.wasm` binaries will be deposited by [`kit build`](#building-the-package).
 The files in the `pkg/` directory are injected into the Kinode with [`kit start-package`](#starting-the-package).
 
-The `metadata.json` is a required file that contains app metadata which is used in the Kinode [App Store](./chapter_5.html)
+The `metadata.json` is a required file that contains app metadata which is used in the Kinode [App Store](./chapter_5.html).
 
 The `api/` directory contains the [WIT API](../system/process/wit_apis.md) for the `my-chat-app` package, see more discussion [below](#api).
 
@@ -142,6 +142,7 @@ $ cat my-chat-app/pkg/manifest.json
         "request_networking": true,
         "request_capabilities": [
             "http_server:distro:sys",
+            "vfs:distro:sys"
         ],
         "grant_capabilities": [],
         "public": true
@@ -203,8 +204,10 @@ The rest of these fields are not required for development, but become important 
 As an aside: each process has a unique `ProcessId`, used to address messages to that process, that looks like
 
 ```
-<process_name>:<package_name>:<publisher>
+<process-name>:<package-name>:<publisher-node>
 ```
+
+Each field separated by `:`s must be "Kimap safe", i.e. can only contain a-z, A-Z, 0-9, `-` (and, for publisher node, `.`).
 
 You can read more about `ProcessId`s [here](../system/process/processes.md#overview).
 
@@ -255,7 +258,7 @@ By default, the fake node will bind to port `8080`.
 Note the port number in the output for [later](#starting-the-package); it will look something like:
 
 ```bash
-Fri 12/8 15:43 http_server: running on port 8080
+Thu 22:50 http_server: running on port 8080
 ```
 
 `kit boot-fake-node` also accepts a `--runtime-path` argument.
@@ -280,7 +283,7 @@ To develop on a real Kinode, connect to the network and follow the instructions 
 
 ## Starting the Package
 
-Now it is time to load and initiate the `my-chat-app` package. For this, you will use the `kit start-package` tool.
+Now it is time to load and initiate the `my-chat-app` package. For this, you will use the [`kit start-package`](../kit/start-package.md) tool.
 Like [`kit build`](#building-the-package), the `kit start-package` tool takes an optional directory argument — the package — defaulting to the current working directory.
 It also accepts a URL: the address of the node on which to initiate the package.
 The node's URL can be input in one of two ways:
@@ -308,7 +311,7 @@ where here the port provided following `-p` must match the port bound by the nod
 The node's terminal should display something like
 
 ```
-Fri 12/8 15:54 my-chat-app: begin
+Thu 22:51 app_store:sys: successfully installed my-chat-app:template.os
 ```
 
 Congratulations: you've now built and installed your first application on Kinode!
@@ -358,7 +361,7 @@ kit inject-message my-chat-app:my-chat-app:template.os '{"Send": {"target": "fak
 
 ## Testing the Package
 
-To run the `my-chat-app/` tests, close all fake nodes and then run
+To run the `my-chat-app/` tests, *first close all fake nodes* and then run
 
 ```bash
 kit run-tests my-chat-app

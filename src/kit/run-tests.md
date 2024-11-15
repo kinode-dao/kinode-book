@@ -29,6 +29,8 @@ Each test package must respond to the `tester` package with a `Pass` or `Fail`.
 The `tester` package stops on the first `Fail`, or responds with a `Pass` if all tests `Pass`.
 If a given test `Pass`es, the next test in the series is run.
 
+Examples of tests are the [Kinode Book's code examples](https://github.com/kinode-dao/kinode-book/tree/main/code) and [`kit`s templates](https://github.com/kinode-dao/kit/tree/master/src/new/templates/rust).
+
 ## Arguments
 
 ```

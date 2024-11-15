@@ -1,6 +1,6 @@
 # Timer API
 
-The Timer API allows processes to manage time-based operations within Kinode OS.
+The Timer API allows processes to manage time-based operations within Kinode.
 This API provides a simple yet powerful mechanism for scheduling actions to be executed after a specified delay.
 The entire API is just the `TimerAction`:
 

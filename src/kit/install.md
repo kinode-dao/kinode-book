@@ -19,6 +19,7 @@ Commands:
   dev-ui               Start the web UI development server with hot reloading (same as `cd ui && npm i && npm run dev`) [aliases: d]
   inject-message       Inject a message to a running Kinode [aliases: i]
   new                  Create a Kinode template package [aliases: n]
+  publish              Publish or update a package [aliases: p]
   remove-package       Remove a running package from a node [aliases: r]
   reset-cache          Reset kit cache (Kinode core binaries, logs, etc.)
   run-tests            Run Kinode tests [aliases: t]
@@ -62,11 +63,13 @@ kit update
 
 You can find the source for `kit` at [https://github.com/kinode-dao/kit](https://github.com/kinode-dao/kit).
 
+You can find a video guide that walks through setting up `kit` [here](https://www.youtube.com/watch?v=N8B_s_cm61k).
+
 ## Logging
 
 Logs are printed to the terminal and stored, by default, at `/tmp/kinode-kit-cache/logs/log.log`.
 The default logging level is `info`.
-Other logging levels are: `debug`, `warning` and `error`.
+Other valid logging levels are: `debug`, `warning` and `error`.
 
 These defaults can be changed by setting environment variables:
 

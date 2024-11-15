@@ -18,22 +18,23 @@ You'll use `get_blob()` to grab the `body` bytes of an incoming HTTP request.
 
 Keep the custom WIT-defined `MfaRequest` the same, and keep using that for terminal input.
 
-At the beginning of the `init()` function, in order to receive HTTP requests, you must use the [`kinode_process_lib::http`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/index.html) library to bind a new path.
+At the beginning of the `init()` function, in order to receive HTTP requests, use the [`kinode_process_lib::http`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/index.html) library to bind a new path.
 Binding a path will cause the process to receive all HTTP requests that match that path.
 You can also bind static content to a path using another function in the library.
 
 ```rust
 ...
-{{#include ../../code/mfa-fe-demo/mfa-fe-demo/src/lib.rs:91:94}}
+{{#include ../../code/mfa-fe-demo/mfa-fe-demo/src/lib.rs:91:95}}
+    server.bind_http_path("/", server_config.authenticated(false)).unwrap();
 ...
 ```
 
-[`http::bind_http_path("/", false, false)`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/server/struct.HttpServer.html#method.bind_http_path) arguments mean the following:
-- The first argument is the path to bind.
-Note that requests will be namespaced under the process name, so this will be accessible at e.g. `/my-process-name/`.
-- The second argument marks whether to serve the path only to authenticated clients
-In order to skip authentication, set the second argument to false here.
-- The third argument marks whether to only serve the path locally.
+[`http::HttpServer::bind_http_path("/", server_config)`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/server/struct.HttpServer.html#method.bind_http_path) arguments mean the following:
+1. The first argument is the path to bind.
+   Note that requests will be namespaced under the process name, so this will be accessible at e.g. `/my-process-name/`.
+2. The second argument [configures the binding](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/server/struct.HttpBindingConfig.html).
+   A default setting here serves the page only to the owner of the node, suitable for private app access.
+   Here, setting `authenticated(false)` serves the page to anyone with the URL.
 
 To handle different kinds of Requests (or Responses), wrap them in a meta `Req` or `Res`:
 ```rust

@@ -1,5 +1,8 @@
 # ZK proofs with SP1
 
+**Warning: This document is known to be out-of-date as of November 14, 2024.
+  Proceed with caution.**
+
 Zero-knowledge proofs are an exciting new tool for decentralize applications.
 Thanks to [SP1](https://github.com/succinctlabs/sp1), you can prove a Rust program with an extremely easy to use open-source library.
 There are a number of other ZK proving systems both in production and under development, which can also be used inside the Kinode environment, but this tutorial will focus on SP1.

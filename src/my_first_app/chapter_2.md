@@ -1,13 +1,13 @@
 # Sending and Responding to a Message
 
-In this section you will learn how to use different parts of a process, how request-response handling works, and other implementation details with regards to messaging.
+In this section you will learn how to use different parts of a process, how `Request`-`Response` handling works, and other implementation details with regards to messaging.
 The process you will build will be simple — it messages itself and responds to itself, printing whenever it gets messages.
 
 Note — the app you will build in Sections 2 through 5 is *not* `my-chat-app`; it is simply a series of examples designed to demonstrate how to use the system's features.
 
 ## Requirements
 
-This section assumes you've completed the steps outlined in [Environment Setup](./chapter_1.md) to construct your development environment or otherwise have a basic Kinode app open in your code editor of choice.
+This section assumes you've completed the steps outlined in [Environment Setup](./chapter_1.md) to setup your development environment or otherwise have a basic Kinode app open in your code editor of choice.
 You should also be actively running a Kinode ([live](../getting_started/login.md) or [fake](./chapter_1.md#booting-a-fake-kinode-node)) such that you can quickly compile and test your code!
 Tight feedback loops when building: very important.
 
@@ -28,9 +28,9 @@ For the purposes of this tutorial, crucial information from this [Wasm documenta
 
 A [Wasm component](https://component-model.bytecodealliance.org/design/components.html) is a wrapper around a core module that specifies its imports and exports.
 E.g. a Go component can communicate directly and safely with a C or Rust component.
-It need not even know which language another component was written in — it needs only the component interface, expressed in WIT.
+It need not even know what language another component was written in — it needs only the component interface, expressed in WIT.
 
-The external interface of a component - its imports and exports - is described by a [`world`](https://component-model.bytecodealliance.org/design/wit.html#worlds).
+The external interface of a component — its imports and exports — is described by a [`world`](https://component-model.bytecodealliance.org/design/wit.html#worlds).
 Exports are provided by the component, and define what consumers of the component may call; imports are things the component may call.
 The component, however, internally defines how that `world` is implemented.
 This interface is defined via [WIT](https://component-model.bytecodealliance.org/design/wit.html).
@@ -41,7 +41,7 @@ The `world`, types, imports, and exports are all declared in a [WIT file](https:
 
 So, to bring it all together...
 
-In order to compile properly to the Kinode environment, based on the WIT file, every process must generate the WIT bindings for the `process` `world`, which is an interface for the Kinode kernel.
+Every process must generate WIT bindings based on a WIT file for either the default `process-v0` world or a package-specific `world` in order to interface with the Kinode kernel:
 
 ```rust
 {{#include ../../code/mfa-message-demo/mfa-message-demo/src/lib.rs:3:6}}
@@ -66,8 +66,8 @@ The definition of the `Component` struct can be done manually, but it's easier t
 ```
 
 Every Kinode process written in Rust will need code that does the same thing as the code above (i.e. use the `wit_bindgen::generate!()` and `call_init!()` macros).
-See [kinode.wit](../apis/kinode_wit.md) for more details on what is imported by the WIT bindgen macro.
-These imports are the necessary "system calls" for talking to other processes and runtime components in Kinode OS.
+See [`kinode.wit`](../apis/kinode_wit.md) for more details on what is imported by the WIT bindgen macro.
+These imports are the necessary "system calls" for talking to other processes and runtime components on Kinode.
 Note that there are a variety of imports from the [`process_lib`](../process_stdlib/overview.md) including a `println!` macro that replaces the standard Rust one.
 
 The [`our` parameter](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.Address.html) tells the process what its globally-unique name is.
@@ -99,25 +99,25 @@ Because this process might not have [capabilities](../system/process/capabilitie
 Note that `send()` returns a Result.
 If you know that a `target` and `body` was set, you can safely unwrap this: send will only fail if one of those two fields are missing.
 
-You can modify your request to expect a response, and your message-handling to send one back, as well as parse the received request into a string.
+You can modify your `Request` to expect a `Response`, and your message-handling to send one back, as well as parse the received `Request` into a string.
 
 ```rust
 {{#include ../../code/mfa-message-demo/mfa-message-demo/src/lib.rs:12:16}}
 ```
 
 The `expects_response` method takes a timeout in seconds.
-If the timeout is reached, the request will be returned to the process that sent it as an error.
+If the timeout is reached, the `Request` will be returned to the process that sent it as an error.
 If you add that to the code above, you'll see the error after 5 seconds in your node's terminal.
 
 ## Responding to a Message
 
-Now, consider how to handle the request.
+Now, consider how to handle the `Request`.
 The `await_message()` function returns a `Result` that looks like this:
 ```rust
 Result<Message, SendError>
 ```
 
-The `SendError` is returned when a request times out or, if the request passes over the network, in case of a networking issue.
+The `SendError` is returned when a `Request` times out or, if the `Request` passes over the network, in case of a networking issue.
 Use a `match` statement to check whether the incoming value is a message or an error, then branch on whether the message is a `Request` or a `Response`.
 To send a `Response` back, import the `Response` type from `process_lib` and send one from the `Request` branch.
 
@@ -140,7 +140,7 @@ to see the messages being sent by your process.
 
 You can find the full code [here](https://github.com/kinode-dao/kinode-book/tree/main/code/mfa-message-demo).
 
-This basic structure can be found in the majority of Kinode processes.
-The other common structure is a script-like process, that sends and handles a fixed series of messages and then exits.
+The basic structure of this process — an infinite loop of `await_message()` and then handling logic — can be found in the majority of Kinode processes.
+The other common structure is a script-like process, that handles and sends a fixed series of messages and then exits.
 
-In the next section, you will learn how to turn this very basic request-response pattern into something that can be extensible and composable.
+In the next section, you will learn how to turn this very basic `Request-`Response` pattern into something that can be extensible and composable.

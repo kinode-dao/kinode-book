@@ -1,5 +1,8 @@
 # Kino Files (File Transfer + UI)
 
+**Warning: This document is known to be out-of-date as of November 14, 2024.
+  Proceed with caution.**
+
 This entry will teach you to add a simple UI to the [file transfer app](./file_transfer.md), using [`kit`](../kit/kit-dev-toolkit.md)'s built-in UI template.
 
 This guide assumes a basic understanding of Kinode process building, some familiarity with [`kit`](../kit/kit-dev-toolkit.md), requests and responses, and some knowledge of Rust syntax.

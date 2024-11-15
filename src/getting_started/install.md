@@ -11,7 +11,7 @@ After acquiring the software, you can learn how to run it and [Join the Network]
 
 Kinode core distributes pre-compiled binaries for MacOS and Linux Debian derivatives, like Ubuntu.
 
-First, get the software itself by downloading a [precompiled release binary](https://github.com/kinode-dao/kinode/releases).
+First, get the software itself by downloading a [precompiled release binary](https://github.com/kinode-dao/kinode/releases/latest).
 Choose the correct binary for your particular computer architecture and OS.
 There is no need to download the `simulation-mode` binary — it is used behind the scenes by [`kit`](../kit/boot-fake-node.md).
 Extract the `.zip` file: the binary is inside.
@@ -52,28 +52,38 @@ Port `8080` is used for serving the Kinode web dashboard over HTTP, and it may b
 Port `9000` is optional and is only required for a direct node.
 
 If you are running a direct node, you **must** map port `9000` to the same port on the host and on your router.
-Otherwise, your Kinode will not be able to connect to the rest of the network as connection info is written to the chain, and this information is based on the view from inside the Docker container.
+Otherwise, your Kinode will not be able to connect to the rest of the network.
 
 Run the following command to create a volume:
 
 ```bash
-docker volume create kinode-volume
+# Replace this variable with your node's intended name
+export NODENAME=helloworld.os
+
+docker volume create kinode-${NODENAME}
 ```
 
 Then run the following command to create the container.
-Replace `kinode-volume` with the name of your volume, and `my-kinode` with a unique name.
+Replace `kinode-${NODENAME}` with the name of your volume if you prefer.
 To map the port to a different port (for example, `80` or `6969`), change `8080:8080` to `PORT:8080`, where `PORT` is the post on the host machine.
 
 ```bash
-docker run -d -p 127.0.0.1:8080:8080 -it --name my-kinode \
-    --mount type=volume,source=kinode-volume,destination=/kinode-home \
-    0xlynett/kinode
+docker run -p 8080:8080 --rm -it --name kinode-${NODENAME} \
+    --mount type=volume,source=kinode-${NODENAME},destination=/kinode-home \
+    nick1udwig/kinode
+```
+
+which will launch your Kinode container attached to the terminal.
+Alternatively, you can run it detached:
+
+```bash
+docker run -p 8080:8080 --rm -dt --name kinode-${NODENAME} \
+    --mount type=volume,source=kinode-${NODENAME},destination=/kinode-home \
+    nick1udwig/kinode
 ```
 
 Check the status of your Docker processes with `docker ps`.
-To start and stop the container, use `docker start my-kinode` or `docker stop my-kinode`.
-To remove the container, run `docker remove my-kinode`.
-(replace `my-kinode` with the name of your container)
+To start and stop the container, use `docker start kinode-${NODENAME}` or `docker stop kinode-${NODENAME}`.
 
 As long as the volume is not deleted, your data remains intact upon removal or stop.
 If you need further help with Docker, [access the official Docker documentation here](https://docs.docker.com/manuals/).

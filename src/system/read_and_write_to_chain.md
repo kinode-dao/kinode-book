@@ -5,7 +5,7 @@ This runtime module lives in [`eth:distro:sys`](https://github.com/kinode-dao/ki
 In addition to allowing read/write connections directly to WebSocket RPC endpoints, the provider module can also connect via the Kinode networking protocol to other Kinodes and use their provider modules as a relay to an RPC endpoint (or to another Kinode, forming a relay chain).
 The node must be configured to allow relay connections, which can be done with a public/private flag or explicit allow/deny list.
 
-As with other runtime modules, processes should generally use the [kinode_process_lib](https://github.com/kinode-dao/process_lib) to interact with the RPC provider.
+As with other runtime modules, processes should generally use the [`kinode_process_lib`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/eth/index.html) to interact with the RPC provider.
 See [Reading Data from ETH](../cookbook/reading_data_from_eth.md) for an example of doing this in a process.
 For more advanced or direct usage, such as configuring the provider module, see the [API Reference](../apis/eth_provider.md).
 

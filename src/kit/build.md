@@ -67,7 +67,7 @@ Build a Kinode package
 Usage: kit build [OPTIONS] [DIR]
 
 Arguments:
-  [DIR]  The package directory to build [default: /home/nick/git/kit]
+  [DIR]  The package directory to build [default: /home/nick/git/kinode-book/src]
 
 Options:
       --no-ui
@@ -75,9 +75,9 @@ Options:
       --ui-only
           If set, build ONLY the web UI for the process; no-op if passed with NO_UI
   -i, --include <INCLUDE>
-          Build only these processes/UIs (can specify multiple times) (default: build all)
+          Build only these processes/UIs (can specify multiple times) [default: build all]
   -e, --exclude <EXCLUDE>
-          Build all but these processes/UIs (can specify multiple times) (default: build all)
+          Build all but these processes/UIs (can specify multiple times) [default: build all]
   -s, --skip-deps-check
           If set, do not check for dependencies
       --features <FEATURES>

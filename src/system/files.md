@@ -4,8 +4,9 @@
 
 The primary way to access files within your node is through the [VFS API](../apis/vfs.md).
 The VFS API follows [`std::fs`](https://doc.rust-lang.org/std/fs/index.html) closely, while also adding some capabilities checks on paths.
+Use the [`kinode_process_lib`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/vfs/index.html) to interact with the VFS.
 
-VFS files exist in the "/vfs" folder within your home node, and files are grouped by [`package_id`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.PackageId.html).
+VFS files exist in the `vfs/` directory within your home node, and files are grouped by [`package_id`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/kinode/process/standard/struct.PackageId.html).
 For example, part of the VFS might look like:
 
 ```text
@@ -43,7 +44,7 @@ node-home/vfs
 
 ## Drives
 
-A drive is a directory within a package's VFS directory, e.g., `app_store:sys/pkg/` or `your_package:publisher.os/my_drive/`.
+A drive is a directory within a package's VFS directory, e.g., `app_store:sys/pkg/` or `your-package:publisher.os/my-drive/`.
 Drives are owned by processes.
 Processes can share access to drives they own via [capabilities](process/capabilities.md).
 Each package is spawned with two drives: [`pkg/`](#pkg-drive) and [`tmp/`](#tmp-drive).

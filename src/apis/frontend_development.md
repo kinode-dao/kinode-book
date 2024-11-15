@@ -2,11 +2,11 @@
 
 Kinode can easily serve any webpage or web app developed with normal libraries and frameworks.
 
-There are some specific endpoints, JS libraries, and process_lib functions that are helpful for doing frontend development.
+There are some specific endpoints, JS libraries, and `process_lib` functions that are helpful for doing frontend development.
 
 There are also some important considerations and "gotchas" that can happen when trying to do frontend development.
 
-Kinode OS can serve a website or web app just like any HTTP webserver.
+Kinode can serve a website or web app just like any HTTP webserver.
 The preferred method is to upload your static assets on install by placing them in the `pkg` folder.
 By convention, `kit` bundles these assets into a directory inside `pkg` called `ui`, but you can call it anything.
 You **must** place your `index.html` in the top-level folder.
@@ -50,7 +50,7 @@ To make development easy, your setup should support a base URL and http proxying
 
 ### Base URL
 
-All processes in Kinode OS are namespaced by process name in the standard format of `process:package:publisher`.
+All processes on Kinode are namespaced by process name in the standard format of `process:package:publisher`.
 So if your process is called `my-process:my-package:template.os`, then your process can only bind HTTP paths that start with `/my-process:my-package:template.os`.
 Your UI should be developed and compiled with the base URL set to the appropriate process path.
 
