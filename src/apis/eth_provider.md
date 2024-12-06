@@ -11,16 +11,16 @@ Most processes will only need to send `EthAction` requests.
 /// The Action and Request type that can be made to eth:distro:sys. Any process with messaging
 /// capabilities can send this action to the eth provider.
 ///
-/// Will be serialized and deserialized using `serde_json::to_vec` and `serde_json::from_slice`.
+/// Will be serialized and deserialized using [`serde_json::to_vec`] and [`serde_json::from_slice`].
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum EthAction {
     /// Subscribe to logs with a custom filter. ID is to be used to unsubscribe.
-    /// Logs come in as alloy_rpc_types::pubsub::SubscriptionResults
+    /// Logs come in as JSON value which can be parsed to [`alloy::rpc::types::eth::pubsub::SubscriptionResult`]
     SubscribeLogs {
         sub_id: u64,
         chain_id: u64,
         kind: SubscriptionKind,
-        params: Params,
+        params: serde_json::Value,
     },
     /// Kill a SubscribeLogs subscription of a given ID, to stop getting updates.
     UnsubscribeLogs(u64),
@@ -37,23 +37,24 @@ The `Request` containing this action should always expect a response, since ever
 The ETH provider will respond with the following type:
 
 ```rust
-/// The Response type which a process will get from requesting with an [`EthAction`] will be
-/// of this type, serialized and deserialized using `serde_json::to_vec`
-/// and `serde_json::from_slice`.
+/// The Response body type which a process will get from requesting
+/// with an [`EthAction`] will be of this type, serialized and deserialized
+/// using [`serde_json::to_vec`] and [`serde_json::from_slice`].
 ///
 /// In the case of an [`EthAction::SubscribeLogs`] request, the response will indicate if
 /// the subscription was successfully created or not.
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub enum EthResponse {
     Ok,
-    Response { value: serde_json::Value },
+    Response(serde_json::Value),
     Err(EthError),
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum EthError {
-    /// RPC provider returned an error
-    RpcError(ErrorPayload),
+    /// RPC provider returned an error.
+    /// Can be parsed to [`alloy::rpc::json_rpc::ErrorPayload`]
+    RpcError(serde_json::Value),
     /// provider module cannot parse message
     MalformedRequest,
     /// No RPC provider for the chain
@@ -85,14 +86,15 @@ That request will look like this:
 pub type EthSubResult = Result<EthSub, EthSubError>;
 
 /// Incoming type for successful subscription updates.
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct EthSub {
     pub id: u64,
-    pub result: SubscriptionResult,
+    /// can be parsed to [`alloy::rpc::types::eth::pubsub::SubscriptionResult`]
+    pub result: serde_json::Value,
 }
 
 /// If your subscription is closed unexpectedly, you will receive this.
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct EthSubError {
     pub id: u64,
     pub error: String,
