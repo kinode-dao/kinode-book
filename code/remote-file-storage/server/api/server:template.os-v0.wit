@@ -29,5 +29,5 @@ world server-template-dot-os-api-v0 {
 
 world server-template-dot-os-v0 {
     import server;
-    include process-v0;
+    include process-v1;
 }
