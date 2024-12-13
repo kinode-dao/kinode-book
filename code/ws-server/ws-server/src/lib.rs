@@ -18,7 +18,7 @@ use kinode_process_lib::{
 
 wit_bindgen::generate!({
     path: "target/wit",
-    world: "process-v0",
+    world: "process-v1",
 });
 
 const WS_PATH: &str = "/";
@@ -82,14 +82,14 @@ fn init(our: Address) {
     server
         .bind_ws_path(
             WS_PATH,
-            http::server::WsBindingConfig::new(false, false, false, false),
+            http::server::WsBindingConfig::new(false, false, false),
         )
         .unwrap();
 
     loop {
         match await_message() {
             Ok(message) => {
-                if message.source().process == "http_server:distro:sys" {
+                if message.source().process == "http-server:distro:sys" {
                     if let Err(e) = handle_http_message(&our, &message, &mut connection) {
                         println!("{e}");
                     }
