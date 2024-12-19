@@ -12,5 +12,5 @@ interface mfa-data-demo {
 
 world mfa-data-demo-template-dot-os-v0 {
     import mfa-data-demo;
-    include process-v0;
+    include process-v1;
 }

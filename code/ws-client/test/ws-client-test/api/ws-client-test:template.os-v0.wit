@@ -1,4 +1,4 @@
 world ws-client-test-template-dot-os-v0 {
     import tester;
-    include process-v0;
+    include process-v1;
 }

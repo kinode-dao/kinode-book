@@ -20,7 +20,7 @@ use kinode_process_lib::{OnExit, Request};
 
 wit_bindgen::generate!({
     path: "target/wit",
-    world: "process-v0",
+    world: "process-v1",
 });
 
 const WS_URL: &str = "ws://localhost:8765";
@@ -67,7 +67,7 @@ fn talk_to_ws() -> Result<()> {
 
     match await_message() {
         Ok(message) => {
-            if message.source().process == "http_client:distro:sys" {
+            if message.source().process == "http-client:distro:sys" {
                 if let Err(e) = handle_http_message(&message, &connection) {
                     println!("{e}");
                 }
