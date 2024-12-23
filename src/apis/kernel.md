@@ -108,8 +108,8 @@ To do that, send a `RunProcess` command after a successful `InitializeProcess` c
 ## `GrantCapabilities`
 This command directly inserts a list of capabilities into another process' state.
 While you generally don't want to do this for security reasons, it helps you clean up the "handshake" process by which capabilities must be handed off between two processes before engaging in the business logic.
-For instance, if you want a kernel module like `http_server` to be able to message a process back, you do this by directly inserting that `"messaging"` cap into `http_server`'s store.
-Only the `app_store`, `terminal`, and `tester` make use of this.
+For instance, if you want a kernel module like `http-server` to be able to message a process back, you do this by directly inserting that `"messaging"` cap into `http-server`'s store.
+Only the `app-store`, `terminal`, and `tester` make use of this.
 
 ## `DropCapabilities`
 This command removes a list of capabilities from another process' state.

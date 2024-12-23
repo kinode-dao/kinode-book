@@ -16,7 +16,7 @@ For this reason, users are unlikely to grant direct terminal access to most apps
 
 If one does have the capability to send `Request`s to the terminal, they can execute commands like so:
 ```
-script_name:package_name:publisher_name <ARGS>
+script-name:package-name:publisher-name <ARGS>
 ```
 
 For example, the `hi` script, which pings another node's terminal with a message, can be called like so:
@@ -34,7 +34,7 @@ hi default-router-1.os what's up?
 The other most commonly used script is `m:terminal:sys`, or just `m` - which stands for `Message`.
 `m` lets you send a request to any node or application like so:
 ```
-m john.os@proc:pkg:pub '{"foo":"bar"}'
+m some-node.os@proc:pkg:pub '{"foo":"bar"}'
 ```
 
 Note that if your process has the ability to message the `terminal` app, then that process can call any script.

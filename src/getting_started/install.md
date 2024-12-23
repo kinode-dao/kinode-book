@@ -141,7 +141,7 @@ git clone https://github.com/kinode-dao/kinode.git
 
 Build the packages that are bundled with the binary:
 ```bash
-cargo run -p build_packages
+cargo run -p build-packages
 ```
 
 Build the binary:

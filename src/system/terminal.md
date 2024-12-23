@@ -111,7 +111,7 @@ For instance, `m.wasm` only uses root, public, and `request_networking`, omittin
 
 ### Example
 
-This is a `scripts.json` that publishes a single script, `hi`, which doesn't receive `root` capabilities, is not `public`, can send messages over the network, will receive the capability to message `net:distro:sys`, and gives `net:distro:sys` the ability to message it back:
+This is a `scripts.json` that publishes a single script, `hi`, which doesn't receive all of its parent's capabilities (root=false), is not `public`, can send messages over the network, will receive the capability to message `net:distro:sys`, and gives `net:distro:sys` the ability to message it back:
 
 ```json
 {

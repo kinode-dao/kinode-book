@@ -1,15 +1,15 @@
 # HTTP API
 
-Incoming HTTP requests are handled by a Rust `warp` server in the core `http_server:distro:sys` process.
+Incoming HTTP requests are handled by a Rust `warp` server in the core `http-server:distro:sys` process.
 This process handles binding (registering) routes, simple JWT-based authentication, and serving a `/login` page if auth is missing.
 
 ## Binding (Registering) HTTP Paths
 
-Any process that you build can bind (register) any number of HTTP paths with `http_server`.
+Any process that you build can bind (register) any number of HTTP paths with `http-server`.
 Every path that you bind will be automatically prepended with the current process' ID.
 For example, bind the route `/messages` within a process called `main:my-package:myname.os` like so:
 
-```rs
+```rust
 use kinode_process_lib::{http::bind_http_path};
 
 bind_http_path("/messages", true, false).unwrap();
@@ -18,25 +18,30 @@ bind_http_path("/messages", true, false).unwrap();
 Now, any HTTP requests to your node at `/main:my-package:myname.os/messages` will be routed to your process.
 
 The other two parameters to `bind_http_path` are `authenticated: bool` and `local_only: bool`.
-`authenticated` means that `http_server` will check for an auth cookie (set at login/registration), and `local_only` means that `http_server` will only allow requests that come from `localhost`.
+`authenticated` means that `http-server` will check for an auth cookie (set at login/registration), and `local_only` means that `http-server` will only allow requests that come from `localhost`.
 
-Incoming HTTP requests will come via `http_server` and have both a `body` and a `lazy_load_blob`.
-The `lazy_load_blob` is the HTTP request body, and the `body` is an `IncomingHttpRequest`:
+Incoming HTTP requests will come via `http-server` and have both a `body` and a `lazy_load_blob`.
+The `lazy_load_blob` is the HTTP request body itself, and the `body` is an `IncomingHttpRequest`:
 
-```rs
+```rust
 pub struct IncomingHttpRequest {
-    pub source_socket_addr: Option<String>,   // will parse to SocketAddr
-    pub method: String,                       // will parse to http::Method
-    pub url: String,                          // will parse to url::Url
-    pub bound_path: String,                   // the path that was originally bound
+    /// will parse to SocketAddr
+    pub source_socket_addr: Option<String>,
+    /// will parse to http::Method
+    pub method: String,
+    /// will parse to url::Url
+    pub url: String,
+    /// the matching path that was bound
+    pub bound_path: String,
+    /// will parse to http::HeaderMap
     pub headers: HashMap<String, String>,
-    pub url_params: HashMap<String, String>, // comes from route-recognizer
+    pub url_params: HashMap<String, String>,
     pub query_params: HashMap<String, String>,
 }
 ```
 
 Note that `url` is the host and full path of the original HTTP request that came in.
-`bound_path` is the matching path that was originally bound in `http_server`.
+`bound_path` is the matching path that was originally bound in `http-server`.
 
 ## Handling HTTP Requests
 
@@ -47,8 +52,8 @@ Usually, you will want to:
 
 Here is an example from the `kit` UI-enabled chat app template that handles both `POST` and `GET` requests to the `/messages` path:
 
-```rs
-fn handle_http_server_request(
+```rust
+fn handle_http-server_request(
     our: &Address,
     message_archive: &mut MessageArchive,
     source: &Address,
@@ -119,7 +124,7 @@ fn handle_http_server_request(
 
 `send_response` is a `process_lib` function that sends an HTTP response. The function signature is as follows:
 
-```rs
+```rust
 pub fn send_response(
     status: StatusCode,
     headers: Option<HashMap<String, String>>,

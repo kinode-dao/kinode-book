@@ -8,7 +8,7 @@ Every request takes a path and a corresponding action.
 
 ## Drives
 
-A drive is a directory within a package's VFS directory, e.g., `app_store:sys/pkg/` or `your_package:publisher.os/my_drive/`.
+A drive is a directory within a package's VFS directory, e.g., `app-store:sys/pkg/` or `your_package:publisher.os/my_drive/`.
 Drives are owned by packages.
 Packages can share access to drives they own via [capabilities](../system/process/capabilities.md).
 Each package is spawned with two drives: [`pkg/`](#pkg-drive) and [`tmp/`](#tmp-drive).
@@ -183,13 +183,14 @@ let metadata = metadata(&some_path)?;
 ### API
 
 ```rust
+/// IPC Request format for the vfs:distro:sys runtime module.
+#[derive(Debug, Serialize, Deserialize)]
 pub struct VfsRequest {
-    /// path is always prepended by package_id, the capabilities of the topmost directory are checked
-    /// "/your_package:publisher.os/drive_dir/another_dir_or_file"
     pub path: String,
     pub action: VfsAction,
 }
 
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub enum VfsAction {
     CreateDrive,
     CreateDir,
@@ -198,15 +199,15 @@ pub enum VfsAction {
     OpenFile { create: bool },
     CloseFile,
     Write,
-    WriteAt,
+    WriteAll,
     Append,
     SyncAll,
     Read,
     ReadDir,
     ReadToEnd,
-    ReadExact(u64),
+    ReadExact { length: u64 },
     ReadToString,
-    Seek { seek_from: SeekFrom },
+    Seek(SeekFrom),
     RemoveFile,
     RemoveDir,
     RemoveDirAll,
@@ -219,12 +220,14 @@ pub enum VfsAction {
     Hash,
 }
 
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub enum SeekFrom {
     Start(u64),
     End(i64),
     Current(i64),
 }
 
+#[derive(Debug, Serialize, Deserialize)]
 pub enum FileType {
     File,
     Directory,
@@ -232,21 +235,24 @@ pub enum FileType {
     Other,
 }
 
+#[derive(Debug, Serialize, Deserialize)]
 pub struct FileMetadata {
     pub file_type: FileType,
     pub len: u64,
 }
 
+#[derive(Debug, Serialize, Deserialize)]
 pub struct DirEntry {
     pub path: String,
     pub file_type: FileType,
 }
 
+#[derive(Debug, Serialize, Deserialize)]
 pub enum VfsResponse {
     Ok,
     Err(VfsError),
     Read,
-    SeekFrom(u64),
+    SeekFrom { new_offset: u64 },
     ReadDir(Vec<DirEntry>),
     ReadToString(String),
     Metadata(FileMetadata),
@@ -254,15 +260,27 @@ pub enum VfsResponse {
     Hash([u8; 32]),
 }
 
+#[derive(Error, Debug, Serialize, Deserialize)]
 pub enum VfsError {
+    #[error("No capability for action {action} at path {path}")]
     NoCap { action: String, path: String },
+    #[error("Bytes blob required for {action} at path {path}")]
     BadBytes { action: String, path: String },
+    #[error("bad request error: {error}")]
     BadRequest { error: String },
+    #[error("error parsing path: {path}: {error}")]
     ParseError { error: String, path: String },
+    #[error("IO error: {error}, at path {path}")]
     IOError { error: String, path: String },
+    #[error("kernel capability channel error: {error}")]
     CapChannelFail { error: String },
+    #[error("Bad JSON blob: {error}")]
     BadJson { error: String },
+    #[error("File not found at path {path}")]
     NotFound { path: String },
+    #[error("Creating directory failed at path: {path}: {error}")]
     CreateDirError { path: String, error: String },
+    #[error("Other error: {error}")]
+    Other { error: String },
 }
 ```

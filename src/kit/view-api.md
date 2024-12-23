@@ -15,7 +15,7 @@ lists all the APIs of packages downloaded by the Kinode running at port 8080.
 
 ```bash
 # Fetch and display the API for the given package
-kit view-api app_store:sys
+kit view-api app-store:sys
 ```
 
 ## Discussion

@@ -23,7 +23,7 @@ fn init(our: Address) {
         // capabilities to pass onto the child
         vec![
             // the parent process already has the capability to message
-            // http_client here so we are just passing it onto the child
+            // http-client here so we are just passing it onto the child
             Capability {
                 issuer: Address::new(
                     &our.node,

@@ -223,11 +223,11 @@ For an example of a more complex widget, see the source code of our [app store w
 
 #### Widget Case Study: App Store
 
-The app store's [widget](https://github.com/kinode-dao/kinode/blob/3719ab38e19143a7bcd501fd245c7a10b2239ee7/kinode/packages/app_store/app_store/src/http_api.rs#L59C1-L133C2) makes a single request to the node, to determine the apps that are listed in the app store.
+The app store's [widget](https://github.com/kinode-dao/kinode/blob/3719ab38e19143a7bcd501fd245c7a10b2239ee7/kinode/packages/app-store/app-store/src/http_api.rs#L59C1-L133C2) makes a single request to the node, to determine the apps that are listed in the app store.
 It then creates some HTML to display the apps in a nice little list.
 
 ```html
 <html>
-{{#webinclude https://raw.githubusercontent.com/kinode-dao/kinode/3719ab38e19143a7bcd501fd245c7a10b2239ee7/kinode/packages/app_store/app_store/src/http_api.rs 62:130}}
+{{#webinclude https://raw.githubusercontent.com/kinode-dao/kinode/3719ab38e19143a7bcd501fd245c7a10b2239ee7/kinode/packages/app-store/app-store/src/http_api.rs 62:130}}
 </html>
 ```

@@ -23,15 +23,17 @@ Different implementations of the networking protocol may reject actions dependin
 This is, for example, where a router would choose whether or not to perform routing for a specific node<>node connection.
 
 ```rust
+/// Must be parsed from message pack vector.
+/// all Get actions must be sent from local process. used for debugging
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum NetAction {
     /// Received from a router of ours when they have a new pending passthrough for us.
     /// We should respond (if we desire) by using them to initialize a routed connection
     /// with the NodeId given.
     ConnectionRequest(NodeId),
-    /// can only receive from trusted source, for now just ourselves locally,
-    /// in the future could get from remote provider
+    /// can only receive from trusted source: requires net root cap
     KnsUpdate(KnsUpdate),
+    /// can only receive from trusted source: requires net root cap
     KnsBatchUpdate(Vec<KnsUpdate>),
     /// get a list of peers we are connected to
     GetPeers,
@@ -47,12 +49,10 @@ pub enum NetAction {
     /// the given source. if the signer is not in our representation of
     /// the PKI, will not verify.
     /// **the `from` [`Address`] will always be prepended to the payload**
-    Verify {
-        from: Address,
-        signature: Vec<u8>,
-    }
+    Verify { from: Address, signature: Vec<u8> },
 }
 
+#[derive(Clone, Debug, Serialize, Deserialize, Hash, Eq, PartialEq)]
 pub struct KnsUpdate {
     pub name: String,
     pub public_key: String,
@@ -67,7 +67,7 @@ This type must be parsed from a request body using MessagePack.
 This is responded to with either an `Accepted` or `Rejected` variant of `NetResponses`.
 
 `KnsUpdate` and `KnsBatchUpdate` both are used as entry point by which the `net` module becomes aware of the Kinode PKI, or KNS.
-In the current distro these are only accepted from the local node, and specifically the `kns_indexer` distro package.
+In the current distro these are only accepted from the local node, and specifically the `kns-indexer` distro package.
 
 `GetPeers` is used to request a list of peers that the `net` module is connected to. It can only be received from the local node.
 
@@ -85,6 +85,7 @@ In the current distro these are only accepted from the local node, and specifica
 Finally, let's look at the type parsed from a `Response`.
 
 ```rust
+/// Must be parsed from message pack vector
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum NetResponse {
     /// response to [`NetAction::ConnectionRequest`]
