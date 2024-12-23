@@ -1,0 +1,49 @@
+[
+    {
+        "process_name": "contacts",
+        "process_wasm_path": "/contacts.wasm",
+        "on_exit": "Restart",
+        "request_networking": false,
+        "request_capabilities": [
+            "eth:distro:sys",
+            "homepage:homepage:sys",
+            "http_server:distro:sys",
+            "vfs:distro:sys"
+        ],
+        "grant_capabilities": [
+            "eth:distro:sys",
+            "http_server:distro:sys",
+            "vfs:distro:sys"
+        ],
+        "public": false
+    },
+    {
+        "process_name": "contacts-test",
+        "process_wasm_path": "/contacts_test.wasm",
+        "on_exit": "None",
+        "request_networking": false,
+        "request_capabilities": [
+            "contacts:capabilities-test:doria.kino",
+            {
+                "process": "contacts:capabilities-test:doria.kino",
+                "params": "ReadNameOnly"
+            },
+            {
+                "process": "contacts:capabilities-test:doria.kino",
+                "params": "Read"
+            },
+            {
+                "process": "contacts:capabilities-test:doria.kino",
+                "params": "Add"
+            },
+            {
+                "process": "contacts:capabilities-test:doria.kino",
+                "params": "Remove"
+            }
+        ],
+        "grant_capabilities": [
+            "contacts:capabilities-test:doria.kino"
+        ],
+        "public": false
+    }
+]
