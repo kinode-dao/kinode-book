@@ -6,6 +6,8 @@ Ultimately, Kinode facilitates the writing and distribution of software that run
 
 You are reading the Kinode Book, which is a technical document targeted at developers.
 
+[Read the Kinode Whitepaper here.](https://kino.casa/whitepaper.pdf)
+
 If you're a non-technical user:
 
 - Learn about Kinode at the [Kinode blog](https://kinode.org/blog).
