@@ -32,22 +32,22 @@ use kinode_process_lib::{http::server, homepage};
 // add ourselves to the homepage
 homepage::add_to_homepage("My Chess App", None, Some("/"), None);
 
-// create an HTTP server struct with which to manipulate `http_server:distro:sys`
-let mut http_server = server::HttpServer::new(5);
+// create an HTTP server struct with which to manipulate `http-server:distro:sys`
+let mut http-server = server::HttpServer::new(5);
 let http_config = server::HttpBindingConfig::default();
 
 // Serve the index.html and other UI files found in pkg/ui at the root path.
-http_server
+http-server
     .serve_ui(&our, "ui", vec!["/"], http_config.clone())
     .expect("failed to serve ui");
 
 // Allow HTTP requests to be made to /games; they will be handled dynamically.
-http_server
+http-server
     .bind_http_path("/games", http_config.clone())
     .expect("failed to bind /games");
 
 // Allow websockets to be opened at / (our process ID will be prepended).
-http_server
+http-server
     .bind_ws_path("/", server::WsBindingConfig::default())
     .expect("failed to bind ws");
 ```
@@ -61,15 +61,15 @@ See [process_lib docs](https://docs.rs/kinode_process_lib/latest/kinode_process_
 These requests all serve HTTP that can only be accessed by a logged-in node user (the `true` parameter for `authenticated` in `HttpBindingConfig`) and can be accessed remotely (the `false` parameter for `local_only`).
 
 Requests on the `/games` path will arrive as requests to your process, and you'll have to handle them and respond.
-To do this, add a branch to the main request-handling function that takes requests from *our* `http_server:distro:sys`.
+To do this, add a branch to the main request-handling function that takes requests from *our* `http-server:distro:sys`.
 
 In `my-chess/src/lib.rs`, inside the part of `handle_request()` that handles local requests:
 ```rust
 ...
     // if the message is from the HTTP server runtime module, we should handle it
     // as an HTTP request and not a chess request
-    if message.source().process == "http_server:distro:sys" {
-        return handle_http_request(state, http_server, message);
+    if message.source().process == "http-server:distro:sys" {
+        return handle_http_request(state, http-server, message);
     }
 ...
 ```
@@ -87,14 +87,14 @@ In `my-chess/src/lib.rs`:
 /// Handle HTTP requests from our own frontend.
 fn handle_http_request(
     state: &mut ChessState,
-    http_server: &mut server::HttpServer,
+    http-server: &mut server::HttpServer,
     message: &Message,
 ) -> anyhow::Result<()> {
-    let request = http_server.parse_request(message.body())?;
+    let request = http-server.parse_request(message.body())?;
 
     // the HTTP server helper struct allows us to pass functions that
     // handle the various types of requests we get from the frontend
-    http_server.handle_request(
+    http-server.handle_request(
         request,
         |incoming| {
             // client frontend sent an HTTP request, process it and
@@ -280,8 +280,8 @@ Since open channels are already tracked in `HttpServer`, you just need to send a
 
 In `my-chess/src/lib.rs`, add a helper function:
 ```rust
-fn send_ws_update(http_server: &mut server::HttpServer, game: &Game) {
-    http_server.ws_push_all_channels(
+fn send_ws_update(http-server: &mut server::HttpServer, game: &Game) {
+    http-server.ws_push_all_channels(
         "/",
         server::WsMessageType::Binary,
         LazyLoadBlob {
@@ -301,11 +301,11 @@ Now, anywhere you receive an action from another node (in `handle_chess_request(
 A good place to do this is right after saving the updated state.
 Local moves from the frontend will update on their own.
 
-Finally, add requests for `http_server` and `vfs` messaging capabilities to the `manifest.json`:
+Finally, add requests for `http-server` and `vfs` messaging capabilities to the `manifest.json`:
 ```json
 ...
 "request_capabilities": [
-    "http_server:distro:sys",
+    "http-server:distro:sys",
     "vfs:distro:sys"
 ],
 ...

@@ -40,7 +40,10 @@ fn init(our: Address) {
             Request::to(&our).body(serde_json::to_vec(&Err::<(), ()>(())).unwrap())
         ]),
         our_capabilities(),
-        vec!["http_client:distro:sys".parse().unwrap()],
+        vec![(
+            "http-client:distro:sys".parse().unwrap(),
+            "\"messaging\"".to_string(),
+        )],
         false,
     );
     if child.is_err() {

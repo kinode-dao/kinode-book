@@ -11,11 +11,11 @@ For example, part of the VFS might look like:
 
 ```text
 node-home/vfs
-├── app_store:sys
+├── app-store:sys
 │   ├── pkg
 │   │   ├── api
-│   │   │   └── app_store:sys-v0.wit
-│   │   ├── app_store.wasm
+│   │   │   └── app-store:sys-v0.wit
+│   │   ├── app-store.wasm
 │   │   ├── manifest.json
 │   │   ...
 │   └── tmp
@@ -44,7 +44,7 @@ node-home/vfs
 
 ## Drives
 
-A drive is a directory within a package's VFS directory, e.g., `app_store:sys/pkg/` or `your-package:publisher.os/my-drive/`.
+A drive is a directory within a package's VFS directory, e.g., `app-store:sys/pkg/` or `your-package:publisher.os/my-drive/`.
 Drives are owned by processes.
 Processes can share access to drives they own via [capabilities](process/capabilities.md).
 Each package is spawned with two drives: [`pkg/`](#pkg-drive) and [`tmp/`](#tmp-drive).

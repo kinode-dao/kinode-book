@@ -47,9 +47,9 @@ If your process is called `main:my-package:myusername.os` and your Kinode is run
    - Whether the content is static (not relevant here)
    - Whether to serve as a secure subdomain
 
-Under the hood, `serve_ui` uses [`bind_http_static_path`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/server/struct.HttpServer.html#method.bind_http_static_path) which caches files in memory with `http_server` to respond to HTTP requests more quickly.
+Under the hood, `serve_ui` uses [`bind_http_static_path`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/server/struct.HttpServer.html#method.bind_http_static_path) which caches files in memory with `http-server` to respond to HTTP requests more quickly.
 The two additional parameters are the `content_type` (an optional String) and the `content` (bytes).
 The content will be served at the named route with the `Content-Type` header set appropriately.
 
-Note that `serve_ui` caches all files in `http_server`, so if your website or web app has hundreds of MBs of asset files (like high-res images), then you will want to use a different method to serve content.
+Note that `serve_ui` caches all files in `http-server`, so if your website or web app has hundreds of MBs of asset files (like high-res images), then you will want to use a different method to serve content.
 For example, see the [`docs:docs:nick.kino` application](https://github.com/nick1udwig/docs/blob/master/docs/src/lib.rs).

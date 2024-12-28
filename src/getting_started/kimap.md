@@ -9,7 +9,7 @@ Discoverability can present both social barriers (finding a new user on a game o
 Many solutions have been designed to address this problem, but so far, the ``devex'' (developer experience) of deploying centralized services has continued to outcompete the p2p discoverability options available.
 Kimap aims to change this by providing a single, shared, onchain namespace that can be used to resolve to arbitrary elements of the Kinode network.
 
-1. All keys are strings containing exclusively characters 0-9, a-z (lowercase), - (hyphen).
+1. All keys are strings containing exclusively characters 0-9, a-z (lowercase), - (hyphen) and are at maximum 63 characters long.
 2. A key may be one of two types, a name-key or a data-key.
 3. Every name-key may create sub-entries directly beneath it.
 4. Every name-key is an ERC-721[^1] NFT (non-fungible token), with a connected token-bound account[^2] with a counterfactual address.

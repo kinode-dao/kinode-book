@@ -141,7 +141,7 @@ $ cat my-chat-app/pkg/manifest.json
         "on_exit": "Restart",
         "request_networking": true,
         "request_capabilities": [
-            "http_server:distro:sys",
+            "http-server:distro:sys",
             "vfs:distro:sys"
         ],
         "grant_capabilities": [],
@@ -199,7 +199,7 @@ The `wit_version` is an optional field.
 If elided, the package will use [`kinode.wit` `0.7.0`](https://github.com/kinode-dao/kinode-wit/blob/aa2c8b11c9171b949d1991c32f58591c0e881f85/kinode.wit).
 If included with a value of `0`, it will use [`kinode.wit` `0.8.0`](https://github.com/kinode-dao/kinode-wit/blob/758fac1fb144f89c2a486778c62cbea2fb5840ac/kinode.wit).
 The `dependencies` field is also optional; see discussion in [WIT APIs](../system/process/wit_apis.md).
-The rest of these fields are not required for development, but become important when publishing a package with the [`app_store`](https://github.com/kinode-dao/kinode/tree/main/kinode/packages/app_store).
+The rest of these fields are not required for development, but become important when publishing a package with the [`app-store`](https://github.com/kinode-dao/kinode/tree/main/kinode/packages/app-store).
 
 As an aside: each process has a unique `ProcessId`, used to address messages to that process, that looks like
 
@@ -258,7 +258,7 @@ By default, the fake node will bind to port `8080`.
 Note the port number in the output for [later](#starting-the-package); it will look something like:
 
 ```bash
-Thu 22:50 http_server: running on port 8080
+Thu 22:50 http-server: running on port 8080
 ```
 
 `kit boot-fake-node` also accepts a `--runtime-path` argument.
@@ -311,7 +311,7 @@ where here the port provided following `-p` must match the port bound by the nod
 The node's terminal should display something like
 
 ```
-Thu 22:51 app_store:sys: successfully installed my-chat-app:template.os
+Thu 22:51 app-store:sys: successfully installed my-chat-app:template.os
 ```
 
 Congratulations: you've now built and installed your first application on Kinode!

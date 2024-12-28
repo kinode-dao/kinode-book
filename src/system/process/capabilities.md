@@ -42,14 +42,14 @@ Here is a `manifest.json` example for the `chess` app:
             "net:distro:sys"
         ],
         "grant_capabilities": [
-            "http_server:distro:sys"
+            "http-server:distro:sys"
         ],
         "public": true
     }
 ]
 ```
 By setting `request_networking: true`, the kernel will give it the `"networking"` capability. In the `request_capabilities` field, `chess` is asking for the capability to message `net:distro:sys`.
-Finally, in the `grant_capabilities` field, it is giving `http_server:distro:sys` the ability to message `chess`.
+Finally, in the `grant_capabilities` field, it is giving `http-server:distro:sys` the ability to message `chess`.
 
 When booting the `chess` app, all of these capabilities will be granted throughout your node.
 If you were to print out `chess`' capabilities using `kinode_process_lib::our_capabilities() -> Vec<Capability>`, you would see something like this:
@@ -57,9 +57,9 @@ If you were to print out `chess`' capabilities using `kinode_process_lib::our_ca
 ```rust
 [
     // obtained because of `request_networking: true`
-    Capability { issuer: "our@kernel:distro:sys", params: "\"network\"" },
+    Capability { issuer: "our-node.os@kernel:distro:sys", params: "\"network\"" },
     // obtained because we asked for it in `request_capabilities`
-    Capability { issuer: "our@net:distro:sys", params: "\"messaging\"" }
+    Capability { issuer: "our-node.os@net:distro:sys", params: "\"messaging\"" }
 ]
 ```
 Note that [userspace capabilities](#userspace-capabilities), those *created by other processes*, can also be requested in a package manifest, though it's not guaranteed that the user will have installed the process that can grant the capability.

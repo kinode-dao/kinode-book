@@ -86,7 +86,7 @@ This method requires a [`--port`](#../kit/build.md#--port) (or `-p` for short) f
 That `--port` corresponds to the Kinode hosting the API dependency.
 
 To host an API, your Kinode must either:
-1. Have that package downloaded by the `app_store`.
+1. Have that package downloaded by the `app-store`.
 2. Be a live node, in which case it will attempt to contact the publisher of the package, and download the package.
 Thus, when developing on a fake node, you must first build and start any dependencies on your fake node before building packages that depend upon them: see [usage example below](#remote-file-storage-usage-example).
 

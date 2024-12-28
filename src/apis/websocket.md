@@ -1,6 +1,6 @@
 # WebSocket API
 
-WebSocket connections are made with a Rust `warp` server in the core `http_server:distro:sys` process.
+WebSocket connections are made with a Rust `warp` server in the core `http-server:distro:sys` process.
 Each connection is assigned a `channel_id` that can be bound to a given process using a `WsRegister` message.
 The process receives the `channel_id` for pushing data into the WebSocket, and any subsequent messages from that client will be forwarded to the bound process.
 
@@ -62,7 +62,7 @@ With a `WebSocketPush`, the incoming message will be on the `LazyLoadBlob`, acce
 A full example:
 
 ```rs
-fn handle_http_server_request(
+fn handle_http-server_request(
     our: &Address,
     message_archive: &mut MessageArchive,
     source: &Address,
@@ -119,7 +119,7 @@ pub fn send_ws_push(
 ) -> anyhow::Result<()>
 ```
 
-`node` will usually be `our.node` (although you can also send a WS push to another node's `http_server`!), `channel_id` is the client you want to send to, `message_type` will be either `WsMessageType::Text` or `WsMessageType::Binary`, and `blob` will be a standard `LazyLoadBlob` with an optional `mime` field and required `bytes` field.
+`node` will usually be `our.node` (although you can also send a WS push to another node's `http-server`!), `channel_id` is the client you want to send to, `message_type` will be either `WsMessageType::Text` or `WsMessageType::Binary`, and `blob` will be a standard `LazyLoadBlob` with an optional `mime` field and required `bytes` field.
 
 If you would prefer to send the request without the helper function, this is that what `send_ws_push` looks like under the hood:
 
@@ -127,7 +127,7 @@ If you would prefer to send the request without the helper function, this is tha
 Request::new()
     .target(Address::new(
         node,
-        ProcessId::from_str("http_server:distro:sys").unwrap(),
+        ProcessId::from_str("http-server:distro:sys").unwrap(),
     ))
     .body(
         serde_json::json!(HttpServerRequest::WebSocketPush {

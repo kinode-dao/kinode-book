@@ -2,7 +2,7 @@
 
 short: `kit p`
 
-`kit publish` creates entries in the Kimap, publishing the given package according to the `app_store`s protocol.
+`kit publish` creates entries in the Kimap, publishing the given package according to the `app-store`s protocol.
 It can also be used to update or unpublish previously-published packages.
 `kit publish` directly writes to the Kimap: it does not interact with a Kinode.
 

@@ -5,8 +5,8 @@
         "on_exit": "None",
         "request_networking": false,
         "request_capabilities": [
-            "http_client:distro:sys",
-            "http_server:distro:sys",
+            "http-client:distro:sys",
+            "http-server:distro:sys",
             "vfs:distro:sys"
         ],
         "grant_capabilities": [],

@@ -6,9 +6,9 @@ As a result, Kinode apps can read data from the web (and other Kinodes), and als
 The HTTP server is how most processes in Kinode present their interface to the user, through an authenticated web browser.
 
 The specification for the [server](../apis/http_server.md) and [client](../apis/http_client.md) APIs are available in the API reference.
-These APIs are accessible via messaging the [`http_server:distro:sys`](https://github.com/kinode-dao/kinode/blob/main/kinode/src/http/server.rs) and [`http_client:distro:sys`](https://github.com/kinode-dao/kinode/blob/main/kinode/src/http/client.rs) runtime modules, respectively.
+These APIs are accessible via messaging the [`http-server:distro:sys`](https://github.com/kinode-dao/kinode/blob/main/kinode/src/http/server.rs) and [`http-client:distro:sys`](https://github.com/kinode-dao/kinode/blob/main/kinode/src/http/client.rs) runtime modules, respectively.
 The only [`capability`](../system/process/capabilities.md) required to use either process is the one to message it, granted by the kernel.
-It is recommended to interact with the `http_server` and `http_client` using the [`kinode_process_lib`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/index.html)
+It is recommended to interact with the `http-server` and `http-client` using the [`kinode_process_lib`](https://docs.rs/kinode_process_lib/latest/kinode_process_lib/http/index.html)
 
 WebSocket server/client functionality is presented alongside HTTP.
 

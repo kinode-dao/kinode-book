@@ -5,16 +5,7 @@ The full documentation can be found [here](https://docs.rs/kinode_process_lib), 
 
 In your `Cargo.toml` file, use a version tag like this:
 ```toml
-kinode_process_lib = "0.8.5"
-```
-
-To use a specific commit hash or branch from the `process_lib` repo, use this:
-```toml
-kinode_process_lib = { git = "https://github.com/kinode-dao/process_lib.git", rev = "5305453" }
-```
-or this:
-```toml
-kinode_process_lib = { git = "https://github.com/kinode-dao/process_lib.git", branch = "main" }
+kinode_process_lib = "0.10.0"
 ```
 
 **Make sure to use a recent version of the `process_lib` while the system is in beta and active development.**
@@ -24,7 +15,7 @@ Since the current major version of both is 0, breaking changes can occur at any 
 Once the major version reaches 1, breaking changes will only occur between major versions.
 As is, **developers may have to update their version of `process_lib` as they update Kinode.**
 
-Since Kinode apps use the [WebAssembly Component Model](https://component-model.bytecodealliance.org/), they are built on top of a [WIT](https://component-model.bytecodealliance.org/design/wit.html) (Wasm Interface Type) [package](https://github.com/kinode-dao/kinode-wit/blob/v0.8/kinode.wit).
+Since Kinode apps use the [WebAssembly Component Model](https://component-model.bytecodealliance.org/), they are built on top of a [WIT](https://component-model.bytecodealliance.org/design/wit.html) (Wasm Interface Type) [package](https://github.com/kinode-dao/kinode-wit).
 [`wit-bindgen`](https://github.com/bytecodealliance/wit-bindgen) is used to generate Rust code from a WIT file.
 The generated code then contains the core types and functions that are available to all Kinode apps.
 

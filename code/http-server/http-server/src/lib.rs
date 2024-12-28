@@ -16,7 +16,7 @@ use kinode_process_lib::{await_message, call_init, get_blob, http, println, Addr
 
 wit_bindgen::generate!({
     path: "target/wit",
-    world: "process-v0",
+    world: "process-v1",
 });
 
 /// Handle a message from the HTTP server.
@@ -58,7 +58,7 @@ fn init(_our: Address) {
     loop {
         match await_message() {
             Ok(message) => {
-                if message.source().process == "http_server:distro:sys" {
+                if message.source().process == "http-server:distro:sys" {
                     if let Err(e) = handle_http_message(&message) {
                         println!("{e}");
                     }

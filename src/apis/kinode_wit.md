@@ -44,5 +44,5 @@ See the [capabilities overview](../system/process/capabilities.md) for more deta
 
 Lastly, message I/O functions are used to send and receive messages between processes.
 Message-passing is the primary means by which processes communicate not only with themselves, but also with runtime modules which expose all kinds of I/O abilities.
-For example, handling an HTTP request involves sending and receiving messages to and from the `http_server:disto:sys` runtime module.
+For example, handling an HTTP request involves sending and receiving messages to and from the `http-server:disto:sys` runtime module.
 Interacting with this module and others occurs through message I/O.

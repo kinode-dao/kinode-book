@@ -5,16 +5,14 @@ See also: [docs.rs for HTTP Server part of `process_lib`](https://docs.rs/kinode
 **Note: Most processes will not use this API directly. Instead, they will use the [`process_lib`](../process_stdlib/overview.md) library, which papers over this API and provides a set of types and functions which are much easier to natively use. This is mostly useful for re-implementing this module in a different client or performing niche actions unsupported by the library.**
 
 The HTTP server is used by sending and receiving requests and responses.
-From a process, you may send an `HttpServerAction` to the `http_server:distro:sys` process.
+From a process, you may send an `HttpServerAction` to the `http-server:distro:sys` process.
 
 ```rust
-/// Request type sent to `http_server:distro:sys` in order to configure it.
-/// You can also send [`type@HttpServerAction::WebSocketPush`], which
-/// allows you to push messages across an existing open WebSocket connection.
+/// Request type sent to `http-server:distro:sys` in order to configure it.
 ///
-/// If a response is expected, all HttpServerActions will return a Response
-/// with the shape Result<(), HttpServerActionError> serialized to JSON.
-#[derive(Debug, Serialize, Deserialize)]
+/// If a response is expected, all actions will return a Response
+/// with the shape `Result<(), HttpServerActionError>` serialized to JSON.
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum HttpServerAction {
     /// Bind expects a lazy_load_blob if and only if `cache` is TRUE. The lazy_load_blob should
     /// be the static file to serve at this path.
@@ -51,23 +49,18 @@ pub enum HttpServerAction {
     WebSocketBind {
         path: String,
         authenticated: bool,
-        encrypted: bool,
         extension: bool,
     },
     /// SecureBind is the same as Bind, except that it forces new connections to be made
     /// from the unique subdomain of the process that bound the path. These are *always*
     /// authenticated. Since the subdomain is unique, it will require the user to be
     /// logged in separately to the general domain authentication.
-    WebSocketSecureBind {
-        path: String,
-        encrypted: bool,
-        extension: bool,
-    },
+    WebSocketSecureBind { path: String, extension: bool },
     /// Unbind a previously-bound WebSocket path
     WebSocketUnbind { path: String },
     /// Processes will RECEIVE this kind of request when a client connects to them.
     /// If a process does not want this websocket open, they should issue a *request*
-    /// containing a [`type@HttpServerAction::WebSocketClose`] message and this channel ID.
+    /// containing a [`HttpServerAction::WebSocketClose`] message and this channel ID.
     WebSocketOpen { path: String, channel_id: u32 },
     /// When sent, expects a lazy_load_blob containing the WebSocket message bytes to send.
     WebSocketPush {
@@ -83,8 +76,8 @@ pub enum HttpServerAction {
         desired_reply_type: MessageType,
     },
     /// For communicating with the ext.
-    /// Kinode's http_server sends this to the ext after receiving `WebSocketExtPushOutgoing`.
-    /// Upon receiving reply with this type from ext, http_server parses, setting:
+    /// Kinode's http-server sends this to the ext after receiving `WebSocketExtPushOutgoing`.
+    /// Upon receiving reply with this type from ext, http-server parses, setting:
     /// * id as given,
     /// * message type as given (Request or Response),
     /// * body as HttpServerRequest::WebSocketPush,
@@ -98,11 +91,12 @@ pub enum HttpServerAction {
     WebSocketClose(u32),
 }
 
-/// The possible message types for WebSocketPush. Ping and Pong are limited to 125 bytes
-/// by the WebSockets protocol. Text will be sent as a Text frame, with the lazy_load_blob bytes
-/// being the UTF-8 encoding of the string. Binary will be sent as a Binary frame containing
-/// the unmodified lazy_load_blob bytes.
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
+/// The possible message types for [`HttpServerRequest::WebSocketPush`].
+/// Ping and Pong are limited to 125 bytes by the WebSockets protocol.
+/// Text will be sent as a Text frame, with the lazy_load_blob bytes
+/// being the UTF-8 encoding of the string. Binary will be sent as a
+/// Binary frame containing the unmodified lazy_load_blob bytes.
+#[derive(Clone, Copy, Debug, PartialEq, Serialize, Deserialize)]
 pub enum WsMessageType {
     Text,
     Binary,
@@ -112,25 +106,22 @@ pub enum WsMessageType {
 }
 ```
 
-This struct must be serialized to JSON and placed in the `body` of a requests to `http_server:distro:sys`.
+This struct must be serialized to JSON and placed in the `body` of a requests to `http-server:distro:sys`.
 For actions that take additional data, such as `Bind` and `WebSocketPush`, it is placed in the `lazy_load_blob` of that request.
 
 After handling such a request, the HTTP server will always give a response of the shape `Result<(), HttpServerError>`, also serialized to JSON. This can be ignored, or awaited and handled.
 
 ```rust
-/// Part of the Response type issued by http_server
+/// Part of the Response type issued by `http-server:distro:sys`
 #[derive(Error, Debug, Serialize, Deserialize)]
 pub enum HttpServerError {
-    #[error(
-        "http_server: request could not be parsed to HttpServerAction: {}.",
-        req
-    )]
+    #[error("request could not be parsed to HttpServerAction: {req}.")]
     BadRequest { req: String },
-    #[error("http_server: action expected blob")]
+    #[error("action expected blob")]
     NoBlob,
-    #[error("http_server: path binding error: {:?}", error)]
+    #[error("path binding error: {error}")]
     PathBindError { error: String },
-    #[error("http_server: WebSocket error: {:?}", error)]
+    #[error("WebSocket error: {error}")]
     WebSocketPushError { error: String },
 }
 ```
@@ -149,20 +140,20 @@ Note that the HTTP server module will persist bindings until the node itself is 
 
 The incoming request, whether the binding is for HTTP or WebSocket, will look like this:
 ```rust
-/// HTTP Request type that can be shared over Wasm boundary to apps.
-/// This is the one you receive from the `http_server:distro:sys` service.
-#[derive(Debug, Serialize, Deserialize)]
+/// HTTP Request received from the `http-server:distro:sys` service as a
+/// result of either an HTTP or WebSocket binding, created via [`HttpServerAction`].
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum HttpServerRequest {
     Http(IncomingHttpRequest),
     /// Processes will receive this kind of request when a client connects to them.
     /// If a process does not want this websocket open, they should issue a *request*
-    /// containing a [`type@HttpServerAction::WebSocketClose`] message and this channel ID.
+    /// containing a [`HttpServerAction::WebSocketClose`] message and this channel ID.
     WebSocketOpen {
         path: String,
         channel_id: u32,
     },
     /// Processes can both SEND and RECEIVE this kind of request
-    /// (send as [`type@HttpServerAction::WebSocketPush`]).
+    /// (send as [`HttpServerAction::WebSocketPush`]).
     /// When received, will contain the message bytes as lazy_load_blob.
     WebSocketPush {
         channel_id: u32,
@@ -173,16 +164,23 @@ pub enum HttpServerRequest {
     WebSocketClose(u32),
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+/// An HTTP request routed to a process as a result of a binding.
+///
+/// BODY is stored in the lazy_load_blob, as bytes.
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct IncomingHttpRequest {
-    pub source_socket_addr: Option<String>,   // will parse to SocketAddr
-    pub method: String,                       // will parse to http::Method
-    pub url: String,                          // will parse to url::Url
-    pub bound_path: String,                   // the path that was originally bound
+    /// will parse to SocketAddr
+    pub source_socket_addr: Option<String>,
+    /// will parse to http::Method
+    pub method: String,
+    /// will parse to url::Url
+    pub url: String,
+    /// the matching path that was bound
+    pub bound_path: String,
+    /// will parse to http::HeaderMap
     pub headers: HashMap<String, String>,
-    pub url_params: HashMap<String, String>, // comes from route-recognizer
+    pub url_params: HashMap<String, String>,
     pub query_params: HashMap<String, String>,
-    // BODY is stored in the lazy_load_blob, as bytes
 }
 ```
 
@@ -192,11 +190,12 @@ The process must issue a response with this structure in the body, serialized to
 ```rust
 /// HTTP Response type that can be shared over Wasm boundary to apps.
 /// Respond to [`IncomingHttpRequest`] with this type.
+///
+/// BODY is stored in the lazy_load_blob, as bytes
 #[derive(Debug, Serialize, Deserialize)]
 pub struct HttpResponse {
     pub status: u16,
     pub headers: HashMap<String, String>,
-    // BODY is stored in the lazy_load_blob, as bytes
 }
 ```
 

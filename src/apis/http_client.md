@@ -6,14 +6,15 @@ See also: [docs.rs for HTTP Client part of `process_lib`](https://docs.rs/kinode
 
 The HTTP client is used for sending and receiving HTTP requests and responses.
 It is also used for connecting to a websocket endpoint as a client.
-From a process, you may send an `HttpClientAction` to the `http_client:distro:sys` process.
+From a process, you may send an `HttpClientAction` to the `http-client:distro:sys` process.
 The action must be serialized to JSON and sent in the `body` of a request.
 `HttpClientAction` is an `enum` type that includes both HTTP and websocket actions.
 
 ```rust
-/// Request type that can be shared over Wasm boundary to apps.
-/// This is the one you send to the `http_client:distro:sys` service.
-#[derive(Debug, Serialize, Deserialize)]
+/// Request type sent to the `http-client:distro:sys` service.
+///
+/// Always serialized/deserialized as JSON.
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum HttpClientAction {
     Http(OutgoingHttpRequest),
     WebSocketOpen {
@@ -38,26 +39,31 @@ Two or more connections can have the same `channel_id` if they are from differen
 
 ```rust
 /// HTTP Request type that can be shared over Wasm boundary to apps.
-/// This is the one you send to the `http_client:distro:sys` service.
-#[derive(Debug, Serialize, Deserialize)]
+/// This is the one you send to the `http-client:distro:sys` service.
+///
+/// BODY is stored in the lazy_load_blob, as bytes
+///
+/// TIMEOUT is stored in the message expect_response value
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct OutgoingHttpRequest {
-    pub method: String,          // must parse to http::Method
-    pub version: Option<String>, // must parse to http::Version
-    pub url: String,             // must parse to url::Url
+    /// must parse to [`http::Method`]
+    pub method: String,
+    /// must parse to [`http::Version`]
+    pub version: Option<String>,
+    /// must parse to [`url::Url`]
+    pub url: String,
     pub headers: HashMap<String, String>,
-    // BODY is stored in the lazy_load_blob, as bytes
-    // TIMEOUT is stored in the message expect_response
 }
 ```
 
 All requests to the HTTP client will receive a response of `Result<HttpClientResponse, HttpClientError>` serialized to JSON.
 The process can await or ignore this response, although the desired information will be in the `HttpClientResponse` if the request was successful.
-An HTTP request will have an `HttpResponse` defined in the [`http_server`](./http_server.md) module.
+An HTTP request will have an `HttpResponse` defined in the [`http-server`](./http_server.md) module.
 A websocket request (open, push, close) will simply respond with a `HttpClientResponse::WebSocketAck`.
 
 ```rust
-/// HTTP Client Response type that can be shared over Wasm boundary to apps.
-/// This is the one you receive from the `http_client:distro:sys` service.
+/// Response type received from the `http-client:distro:sys` service after
+/// sending a successful [`HttpClientAction`] to it.
 #[derive(Debug, Serialize, Deserialize)]
 pub enum HttpClientResponse {
     Http(HttpResponse),
@@ -68,24 +74,24 @@ pub enum HttpClientResponse {
 ```rust
 #[derive(Error, Debug, Serialize, Deserialize)]
 pub enum HttpClientError {
-    // HTTP errors, may also be applicable to OutgoingWebSocketClientRequest::Open
-    #[error("http_client: request is not valid HttpClientRequest: {}.", req)]
+    // HTTP errors
+    #[error("http-client: request is not valid HttpClientRequest: {req}.")]
     BadRequest { req: String },
-    #[error("http_client: http method not supported: {}", method)]
+    #[error("http-client: http method not supported: {method}.")]
     BadMethod { method: String },
-    #[error("http_client: url could not be parsed: {}", url)]
+    #[error("http-client: url could not be parsed: {url}.")]
     BadUrl { url: String },
-    #[error("http_client: http version not supported: {}", version)]
+    #[error("http-client: http version not supported: {version}.")]
     BadVersion { version: String },
-    #[error("http_client: failed to execute request {}", error)]
+    #[error("http-client: failed to execute request {error}.")]
     RequestFailed { error: String },
 
     // WebSocket errors
-    #[error("websocket_client: failed to open connection {}", url)]
+    #[error("http-client: failed to open connection {url}.")]
     WsOpenFailed { url: String },
-    #[error("websocket_client: failed to send message {}", req)]
+    #[error("http-client: failed to send message {req}.")]
     WsPushFailed { req: String },
-    #[error("websocket_client: failed to close connection {}", channel_id)]
+    #[error("http-client: failed to close connection {channel_id}.")]
     WsCloseFailed { channel_id: u32 },
 }
 ```
@@ -95,9 +101,10 @@ These incoming websocket messages are processed and sent as `HttpClientRequest` 
 The message itself is accessible with `get_blob()`.
 
 ```rust
-/// WebSocket Client Request type that can be shared over Wasm boundary to apps.
-/// This comes from an open websocket client connection in the `http_client:distro:sys` service.
-#[derive(Debug, Serialize, Deserialize)]
+/// Request that comes from an open WebSocket client connection in the
+/// `http-client:distro:sys` service. Be prepared to receive these after
+/// using a [`HttpClientAction::WebSocketOpen`] to open a connection.
+#[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 pub enum HttpClientRequest {
     WebSocketPush {
         channel_id: u32,

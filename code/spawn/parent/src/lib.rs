@@ -4,7 +4,7 @@ use kinode_process_lib::{call_init, println, spawn, Address, Capability, OnExit,
 // boilerplate to generate types
 wit_bindgen::generate!({
     path: "target/wit",
-    world: "process-v0",
+    world: "process-v1",
 });
 
 // parent app component boilerplate
@@ -23,17 +23,20 @@ fn init(our: Address) {
         // capabilities to pass onto the child
         vec![
             // the parent process already has the capability to message
-            // http_client here so we are just passing it onto the child
+            // http-client here so we are just passing it onto the child
             Capability {
                 issuer: Address::new(
                     &our.node,
-                    "http_client:distro:sys".parse::<ProcessId>().unwrap(),
+                    "http-client:distro:sys".parse::<ProcessId>().unwrap(),
                 ),
                 params: "\"messaging\"".into(),
             },
         ],
         // allow tester to message child in case this is being run as a test
-        vec!["tester:tester:sys".parse::<ProcessId>().unwrap()],
+        vec![(
+            "tester:tester:sys".parse::<ProcessId>().unwrap(),
+            "\"messaging\"".to_string(),
+        )],
         // this process will not be public: only processes with proper caps can message it
         false,
     ) {
