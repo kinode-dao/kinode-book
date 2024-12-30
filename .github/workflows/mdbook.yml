@@ -72,12 +72,12 @@ jobs:
       #      }
       #      return asset.browser_download_url;
       #    result-encoding: string
-      - name: Download the Foundry release
-        run: wget -q https://github.com/foundry-rs/foundry/releases/download/nightly-de596a4db781933f0c95805bd1c8c05e65f03d4f/foundry_nightly_linux_amd64.tar.gz -O foundry.tar.gz
+      - name: Download Foundry
+        run: wget -q https://github.com/foundry-rs/foundry/releases/download/nightly-c3069a50ba18cccfc4e7d5de9b9b388811d9cc7b/foundry_nightly_linux_amd64.tar.gz -O foundry.tar.gz
         #run: wget -q ${DOWNLOAD_URL} -O foundry.tar.gz
         #env:
         #  DOWNLOAD_URL: ${{ steps.get-latest-foundry-release.outputs.result }}
-      - name: Untar the release
+      - name: Untar Foundry
         run: tar zxf foundry.tar.gz
       - name: Add Foundry to path
         run: echo "$PWD" >> $GITHUB_PATH
@@ -105,28 +105,28 @@ jobs:
       - name: Unzip the release
         run: unzip kit.zip
 
-      - name: Get latest release from kinode-dao/kit
-        id: get-latest-kit-release
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const repo = {
-              owner: 'kinode-dao',
-              repo: 'kinode',
-            };
-            const release = await github.rest.repos.getLatestRelease(repo);
-            const asset = release.data.assets.find(asset => asset.name.match(/kinode-x86_64-unknown-linux-gnu\.zip/));
-            if (!asset) {
-              throw new Error('Asset not found');
-            }
-            return asset.browser_download_url;
-          result-encoding: string
-      - name: Download the Kinode release
-        run: wget -q ${DOWNLOAD_URL} -O kinode.zip
-        env:
-          DOWNLOAD_URL: ${{ steps.get-latest-kit-release.outputs.result }}
-      - name: Unzip the Kinode release
-        run: unzip kinode.zip
+      #- name: Get latest release from kinode-dao/kinode
+      #  id: get-latest-kinode-release
+      #  uses: actions/github-script@v6
+      #  with:
+      #    script: |
+      #      const repo = {
+      #        owner: 'kinode-dao',
+      #        repo: 'kinode',
+      #      };
+      #      const release = await github.rest.repos.getLatestRelease(repo);
+      #      const asset = release.data.assets.find(asset => asset.name.match(/kinode-x86_64-unknown-linux-gnu\.zip/));
+      #      if (!asset) {
+      #        throw new Error('Asset not found');
+      #      }
+      #      return asset.browser_download_url;
+      #    result-encoding: string
+      #- name: Download the Kinode release
+      #  run: wget -q ${DOWNLOAD_URL} -O kinode.zip
+      #  env:
+      #    DOWNLOAD_URL: ${{ steps.get-latest-kit-release.outputs.result }}
+      #- name: Unzip the Kinode release
+      #  run: unzip kinode.zip
 
       - name: Run Kit tests
         #run: ./kit t code/tests.toml
