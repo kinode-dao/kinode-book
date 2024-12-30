@@ -42,7 +42,7 @@ The [examples below](#examples) show some more working extensions.
 The process [binds a WebSocket](#bind-an-extension-websocket), so Kinode acts as the WebSocket server.
 The extension acts as a client, connecting to the WebSocket served by the Kinode process.
 
-The process sends [`HttpServerAction::WebSocketExtPushOutgoing`](https://docs.rs/kinode_process_lib/0.9.6/kinode_process_lib/http/server/enum.HttpServerAction.html#variant.WebSocketExtPushOutgoing) Requests to the `http-server`(look [here](../http-server_and_client.md) and [here](../..//apis/http_server.md)) to communicate with the extension (see the `enum` defined at the bottom of this section).
+The process sends [`HttpServerAction::WebSocketExtPushOutgoing`](https://docs.rs/kinode_process_lib/0.9.6/kinode_process_lib/http/server/enum.HttpServerAction.html#variant.WebSocketExtPushOutgoing) Requests to the `http-server`(look [here](../http_server_and_client.md) and [here](../..//apis/http_server.md)) to communicate with the extension (see the `enum` defined at the bottom of this section).
 
 Table 1: `HttpServerAction::WebSocketExtPushOutgoing` Inputs
 
