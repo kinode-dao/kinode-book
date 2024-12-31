@@ -186,7 +186,7 @@ $ cat my-chat-app/metadata.json
         "code_hashes": {
             "0.1.0": ""
         },
-        "wit_version": 0,
+        "wit_version": 1,
         "dependencies": []
     },
     "external_url": "",
@@ -195,9 +195,14 @@ $ cat my-chat-app/metadata.json
 ```
 Here, the `publisher` is the default value (`"template.os"`), but for a real package, this field should contain the KNS ID of the publishing node.
 The `publisher` can also be set with a `kit new --publisher` flag.
-The `wit_version` is an optional field.
-If elided, the package will use [`kinode.wit` `0.7.0`](https://github.com/kinode-dao/kinode-wit/blob/aa2c8b11c9171b949d1991c32f58591c0e881f85/kinode.wit).
-If included with a value of `0`, it will use [`kinode.wit` `0.8.0`](https://github.com/kinode-dao/kinode-wit/blob/758fac1fb144f89c2a486778c62cbea2fb5840ac/kinode.wit).
+The `wit_version` is an optional field:
+
+`wit_version` value | Resulting `kinode.wit` version
+------------------- | ------------------------------
+elided              | [`kinode.wit` `0.7.0`](https://github.com/kinode-dao/kinode-wit/blob/aa2c8b11c9171b949d1991c32f58591c0e881f85/kinode.wit)
+`0`                 | [`kinode.wit` `0.8.0`](https://github.com/kinode-dao/kinode-wit/blob/758fac1fb144f89c2a486778c62cbea2fb5840ac/kinode.wit)
+`1`                 | [`kinode.wit` `1.0.0`](https://github.com/kinode-dao/kinode-wit/blob/v1.0.0/kinode.wit)
+
 The `dependencies` field is also optional; see discussion in [WIT APIs](../system/process/wit_apis.md).
 The rest of these fields are not required for development, but become important when publishing a package with the [`app-store`](https://github.com/kinode-dao/kinode/tree/main/kinode/packages/app-store).
 

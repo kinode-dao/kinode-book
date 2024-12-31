@@ -105,6 +105,7 @@ Field                    | Type             | Description
 `"request_networking"`   | Boolean          | Specifies whether the script will get networking capabilities
 `"request_capabilities"` | Array            | An array that lists the capabilities requested by the script. Each element in the array can be either a string or an object. The string represents a `ProcessId` that this script will be able to message. When an object is used, it specifies a different kind of capability from `issuer` with `params` as an arbitrary json object.
 `"grant_capabilities"`   | Array of strings | An array of `ProcessId`s which represents which processes will be able to send a `Response` back to this script. If this script is public, `grant_capabilities` can stay empty.
+`"wit_version"`          | Unsigned integer | The [WIT version](../my_first_app/chapter_1.html?highlight=wit_version#metadatajson) to use
 
 Processes may not necessarily use all these fields.
 For instance, `m.wasm` only uses root, public, and `request_networking`, omitting `request_capabilities` and `grant_capabilities`.
