@@ -611,7 +611,7 @@ const SearchFiles = function() {
 
     const handleSearch = () => {
         if (!searchTerm) return alert('Please enter a node name.');
-        if (!searchTerm.match(/^[a-zA-Z0-9-]+\.os$/)) return alert('Invalid node name.');
+        if (!searchTerm.match(/^[a-z0-9-]+\.os$/)) return alert('Invalid node name.');
         try {
             fetch(`${import.meta.env.BASE_URL}/files?node=${searchTerm}`, {
                 method: 'GET',

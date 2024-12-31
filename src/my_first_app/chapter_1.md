@@ -32,18 +32,18 @@ Create a Kinode template package
 Usage: kit new [OPTIONS] <DIR>
 
 Arguments:
-  <DIR>  Path to create template directory at (must contain only a-z, A-Z, 0-9, `-`)
+  <DIR>  Path to create template directory at (must contain only a-z, 0-9, `-`)
 
 Options:
-  -a, --package <PACKAGE>      Name of the package (must contain only a-z, A-Z, 0-9, `-`) [default: DIR]
-  -u, --publisher <PUBLISHER>  Name of the publisher (must contain only a-z, A-Z, 0-9, `-`, `.`) [default: template.os]
+  -a, --package <PACKAGE>      Name of the package (must contain only a-z, 0-9, `-`) [default: DIR]
+  -u, --publisher <PUBLISHER>  Name of the publisher (must contain only a-z, 0-9, `-`, `.`) [default: template.os]
   -l, --language <LANGUAGE>    Programming language of the template [default: rust] [possible values: rust]
   -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: blank, chat, echo, fibonacci, file-transfer]
       --ui                     If set, use the template with UI
   -h, --help                   Print help
 ```
 
-Create a package `my-chat-app` (you can name it anything "Kimap-safe", i.e. containing only a-z, A-Z, 0-9, `-`; but we'll assume you're working with `my-chat-app` in this document):
+Create a package `my-chat-app` (you can name it anything "Kimap-safe", i.e. containing only a-z, 0-9, `-`; but we'll assume you're working with `my-chat-app` in this document):
 
 ```bash
 kit new my-chat-app
@@ -207,7 +207,7 @@ As an aside: each process has a unique `ProcessId`, used to address messages to 
 <process-name>:<package-name>:<publisher-node>
 ```
 
-Each field separated by `:`s must be "Kimap safe", i.e. can only contain a-z, A-Z, 0-9, `-` (and, for publisher node, `.`).
+Each field separated by `:`s must be "Kimap safe", i.e. can only contain a-z, 0-9, `-` (and, for publisher node, `.`).
 
 You can read more about `ProcessId`s [here](../system/process/processes.md#overview).
 

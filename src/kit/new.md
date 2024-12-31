@@ -10,7 +10,7 @@ kit new foo
 
 creates the default template (a Rust chat app with no UI) in the `foo/` directory.
 
-The package name must be "Kimap-safe": contain only a-z, A-Z, 0-9, and `-`.
+The package name must be "Kimap-safe": contain only a-z, 0-9, and `-`.
 
 ## Example Usage
 
@@ -54,11 +54,11 @@ Create a Kinode template package
 Usage: kit new [OPTIONS] <DIR>
 
 Arguments:
-  <DIR>  Path to create template directory at (must contain only a-z, A-Z, 0-9, `-`)
+  <DIR>  Path to create template directory at (must contain only a-z, 0-9, `-`)
 
 Options:
-  -a, --package <PACKAGE>      Name of the package (must contain only a-z, A-Z, 0-9, `-`) [default: DIR]
-  -u, --publisher <PUBLISHER>  Name of the publisher (must contain only a-z, A-Z, 0-9, `-`, `.`) [default: template.os]
+  -a, --package <PACKAGE>      Name of the package (must contain only a-z, 0-9, `-`) [default: DIR]
+  -u, --publisher <PUBLISHER>  Name of the publisher (must contain only a-z, 0-9, `-`, `.`) [default: template.os]
   -l, --language <LANGUAGE>    Programming language of the template [default: rust] [possible values: rust]
   -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: blank, chat, echo, fibonacci, file-transfer]
       --ui                     If set, use the template with UI
@@ -75,14 +75,14 @@ By default the package name is set to the name specified here, if not supplied b
 short: `-a`
 
 Name of the package; defaults to `DIR`.
-Must be Kimap-safe: contain only a-z, A-Z, 0-9, and `-`.
+Must be Kimap-safe: contain only a-z, 0-9, and `-`.
 
 ### `--publisher`
 
 short: `-u`
 
 Name of the publisher; defaults to `template.os`.
-Must be Kimap-safe (plus `.`): contain only a-z, A-Z, 0-9, `-`, and `.`.
+Must be Kimap-safe (plus `.`): contain only a-z, 0-9, `-`, and `.`.
 
 ### `--language`
 
