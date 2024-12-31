@@ -92,7 +92,7 @@ my-chat-app
     └── tests.toml
 ```
 
-The `my-chat-app/` package here contains two processes:
+The `my-chat-app/` package here contains two processes, each represented by a directory:
 - `my-chat-app/` — containing the main application code, and
 - `send/` — containing a [script](../cookbook/writing_scripts.html).
 
@@ -104,10 +104,10 @@ Another standard Rust `Cargo.toml` file, a [virtual manifest](https://doc.rust-l
 
 Also within the package directory is a `pkg/` directory.
 The `pkg/` dirctory contains two files:
-- `manifest.json` — required: specifes information the Kinode needs to run the package, and
+- `manifest.json` — required: specifes information Kinode needs to run the package, and
 - `scripts.json` — optional: specifies details needed to run [scripts](../cookbook/writing_scripts.html).
 
-The `pkg/` directory is also where `.wasm` binaries will be deposited by [`kit build`](#building-the-package).
+The `pkg/` directory is also where `.wasm` binaries (and, optionally, built UI files) will be deposited by [`kit build`](#building-the-package).
 The files in the `pkg/` directory are injected into the Kinode with [`kit start-package`](#starting-the-package).
 
 The `metadata.json` is a required file that contains app metadata which is used in the Kinode [App Store](./chapter_5.html).
@@ -262,8 +262,8 @@ To exit from the fake node, press `Ctrl + C`.
 By default, the fake node will bind to port `8080`.
 Note the port number in the output for [later](#starting-the-package); it will look something like:
 
-```bash
-Thu 22:50 http-server: running on port 8080
+```
+Serving Kinode at http://localhost:8080
 ```
 
 `kit boot-fake-node` also accepts a `--runtime-path` argument.
