@@ -33,7 +33,7 @@ System-level capabilities are of two types:
 - `"net"`, which allows the holder to send/receive messages over the network to/from remote nodes.
 
 System-level capabilities need not be attached explicitly to messages.
-They are requested and granted at process start-time in the [manifest](manifest).
+They are requested and granted at process start-time in the [manifest](#manifest).
 
 Userspace-level capabilities are defined within a process.
 They are issued by that process.
