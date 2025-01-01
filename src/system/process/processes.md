@@ -7,9 +7,9 @@ The Kinode runtime handles message-passing between processes, plus the startup a
 This section describes the message design as it relates to processes.
 
 Each process instance has a globally unique identifier, or `Address`, composed of four elements.
-- the publisher's node (containing a-z, A-Z, 0-9, `-`, and `.`)
-- the package name (containing a-z, A-Z, 0-9, and `-`)
-- the process name  (containing a-z, A-Z, 0-9, and `-`).
+- the publisher's node (containing a-z, 0-9, `-`, and `.`)
+- the package name (containing a-z, 0-9, and `-`)
+- the process name  (containing a-z, 0-9, and `-`).
   This may be a developer-selected string or a randomly-generated number as string.
 - the node the process is running on (often your node: `our` for short).
 

@@ -14,10 +14,6 @@ Print out the arguments expected by the binary:
 
 ```
 $ ./kinode --help
-
-DOCKER_BUILD_IMAGE_VERSION: none
-PACKAGES_ZIP_HASH: 9558ea0e2180aea1afc69cbf055a4da14c51cea67fbff9cfb847533caef301fd
-
 A General Purpose Sovereign Cloud Computing Platform
 
 Usage: kinode [OPTIONS] <home>
@@ -54,6 +50,8 @@ Options:
           Maximum number of passthroughs serve as a router (default 0)
       --soft-ulimit <SOFT_ULIMIT>
           Enforce a static maximum number of file descriptors (default fetched from system)
+      --process-verbosity <JSON_STRING>
+          ProcessId: verbosity JSON object [default: ]
   -h, --help
           Print help
   -V, --version
@@ -67,6 +65,8 @@ If the `--port` flag is supplied, Kinode will attempt to bind that port for serv
 If no `--port` flag is supplied, Kinode will bind to `8080` if it is available, or the first port above `8080` if not.
 
 <details><summary>OPTIONAL: Acquiring an RPC API Key</summary>
+
+### Acquiring an RPC API Key
 
 Create a new "app" on [Alchemy](https://dashboard.alchemy.com/apps) for Optimism Mainnet.
 
