@@ -82,3 +82,4 @@
   - [WebSocket API](./apis/websocket.md)
 - [Hosted Nodes User Guide](./hosted-nodes.md)
 - [Audits and Security](./audits-and-security.md)
+- [Glossary](./glossary.md)
