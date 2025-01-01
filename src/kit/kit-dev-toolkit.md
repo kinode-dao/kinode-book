@@ -9,6 +9,7 @@
 - [`kit new`](../kit/new.md)
 - [`kit build`](../kit/build.md)
 - [`kit start-package`](../kit/start-package.md)
+- [`publish`](../kit/publish.md)
 - [`kit build-start-package`](../kit/build-start-package.md)
 - [`kit remove-package`](../kit/remove-package.md)
 - [`kit chain`](../kit/chain.md)

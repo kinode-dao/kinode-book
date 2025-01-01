@@ -10,7 +10,7 @@ These scripts are fully named `<SCRIPT>:terminal:sys` e.g `hi:terminal:sys`, but
 
 ### `hi` - ping another kinode
 
-```bash
+```
 Usage: hi <KNS_ID> <MESSAGE>
 Arguments:
   <KNS_ID>  id of the node you want to message, e.g. some-node.os
@@ -21,7 +21,7 @@ hi other-node.os Hello other-node.os! how are you?
 
 ### `m` - message a process
 
-```bash
+```
 Usage: m <ADDRESS> <BODY>
 Arguments:
   <ADDRESS> kns addresss e.g. some-node.os@process:pkg:publisher.os
@@ -37,7 +37,7 @@ Example:
 
 ### `top` - display information about processes
 
-```bash
+```
 Usage: top [PROCESS_ID]
 Arguments:
   [PROCESS_ID] optional process id, just print information about this process
@@ -50,7 +50,7 @@ Example:
 
 ### `alias` - alias a script name
 
-```bash
+```
 Usage: alias <NAME> [SCRIPT]
 Arguments:
   <NAME>   the name you want to assign the script to
@@ -64,7 +64,7 @@ Example:
 
 ### `cat` - print the contents of a file in your vfs
 
-```bash
+```
 Usage: cat <FILE_PATH>
 Arguments:
   <FILE_PATH> the file path in your vfs
@@ -76,7 +76,7 @@ Example:
 
 `echo` is mostly an example script for developers to look at.
 
-```bash
+```
 Usage: echo <MESSAGE>
 Arguments:
   <MESSAGE> any string
@@ -105,6 +105,7 @@ Field                    | Type             | Description
 `"request_networking"`   | Boolean          | Specifies whether the script will get networking capabilities
 `"request_capabilities"` | Array            | An array that lists the capabilities requested by the script. Each element in the array can be either a string or an object. The string represents a `ProcessId` that this script will be able to message. When an object is used, it specifies a different kind of capability from `issuer` with `params` as an arbitrary json object.
 `"grant_capabilities"`   | Array of strings | An array of `ProcessId`s which represents which processes will be able to send a `Response` back to this script. If this script is public, `grant_capabilities` can stay empty.
+`"wit_version"`          | Unsigned integer | The [WIT version](../my_first_app/chapter_1.html?highlight=wit_version#metadatajson) to use
 
 Processes may not necessarily use all these fields.
 For instance, `m.wasm` only uses root, public, and `request_networking`, omitting `request_capabilities` and `grant_capabilities`.
@@ -115,12 +116,17 @@ This is a `scripts.json` that publishes a single script, `hi`, which doesn't rec
 
 ```json
 {
-  "hi.wasm": {
-    "root": false,
-    "public": false,
-    "request_networking": true,
-    "request_capabilities": ["net:distro:sys"],
-    "grant_capabilities": ["net:distro:sys"]
-  }
+    "hi.wasm": {
+        "root": false,
+        "public": false,
+        "request_networking": true,
+        "request_capabilities": [
+            "net:distro:sys"
+        ],
+        "grant_capabilities": [
+            "net:distro:sys"
+        ],
+        "wit_version": 1
+    }
 }
 ```

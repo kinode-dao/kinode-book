@@ -15,7 +15,7 @@
     - [Extensions](./system/process/extensions.md)
     - [WIT APIs](./system/process/wit_apis.md)
   - [Networking Protocol](./system/networking_protocol.md)
-  - [HTTP Server & Client](./system/http-server_and_client.md)
+  - [HTTP Server & Client](./system/http_server_and_client.md)
   - [Read+Write to Chain](./system/read_and_write_to_chain.md)
   - [Files](./system/files.md)
   - [Databases](./system/databases.md)
@@ -82,3 +82,4 @@
   - [WebSocket API](./apis/websocket.md)
 - [Hosted Nodes User Guide](./hosted-nodes.md)
 - [Audits and Security](./audits-and-security.md)
+- [Glossary](./glossary.md)

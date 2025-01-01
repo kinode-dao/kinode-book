@@ -32,18 +32,18 @@ Create a Kinode template package
 Usage: kit new [OPTIONS] <DIR>
 
 Arguments:
-  <DIR>  Path to create template directory at (must contain only a-z, A-Z, 0-9, `-`)
+  <DIR>  Path to create template directory at (must contain only a-z, 0-9, `-`)
 
 Options:
-  -a, --package <PACKAGE>      Name of the package (must contain only a-z, A-Z, 0-9, `-`) [default: DIR]
-  -u, --publisher <PUBLISHER>  Name of the publisher (must contain only a-z, A-Z, 0-9, `-`, `.`) [default: template.os]
+  -a, --package <PACKAGE>      Name of the package (must contain only a-z, 0-9, `-`) [default: DIR]
+  -u, --publisher <PUBLISHER>  Name of the publisher (must contain only a-z, 0-9, `-`, `.`) [default: template.os]
   -l, --language <LANGUAGE>    Programming language of the template [default: rust] [possible values: rust]
   -t, --template <TEMPLATE>    Template to create [default: chat] [possible values: blank, chat, echo, fibonacci, file-transfer]
       --ui                     If set, use the template with UI
   -h, --help                   Print help
 ```
 
-Create a package `my-chat-app` (you can name it anything "Kimap-safe", i.e. containing only a-z, A-Z, 0-9, `-`; but we'll assume you're working with `my-chat-app` in this document):
+Create a package `my-chat-app` (you can name it anything "Kimap-safe", i.e. containing only a-z, 0-9, `-`; but we'll assume you're working with `my-chat-app` in this document):
 
 ```bash
 kit new my-chat-app
@@ -92,7 +92,7 @@ my-chat-app
     └── tests.toml
 ```
 
-The `my-chat-app/` package here contains two processes:
+The `my-chat-app/` package here contains two processes, each represented by a directory:
 - `my-chat-app/` — containing the main application code, and
 - `send/` — containing a [script](../cookbook/writing_scripts.html).
 
@@ -104,10 +104,10 @@ Another standard Rust `Cargo.toml` file, a [virtual manifest](https://doc.rust-l
 
 Also within the package directory is a `pkg/` directory.
 The `pkg/` dirctory contains two files:
-- `manifest.json` — required: specifes information the Kinode needs to run the package, and
+- `manifest.json` — required: specifes information Kinode needs to run the package, and
 - `scripts.json` — optional: specifies details needed to run [scripts](../cookbook/writing_scripts.html).
 
-The `pkg/` directory is also where `.wasm` binaries will be deposited by [`kit build`](#building-the-package).
+The `pkg/` directory is also where `.wasm` binaries (and, optionally, built UI files) will be deposited by [`kit build`](#building-the-package).
 The files in the `pkg/` directory are injected into the Kinode with [`kit start-package`](#starting-the-package).
 
 The `metadata.json` is a required file that contains app metadata which is used in the Kinode [App Store](./chapter_5.html).
@@ -186,7 +186,7 @@ $ cat my-chat-app/metadata.json
         "code_hashes": {
             "0.1.0": ""
         },
-        "wit_version": 0,
+        "wit_version": 1,
         "dependencies": []
     },
     "external_url": "",
@@ -195,9 +195,14 @@ $ cat my-chat-app/metadata.json
 ```
 Here, the `publisher` is the default value (`"template.os"`), but for a real package, this field should contain the KNS ID of the publishing node.
 The `publisher` can also be set with a `kit new --publisher` flag.
-The `wit_version` is an optional field.
-If elided, the package will use [`kinode.wit` `0.7.0`](https://github.com/kinode-dao/kinode-wit/blob/aa2c8b11c9171b949d1991c32f58591c0e881f85/kinode.wit).
-If included with a value of `0`, it will use [`kinode.wit` `0.8.0`](https://github.com/kinode-dao/kinode-wit/blob/758fac1fb144f89c2a486778c62cbea2fb5840ac/kinode.wit).
+The `wit_version` is an optional field:
+
+`wit_version` value | Resulting `kinode.wit` version
+------------------- | ------------------------------
+elided              | [`kinode.wit` `0.7.0`](https://github.com/kinode-dao/kinode-wit/blob/aa2c8b11c9171b949d1991c32f58591c0e881f85/kinode.wit)
+`0`                 | [`kinode.wit` `0.8.0`](https://github.com/kinode-dao/kinode-wit/blob/758fac1fb144f89c2a486778c62cbea2fb5840ac/kinode.wit)
+`1`                 | [`kinode.wit` `1.0.0`](https://github.com/kinode-dao/kinode-wit/blob/v1.0.0/kinode.wit)
+
 The `dependencies` field is also optional; see discussion in [WIT APIs](../system/process/wit_apis.md).
 The rest of these fields are not required for development, but become important when publishing a package with the [`app-store`](https://github.com/kinode-dao/kinode/tree/main/kinode/packages/app-store).
 
@@ -207,7 +212,7 @@ As an aside: each process has a unique `ProcessId`, used to address messages to 
 <process-name>:<package-name>:<publisher-node>
 ```
 
-Each field separated by `:`s must be "Kimap safe", i.e. can only contain a-z, A-Z, 0-9, `-` (and, for publisher node, `.`).
+Each field separated by `:`s must be "Kimap safe", i.e. can only contain a-z, 0-9, `-` (and, for publisher node, `.`).
 
 You can read more about `ProcessId`s [here](../system/process/processes.md#overview).
 
@@ -257,8 +262,8 @@ To exit from the fake node, press `Ctrl + C`.
 By default, the fake node will bind to port `8080`.
 Note the port number in the output for [later](#starting-the-package); it will look something like:
 
-```bash
-Thu 22:50 http-server: running on port 8080
+```
+Serving Kinode at http://localhost:8080
 ```
 
 `kit boot-fake-node` also accepts a `--runtime-path` argument.

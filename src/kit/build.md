@@ -21,7 +21,7 @@ It automatically detects what language each process is, and builds it appropriat
 
 `kit build` builds a Kinode package directory.
 Specifically, it iterates through all directories within the given package directory and looks for `src/lib.??`, where the `??` is the file extension.
-Currently, `rs`, `py`, and `js` are supported, corresponding to processes written in `rust`, `python`, and `javascript`, respectively.
+Currently, `rs` is supported, corresponding to processes written in `rust`.
 Note that a package may have more than one process and those processes need not be written in the same language.
 
 After compiling each process, it places the output `.wasm` binaries within the `pkg/` directory at the top-level of the given package directory.
