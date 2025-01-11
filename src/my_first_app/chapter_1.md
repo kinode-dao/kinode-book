@@ -116,7 +116,7 @@ The `api/` directory contains the [WIT API](../system/process/wit_apis.md) for t
 
 Lastly, the `test/` directory contains tests for the `my-chat-app` package.
 The `tests.toml` file specifies the configuration of the tests.
-The `my-chat-app-test/` direcotry is itself a package: the test for `my-chat-app`.
+The `my-chat-app-test/` directory is itself a package: the test for `my-chat-app`.
 For more discussion of tests see [`kit run-tests`](../kit/run-tests.md), or see usage, [below](#testing-the-package).
 
 Though not included in this template, packages with a frontend have a `ui/` directory as well.
