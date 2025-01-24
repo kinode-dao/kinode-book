@@ -10,4 +10,5 @@ Kinode OS remains a work in progress and will continue to be audited as it matur
 ### Smart Contracts
 
 Kinode OS uses a number of smart contracts to manage global state.
-[link to smart contract audit when finished]
+Audits below:
+- [Kimap audit](https://cantina.xyz/portfolio/c2cbcbe7-727c-47cf-99f1-4e82ea8e5c77) by [Spearbit](https://spearbit.com/)
