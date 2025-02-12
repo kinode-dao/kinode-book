@@ -39,14 +39,3 @@ Options:
   -p, --port <NODE_PORT>  localhost node port; for remote see https://book.kinode.org/hosted-nodes.html#using-kit-with-your-hosted-node [default: 8080]
   -h, --help              Print help
 ```
-
-### Optional positional arg: `DIR`
-
-The package directory to install and start on the node; defaults to current working directory.
-
-### `--port`
-
-short: `-p`
-
-The localhost port of the node; defaults to `8080`.
-To interact with a remote node, see [here](../hosted-nodes.md#using-kit-with-your-hosted-node).

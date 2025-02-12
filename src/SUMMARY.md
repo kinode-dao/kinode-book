@@ -1,85 +1,46 @@
 # Summary
 
-- [Getting Started](./getting_started/getting_started.md)
-  - [Quick Start](./getting_started/quick_start.md)
-  - [Introduction](./getting_started/intro.md)
-  - [Kimap and KNS](./getting_started/kimap.md)
-  - [Design Philosophy](./getting_started/design_philosophy.md)
-  - [Installation](./getting_started/install.md)
-  - [Join the Network](./getting_started/login.md)
-- [System Components](./system/system_components.md)
-  - [Processes](./system/processes_overview.md)
-    - [Process Semantics](./system/process/processes.md)
-    - [Capability-Based Security](./system/process/capabilities.md)
-    - [Startup, Spindown, and Crashes](./system/process/startup.md)
-    - [Extensions](./system/process/extensions.md)
-    - [WIT APIs](./system/process/wit_apis.md)
-  - [Networking Protocol](./system/networking_protocol.md)
-  - [HTTP Server & Client](./system/http_server_and_client.md)
-  - [Read+Write to Chain](./system/read_and_write_to_chain.md)
-  - [Files](./system/files.md)
-  - [Databases](./system/databases.md)
-  - [Terminal](./system/terminal.md)
-- [Process Standard Library](./process_stdlib/overview.md)
-- [Kit: Development Tool**kit**](./kit/kit-dev-toolkit.md)
-  - [Installation](./kit/install.md)
-  - [`boot-fake-node`](./kit/boot-fake-node.md)
-  - [`new`](./kit/new.md)
-  - [`build`](./kit/build.md)
-  - [`start-package`](./kit/start-package.md)
-  - [`publish`](./kit/publish.md)
-  - [`build-start-package`](./kit/build-start-package.md)
-  - [`remove-package`](./kit/remove-package.md)
-  - [`chain`](./kit/chain.md)
-  - [`dev-ui`](./kit/dev-ui.md)
-  - [`inject-message`](./kit/inject-message.md)
-  - [`run-tests`](./kit/run-tests.md)
-  - [`connect`](./kit/connect.md)
-  - [`reset-cache`](./kit/reset-cache.md)
-  - [`boot-real-node`](./kit/boot-real-node.md)
-  - [`view-api`](./kit/view-api.md)
-- [My First Kinode Application](./my_first_app/build_and_deploy_an_app.md)
-  - [Environment Setup](./my_first_app/chapter_1.md)
-  - [Sending and Responding to a Message](./my_first_app/chapter_2.md)
-  - [Messaging with More Complex Data Types](./my_first_app/chapter_3.md)
-  - [Frontend Time](./my_first_app/chapter_4.md)
-  - [Sharing with the World](./my_first_app/chapter_5.md)
-- [In-Depth Guide: Chess App](./chess_app/chess_app.md)
-  - [Environment Setup](./chess_app/setup.md)
-  - [Chess Engine](./chess_app/chess_engine.md)
-  - [Adding a Frontend](./chess_app/frontend.md)
-  - [Putting Everything Together](./chess_app/putting_everything_together.md)
-  - [Extension: Chat](./chess_app/chat.md)
-- [Cookbook (Handy Recipes)](./cookbook/cookbook.md)
-  - [Saving State](./cookbook/save_state.md)
-  - [Managing Child Processes](./cookbook/manage_child_processes.md)
-  - [Publishing a Website or Web App](./cookbook/publish_to_web.md)
-  - [Simple File Transfer Guide](./cookbook/file_transfer.md)
-  - [Intro to Web UI with File Transfer](./cookbook/file_transfer_ui.md)
-  - [Writing and Running Scripts](./cookbook/writing_scripts.md)
-  - [Reading Data from ETH](./cookbook/reading_data_from_eth.md)
-  - [Writing Data to ETH](./cookbook/writing_data_to_eth.md)
-  - [Creating and Using Capabilities](./cookbook/creating_and_using_capabilities.md)
-  - [Managing Contacts](./cookbook/managing_contacts.md)
-  - [Use ZK proofs with SP1](./cookbook/zk_with_sp1.md)
-  - [Talking to the Outside World](./cookbook/talking_to_the_outside_world.md)
-  - [Exporting & Importing Package APIs](./cookbook/package_apis.md)
-  - [Exporting Workers in Package APIs](./cookbook/package_apis_workers.md)
-- [API Reference](./apis/api_reference.md)
-  - [ETH Provider API](./apis/eth_provider.md)
-  - [Frontend/UI Development](./apis/frontend_development.md)
-  - [HTTP API](./apis/http_authentication.md)
-  - [HTTP Client API](./apis/http_client.md)
-  - [HTTP Server API](./apis/http_server.md)
-  - [Kernel API](./apis/kernel.md)
-  - [`kinode.wit`](./apis/kinode_wit.md)
-  - [KV API](./apis/kv.md)
-  - [Net API](./apis/net.md)
-  - [SQLite API](./apis/sqlite.md)
-  - [Terminal API](./apis/terminal.md)
-  - [Timer API](./apis/timer.md)
-  - [VFS API](./apis/vfs.md)
-  - [WebSocket API](./apis/websocket.md)
-- [Hosted Nodes User Guide](./hosted-nodes.md)
-- [Audits and Security](./audits-and-security.md)
-- [Glossary](./glossary.md)
+- Getting Started
+  - [Quick Start](./getting_started/quick_start.md) - Step-by-step guide for running two fake Kinodes and building a simple chat application between them.
+  - [Introduction](./getting_started/intro.md) - Overview of Kinode OS, its core primitives for P2P app development, and system architecture.
+  - Processes
+    - [Process Semantics](./system/process/processes.md) - Core concepts of Kinode processes, messaging between them, and state management.
+    - [Capability-Based Security](./system/process/capabilities.md) - Security model using capability tokens for process permissions and access control.
+    - [Startup, Spindown, and Crashes](./system/process/startup.md) - Process lifecycle management including initialization, state persistence, and exit behaviors.
+    - [WIT APIs](./system/process/wit_apis.md) - How processes use WebAssembly Interface Types for cross-language API definitions.
+- Kit: Development Tool**kit**
+  - [`boot-fake-node`](./kit/boot-fake-node.md) - Starts a development node on fake chain for testing, with pre-seeded contracts.
+  - [`new`](./kit/new.md) - Creates a new Kinode package from templates, supporting different languages and UI options.
+  - [`build`](./kit/build.md) - Compiles package processes to WebAssembly and prepares deployment artifacts.
+  - [`start-package`](./kit/start-package.md) - Installs and launches a built package on a target Kinode.
+  - [`publish`](./kit/publish.md) - Publishes or updates package entries in the Kimap distribution system.
+  - [`build-start-package`](./kit/build-start-package.md) - Combines build and start-package steps for quicker deployment.
+  - [`remove-package`](./kit/remove-package.md) - Uninstalls a package from a running Kinode.
+  - [`chain`](./kit/chain.md) - Launches local blockchain with Foundry's Anvil for development.
+  - [`dev-ui`](./kit/dev-ui.md) - Starts development server with hot reloading for UI development.
+  - [`inject-message`](./kit/inject-message.md) - Sends test messages to processes for development and debugging.
+  - [`run-tests`](./kit/run-tests.md) - Executes test suites defined in TOML configuration files.
+  - [`connect`](./kit/connect.md) - Creates SSH tunnels to remote nodes for development access.
+  - [`boot-real-node`](./kit/boot-real-node.md) - Launches a node connected to live Kinode network.
+- My First Kinode Application
+  - [Environment Setup](./my_first_app/chapter_1.md) - Setup development environment, create a package template, and explore structure.
+  - [Sending and Responding to a Message](./my_first_app/chapter_2.md) - Learn about process initialization, message sending and response handling.
+  - [Messaging with More Complex Data Types](./my_first_app/chapter_3.md) - Implement complex data types with Serde and handle process lifecycle.
+  - [Frontend Time](./my_first_app/chapter_4.md) - Add HTTP handling, serve a static frontend, and create homepage widgets.
+  - [Sharing with the World](./my_first_app/chapter_5.md) - Package and publish your application to the Kinode network.
+- Cookbook (Handy Recipes)
+  - [Saving State](./cookbook/save_state.md) - Use built-in state persistence functions to maintain process data between restarts.
+  - [Managing Child Processes](./cookbook/manage_child_processes.md) - Create and manage child processes for task isolation and parallel execution.
+  - [Publishing a Website or Web App](./cookbook/publish_to_web.md) - Serve static assets and web applications through HTTP server bindings.
+  - [Simple File Transfer Guide](./cookbook/file_transfer.md) - Implement file transfer functionality using VFS and worker processes.
+  - [Intro to Web UI with File Transfer](./cookbook/file_transfer_ui.md) - Build a React-based UI for the file transfer system using Vite.
+  - [Writing and Running Scripts](./cookbook/writing_scripts.md) - Create and use command-line scripts as processes with arguments.
+  - [Reading Data from ETH](./cookbook/reading_data_from_eth.md) - Query Ethereum blockchain data using the provider system.
+  - [Writing Data to ETH](./cookbook/writing_data_to_eth.md) - Write to Ethereum using contracts and transaction signing.
+  - [Creating and Using Capabilities](./cookbook/creating_and_using_capabilities.md) - Implement custom capability checking for process security.
+  - [Managing Contacts](./cookbook/managing_contacts.md) - Use the contacts system primitive to manage node identities.
+  - [Talking to the Outside World](./cookbook/talking_to_the_outside_world.md) - Communicate with external systems and resources.
+  - [Exporting & Importing Package APIs](./cookbook/package_apis.md) - Share and use package APIs using WIT interfaces.
+  - [Exporting Workers in Package APIs](./cookbook/package_apis_workers.md) - Create reusable worker processes in package APIs.
+- [Hosted Nodes User Guide](./hosted-nodes.md) - Managing hosted Kinodes, accessing terminals via SSH, and development workflows.
+- [Glossary](./glossary.md) - Definitions and explanations of key Kinode technical terms and concepts.
